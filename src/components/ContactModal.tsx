@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send, CheckCircle2, AlertCircle, Sparkles } from 'lucide-react';
 
-// REPLACE THIS WITH YOUR DEPLOYED APPS SCRIPT WEB APP URL
+// Deployed Apps Script Web App Endpoint
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzbSFHQqPwUvxHgdesX8HAV_VdIlkvWc_N4c8_c6DpniqQ4uHCAasaXojRBp4Q8xMyTTg/exec';
 
 interface ContactModalProps {
@@ -97,17 +97,15 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
     setSubmitError(null);
 
     try {
-      // POST execution to Google Apps Script Endpoint
       await fetch(APPS_SCRIPT_URL, {
         method: 'POST',
-        mode: 'no-cors', // Google Apps Script handles redirect execution via no-cors securely
+        mode: 'no-cors', 
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(form),
       });
 
-      // Track submissions locally as a fallback backup index
       const submissions = JSON.parse(localStorage.getItem('euroziel_leads') || '[]');
       submissions.push({ ...form, id: Date.now(), date: new Date().toISOString() });
       localStorage.setItem('euroziel_leads', JSON.stringify(submissions));
@@ -146,38 +144,40 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        /* CRITICAL FIX: Escalated to z-[9999] and forced internal overflow management on layout wrappers */
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 overflow-y-auto overflow-x-hidden">
+          
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={handleClose}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 bg-black/75 backdrop-blur-sm pointer-events-auto"
           />
 
-          {/* Modal Card */}
+          {/* Modal Card Card Container */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            initial={{ opacity: 0, scale: 0.96, y: 15 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ type: 'spring', duration: 0.5 }}
+            exit={{ opacity: 0, scale: 0.96, y: 15 }}
+            transition={{ type: 'spring', duration: 0.4, ease: 'easeOut' }}
             id="contact-modal"
-            className={`relative w-full max-w-2xl rounded-sm shadow-2xl overflow-hidden z-10 border max-h-[90vh] flex flex-col border-b-4 border-b-amber-500 ${
+            className={`relative w-full max-w-2xl rounded-sm shadow-2xl overflow-hidden z-[10000] border flex flex-col border-b-4 border-b-amber-500 my-auto ${
               theme === 'dark'
                 ? 'bg-slate-900 border-slate-800 text-slate-100'
                 : 'bg-white border-slate-200 text-slate-900'
             }`}
           >
             {/* Header banner decoration */}
-            <div className="h-1.5 bg-blue-900" />
+            <div className="h-1.5 bg-blue-900 w-full shrink-0" />
 
-            {/* Modal Body */}
-            <div className="p-6 overflow-y-auto flex-1">
+            {/* Modal Body Container with precise calculation boundaries */}
+            <div className="p-6 overflow-y-auto max-h-[80vh] flex-1">
               <button
                 onClick={handleClose}
-                className={`absolute top-4 right-4 p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors ${
-                  theme === 'dark' ? 'text-slate-400' : 'text-slate-500'
+                className={`absolute top-4 right-4 p-2 rounded-full transition-colors z-[10001] cursor-pointer ${
+                  theme === 'dark' ? 'text-slate-400 hover:bg-slate-800' : 'text-slate-500 hover:bg-slate-100'
                 }`}
                 aria-label="Close"
               >
@@ -186,7 +186,7 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
 
               {!isSubmitted ? (
                 <>
-                  <div className="mb-6">
+                  <div className="mb-6 pr-6">
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-sm text-[10px] font-bold tracking-[0.15em] uppercase mb-2 bg-amber-500/5 border border-amber-500/35 text-amber-500">
                       <Sparkles className="w-3.5 h-3.5" /> Direct Access Setup
                     </span>
@@ -424,7 +424,7 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="flex flex-col items-center justify-center text-center py-10"
+                  className="flex flex-col items-center justify-center text-center py-6"
                 >
                   <motion.div
                     initial={{ scale: 0 }}

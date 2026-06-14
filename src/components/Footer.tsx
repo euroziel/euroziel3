@@ -128,7 +128,7 @@ export default function Footer({ currentTab, onTabChange, theme, onOpenConsultat
         <div className={`border-t pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs ${
           dark ? 'border-slate-900' : 'border-slate-200/40'
         }`}>
-          <span>&copy; 2026 EuroZiel Consulting. All Rights Reserved. Hamburg - Bengaluru.</span>
+          <span>&copy; 2026 EuroZiel Consulting. All Rights Reserved.</span>
           <div className="flex items-center gap-1">
             <span>Made with</span> <Heart className="w-3.5 h-3.5 text-rose-500 fill-current" /> <span>for future German Scholars</span>
           </div>
