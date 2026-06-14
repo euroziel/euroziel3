@@ -10,6 +10,7 @@ interface FAQSectionProps {
 }
 
 export default function FAQSection({ onOpenConsultation, theme }: FAQSectionProps) {
+  const dark = theme === 'dark';
   
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
@@ -150,13 +151,13 @@ export default function FAQSection({ onOpenConsultation, theme }: FAQSectionProp
       
       {/* Category banner */}
       <div className="text-center max-w-2xl mx-auto space-y-3">
-        <span className="text-[10px] font-bold text-gold uppercase tracking-[0.2em] bg-gold/5 border border-gold/30 px-3 py-1 rounded-sm inline-block">
+        <span className="text-[10px] font-bold text-navy uppercase tracking-[0.2em] bg-gold/5 border border-gold/30 px-3 py-1 rounded-sm inline-block">
           FAQ DIRECTORY
         </span>
-        <h2 className="text-3xl font-bold tracking-tight font-sans text-slate-900 dark:text-white">
+        <h2 className={`text-3xl font-bold tracking-tight font-sans ${dark ? 'text-white' : 'text-slate-900'}`}>
           Frequently Asked Questions
         </h2>
-        <p className="text-slate-500 dark:text-slate-400 text-xs md:text-sm">
+        <p className={`text-xs md:text-sm ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
           Get authentic, ground-level answers regarding German admissions, blocked accounts, visas, and language targets.
         </p>
       </div>
@@ -172,7 +173,7 @@ export default function FAQSection({ onOpenConsultation, theme }: FAQSectionProp
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search FAQs (e.g. Ausbildung, APS, €11,904, WG)..."
             className={`w-full pl-11 pr-4 py-3 rounded-sm border text-sm transition-all focus:outline-none focus:ring-1 focus:ring-navy ${
-              theme === 'dark'
+              dark
                 ? 'border-slate-800 bg-slate-950 text-slate-105 focus:border-navy'
                 : 'border-slate-205 bg-slate-50 text-slate-900 focus:border-navy'
             }`}
@@ -193,7 +194,7 @@ export default function FAQSection({ onOpenConsultation, theme }: FAQSectionProp
                 className={`px-3 py-1.5 rounded-sm text-[9px] font-bold uppercase tracking-widest transition-all cursor-pointer border ${
                   isSelected
                     ? 'bg-navy text-white border-navy border-b-2 border-b-gold shadow-premium'
-                    : theme === 'dark'
+                    : dark
                     ? 'bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-100'
                     : 'bg-white border-slate-200 text-slate-500 hover:text-slate-800'
                 }`}
@@ -206,26 +207,32 @@ export default function FAQSection({ onOpenConsultation, theme }: FAQSectionProp
       </div>
 
       {/* FAQ ITEMS ACCORDION WRAPPER */}
-      <div className="border border-slate-200/50 dark:border-slate-900 rounded-sm overflow-hidden bg-white dark:bg-slate-950 shadow-premium">
+      <div className={`border rounded-sm overflow-hidden shadow-premium ${
+        dark ? 'border-slate-900 bg-slate-950' : 'border-slate-200/50 bg-white'
+      }`}>
         {filteredFaqs.length > 0 ? (
           filteredFaqs.map((faq, index) => {
             const isExpanded = expandedIndex === `${faq.cat}-${index}`;
             return (
               <div 
                 key={index}
-                className={`border-b last:border-b-0 border-slate-200/40 dark:border-slate-900 transition-colors ${
-                  isExpanded ? 'bg-slate-50/20 dark:bg-slate-900/10' : ''
+                className={`border-b last:border-b-0 transition-colors ${
+                  dark ? 'border-slate-900' : 'border-slate-200/40'
+                } ${
+                  isExpanded ? (dark ? 'bg-slate-900/10' : 'bg-slate-50/20') : ''
                 }`}
               >
                 <button
                   onClick={() => setExpandedIndex(isExpanded ? null : `${faq.cat}-${index}`)}
-                  className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-slate-50/50 dark:hover:bg-slate-900/40 cursor-pointer transition-colors"
+                  className={`w-full px-6 py-4 flex items-center justify-between text-left cursor-pointer transition-colors ${
+                    dark ? 'hover:bg-slate-900/40' : 'hover:bg-slate-50/50'
+                  }`}
                 >
                   <div className="space-y-1 pr-4">
                     <span className="text-[9px] font-bold text-gold uppercase tracking-widest font-mono">
                       Category: {faq.cat}
                     </span>
-                    <h4 className="font-bold text-sm md:text-base text-slate-900 dark:text-slate-100">
+                    <h4 className={`font-bold text-sm md:text-base ${dark ? 'text-slate-100' : 'text-slate-900'}`}>
                       {faq.q}
                     </h4>
                   </div>
@@ -241,7 +248,9 @@ export default function FAQSection({ onOpenConsultation, theme }: FAQSectionProp
                       transition={{ duration: 0.2 }}
                       className="overflow-hidden"
                     >
-                      <div className="px-6 pb-6 pt-1 text-xs md:text-sm text-slate-500 dark:text-slate-350 leading-relaxed font-sans border-l-2 border-gold">
+                      <div className={`px-6 pb-6 pt-1 text-xs md:text-sm leading-relaxed font-sans border-l-2 border-gold ${
+                        dark ? 'text-slate-350' : 'text-slate-500'
+                      }`}>
                         {faq.a}
                       </div>
                     </motion.div>
@@ -255,7 +264,7 @@ export default function FAQSection({ onOpenConsultation, theme }: FAQSectionProp
             <div>No matching FAQs found for your search query.</div>
             <button 
               onClick={() => { setSearchQuery(''); setActiveCategory('All'); }}
-              className="text-navy dark:text-gold font-bold underline text-xs cursor-pointer"
+              className={`font-bold underline text-xs cursor-pointer ${dark ? 'text-gold' : 'text-navy'}`}
             >
               Reset Search & Filters
             </button>
@@ -264,8 +273,10 @@ export default function FAQSection({ onOpenConsultation, theme }: FAQSectionProp
       </div>
 
       {/* STILL HAVE QUESTIONS BOTTOM BLOCK */}
-      <div className="p-8 rounded-sm border border-gold/20 text-center bg-white dark:bg-slate-950 shadow-premium border-b-4 border-b-gold space-y-4">
-        <h4 className="font-bold text-base text-slate-900 dark:text-white">Still searching for matching parameters?</h4>
+      <div className={`p-8 rounded-sm border text-center shadow-premium border-b-4 border-b-gold space-y-4 ${
+        dark ? 'border-gold/20 bg-slate-950' : 'border-gold/20 bg-white'
+      }`}>
+        <h4 className={`font-bold text-base ${dark ? 'text-white' : 'text-slate-900'}`}>Still searching for matching parameters?</h4>
         <p className="text-xs text-slate-400 max-w-sm mx-auto">
           Every educational background behaves uniquely. Let Yuvasri and Sarathkumar evaluate your CGPA and language status on a raw personal basis.
         </p>

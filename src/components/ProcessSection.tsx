@@ -10,6 +10,7 @@ interface ProcessSectionProps {
 }
 
 export default function ProcessSection({ onOpenConsultation, theme }: ProcessSectionProps) {
+  const dark = theme === 'dark';
   
   // Pre-departure Checklist state
   const [checklist, setChecklist] = useState([
@@ -189,23 +190,27 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
       {/* YOUR GERMANY TIMELINE ROADMAP */}
       <section className="max-w-4xl mx-auto px-4 text-left space-y-12">
         <div className="space-y-2 text-center max-w-xl mx-auto">
-          <span className="text-[10px] font-bold text-navy uppercase tracking-[0.2em] bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-3 py-1 rounded-sm inline-block">
+          <span className={`text-[10px] font-bold text-navy uppercase tracking-[0.2em] border px-3 py-1 rounded-sm inline-block ${
+            dark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
+          }`}>
             Step-By-Step
           </span>
           <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Your Germany Timeline</h2>
-          <p className="text-xs text-slate-500 dark:text-slate-400 font-sans">
+          <p className={`text-xs font-sans ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
             A structured roadmap designed to guide you from your first consultation to your arrival in Germany with complete clarity and support.
           </p>
         </div>
 
         {/* Timeline Path */}
-        <div className="relative border-l-2 border-slate-200 dark:border-slate-800 ml-4 md:ml-6 space-y-12 py-4">
+        <div className={`relative border-l-2 ml-4 md:ml-6 space-y-12 py-4 ${dark ? 'border-slate-800' : 'border-slate-200'}`}>
           
           {timeline.map((card, idx) => (
             <div key={idx} className="relative pl-8 md:pl-10">
               
               {/* Timeline dot */}
-              <div className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-sm bg-white dark:bg-slate-950 border-2 border-navy flex items-center justify-center">
+              <div className={`absolute -left-[9px] top-1.5 w-4 h-4 rounded-sm border-2 border-navy flex items-center justify-center ${
+                dark ? 'bg-slate-950' : 'bg-white'
+              }`}>
                 <div className="w-1.5 h-1.5 rounded-sm bg-gold" />
               </div>
 
@@ -213,17 +218,17 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
                 <span className="text-[10px] font-bold text-gold tracking-widest uppercase font-mono block">
                   {card.months}
                 </span>
-                <h3 className="text-base md:text-lg font-bold text-slate-800 dark:text-slate-100">
+                <h3 className={`text-base md:text-lg font-bold ${dark ? 'text-slate-100' : 'text-slate-800'}`}>
                   {card.title}
                 </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400 font-sans max-w-2xl leading-relaxed">
+                <p className={`text-xs font-sans max-w-2xl leading-relaxed ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
                   {card.sub}
                 </p>
 
                 {/* Sub-bullets list */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-w-xl pt-2">
                   {card.bullets.map((bullet, bulletIdx) => (
-                    <div key={bulletIdx} className="flex items-start gap-2 text-[11px] text-slate-600 dark:text-slate-400">
+                    <div key={bulletIdx} className={`flex items-start gap-2 text-[11px] ${dark ? 'text-slate-400' : 'text-slate-600'}`}>
                       <span className="text-navy font-bold shrink-0">•</span>
                       <span>{bullet}</span>
                     </div>
@@ -235,7 +240,9 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
 
         </div>
 
-        <div className="p-4 rounded-sm border border-red-500/20 bg-red-500/5 text-xs text-slate-600 dark:text-slate-400 flex gap-3 items-center">
+        <div className={`p-4 rounded-sm border bg-red-500/5 text-xs text-slate-600 flex gap-3 items-center ${
+          dark ? 'border-red-500/20 text-slate-400' : 'border-red-500/20 text-slate-600'
+        }`}>
           <AlertCircle className="w-6 h-6 text-red-500 shrink-0" />
           <div className="font-sans leading-relaxed">
             <strong>Intake Reminder:</strong> Most Winter Intake deadlines close around **July 15** for public universities in Germany. Do not leave your university applications or APS verification to the last minute!
@@ -245,16 +252,18 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
 
       {/* INTERACTIVE PRE-DEPARTURE CHECKLIST */}
       <section className="max-w-4xl mx-auto px-4">
-        <div className="p-6 md:p-10 rounded-sm border border-[#e5a800]/20 bg-white dark:bg-slate-950/80 shadow-premium border-b-4 border-b-gold space-y-8 text-left relative">
+        <div className={`p-6 md:p-10 rounded-sm border border-[#e5a800]/20 shadow-premium border-b-4 border-b-gold space-y-8 text-left relative ${
+          dark ? 'bg-slate-950/80' : 'bg-white'
+        }`}>
           <div className="absolute top-4 right-4 text-[9px] px-2 py-1 rounded-sm bg-gold/5 text-gold border border-gold/20 font-mono font-bold uppercase tracking-wider">
             Interactive Checklist
           </div>
 
           <div className="space-y-2">
-            <h2 className="text-2xl font-bold tracking-tight font-sans text-slate-800 dark:text-slate-100">
+            <h2 className={`text-2xl font-bold tracking-tight font-sans ${dark ? 'text-slate-100' : 'text-slate-800'}`}>
               Pre-Departure Readiness Checklist
             </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-sans">
+            <p className={`text-xs font-sans ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
               Plan and tick off milestones. See if you are fully prepared for your flight.
             </p>
           </div>
@@ -265,7 +274,7 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
               <span className="font-semibold text-slate-500">Your Progress</span>
               <span className="font-bold text-gold">{checkedCount} of {checklist.length} Completed ({progressPercent}%)</span>
             </div>
-            <div className="h-2 bg-slate-105 dark:bg-slate-900 rounded-sm overflow-hidden border border-slate-200/20">
+            <div className={`h-2 rounded-sm overflow-hidden border border-slate-200/20 ${dark ? 'bg-slate-900' : 'bg-slate-105'}`}>
               <div 
                 className="h-full bg-navy transition-all duration-500"
                 style={{ width: `${progressPercent}%` }}
@@ -281,14 +290,14 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
                 onClick={() => toggleCheck(item.id)}
                 className={`p-3.5 rounded-sm border flex items-center gap-3.5 cursor-pointer transition-all ${
                   item.checked 
-                    ? 'border-navy/30 bg-navy/5 text-slate-800 dark:text-slate-200' 
-                    : 'border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40 text-slate-500 dark:text-slate-400'
+                    ? `border-navy/30 bg-navy/5 ${dark ? 'text-slate-200' : 'text-slate-800'}` 
+                    : `${dark ? 'border-slate-800 bg-slate-900/40 text-slate-400' : 'border-slate-200 bg-slate-50/50 text-slate-500'}`
                 }`}
               >
                 <div className={`w-5 h-5 rounded-sm flex items-center justify-center border transition-all ${
                   item.checked
                     ? 'bg-navy border-navy text-white'
-                    : 'border-slate-300 dark:border-slate-700'
+                    : `${dark ? 'border-slate-700' : 'border-slate-300'}`
                 }`}>
                   {item.checked && <Check className="w-3.5 h-3.5 stroke-[3.5]" />}
                 </div>
@@ -300,7 +309,9 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
       </section>
 
       {/* GERMANY JOURNEY INSIGHTS FLASH CARDS */}
-      <section className="bg-slate-50/50 dark:bg-slate-950/50 py-20 px-4 border-y border-slate-100 dark:border-slate-900 animate-fade-in">
+      <section className={`py-20 px-4 border-y animate-fade-in ${
+        dark ? 'bg-slate-950/50 border-slate-900' : 'bg-slate-50/50 border-slate-100'
+      }`}>
         <div className="max-w-7xl mx-auto space-y-12">
           
           <div className="text-center max-w-xl mx-auto space-y-3">
@@ -310,7 +321,7 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
             <h2 className="text-3xl font-bold tracking-tight font-sans">
               Germany Journey Insights
             </h2>
-            <p className="text-slate-500 dark:text-slate-400 text-xs md:text-sm">
+            <p className={`text-xs md:text-sm ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
               Click any flash card below to flip it over and read vital insights about student life and legal compliance in Germany.
             </p>
           </div>
@@ -325,7 +336,9 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
                   className={`h-48 rounded-sm border cursor-pointer relative overflow-hidden transition-all duration-300 transform ${
                     isSelected 
                       ? 'border-gold bg-slate-950 text-gold shadow-premium border-b-4 border-b-gold' 
-                      : 'border-slate-200/50 dark:border-slate-900 bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 shadow-premium hover:border-gold'
+                      : `shadow-premium hover:border-gold ${
+                          dark ? 'border-slate-900 bg-slate-950 text-slate-100' : 'border-slate-200/50 bg-white text-slate-800'
+                        }`
                   }`}
                 >
                   <div className="p-6 h-full flex flex-col justify-between text-left">
@@ -376,7 +389,9 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
 
       {/* PROCESS FINAL BOTTOM CTA */}
       <section className="max-w-4xl mx-auto px-4 text-center">
-        <div className="relative rounded-sm overflow-hidden py-12 px-6 border border-gold/20 bg-slate-900 dark:bg-slate-950 text-white shadow-premium border-b-4 border-b-gold">
+        <div className={`relative rounded-sm overflow-hidden py-12 px-6 border border-gold/20 text-white shadow-premium border-b-4 border-b-gold ${
+          dark ? 'bg-slate-950' : 'bg-slate-900'
+        }`}>
           <div className="relative z-10 space-y-6">
             <h3 className="text-2xl font-bold font-sans">Still Confused About Your Germany Pathway?</h3>
             <p className="text-gold text-xs uppercase tracking-widest max-w-lg mx-auto font-sans font-semibold">

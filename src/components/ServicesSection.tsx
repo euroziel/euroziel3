@@ -11,6 +11,7 @@ interface ServicesSectionProps {
 
 export default function ServicesSection({ onOpenConsultation, theme }: ServicesSectionProps) {
   const [expandedStep, setExpandedStep] = useState<number | null>(0);
+  const dark = theme === 'dark';
 
   const mainServices = [
     {
@@ -131,18 +132,22 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
       
       {/* SERVICES HERO */}
       <section className="max-w-7xl mx-auto px-4 text-left">
-        <div className="relative rounded-sm overflow-hidden py-16 px-8 md:px-14 border border-slate-200/50 dark:border-slate-800 bg-white dark:bg-slate-950 shadow-premium border-b-4 border-b-gold">
+        <div className={`relative rounded-sm overflow-hidden py-16 px-8 md:px-14 border border-b-4 border-b-gold shadow-premium ${
+          dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200/50 bg-white'
+        }`}>
           <div className="absolute top-1/2 -translate-y-1/2 -right-32 w-80 h-80 bg-navy/10 rounded-full blur-3xl pointer-events-none" />
           
           <div className="relative z-10 max-w-3xl space-y-4">
-            <span className="text-[10px] font-bold text-navy uppercase tracking-[0.2em] bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-3 py-1 rounded-sm">
+            <span className={`text-[10px] font-bold text-navy uppercase tracking-[0.2em] border px-3 py-1 rounded-sm ${
+              dark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
+            }`}>
               OUR GUIDANCE SERVICES
             </span>
-            <h1 className="text-3xl md:text-5xl font-bold font-sans leading-tight text-slate-900 dark:text-white">
+            <h1 className={`text-3xl md:text-5xl font-bold font-sans leading-tight ${dark ? 'text-white' : 'text-slate-900'}`}>
               Complete support, <br />
               <span className="font-serif italic font-medium text-gold">zero gaps.</span>
             </h1>
-            <p className="text-slate-600 dark:text-slate-300 text-sm md:text-base font-sans leading-relaxed">
+            <p className={`text-sm md:text-base font-sans leading-relaxed ${dark ? 'text-slate-300' : 'text-slate-600'}`}>
               From your first enquiry to your first day on a German campus—EuroZiel covers every aspect of your study abroad journey. Guided by mentors currently studying your fields in Germany.
             </p>
           </div>
@@ -155,18 +160,24 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
           {mainServices.map((service, sIdx) => (
             <div 
               key={sIdx}
-              className="p-8 rounded-sm border border-slate-100 dark:border-slate-900 bg-white dark:bg-slate-950 text-left space-y-4 relative shadow-premium hover:border-gold transition-all duration-300"
+              className={`p-8 rounded-sm border text-left space-y-4 relative shadow-premium hover:border-gold transition-all duration-300 ${
+                dark ? 'border-slate-900 bg-slate-950' : 'border-slate-100 bg-white'
+              }`}
             >
               <div className="absolute top-4 right-4 text-[9px] font-bold text-gold uppercase bg-gold/5 border border-gold/20 px-2 py-0.5 rounded-sm">
                 {service.tag}
               </div>
-              <h3 className="text-lg font-bold font-sans border-b border-slate-100 dark:border-slate-900 pb-3 text-slate-800 dark:text-slate-100">
+              <h3 className={`text-lg font-bold font-sans border-b pb-3 ${
+                dark ? 'border-slate-900 text-slate-100' : 'border-slate-100 text-slate-800'
+              }`}>
                 {service.title}
               </h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-sans">
+              <p className={`text-xs leading-relaxed font-sans ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
                 {service.desc}
               </p>
-              <div className="p-4 rounded-sm bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 font-sans leading-relaxed">
+              <div className={`p-4 rounded-sm border text-xs font-sans leading-relaxed ${
+                dark ? 'bg-slate-900 border-slate-800 text-slate-400' : 'bg-slate-50 border-slate-100 text-slate-600'
+              }`}>
                 <strong>Ground Rule:</strong> {service.rules}
               </div>
             </div>
@@ -183,32 +194,36 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
           <h2 className="text-2xl md:text-3.5xl font-bold tracking-tight font-sans">
             Our 15-Step End-To-End Support
           </h2>
-          <p className="text-slate-500 dark:text-slate-400 text-xs md:text-sm">
+          <p className={`text-xs md:text-sm ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
             We handle the intricate details so you can focus entirely on your academics and language goals. Click any step below to explore.
           </p>
         </div>
 
         {/* Directory List Accordion Style */}
-        <div className="border border-slate-200/50 dark:border-slate-800 rounded-sm overflow-hidden bg-white dark:bg-slate-950/65 shadow-premium">
+        <div className={`border rounded-sm overflow-hidden shadow-premium ${
+          dark ? 'border-slate-800 bg-slate-950/65' : 'border-slate-200/50 bg-white'
+        }`}>
           {blockSteps.map((step, idx) => {
             const isExpanded = expandedStep === idx;
             return (
               <div 
                 key={idx}
-                className={`border-b last:border-b-0 border-slate-200/50 dark:border-slate-800 transition-all ${
-                  isExpanded ? 'bg-slate-50/50 dark:bg-slate-900/20' : ''
-                }`}
+                className={`border-b last:border-b-0 border-slate-200/50 transition-all ${
+                  dark ? 'border-slate-800' : 'border-slate-200/50'
+                } ${isExpanded ? (dark ? 'bg-slate-900/20' : 'bg-slate-50/50') : ''}`}
               >
                 <button
                   onClick={() => setExpandedStep(isExpanded ? null : idx)}
-                  className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-slate-100/40 dark:hover:bg-slate-900/40 transition-colors pointer-cursor"
+                  className={`w-full px-6 py-4 flex items-center justify-between text-left transition-colors pointer-cursor ${
+                    dark ? 'hover:bg-slate-900/40' : 'hover:bg-slate-100/40'
+                  }`}
                 >
                   <div className="flex items-center gap-4">
                     <span className="font-extrabold text-sm text-[#e5a800] tracking-wider w-6">
                       {step.id}
                     </span>
                     <div>
-                      <h4 className="font-extrabold text-sm text-slate-800 dark:text-slate-205">
+                      <h4 className={`font-extrabold text-sm ${dark ? 'text-slate-200' : 'text-slate-800'}`}>
                         {step.title}
                       </h4>
                       <p className="text-[10px] text-slate-400 mt-0.5">
@@ -228,7 +243,9 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
                       transition={{ duration: 0.25 }}
                       className="overflow-hidden"
                     >
-                      <div className="px-12 pb-6 pt-1 text-slate-600 dark:text-slate-350 text-xs md:text-sm leading-relaxed font-sans border-l-2 border-[#1b73ba]">
+                      <div className={`px-12 pb-6 pt-1 text-xs md:text-sm leading-relaxed font-sans border-l-2 border-[#1b73ba] ${
+                        dark ? 'text-slate-300' : 'text-slate-600'
+                      }`}>
                         {step.full}
                       </div>
                     </motion.div>
@@ -242,14 +259,18 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
 
       {/* bottom CTA */}
       <section className="max-w-4xl mx-auto px-4 text-center">
-        <div className="p-8 md:p-12 rounded-sm border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 shadow-premium space-y-6 border-b-4 border-b-gold">
-          <span className="text-[10px] font-bold text-navy uppercase tracking-[0.2em] bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-3 py-1 rounded-sm">
+        <div className={`p-8 md:p-12 rounded-sm border shadow-premium space-y-6 border-b-4 border-b-gold ${
+          dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200 bg-white'
+        }`}>
+          <span className={`text-[10px] font-bold text-navy uppercase tracking-[0.2em] border px-3 py-1 rounded-sm ${
+            dark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
+          }`}>
             Need Expert Input?
           </span>
-          <h3 className="text-2xl font-bold font-sans leading-tight text-slate-900 dark:text-white">
+          <h3 className={`text-2xl font-bold font-sans leading-tight ${dark ? 'text-white' : 'text-slate-900'}`}>
             Stop Guessing and Connect with Students Already Living Your Dream
           </h3>
-          <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto leading-relaxed">
+          <p className={`text-xs max-w-md mx-auto leading-relaxed ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
             Our mentors are not sitting in an office in India guessing what Germany is like. They are there. Right now. And they are part of your team.
           </p>
           <div>

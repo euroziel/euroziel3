@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send, CheckCircle2, AlertCircle, Sparkles } from 'lucide-react';
+
+// REPLACE THIS WITH YOUR DEPLOYED APPS SCRIPT WEB APP URL
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzbSFHQqPwUvxHgdesX8HAV_VdIlkvWc_N4c8_c6DpniqQ4uHCAasaXojRBp4Q8xMyTTg/exec';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -9,48 +12,46 @@ interface ContactModalProps {
 }
 
 interface FormState {
-  fullName: string;
+  name: string;
   email: string;
   phone: string;
-  gpa: string;
-  qualification: string;
-  germanLevel: string;
-  preferredIntake: string;
+  course: string;
+  budget: string;
+  timeline: string;
   message: string;
 }
 
 interface ValidationErrors {
-  fullName?: string;
+  name?: string;
   email?: string;
   phone?: string;
-  gpa?: string;
-  qualification?: string;
-  germanLevel?: string;
+  course?: string;
+  budget?: string;
 }
 
 export default function ContactModal({ isOpen, onClose, theme = 'light' }: ContactModalProps) {
   const [form, setForm] = useState<FormState>({
-    fullName: '',
+    name: '',
     email: '',
     phone: '',
-    gpa: '',
-    qualification: '',
-    germanLevel: 'none',
-    preferredIntake: 'winter_2026',
+    course: '',
+    budget: '',
+    timeline: 'winter_2026',
     message: ''
   });
 
   const [errors, setErrors] = useState<ValidationErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const validate = (): boolean => {
     const newErrors: ValidationErrors = {};
 
-    if (!form.fullName.trim()) {
-      newErrors.fullName = 'Full name is required';
-    } else if (form.fullName.trim().length < 3) {
-      newErrors.fullName = 'Name must be at least 3 characters long';
+    if (!form.name.trim()) {
+      newErrors.name = 'Full name is required';
+    } else if (form.name.trim().length < 3) {
+      newErrors.name = 'Name must be at least 3 characters long';
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -67,15 +68,12 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
       newErrors.phone = 'Enter a valid 10-15 digit phone number';
     }
 
-    if (form.gpa.trim()) {
-      const gpaNum = parseFloat(form.gpa);
-      if (isNaN(gpaNum) || gpaNum < 0 || gpaNum > 100) {
-        newErrors.gpa = 'GPA/Percentage must be between 0 and 100, or a CGPA out of 10';
-      }
+    if (!form.course) {
+      newErrors.course = 'Please select your desired course field';
     }
 
-    if (!form.qualification) {
-      newErrors.qualification = 'Please select your current qualification';
+    if (!form.budget) {
+      newErrors.budget = 'Please select your estimated budget layout';
     }
 
     setErrors(newErrors);
@@ -85,7 +83,7 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setForm(prev => ({ ...prev, [name]: value }));
-    // Clear error instantly if typing
+    
     if (errors[name as keyof ValidationErrors]) {
       setErrors(prev => ({ ...prev, [name]: undefined }));
     }
@@ -96,36 +94,53 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
     if (!validate()) return;
 
     setIsSubmitting(true);
-    // Simulate API storage / loading
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    setSubmitError(null);
 
-    // Save submission locally for "Your Submissions" panel or state tracking
-    const submissions = JSON.parse(localStorage.getItem('euroziel_leads') || '[]');
-    submissions.push({ ...form, id: Date.now(), date: new Date().toISOString() });
-    localStorage.setItem('euroziel_leads', JSON.stringify(submissions));
+    try {
+      // POST execution to Google Apps Script Endpoint
+      await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors', // Google Apps Script handles redirect execution via no-cors securely
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form),
+      });
 
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+      // Track submissions locally as a fallback backup index
+      const submissions = JSON.parse(localStorage.getItem('euroziel_leads') || '[]');
+      submissions.push({ ...form, id: Date.now(), date: new Date().toISOString() });
+      localStorage.setItem('euroziel_leads', JSON.stringify(submissions));
+
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error('Submission failed:', error);
+      setSubmitError('System busy. Unable to submit data right now. Please try again.');
+      setIsSubmitting(false);
+    }
   };
 
   const resetForm = () => {
     setForm({
-      fullName: '',
+      name: '',
       email: '',
       phone: '',
-      gpa: '',
-      qualification: '',
-      germanLevel: 'none',
-      preferredIntake: 'winter_2026',
+      course: '',
+      budget: '',
+      timeline: 'winter_2026',
       message: ''
     });
     setErrors({});
-    setIsSubmitted(false);
+    setSubmitError(null);
   };
 
   const handleClose = () => {
-    resetForm();
     onClose();
+    setTimeout(() => {
+      setIsSubmitted(false);
+      resetForm();
+    }, 200); 
   };
 
   return (
@@ -148,14 +163,14 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: 'spring', duration: 0.5 }}
             id="contact-modal"
-            className={`relative w-full max-w-2xl rounded-sm shadow-premium overflow-hidden z-10 border max-h-[90vh] flex flex-col border-b-4 border-b-gold ${
+            className={`relative w-full max-w-2xl rounded-sm shadow-2xl overflow-hidden z-10 border max-h-[90vh] flex flex-col border-b-4 border-b-amber-500 ${
               theme === 'dark'
                 ? 'bg-slate-900 border-slate-800 text-slate-100'
                 : 'bg-white border-slate-200 text-slate-900'
             }`}
           >
             {/* Header banner decoration */}
-            <div className="h-1.5 bg-navy" />
+            <div className="h-1.5 bg-blue-900" />
 
             {/* Modal Body */}
             <div className="p-6 overflow-y-auto flex-1">
@@ -172,11 +187,11 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
               {!isSubmitted ? (
                 <>
                   <div className="mb-6">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-sm text-[10px] font-bold tracking-[0.15em] uppercase mb-2 bg-gold/5 border border-gold/35 text-gold">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-sm text-[10px] font-bold tracking-[0.15em] uppercase mb-2 bg-amber-500/5 border border-amber-500/35 text-amber-500">
                       <Sparkles className="w-3.5 h-3.5" /> Direct Access Setup
                     </span>
                     <h3 className="text-2xl font-bold font-sans text-slate-900 dark:text-white">
-                      Start Your <span className="font-serif italic font-medium text-navy dark:text-gold">Germany</span> Profile Audit
+                      Start Your <span className="font-serif italic font-medium text-blue-950 dark:text-amber-500">Germany</span> Profile Audit
                     </h3>
                     <p className={`text-xs mt-1 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
                       Get custom counseling, course shortlisting, and direct evaluation from experts already working & studying in Germany.
@@ -193,21 +208,21 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
                         </label>
                         <input
                           type="text"
-                          name="fullName"
-                          value={form.fullName}
+                          name="name"
+                          value={form.name}
                           onChange={handleChange}
                           placeholder="Yuvasri Jagadeesan"
-                          className={`w-full px-4 py-2.5 rounded-sm border text-sm transition-all focus:outline-none focus:ring-1 focus:ring-navy ${
-                            errors.fullName
+                          className={`w-full px-4 py-2.5 rounded-sm border text-sm transition-all focus:outline-none focus:ring-1 focus:ring-blue-900 ${
+                            errors.name
                               ? 'border-red-500 bg-red-500/5'
                               : theme === 'dark'
-                              ? 'border-slate-800 bg-slate-950 focus:border-navy'
-                              : 'border-slate-205 bg-slate-50 focus:border-navy'
+                              ? 'border-slate-800 bg-slate-950 focus:border-blue-900'
+                              : 'border-slate-200 bg-slate-50 focus:border-blue-900'
                           }`}
                         />
-                        {errors.fullName && (
+                        {errors.name && (
                           <p className="text-xs text-red-500 flex items-center gap-1 mt-1 font-medium">
-                            <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {errors.fullName}
+                            <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {errors.name}
                           </p>
                         )}
                       </div>
@@ -223,12 +238,12 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
                           value={form.email}
                           onChange={handleChange}
                           placeholder="you@domain.com"
-                          className={`w-full px-4 py-2.5 rounded-sm border text-sm transition-all focus:outline-none focus:ring-1 focus:ring-navy ${
+                          className={`w-full px-4 py-2.5 rounded-sm border text-sm transition-all focus:outline-none focus:ring-1 focus:ring-blue-900 ${
                             errors.email
                               ? 'border-red-500 bg-red-500/5'
                               : theme === 'dark'
-                              ? 'border-slate-800 bg-slate-950 focus:border-navy'
-                              : 'border-slate-205 bg-slate-50 focus:border-navy'
+                              ? 'border-slate-800 bg-slate-950 focus:border-blue-900'
+                              : 'border-slate-200 bg-slate-50 focus:border-blue-900'
                           }`}
                         />
                         {errors.email && (
@@ -251,12 +266,12 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
                           value={form.phone}
                           onChange={handleChange}
                           placeholder="+91 98765 43210"
-                          className={`w-full px-4 py-2.5 rounded-sm border text-sm transition-all focus:outline-none focus:ring-1 focus:ring-navy ${
+                          className={`w-full px-4 py-2.5 rounded-sm border text-sm transition-all focus:outline-none focus:ring-1 focus:ring-blue-900 ${
                             errors.phone
                               ? 'border-red-500 bg-red-500/5'
                               : theme === 'dark'
-                              ? 'border-slate-800 bg-slate-950 focus:border-navy'
-                              : 'border-slate-205 bg-slate-50 focus:border-navy'
+                              ? 'border-slate-800 bg-slate-950 focus:border-blue-900'
+                              : 'border-slate-200 bg-slate-50 focus:border-blue-900'
                           }`}
                         />
                         {errors.phone && (
@@ -266,107 +281,87 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
                         )}
                       </div>
 
-                      {/* GPA/Percentage */}
+                      {/* Target Course Fields */}
                       <div>
                         <label className="block text-[10px] font-bold uppercase tracking-wider mb-1 text-slate-500 dark:text-slate-400">
-                          GPA / percentage (e.g. 8.5 CGPA or 78%)
+                          Target Course Domain *
                         </label>
-                        <input
-                          type="text"
-                          name="gpa"
-                          value={form.gpa}
+                        <select
+                          name="course"
+                          value={form.course}
                           onChange={handleChange}
-                          placeholder="e.g. 7.8 or 82%"
-                          className={`w-full px-4 py-2.5 rounded-sm border text-sm transition-all focus:outline-none focus:ring-1 focus:ring-navy ${
-                            errors.gpa
+                          className={`w-full px-3 py-2.5 rounded-sm border text-xs transition-all focus:outline-none focus:ring-1 focus:ring-blue-900 ${
+                            errors.course
                               ? 'border-red-500 bg-red-500/5'
                               : theme === 'dark'
-                              ? 'border-slate-800 bg-slate-950 focus:border-navy'
-                              : 'border-slate-205 bg-slate-50 focus:border-navy'
+                              ? 'border-slate-800 bg-slate-950 text-slate-100 focus:border-blue-900'
+                              : 'border-slate-200 bg-slate-50 text-slate-900 focus:border-blue-900'
                           }`}
-                        />
-                        {errors.gpa && (
+                        >
+                          <option value="" className="dark:bg-slate-900">Select Domain Path</option>
+                          <option value="Computer Science / IT" className="dark:bg-slate-900">Computer Science / IT Engineering</option>
+                          <option value="Mechanical / Automotive" className="dark:bg-slate-900">Mechanical / Automotive Track</option>
+                          <option value="Electrical / Mechatronics" className="dark:bg-slate-900">Electrical / Robotics / Mechatronics</option>
+                          <option value="Business / Management" className="dark:bg-slate-900">Business Management / MBA</option>
+                          <option value="Other Sciences" className="dark:bg-slate-900">Other Fields / Advanced Research</option>
+                        </select>
+                        {errors.course && (
                           <p className="text-xs text-red-500 flex items-center gap-1 mt-1 font-medium">
-                            <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {errors.gpa}
+                            <AlertCircle className="w-3.5 h-3.5" /> Domain target required
                           </p>
                         )}
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      {/* Qualification */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {/* Budget Matrix */}
                       <div>
                         <label className="block text-[10px] font-bold uppercase tracking-wider mb-1 text-slate-500 dark:text-slate-400">
-                          Current Degree *
+                          Estimated Blocked Account / Tuition Budget *
                         </label>
                         <select
-                          name="qualification"
-                          value={form.qualification}
+                          name="budget"
+                          value={form.budget}
                           onChange={handleChange}
-                          className={`w-full px-3 py-2.5 rounded-sm border text-xs transition-all focus:outline-none focus:ring-1 focus:ring-navy ${
-                            errors.qualification
+                          className={`w-full px-3 py-2.5 rounded-sm border text-xs transition-all focus:outline-none focus:ring-1 focus:ring-blue-900 ${
+                            errors.budget
                               ? 'border-red-500 bg-red-500/5'
                               : theme === 'dark'
-                              ? 'border-slate-800 bg-slate-950 text-slate-100 focus:border-navy'
-                              : 'border-slate-205 bg-slate-50 text-slate-900 focus:border-navy'
+                              ? 'border-slate-800 bg-slate-950 text-slate-100 focus:border-blue-900'
+                              : 'border-slate-200 bg-slate-50 text-slate-900 focus:border-blue-900'
                           }`}
                         >
-                          <option value="">Select Qualification</option>
-                          <option value="class-12">Class 12 / High School</option>
-                          <option value="bachelor-ongoing">Bachelor's (Ongoing)</option>
-                          <option value="bachelor-completed">Bachelor's (Completed)</option>
-                          <option value="master-ongoing">Master's (Ongoing)</option>
-                          <option value="other">Other / Diploma</option>
+                          <option value="" className="dark:bg-slate-900">Select Budget Frame</option>
+                          <option value="Only Blocked Account (~11.9k EUR)" className="dark:bg-slate-900">Only Blocked Account (~12k EUR)</option>
+                          <option value="Blocked Account + Low Fees (<5k EUR/yr)" className="dark:bg-slate-900">Blocked + Low Fees (&lt; 5k EUR/yr)</option>
+                          <option value="Flexible / Higher Private Fees" className="dark:bg-slate-900">Flexible / Private University Plan</option>
                         </select>
-                        {errors.qualification && (
+                        {errors.budget && (
                           <p className="text-xs text-red-500 flex items-center gap-1 mt-1 font-medium">
-                            <AlertCircle className="w-3.5 h-3.5" /> Input required
+                            <AlertCircle className="w-3.5 h-3.5" /> Budget metrics required
                           </p>
                         )}
                       </div>
 
-                      {/* German Language Level */}
+                      {/* Target Intake Timeline */}
                       <div>
                         <label className="block text-[10px] font-bold uppercase tracking-wider mb-1 text-slate-500 dark:text-slate-400">
-                          German Level
+                          Intake Timeline
                         </label>
                         <select
-                          name="germanLevel"
-                          value={form.germanLevel}
+                          name="timeline"
+                          value={form.timeline}
                           onChange={handleChange}
-                          className={`w-full px-3 py-2.5 rounded-sm border text-xs transition-all focus:outline-none focus:ring-1 focus:ring-navy ${
+                          className={`w-full px-3 py-2.5 rounded-sm border text-xs transition-all focus:outline-none focus:ring-1 focus:ring-blue-900 ${
                             theme === 'dark'
-                              ? 'border-slate-800 bg-slate-950 text-slate-100 focus:border-navy'
-                              : 'border-slate-205 bg-slate-50 text-slate-900 focus:border-navy'
+                              ? 'border-slate-800 bg-slate-950 text-slate-100 focus:border-blue-900'
+                              : 'border-slate-200 bg-slate-50 text-slate-900 focus:border-blue-900'
                           }`}
                         >
-                          <option value="none">Beginner / No Knowledge</option>
-                          <option value="a1">A1 Level</option>
-                          <option value="a2">A2 Level</option>
-                          <option value="b1">B1 Level</option>
-                          <option value="b2">B2 Level or higher</option>
-                        </select>
-                      </div>
-
-                      {/* Preferred Intake */}
-                      <div>
-                        <label className="block text-[10px] font-bold uppercase tracking-wider mb-1 text-slate-500 dark:text-slate-400">
-                          Intake Goal
-                        </label>
-                        <select
-                          name="preferredIntake"
-                          value={form.preferredIntake}
-                          onChange={handleChange}
-                          className={`w-full px-3 py-2.5 rounded-sm border text-xs transition-all focus:outline-none focus:ring-1 focus:ring-navy ${
-                            theme === 'dark'
-                              ? 'border-slate-800 bg-slate-950 text-slate-100 focus:border-navy'
-                              : 'border-slate-205 bg-slate-50 text-slate-900 focus:border-navy'
-                          }`}
-                        >
-                          <option value="winter_2026">Winter 2026 (Oct Start)</option>
-                          <option value="summer_2027">Summer 2027 (Apr Start)</option>
-                          <option value="winter_2027">Winter 2027</option>
-                          <option value="undecided">Flexible / Undecided</option>
+                          <option value="Winter 2026 (Oct Start)" className="dark:bg-slate-900">Winter 2026 (Oct Start)</option>
+                          <option value="Summer 2027 (Apr Start)" className="dark:bg-slate-900">Summer 2027 (Apr Start)</option>
+                          <option value="Winter 2027 Target" className="dark:bg-slate-900">Winter 2027</option>
+                          <option value="Flexible / Undecided" className="dark:bg-slate-900">Flexible / Undecided</option>
                         </select>
                       </div>
                     </div>
@@ -381,14 +376,22 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
                         value={form.message}
                         onChange={handleChange}
                         rows={3}
-                        placeholder="e.g. I have 1.5 years work experience in IT, interested in TU Berlin or RWTH Aachen..."
-                        className={`w-full px-4 py-2.5 rounded-sm border text-sm transition-all focus:outline-none focus:ring-1 focus:ring-navy resize-none ${
+                        placeholder="e.g. I have 1.5 years work experience in IT, completed my Bachelor's with 8.2 CGPA..."
+                        className={`w-full px-4 py-2.5 rounded-sm border text-sm transition-all focus:outline-none focus:ring-1 focus:ring-blue-900 resize-none ${
                           theme === 'dark'
-                            ? 'border-slate-800 bg-slate-950 focus:border-[#1b73ba]'
-                            : 'border-slate-205 bg-slate-50 focus:border-[#1b73ba]'
+                            ? 'border-slate-800 bg-slate-950 focus:border-blue-500'
+                            : 'border-slate-200 bg-slate-50 focus:border-blue-500'
                         }`}
                       />
                     </div>
+
+                    {/* Error Notice */}
+                    {submitError && (
+                      <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-sm text-xs text-red-500 flex items-center gap-2">
+                        <AlertCircle className="w-4 h-4 shrink-0" />
+                        <span>{submitError}</span>
+                      </div>
+                    )}
 
                     {/* Footnote */}
                     <p className={`text-[10px] text-center ${theme === 'dark' ? 'text-slate-500' : 'text-slate-400'}`}>
@@ -400,12 +403,12 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full relative py-3.5 rounded-sm font-bold text-xs tracking-widest uppercase overflow-hidden cursor-pointer transition-all duration-300 transform active:scale-[0.98] bg-navy hover:bg-opacity-95 text-white shadow-premium border-b-2 border-gold disabled:opacity-75 flex items-center justify-center gap-2"
+                        className="w-full relative py-3.5 rounded-sm font-bold text-xs tracking-widest uppercase overflow-hidden cursor-pointer transition-all duration-300 transform active:scale-[0.98] bg-blue-950 hover:bg-opacity-95 text-white disabled:opacity-75 flex items-center justify-center gap-2 border-b-2 border-amber-500"
                       >
                         {isSubmitting ? (
                           <>
                             <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                            Analyzing Profile...
+                            Analyzing Profile & Saving Data...
                           </>
                         ) : (
                           <>
@@ -436,26 +439,26 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
                     Application Received!
                   </h3>
                   <p className={`max-w-md text-sm mb-6 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
-                    Thank you, <span className="font-bold text-slate-100">{form.fullName}</span>. An expert from our Hamburg peer network will review your profile credentials and reach out within 24 hours on <span className="font-semibold text-gold">{form.email}</span>.
+                    Thank you, <span className="font-bold text-slate-900 dark:text-slate-100">{form.name}</span>. An expert from our Hamburg peer network will review your profile credentials and reach out within 24 hours on <span className="font-semibold text-amber-500">{form.email}</span>.
                   </p>
 
                   <div className={`p-4 rounded-sm border w-full max-w-sm mb-8 text-left text-xs space-y-2 ${
-                    theme === 'dark' ? 'bg-slate-950 border-slate-800' : 'bg-slate-550 border-slate-200'
+                    theme === 'dark' ? 'bg-slate-950 border-slate-800' : 'bg-slate-100 border-slate-200'
                   }`}>
-                    <div className="font-semibold text-navy dark:text-gold uppercase tracking-wider mb-2">Next Steps for You:</div>
+                    <div className="font-semibold text-blue-950 dark:text-amber-500 uppercase tracking-wider mb-2">Next Steps for You:</div>
                     <div className="flex gap-2">
-                      <span className="font-bold text-gold">1.</span>
+                      <span className="font-bold text-amber-500">1.</span>
                       <span>Review our **Process & Timeline** to understand APS wait times (typically 6-12 weeks).</span>
                     </div>
                     <div className="flex gap-2">
-                      <span className="font-bold text-gold">2.</span>
+                      <span className="font-bold text-amber-500">2.</span>
                       <span>Keep your Semester Marksheets and language test drafts ready for fast verification.</span>
                     </div>
                   </div>
 
                   <button
                     onClick={handleClose}
-                    className="px-6 py-2.5 rounded-sm font-bold text-xs tracking-widest uppercase border border-slate-200 dark:border-slate-800 bg-slate-105 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 transition-all cursor-pointer"
+                    className="px-6 py-2.5 rounded-sm font-bold text-xs tracking-widest uppercase border border-slate-200 dark:border-slate-800 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 transition-all cursor-pointer"
                   >
                     Close Window
                   </button>

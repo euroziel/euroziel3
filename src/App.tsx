@@ -77,6 +77,7 @@ export default function App() {
             <ThreeDHero 
               onOpenConsultation={() => setIsConsultationOpen(true)} 
               onNavigateToTab={handleTabChange} 
+              theme={theme}
             />
             {/* Core Home Sections (Why EuroZiel, Timeline Slider, Testimonials) */}
             <HomeSection 

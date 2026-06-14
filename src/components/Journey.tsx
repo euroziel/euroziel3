@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { Search, Map, FileText, Plane, Home, TrendingUp } from "lucide-react";
 
 const steps = [
@@ -113,7 +113,9 @@ function StepCard({ step, theme, index, registerRef }: StepCardProps) {
 
     const GhostNumber = (
         <motion.span
-            className={`font-black leading-none select-none text-[100px] laptop:text-[150px] ${theme === 'dark' ? 'text-white/[0.04]' : 'text-slate-900/[0.06]'}`}
+            className={`font-black leading-none select-none text-[100px] laptop:text-[150px] ${
+                theme === 'dark' ? 'text-white/[0.04]' : 'text-slate-900/[0.06]'
+            }`}
         >
             {step.number}
         </motion.span>
@@ -200,11 +202,7 @@ function RoadPath({ theme, containerRef }: RoadPathProps) {
                     d="M250 120 C80 300 420 500 250 750 C70 1000 430 1200 250 1500 C80 1800 420 2200 250 2500"
                     strokeLinecap="round"
                     strokeWidth="4"
-                    className={
-                        theme === "dark"
-                            ? "stroke-slate-800"
-                            : "stroke-slate-200"
-                    }
+                    className={theme === "dark" ? "stroke-slate-800" : "stroke-slate-200"}
                 />
                 {/* Animated drawing path */}
                 <motion.path
@@ -212,11 +210,7 @@ function RoadPath({ theme, containerRef }: RoadPathProps) {
                     d="M250 120 C80 300 420 500 250 750 C70 1000 430 1200 250 1500 C80 1800 420 2200 250 2500"
                     strokeLinecap="round"
                     strokeWidth="5"
-                    className={
-                        theme === "dark"
-                            ? "stroke-indigo-500"
-                            : "stroke-indigo-600"
-                    }
+                    className={theme === "dark" ? "stroke-indigo-500" : "stroke-indigo-600"}
                     style={{
                         strokeDasharray: pathLength,
                         strokeDashoffset,
@@ -244,14 +238,16 @@ export default function Journey({ theme }: JourneyProps) {
         <section className={`relative py-20 overflow-hidden ${dark ? 'bg-slate-950' : 'bg-slate-50/60'}`}>
             <div className="max-w-5xl mx-auto px-4">
                 <div className="text-center mb-24">
-                    <h2 className="font-bold text-4xl text-slate-900 dark:text-slate-100">
+                    <h2 className={`font-bold text-4xl ${dark ? 'text-slate-100' : 'text-slate-900'}`}>
                         Six Steps To{" "}
-                        <span className="font-serif italic text-indigo-600 dark:text-amber-400">Germany</span>
+                        <span className={dark ? 'font-serif italic text-amber-400' : 'font-serif italic text-indigo-600'}>
+                            Germany
+                        </span>
                     </h2>
                 </div>
 
                 <div ref={timelineContainerRef} className="relative">
-                    {/* ✅ RoadPath calculation tracks individual element spacing */}
+                    {/* RoadPath calculation tracks individual element spacing */}
                     <RoadPath
                         theme={theme}
                         containerRef={timelineContainerRef}
