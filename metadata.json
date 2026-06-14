@@ -1,0 +1,6 @@
+{
+  "name": "EuroZiel",
+  "description": "Public University Experts for Study in Germany and Europe - Zero tuition college consulting, admissions preparation, language training, and relocation support.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
