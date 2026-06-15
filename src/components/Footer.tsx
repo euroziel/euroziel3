@@ -48,7 +48,7 @@ export default function Footer({ currentTab, onTabChange, theme, onOpenConsultat
             </p>
             <div className={`flex items-center gap-2 text-xs font-bold ${dark ? 'text-slate-200' : 'text-slate-800'}`}>
               <Mail className="w-4 h-4 text-[#1b73ba]" />
-              <a href="mailto:team@euroziel.com" className="hover:underline">team@euroziel.com</a>
+              <a href="mailto:info@euroziel.com?subject=Inquiry%20about%20services&body=Hello%2C%20I%20want%20to%20know%20about%20your%20services." className="hover:underline">info@euroziel.com</a>
             </div>
           </div>
 

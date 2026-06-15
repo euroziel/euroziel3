@@ -172,6 +172,28 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
             </button>
           </motion.div>
 
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.45 }}
+            className={`text-[10px] mobile-m:text-sm 4k:text-base leading-relaxed font-sans ${
+              isDark ? 'text-slate-300' : 'text-slate-600'
+            }`}
+          >
+            Have an{' '}
+            <a
+              href="https://wa.me/917598969875?text=Hello%2C%20I%20have%20an%20enquiry%20about%20your%20services."
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`underline transition-colors duration-300 ${
+                isDark ? 'text-slate-200 hover:text-white' : 'text-slate-700 hover:text-slate-900'
+              }`}
+            >
+              enquiry
+            </a>
+            ? Reach out to us on WhatsApp or email for a quick response.
+          </motion.p>
+
           {/* Social Icons */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -180,11 +202,11 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
             className="flex flex-wrap items-center gap-2 mobile-m:gap-3 4k:gap-4"
           >
             {[
-              { href: '#', label: 'WhatsApp', Icon: FaWhatsapp, color: '#25D366', glow: 'rgba(37,211,102,0.5)' },
-              { href: 'mailto:yourmail@example.com', label: 'Email', Icon: FaEnvelope, color: '#EA4335', glow: 'rgba(234,67,53,0.5)' },
-              { href: '#', label: 'YouTube', Icon: FaYoutube, color: '#FF0000', glow: 'rgba(255,0,0,0.5)' },
-              { href: '#', label: 'Instagram', Icon: FaInstagram, color: '#E4405F', glow: 'rgba(228,64,95,0.5)' },
-              { href: '#', label: 'LinkedIn', Icon: FaLinkedin, color: '#0A66C2', glow: 'rgba(10,102,194,0.5)' },
+              { href: 'https://wa.me/917598969875?text=Hello%2C%20I%20have%20an%20enquiry%20about%20your%20services.', label: 'WhatsApp', Icon: FaWhatsapp, color: '#25D366', glow: 'rgba(37,211,102,0.5)' },
+              { href: 'mailto:info@euroziel.com?subject=I%20want%20to%20know%20about%20your%20services&body=Hello%2C%20I%20want%20to%20know%20about%20your%20services.', label: 'Email', Icon: FaEnvelope, color: '#EA4335', glow: 'rgba(234,67,53,0.5)' },
+              { href: 'https://www.youtube.com/channel/UC_X0Q9J4444', label: 'YouTube', Icon: FaYoutube, color: '#FF0000', glow: 'rgba(255,0,0,0.5)' },
+              { href: 'https://www.instagram.com/euro_ziel/', label: 'Instagram', Icon: FaInstagram, color: '#E4405F', glow: 'rgba(228,64,95,0.5)' },
+              { href: 'https://www.linkedin.com/company/euroziel/', label: 'LinkedIn', Icon: FaLinkedin, color: '#0A66C2', glow: 'rgba(10,102,194,0.5)' },
             ].map(({ href, label, Icon, color, glow }) => (
               <a
                 key={label}

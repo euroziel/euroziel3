@@ -211,7 +211,7 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
                           name="name"
                           value={form.name}
                           onChange={handleChange}
-                          placeholder="Yuvasri Jagadeesan"
+                          placeholder="Rahul Sharma"
                           className={`w-full px-4 py-2.5 rounded-sm border text-sm transition-all focus:outline-none focus:ring-1 focus:ring-blue-900 ${
                             errors.name
                               ? 'border-red-500 bg-red-500/5'
@@ -237,7 +237,7 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
                           name="email"
                           value={form.email}
                           onChange={handleChange}
-                          placeholder="you@domain.com"
+                          placeholder="rahul.sharma@gmail.com"
                           className={`w-full px-4 py-2.5 rounded-sm border text-sm transition-all focus:outline-none focus:ring-1 focus:ring-blue-900 ${
                             errors.email
                               ? 'border-red-500 bg-red-500/5'
