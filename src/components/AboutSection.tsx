@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { 
-  Heart, Users, BookOpen, GraduationCap, Compass, ShieldAlert, Sparkles, Building2, HelpCircle 
+import {
+  Heart, Users, BookOpen, GraduationCap, Compass, ShieldAlert, Sparkles, Building2, HelpCircle
 } from 'lucide-react';
 
 interface AboutSectionProps {
@@ -11,7 +11,7 @@ interface AboutSectionProps {
 
 export default function AboutSection({ onOpenConsultation, theme }: AboutSectionProps) {
   const dark = theme === 'dark';
-  
+
   const trustPoints = [
     {
       title: "Peer Proof",
@@ -33,18 +33,16 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
 
   return (
     <div className="space-y-24 md:space-y-36 pb-20">
-      
+
       {/* ABOUT INTRO HERO */}
       <section className="max-w-7xl mx-auto px-4 text-left">
-        <div className={`relative rounded-sm overflow-hidden py-16 px-8 md:px-14 border shadow-premium border-b-4 border-b-gold ${
-          dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200/50 bg-white'
-        }`}>
+        <div className={`relative rounded-sm overflow-hidden py-16 px-8 md:px-14 border shadow-premium border-b-4 border-b-gold ${dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200/50 bg-white'
+          }`}>
           <div className="absolute top-0 right-0 w-80 h-80 bg-gold/10 rounded-full blur-3xl pointer-events-none" />
-          
+
           <div className="relative z-10 max-w-4xl space-y-4">
-            <span className={`text-[10px] font-bold text-navy uppercase tracking-[0.2em] border px-3 py-1 rounded-sm inline-block ${
-              dark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
-            }`}>
+            <span className={`text-[10px] font-bold text-navy uppercase tracking-[0.2em] border px-3 py-1 rounded-sm inline-block ${dark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
+              }`}>
               ABOUT EUROZIEL
             </span>
             <h1 className={`text-3xl md:text-5xl font-bold font-sans leading-tight ${dark ? 'text-white' : 'text-slate-900'}`}>
@@ -58,25 +56,24 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
       {/* FOUNDER STORY SECTION */}
       <section className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start text-left">
-          
+
           {/* Founders visual card Left */}
           <div className="lg:col-span-5 space-y-6">
-            <div className={`rounded-sm border p-6 md:p-8 space-y-6 shadow-premium border-b-4 border-b-gold ${
-              dark ? 'border-slate-900 bg-slate-950' : 'border-slate-200/50 bg-white'
-            }`}>
+            <div className={`rounded-sm border p-6 md:p-8 space-y-6 shadow-premium border-b-4 border-b-gold ${dark ? 'border-slate-900 bg-slate-950' : 'border-slate-200/50 bg-white'
+              }`}>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-sm text-[9px] font-bold tracking-widest bg-gold/5 border border-gold/30 text-gold uppercase">
                 Our Story
               </span>
               <h3 className="text-xl font-bold font-sans text-navy">Why EuroZiel exists</h3>
               <div className={`space-y-4 text-xs md:text-sm font-sans leading-relaxed ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
                 <p>
-                  Yuvasri Jagadeesan and Sarathkumar Venkateshwaran did not start EuroZiel because they saw a business opportunity. They started it because they watched too many genuinely capable Indian students either give up on Germany entirely or get burned by generic agencies that had never actually engaged with the German university system at a real level.
+                  Sarathkumar Venkateshwaran and Yuvasri Jagadeesan did not start EuroZiel because they saw a business opportunity. They started it because they watched too many genuinely capable Indian students either give up on Germany entirely or get burned by generic agencies that had never actually engaged with the German university system at a real level.
                 </p>
                 <p>
                   The problem was never the students. The problem was the guidance. Generic agencies giving the same advice to every student regardless of their background. No one with actual ground-level knowledge of what TU Munich expects versus what RWTH Aachen looks for. No one who had sat through an APS documentation process, waited three months for a certificate, or figured out how Anmeldung actually works on arrival.
                 </p>
                 <p>
-                  So they built something different. Not just a consultancy. **A real, structural bridge.**
+                  So they built something different. Not just a consultancy. <b>A real, structural bridge.</b>
                 </p>
               </div>
             </div>
@@ -85,9 +82,8 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
           {/* Core Team Details Right */}
           <div className="lg:col-span-7 space-y-8">
             <div className="space-y-2">
-              <span className={`text-[10px] font-bold text-navy uppercase tracking-[0.2em] border px-3 py-1 rounded-sm inline-block mb-1 ${
-                dark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
-              }`}>
+              <span className={`text-[10px] font-bold text-navy uppercase tracking-[0.2em] border px-3 py-1 rounded-sm inline-block mb-1 ${dark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
+                }`}>
                 Leadership Team
               </span>
               <h2 className={`text-2xl md:text-3.5xl font-bold font-sans ${dark ? 'text-white' : 'text-slate-900'}`}>Meet the Founders Behind EuroZiel</h2>
@@ -96,28 +92,9 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
               </p>
             </div>
 
-            {/* Profile 1: Yuvasri */}
-            <div className={`p-6 rounded-sm border space-y-3 shadow-premium border-l-4 border-l-gold ${
-              dark ? 'border-slate-900 bg-slate-950' : 'border-slate-250'
-            }`}>
-              <div className="flex justify-between items-start flex-wrap gap-2">
-                <div>
-                  <h4 className={`text-lg font-bold font-sans ${dark ? 'text-slate-100' : 'text-slate-800'}`}>Yuvasri Jagadeesan</h4>
-                  <div className={`text-[10px] font-bold uppercase tracking-wider mt-1 ${dark ? 'text-gold' : 'text-navy'}`}>Co-Founder | Academic Strategy & Student Success</div>
-                </div>
-              </div>
-              <p className={`text-xs font-sans leading-relaxed ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
-                Yuvasri leads EuroZiel’s student support and academic process framework with strong experience in overseas education counseling and Germany-focused application guidance. Her expertise spans profile evaluation, university shortlisting, application planning, APS coordination, documentation review, and visa guidance.
-              </p>
-              <p className={`text-xs font-sans leading-relaxed ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
-                Known for her structured and accountable approach, she works closely with students across multiple academic backgrounds, helping them navigate complex admission processes with clarity and confidence. Her focus on transparent communication and personalized mentorship is the heart of EuroZiel’s student-first model.
-              </p>
-            </div>
-
-            {/* Profile 2: Sarathkumar */}
-            <div className={`p-6 rounded-sm border space-y-3 shadow-premium border-l-4 border-l-navy ${
-              dark ? 'border-slate-900 bg-slate-950' : 'border-slate-250'
-            }`}>
+            {/* Profile 1: Sarathkumar */}
+            <div className={`p-6 rounded-sm border space-y-3 shadow-premium border-l-4 border-l-navy ${dark ? 'border-slate-900 bg-slate-950' : 'border-slate-250'
+              }`}>
               <div className="flex justify-between items-start flex-wrap gap-2">
                 <div>
                   <h4 className={`text-lg font-bold font-sans ${dark ? 'text-slate-100' : 'text-slate-800'}`}>Sarathkumar Venkateshwaran</h4>
@@ -132,17 +109,33 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
               </p>
             </div>
 
+            {/* Profile 2: Yuvasri */}
+            <div className={`p-6 rounded-sm border space-y-3 shadow-premium border-l-4 border-l-gold ${dark ? 'border-slate-900 bg-slate-950' : 'border-slate-250'
+              }`}>
+              <div className="flex justify-between items-start flex-wrap gap-2">
+                <div>
+                  <h4 className={`text-lg font-bold font-sans ${dark ? 'text-slate-100' : 'text-slate-800'}`}>Yuvasri Jagadeesan</h4>
+                  <div className={`text-[10px] font-bold uppercase tracking-wider mt-1 ${dark ? 'text-gold' : 'text-navy'}`}>Co-Founder | Academic Strategy & Student Success</div>
+                </div>
+              </div>
+              <p className={`text-xs font-sans leading-relaxed ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
+                Yuvasri leads EuroZiel’s student support and academic process framework with strong experience in overseas education counseling and Germany-focused application guidance. Her expertise spans profile evaluation, university shortlisting, application planning, APS coordination, documentation review, and visa guidance.
+              </p>
+              <p className={`text-xs font-sans leading-relaxed ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
+                Known for her structured and accountable approach, she works closely with students across multiple academic backgrounds, helping them navigate complex admission processes with clarity and confidence. Her focus on transparent communication and personalized mentorship is the heart of EuroZiel’s student-first model.
+              </p>
+            </div>
+
           </div>
 
         </div>
       </section>
 
       {/* WHY STUDENTS TRUST US */}
-      <section className={`py-20 px-4 border-y animate-fade-in ${
-        dark ? 'bg-slate-950/50 border-slate-900' : 'bg-slate-50/50 border-slate-100'
-      }`}>
+      <section className={`py-20 px-4 border-y animate-fade-in ${dark ? 'bg-slate-950/50 border-slate-900' : 'bg-slate-50/50 border-slate-100'
+        }`}>
         <div className="max-w-7xl mx-auto space-y-12">
-          
+
           <div className="text-center max-w-2xl mx-auto space-y-3">
             <span className="text-[10px] font-bold text-gold uppercase tracking-[0.2em] bg-gold/5 border border-gold/30 px-3 py-1 rounded-sm">
               Ethical Pillars
@@ -157,11 +150,10 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto text-left">
             {trustPoints.map((point, index) => (
-              <div 
+              <div
                 key={index}
-                className={`p-6 rounded-sm border space-y-3 shadow-premium border-t-2 border-t-gold ${
-                  dark ? 'border-slate-900 bg-slate-950' : 'border-slate-200/50 bg-white'
-                }`}
+                className={`p-6 rounded-sm border space-y-3 shadow-premium border-t-2 border-t-gold ${dark ? 'border-slate-900 bg-slate-950' : 'border-slate-200/50 bg-white'
+                  }`}
               >
                 <h4 className={`font-bold text-base font-sans ${dark ? 'text-white' : 'text-navy'}`}>{point.title}</h4>
                 <p className={`text-xs leading-relaxed font-sans ${dark ? 'text-slate-400' : 'text-slate-500'}`}>{point.text}</p>

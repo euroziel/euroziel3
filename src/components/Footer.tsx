@@ -38,7 +38,7 @@ export default function Footer({ currentTab, onTabChange, theme, onOpenConsultat
       <div className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8 space-y-12">
         
         {/* Upper Column Block */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
           
           {/* Logo & Corporate Brand Column */}
           <div className="col-span-1 md:col-span-4 space-y-4 text-left">
@@ -78,12 +78,12 @@ export default function Footer({ currentTab, onTabChange, theme, onOpenConsultat
             </h4>
             <div className="space-y-4 text-xs font-sans">
               <div>
-                <div className={`font-extrabold ${dark ? 'text-slate-300' : 'text-slate-700'}`}>Yuvasri Jagadeesan</div>
-                <div className="text-[10px] text-[#e5a800] uppercase mt-0.5">Academic Strategy Lead</div>
+                <div className={`font-extrabold ${dark ? 'text-slate-300' : 'text-slate-700'}`}>Sarathkumar Venkateshwaran</div>
+                <div className="text-[10px] text-[#e5a800] uppercase mt-0.5">European Network & Student Ecosystem</div>
               </div>
               <div>
-                <div className={`font-extrabold ${dark ? 'text-slate-300' : 'text-slate-700'}`}>Sarathkumar Venkateshwaran</div>
-                <div className="text-[10px] text-[#e5a800] uppercase mt-0.5">European Network Architect</div>
+                <div className={`font-extrabold ${dark ? 'text-slate-300' : 'text-slate-700'}`}>Yuvasri Jagadeesan</div>
+                <div className="text-[10px] text-[#e5a800] uppercase mt-0.5">Academic Strategy & Student Success</div>
               </div>
             </div>
           </div>
