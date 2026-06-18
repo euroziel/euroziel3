@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Logo from './Logo';
-import { Menu, X, Sun, Moon, Calendar, Home, BookOpen, Briefcase, GitBranch, Users, HelpCircle } from 'lucide-react';
+import { Menu, X, Sun, Moon, Calendar, Home, BookOpen, Briefcase, GitBranch, Users, HelpCircle, LogIn } from 'lucide-react';
 
 interface NavbarProps {
   currentTab: string;
@@ -124,6 +124,19 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
             >
               <Calendar className="w-3 h-3 laptop:w-3.5 laptop:h-3.5 4k:w-4 4k:h-4 text-gold" /> Book Free Call
             </button>
+
+            <a
+              href="https://auth.euroziel.com"
+              title="Login"
+              aria-label="Login"
+              className={`px-3 py-2 rounded-sm text-[10px] laptop:text-xs font-bold tracking-widest uppercase transition-all flex items-center justify-center ${
+                theme === 'dark'
+                  ? 'bg-transparent text-gold border border-gold hover:bg-gold/10'
+                  : 'bg-gold text-navy border border-gold hover:bg-gold/90'
+              }`}
+            >
+              <LogIn className="w-4 h-4" />
+            </a>
           </div>
 
           {/* Mobile Controls */}
@@ -183,6 +196,18 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
               >
                 <Calendar className="w-3.5 h-3.5 mobile-m:w-4 mobile-m:h-4 text-gold" style={{ strokeWidth: 2.5 }} />
                 Book Consultation Call
+              </button>
+            </div>
+
+            <div className="px-3 mobile-m:px-4 pt-1">
+              <button
+                onClick={() => { setIsOpen(false); window.location.href = 'https://auth.euroziel.com'; }}
+                className={`w-full py-2.5 mobile-m:py-3 rounded-sm font-bold text-[10px] mobile-m:text-xs uppercase tracking-wider text-center border transition-all flex items-center justify-center gap-2 ${
+                  theme === 'dark' ? 'border-slate-700 text-slate-200 bg-transparent hover:bg-slate-800/60' : 'border-slate-200 text-slate-700 bg-transparent hover:bg-slate-50'
+                }`}
+              >
+                <LogIn className="w-4 h-4" />
+                Login / Sign Up
               </button>
             </div>
           </div>
