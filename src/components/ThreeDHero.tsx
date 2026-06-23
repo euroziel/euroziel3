@@ -44,7 +44,9 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative overflow-hidden pt-6 pb-6 mobile-m:pt-8 mobile-m:pb-8 mobile-l:pt-10 mobile-l:pb-10 tablet:pt-5 tablet:pb-5 laptop:pt-12 laptop:pb-12 laptop-l:pt-16 laptop-l:pb-16 4k:pt-24 4k:pb-24 px-4 mobile-m:px-5 mobile-l:px-6 tablet:px-6 laptop:px-8 laptop-l:px-12 4k:px-20 select-none"
+      className={`relative overflow-hidden pt-6 pb-6 mobile-m:pt-8 mobile-m:pb-8 mobile-l:pt-10 mobile-l:pb-10 tablet:pt-5 tablet:pb-5 laptop:pt-12 laptop:pb-12 laptop-l:pt-16 laptop-l:pb-16 4k:pt-24 4k:pb-24 px-4 mobile-m:px-5 mobile-l:px-6 tablet:px-6 laptop:px-8 laptop-l:px-12 4k:px-20 select-none lg:h-screen lg:sticky lg:top-0 lg:flex lg:items-center lg:justify-center z-10 ${
+        isDark ? 'bg-[#060814]' : 'bg-white'
+      }`}
     >
       {/* Decorative Grid Gradients */}
       <div className={`absolute inset-0 pointer-events-none bg-[radial-gradient(#1b73ba_1.5px,transparent_1.5px)] [background-size:24px_24px] laptop:[background-size:28px_28px] 4k:[background-size:36px_36px] ${
@@ -59,10 +61,10 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
         isDark ? 'bg-[#e5a800]/15' : 'bg-[#e5a800]/10'
       }`} />
 
-      <div className="max-w-7xl 4k:max-w-[96rem] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 mobile-l:gap-10 laptop:gap-12 4k:gap-20 items-center relative z-10">
+      <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 mobile-l:gap-10 laptop:gap-12 4k:gap-20 items-center relative z-10">
 
         {/* Left Column */}
-        <div className="lg:col-span-7 space-y-4 mobile-m:space-y-5 laptop:space-y-6 4k:space-y-8 text-left">
+        <div className="lg:col-span-8 space-y-4 mobile-m:space-y-5 laptop:space-y-6 4k:space-y-8 text-left">
 
           {/* Badge */}
           <motion.div
@@ -232,7 +234,7 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
         </div>
 
         {/* Right Column — 3D Card */}
-        <div className="lg:col-span-5 flex justify-center items-center">
+        <div className="lg:col-span-4 flex justify-center items-center">
           <motion.div
             style={{ perspective: 1000 }}
             className="w-full max-w-xs mobile-m:max-w-sm tablet:max-w-sm laptop:max-w-md 4k:max-w-lg relative"
@@ -332,7 +334,7 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
 
               {/* Depth Badge */}
               <div
-                className="absolute -bottom-2 -left-2 bg-navy text-white text-[8px] mobile-m:text-[9px] 4k:text-[11px] font-bold px-2.5 mobile-m:px-3 4k:px-4 py-1 mobile-m:py-1.5 4k:py-2 rounded-sm shadow-premium uppercase tracking-widest border-t border-r border-[#ffffff22]"
+                className="absolute -bottom-2 -left-2 bg-gold text-slate-950 text-[8px] mobile-m:text-[9px] 4k:text-[11px] font-bold px-2.5 mobile-m:px-3 4k:px-4 py-1 mobile-m:py-1.5 4k:py-2 rounded-sm shadow-premium uppercase tracking-widest border border-gold/30"
                 style={{ transform: 'translateZ(70px)' }}
               >
                 Zero Tuition Goal €

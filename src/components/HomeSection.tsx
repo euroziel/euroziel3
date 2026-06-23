@@ -46,11 +46,19 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
     <div className="space-y-16 mobile-m:space-y-20 mobile-l:space-y-24 tablet:space-y-24 laptop:space-y-28 laptop-l:space-y-36 4k:space-y-48 pb-12 mobile-m:pb-16 laptop:pb-20 4k:pb-32">
 
       {/* SECTION: WHY EUROZIEL BRIDGE */}
-      <section className="max-w-7xl 4k:max-w-[96rem] mx-auto px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 laptop-l:px-10 4k:px-16">
+      <section className={`w-full px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 laptop-l:px-12 4k:px-20 lg:h-screen lg:sticky lg:top-0 lg:flex lg:items-center lg:justify-center z-20 shadow-[0_-30px_60px_rgba(0,0,0,0.55)] ${
+        isDark ? 'bg-[#060814]' : 'bg-white'
+      }`}>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mobile-m:gap-10 laptop:gap-12 4k:gap-20 items-center">
 
           {/* Visual Left */}
-          <div className="lg:col-span-5 order-2 lg:order-1 relative">
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, margin: "-100px" }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="lg:col-span-5 order-2 lg:order-1 relative"
+          >
             <div className="absolute inset-0 bg-[#e5a800]/5 rounded-sm -rotate-2 transform scale-102 pointer-events-none border border-gold/10" />
             <div className={`relative rounded-sm p-5 mobile-m:p-6 laptop:p-8 4k:p-12 shadow-premium border-b-4 border-b-gold ${
               isDark ? 'border-slate-800 bg-slate-950' : 'border-slate-200/50 bg-white'
@@ -80,10 +88,16 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Text Right */}
-          <div className="lg:col-span-7 order-1 lg:order-2 space-y-4 mobile-m:space-y-5 laptop:space-y-6 4k:space-y-8 text-left">
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, margin: "-100px" }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="lg:col-span-7 order-1 lg:order-2 space-y-4 mobile-m:space-y-5 laptop:space-y-6 4k:space-y-8 text-left"
+          >
             <span className={`text-[9px] mobile-m:text-[10px] 4k:text-xs font-bold text-navy uppercase tracking-[0.2em] px-2.5 mobile-m:px-3 py-1 rounded-sm border ${
               isDark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
             }`}>
@@ -94,12 +108,12 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
             }`}>
               More Than a Consultancy. <span className="font-serif italic font-medium text-navy">A Real Bridge to Germany.</span>
             </h2>
-            <div className={`text-xs mobile-m:text-sm laptop:text-base 4k:text-lg leading-relaxed space-y-3 mobile-m:space-y-4 ${
+            <div className={`text-xs mobile-m:text-sm laptop:text-base 4k:text-lg leading-relaxed space-y-3 mobile-m:space-y-4 max-w-2xl ${
               isDark ? 'text-slate-300' : 'text-slate-600'
             }`}>
-              <p>EuroZiel was founded with a clear purpose to give students access to guidance that is honest, Germany-focused, and built on real experience instead of generic advice. We saw too many capable students lose opportunities because they were given copied strategies, unrealistic expectations, and little understanding of how the German system actually works.</p>
-              <p>That is why EuroZiel combines structured consultancy with direct insight from students currently studying at German public universities, Indian professionals working across Europe, and domain-specific mentors who understand your academic and career pathway.</p>
-              <p>From university applications and APS to visas, accommodation, and settling in Germany, every step is designed to give students clarity, confidence, and practical direction. At EuroZiel, we do not just help you apply to Germany, we help you prepare for life and long-term success there.</p>
+              <p>EuroZiel was founded to replace generic agent templates with a dedicated, ground-level knowledge pipeline. We believe that capable students shouldn't lose opportunities to copied strategies, unrealistic expectations, or a lack of understanding of ground realities.</p>
+              <p>By combining structured, expert consultancy with direct mentorship from active alumni at top German public universities (like TU Munich and RWTH Aachen) and working professionals in Europe, we provide a transparent and honest pathway.</p>
+              <p>From APS validation and visa filing to finding student accommodation and Werkstudent jobs, we don't just guide your application—we prepare you for long-term career success on the ground in Germany.</p>
             </div>
             <div className="pt-1 mobile-m:pt-2">
               <button
@@ -109,18 +123,24 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
                 Read Yuvasri & Sarathkumar's complete story <ArrowRight className="w-3.5 h-3.5 mobile-m:w-4 mobile-m:h-4 4k:w-5 4k:h-5" />
               </button>
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </section>
 
       {/* SECTION: WHY STUDENTS CHOOSE EUROZIEL */}
-      <section className={`py-12 mobile-m:py-16 laptop:py-20 4k:py-28 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 border-y ${
-        isDark ? 'bg-slate-950/50 border-slate-900' : 'bg-slate-50/50 border-slate-100'
+      <section className={`py-12 mobile-m:py-16 laptop:py-20 4k:py-28 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 border-y lg:h-screen lg:sticky lg:top-0 lg:flex lg:items-center lg:justify-center z-30 shadow-[0_-30px_60px_rgba(0,0,0,0.55)] ${
+        isDark ? 'bg-[#060814] border-slate-900' : 'bg-white border-slate-100'
       }`}>
-        <div className="max-w-7xl 4k:max-w-[96rem] mx-auto space-y-8 mobile-m:space-y-10 laptop:space-y-12 4k:space-y-16">
+        <div className="w-full space-y-8 mobile-m:space-y-10 laptop:space-y-12 4k:space-y-16">
 
-          <div className="text-center max-w-xl mobile-m:max-w-2xl 4k:max-w-3xl mx-auto space-y-2 mobile-m:space-y-3">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+            className="text-center max-w-xl mobile-m:max-w-2xl 4k:max-w-3xl mx-auto space-y-2 mobile-m:space-y-3"
+          >
             <span className="text-[9px] mobile-m:text-[10px] 4k:text-xs font-bold text-gold uppercase tracking-[0.2em] bg-gold/5 border border-gold/30 px-2.5 mobile-m:px-3 py-1 rounded-sm">
               Why EuroZiel?
             </span>
@@ -130,14 +150,17 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
             <p className={`text-xs mobile-m:text-sm 4k:text-base ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
               We focus on a single European pathway so we can offer deeper, more comprehensive expertise than any generalist agent.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 mobile-l:grid-cols-2 lg:grid-cols-3 gap-4 mobile-m:gap-5 laptop:gap-6 4k:gap-8">
             {chooseCards.map((card, idx) => (
               <motion.div
                 key={idx}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, margin: "-100px" }}
+                transition={{ duration: 0.4, delay: idx * 0.1 }}
                 whileHover={{ y: -4 }}
-                transition={{ duration: 0.2 }}
                 className={`p-4 mobile-m:p-5 laptop:p-6 4k:p-8 rounded-sm border text-left space-y-3 mobile-m:space-y-4 shadow-premium hover:border-gold transition-all duration-300 ${
                   isDark ? 'border-slate-900 bg-slate-950/80' : 'border-slate-200/50 bg-white'
                 }`}
@@ -164,12 +187,18 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
       <Journey theme={theme} />
 
       {/* SECTION: TESTIMONIALS */}
-      <section className={`py-12 mobile-m:py-16 laptop:py-20 4k:py-28 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 border-y ${
-        isDark ? 'bg-slate-950/30 border-slate-900' : 'bg-slate-50/50 border-slate-100'
+      <section className={`py-12 mobile-m:py-16 laptop:py-20 4k:py-28 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 border-y lg:h-screen lg:sticky lg:top-0 lg:flex lg:items-center lg:justify-center z-50 shadow-[0_-30px_60px_rgba(0,0,0,0.55)] ${
+        isDark ? 'bg-[#060814] border-slate-900' : 'bg-white border-slate-100'
       }`}>
-        <div className="max-w-7xl 4k:max-w-[96rem] mx-auto space-y-8 mobile-m:space-y-10 laptop:space-y-12 4k:space-y-16">
+        <div className="w-full space-y-8 mobile-m:space-y-10 laptop:space-y-12 4k:space-y-16">
 
-          <div className="text-center max-w-xl mobile-m:max-w-2xl 4k:max-w-3xl mx-auto space-y-2 mobile-m:space-y-3">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+            className="text-center max-w-xl mobile-m:max-w-2xl 4k:max-w-3xl mx-auto space-y-2 mobile-m:space-y-3"
+          >
             <span className={`text-[9px] mobile-m:text-[10px] 4k:text-xs font-bold text-navy uppercase tracking-[0.2em] px-2.5 mobile-m:px-3 py-1 rounded-sm border ${
               isDark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
             }`}>
@@ -181,12 +210,16 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
             <p className={`text-[10px] mobile-m:text-xs laptop:text-sm 4k:text-base ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
               Real experiences from students who trusted EuroZiel for their Germany journey.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 mobile-l:grid-cols-2 gap-4 mobile-m:gap-5 laptop:gap-6 4k:gap-8 max-w-2xl mobile-l:max-w-none laptop:max-w-4xl 4k:max-w-6xl mx-auto">
             {testimonials.map((test, index) => (
-              <div
+              <motion.div
                 key={index}
+                initial={{ opacity: 0, y: 35 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, margin: "-100px" }}
+                transition={{ duration: 0.5, delay: index * 0.12 }}
                 className={`p-4 mobile-m:p-5 laptop:p-6 4k:p-8 rounded-sm border text-left shadow-premium flex flex-col justify-between transition-all duration-300 hover:border-gold/30 ${
                   isDark ? 'border-slate-800 bg-slate-950' : 'border-slate-200/50 bg-white'
                 }`}
@@ -214,50 +247,59 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
                     ))}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
 
         </div>
       </section>
 
-      {/* SECTION: BOTTOM CTA */}
-      <section className="max-w-2xl mobile-m:max-w-3xl laptop:max-w-4xl 4k:max-w-5xl mx-auto px-4 mobile-m:px-5 laptop:px-8 4k:px-16 text-center">
-        <div className={`relative rounded-sm overflow-hidden py-8 mobile-m:py-10 laptop:py-12 4k:py-20 px-5 mobile-m:px-8 laptop:px-12 4k:px-20 border border-[#e5a800]/20 text-white shadow-premium border-b-4 border-b-gold ${
-          isDark ? 'bg-slate-950' : 'bg-slate-900'
-        }`}>
+      <div className={`w-full relative z-60 py-16 shadow-[0_-30px_60px_rgba(0,0,0,0.55)] ${
+        isDark ? 'bg-[#060814]' : 'bg-white'
+      }`}>
+        <motion.section
+          initial={{ opacity: 0, scale: 0.96, y: 40 }}
+          whileInView={{ opacity: 1, scale: 1, y: 0 }}
+          viewport={{ once: false, margin: "-100px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="max-w-2xl mobile-m:max-w-3xl laptop:max-w-4xl 4k:max-w-5xl mx-auto px-4 mobile-m:px-5 laptop:px-8 4k:px-16 text-center"
+        >
+          <div className={`relative rounded-sm overflow-hidden py-8 mobile-m:py-10 laptop:py-12 4k:py-20 px-5 mobile-m:px-8 laptop:px-12 4k:px-20 border border-[#e5a800]/20 text-white shadow-premium border-b-4 border-b-gold ${
+            isDark ? 'bg-slate-950' : 'bg-slate-900'
+          }`}>
 
-          <div className="absolute top-0 right-0 w-24 mobile-m:w-32 4k:w-48 h-24 mobile-m:h-32 4k:h-48 bg-gold/10 rounded-full blur-2xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-24 mobile-m:w-32 4k:w-48 h-24 mobile-m:h-32 4k:h-48 bg-navy/10 rounded-full blur-2xl pointer-events-none" />
+            <div className="absolute top-0 right-0 w-24 mobile-m:w-32 4k:w-48 h-24 mobile-m:h-32 4k:h-48 bg-gold/10 rounded-full blur-2xl pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-24 mobile-m:w-32 4k:w-48 h-24 mobile-m:h-32 4k:h-48 bg-navy/10 rounded-full blur-2xl pointer-events-none" />
 
-          <div className="relative z-10 space-y-4 mobile-m:space-y-5 laptop:space-y-6 4k:space-y-8 max-w-xl mobile-m:max-w-2xl mx-auto">
-            <span className="text-[9px] mobile-m:text-[10px] 4k:text-xs font-bold tracking-[0.15em] text-gold uppercase bg-gold/5 border border-gold/30 px-2.5 mobile-m:px-3 py-1 rounded-sm">
-              Germany Is A Big Move
-            </span>
-            <h3 className="text-xl mobile-m:text-2xl laptop:text-3xl 4k:text-4xl font-bold font-sans leading-tight">
-              You Should Not Have To Figure It Out Alone.
-            </h3>
-            <p className="text-slate-400 text-[10px] mobile-m:text-sm 4k:text-base font-sans">
-              Get honest, real connections, and a step-by-step pathway built specifically for your academic profile. Stop searching randomly and talk to experts on the ground.
-            </p>
+            <div className="relative z-10 space-y-4 mobile-m:space-y-5 laptop:space-y-6 4k:space-y-8 max-w-xl mobile-m:max-w-2xl mx-auto">
+              <span className="text-[9px] mobile-m:text-[10px] 4k:text-xs font-bold tracking-[0.15em] text-gold uppercase bg-gold/5 border border-gold/30 px-2.5 mobile-m:px-3 py-1 rounded-sm">
+                Germany Is A Big Move
+              </span>
+              <h3 className="text-xl mobile-m:text-2xl laptop:text-3xl 4k:text-4xl font-bold font-sans leading-tight">
+                You Should Not Have To Figure It Out Alone.
+              </h3>
+              <p className="text-slate-400 text-[10px] mobile-m:text-sm 4k:text-base font-sans">
+                Get honest, real connections, and a step-by-step pathway built specifically for your academic profile. Stop searching randomly and talk to experts on the ground.
+              </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mobile-m:gap-4 pt-2 mobile-m:pt-4">
-              <button
-                onClick={onOpenConsultation}
-                className="w-full sm:w-auto px-6 mobile-m:px-8 4k:px-10 py-3 mobile-m:py-3.5 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm uppercase tracking-widest bg-navy text-white hover:bg-opacity-90 border-b-2 border-gold transition-all cursor-pointer shadow-premium"
-              >
-                Start Your Germany Journey
-              </button>
-              <button
-                onClick={() => onNavigateToTab('study')}
-                className="w-full sm:w-auto px-5 mobile-m:px-6 4k:px-8 py-3 mobile-m:py-3.5 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm uppercase tracking-widest border border-slate-700 hover:border-slate-500 hover:bg-slate-800 text-slate-300 transition-all cursor-pointer"
-              >
-                Verify €0 Tuition Fields &rarr;
-              </button>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mobile-m:gap-4 pt-2 mobile-m:pt-4">
+                <button
+                  onClick={onOpenConsultation}
+                  className="w-full sm:w-auto px-6 mobile-m:px-8 4k:px-10 py-3 mobile-m:py-3.5 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm uppercase tracking-widest bg-navy text-white hover:bg-opacity-90 border-b-2 border-gold transition-all cursor-pointer shadow-premium"
+                >
+                  Start Your Germany Journey
+                </button>
+                <button
+                  onClick={() => onNavigateToTab('study')}
+                  className="w-full sm:w-auto px-5 mobile-m:px-6 4k:px-8 py-3 mobile-m:py-3.5 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm uppercase tracking-widest border border-slate-700 hover:border-slate-500 hover:bg-slate-800 text-slate-300 transition-all cursor-pointer"
+                >
+                  Verify €0 Tuition Fields &rarr;
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </motion.section>
+      </div>
 
     </div>
   );

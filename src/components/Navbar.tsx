@@ -35,7 +35,7 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
         ? 'bg-slate-950/85 border-slate-800 text-slate-100'
         : 'bg-white/85 border-slate-150 text-slate-900'
     }`}>
-      <div className="max-w-7xl 4k:max-w-[96rem] mx-auto px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 laptop-l:px-10 4k:px-16">
+      <div className="w-full px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 laptop-l:px-12 4k:px-20">
         <div className="flex items-center justify-between h-16 mobile-m:h-[4.5rem] laptop:h-20 laptop-l:h-22 4k:h-28">
 
           {/* Logo */}

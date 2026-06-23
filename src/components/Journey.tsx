@@ -235,8 +235,10 @@ export default function Journey({ theme }: JourneyProps) {
     };
 
     return (
-        <section className={`relative py-20 overflow-hidden ${dark ? 'bg-slate-950' : 'bg-slate-50/60'}`}>
-            <div className="max-w-5xl mx-auto px-4">
+        <section className={`relative py-20 overflow-hidden z-40 shadow-[0_-30px_60px_rgba(0,0,0,0.55)] ${
+            dark ? 'bg-[#060814]' : 'bg-white'
+        }`}>
+            <div className="w-full px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 laptop-l:px-12 4k:px-20">
                 <div className="text-center mb-24">
                     <h2 className={`font-bold text-4xl ${dark ? 'text-slate-100' : 'text-slate-900'}`}>
                         Six Steps To{" "}

@@ -27,15 +27,15 @@ export default function Footer({ currentTab, onTabChange, theme, onOpenConsultat
   };
 
   return (
-    <footer className={`border-t select-none transition-colors duration-300 relative ${
+    <footer className={`border-t select-none transition-colors duration-300 relative z-60 shadow-[0_-30px_60px_rgba(0,0,0,0.55)] ${
       dark 
-        ? 'bg-slate-950 border-slate-900 text-slate-400' 
-        : 'bg-slate-50 border-slate-200 text-slate-500'
+        ? 'bg-[#060814] border-slate-900 text-slate-400' 
+        : 'bg-white border-slate-200 text-slate-500'
     }`}>
       {/* Decorative colored glow on foot */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-[#e5a800] to-transparent" />
 
-      <div className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8 space-y-12">
+      <div className="w-full px-4 py-16 mobile-m:px-5 mobile-l:px-6 laptop:px-8 laptop-l:px-12 4k:px-20 space-y-12">
         
         {/* Upper Column Block */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
