@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import {
   CheckCircle, Briefcase, TrendingUp, Calendar, AlertTriangle, ShieldCheck, Flame, Cpu, Building2, Lightbulb, Stethoscope, Palette, Compass, Zap
 } from 'lucide-react';
+import ScrollReveal from './ScrollReveal';
 
 interface StudySectionProps {
   onOpenConsultation: () => void;
@@ -77,6 +78,7 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
 
       {/* HERO SECTION FOR STUDY IN GERMANY */}
       <section className="max-w-7xl mx-auto px-4 text-left">
+       <ScrollReveal variant="clipReveal">
         <div className="rounded-sm bg-slate-900 text-white p-8 md:p-14 relative overflow-hidden border border-slate-800 border-b-4 border-b-gold shadow-premium">
           <div className="absolute top-0 right-0 w-80 h-80 bg-navy/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -93,6 +95,7 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
             </p>
           </div>
         </div>
+       </ScrollReveal>
       </section>
 
       {/* SEMESTER CALENDAR & URGENCY */}
@@ -115,6 +118,7 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
             {/* Winter Semester Card */}
+           <ScrollReveal variant="slideLeft" delay={0.1}>
             <div className={`rounded-sm border p-6 md:p-8 space-y-4 shadow-premium border-b-4 border-b-rose-500 ${dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200 bg-white'
               }`}>
               <div className="flex items-center justify-between">
@@ -138,8 +142,10 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
                 </div>
               </div>
             </div>
+           </ScrollReveal>
 
             {/* Summer Semester Card */}
+           <ScrollReveal variant="slideRight" delay={0.2}>
             <div className={`rounded-sm border p-6 md:p-8 space-y-4 shadow-premium border-b-4 border-b-emerald-500 ${dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200 bg-white'
               }`}>
               <div className="flex items-center justify-between">
@@ -160,9 +166,11 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
                 </div>
               </div>
             </div>
+           </ScrollReveal>
 
           </div>
 
+          <ScrollReveal variant="fadeUp" delay={0.3}>
           <div className="p-5 rounded-sm border border-gold/20 bg-gold/5 text-xs text-slate-600 dark:text-slate-400 space-y-2">
             <span className="font-bold text-gold uppercase tracking-wider font-mono flex items-center gap-1.5">
               <AlertTriangle className="w-4 h-4 text-gold" style={{ strokeWidth: 2.5 }} /> Ground Advice from Founders:
@@ -171,6 +179,7 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
               "Start the process the moment you make the decision. Not when your final semester results are out. Not after holidays. The APS certification process alone can require **up to 3 months**. Language preparation to B2 takes **10 to 14 months minimum**. Successful students started earlier than felt necessary."
             </p>
           </div>
+         </ScrollReveal>
 
         </div>
       </section>
@@ -182,7 +191,7 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
           <h3 className={`text-2xl md:text-3xl font-extrabold font-sans ${dark ? 'text-white' : 'text-slate-900'}`}>Facts That Matter</h3>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <ScrollReveal variant="elastic" stagger={0.1} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, idx) => (
             <div
               key={idx}
@@ -199,7 +208,7 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
               </div>
             </div>
           ))}
-        </div>
+        </ScrollReveal>
       </section>
 
       {/* FIELDS AND SPECIALISATIONS */}
@@ -219,7 +228,7 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <ScrollReveal variant="rotateIn" stagger={0.08} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {specialisations.map((spec, idx) => (
               <div
                 key={idx}
@@ -236,7 +245,7 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
                 </div>
               </div>
             ))}
-          </div>
+          </ScrollReveal>
 
         </div>
       </section>
@@ -245,7 +254,7 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
       <section className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
-          <div className="lg:col-span-6 space-y-6 text-left">
+          <ScrollReveal variant="swoopIn" className="lg:col-span-6 space-y-6 text-left">
             <span className="text-xs font-extrabold text-[#1b73ba] uppercase tracking-widest">Post-Graduation Pathways</span>
             <h3 className={`text-2xl md:text-3.5xl font-black font-sans leading-tight ${dark ? 'text-white' : 'text-slate-900'}`}>
               What Happens After You Graduate?
@@ -275,9 +284,9 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
                 <strong>Deliberate immigration shifts:</strong> The German government passed the **Skilled Immigration Act** in 2023 specifically to expand opportunities for non-EU graduates. The door has been widened deliberately.
               </div>
             </div>
-          </div>
+          </ScrollReveal>
 
-          <div className="lg:col-span-6">
+          <ScrollReveal variant="blurIn" delay={0.15} className="lg:col-span-6">
             <div className={`p-6 md:p-8 rounded-sm border shadow-premium ${dark ? 'border-slate-800 bg-slate-950/80' : 'border-slate-200/50 bg-white'
               }`}>
               <div className="text-left mb-6">
@@ -298,13 +307,14 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
                 ))}
               </div>
             </div>
-          </div>
+          </ScrollReveal>
 
         </div>
       </section>
 
       {/* BOTTOM CTA: INR 100 BOOKING */}
       <section className="max-w-4xl mx-auto px-4 text-center">
+       <ScrollReveal variant="flipUp">
         <div className={`p-8 md:p-12 rounded-sm border shadow-premium space-y-6 border-b-4 border-b-gold ${dark ? 'border-slate-800 bg-slate-950 text-white' : 'border-slate-200 bg-white text-slate-800'
           }`}>
           <span className={`text-[10px] font-bold text-navy uppercase tracking-[0.2em] border px-3 py-1 rounded-sm ${dark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
@@ -326,6 +336,7 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
             </button>
           </div>
         </div>
+       </ScrollReveal>
       </section>
 
     </div>

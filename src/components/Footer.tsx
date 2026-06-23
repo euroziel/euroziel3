@@ -1,6 +1,7 @@
 import React from 'react';
 import Logo from './Logo';
 import { Mail, ShieldCheck, Heart, ArrowRight, Compass, ShieldAlert } from 'lucide-react';
+import ScrollReveal from './ScrollReveal';
 
 interface FooterProps {
   currentTab: string;
@@ -38,6 +39,7 @@ export default function Footer({ currentTab, onTabChange, theme, onOpenConsultat
       <div className="w-full px-4 py-16 mobile-m:px-5 mobile-l:px-6 laptop:px-8 laptop-l:px-12 4k:px-20 space-y-12">
         
         {/* Upper Column Block */}
+       <ScrollReveal variant="fadeUp" delay={0.1}>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
           
           {/* Logo & Corporate Brand Column */}
@@ -105,6 +107,7 @@ export default function Footer({ currentTab, onTabChange, theme, onOpenConsultat
           </div>
 
         </div>
+       </ScrollReveal>
 
         {/* Legal Disclaimers section */}
         <div className={`border-t pt-8 text-[11px] font-sans leading-relaxed max-w-4xl mr-auto text-left space-y-3 ${

@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import {
   Heart, Users, BookOpen, GraduationCap, Compass, ShieldAlert, Sparkles, Building2, HelpCircle
 } from 'lucide-react';
+import ScrollReveal from './ScrollReveal';
 
 interface AboutSectionProps {
   onOpenConsultation: () => void;
@@ -36,6 +37,7 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
 
       {/* ABOUT INTRO HERO */}
       <section className="max-w-7xl mx-auto px-4 text-left">
+       <ScrollReveal variant="blurIn">
         <div className={`relative rounded-sm overflow-hidden py-16 px-8 md:px-14 border shadow-premium border-b-4 border-b-gold ${dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200/50 bg-white'
           }`}>
           <div className="absolute top-0 right-0 w-80 h-80 bg-gold/10 rounded-full blur-3xl pointer-events-none" />
@@ -51,6 +53,7 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
             </h1>
           </div>
         </div>
+       </ScrollReveal>
       </section>
 
       {/* FOUNDER STORY SECTION */}
@@ -58,7 +61,7 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start text-left">
 
           {/* Founders visual card Left */}
-          <div className="lg:col-span-5 space-y-6">
+          <ScrollReveal variant="slideLeft" className="lg:col-span-5 space-y-6">
             <div className={`rounded-sm border p-6 md:p-8 space-y-6 shadow-premium border-b-4 border-b-gold ${dark ? 'border-slate-900 bg-slate-950' : 'border-slate-200/50 bg-white'
               }`}>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-sm text-[9px] font-bold tracking-widest bg-gold/5 border border-gold/30 text-gold uppercase">
@@ -77,10 +80,10 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
                 </p>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Core Team Details Right */}
-          <div className="lg:col-span-7 space-y-8">
+          <ScrollReveal variant="swoopIn" delay={0.15} className="lg:col-span-7 space-y-8">
             <div className="space-y-2">
               <span className={`text-[10px] font-bold text-navy uppercase tracking-[0.2em] border px-3 py-1 rounded-sm inline-block mb-1 ${dark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
                 }`}>
@@ -126,7 +129,7 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
               </p>
             </div>
 
-          </div>
+          </ScrollReveal>
 
         </div>
       </section>
@@ -148,7 +151,7 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto text-left">
+          <ScrollReveal variant="elastic" stagger={0.1} className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto text-left">
             {trustPoints.map((point, index) => (
               <div
                 key={index}
@@ -159,7 +162,7 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
                 <p className={`text-xs leading-relaxed font-sans ${dark ? 'text-slate-400' : 'text-slate-500'}`}>{point.text}</p>
               </div>
             ))}
-          </div>
+          </ScrollReveal>
 
         </div>
       </section>
