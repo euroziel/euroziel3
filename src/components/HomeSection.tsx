@@ -167,16 +167,16 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
 
 
   return (
-    <div className="space-y-0 pb-12 mobile-m:pb-16 laptop:pb-20 4k:pb-32">
-      {/* SECTION 1: OUR MISSION */}
+    <div className="pb-12 mobile-m:pb-16 laptop:pb-20 4k:pb-32">
+      {/* SECTION 1: OUR MISSION — stacks over the sticky hero */}
       <section
         ref={section1Ref}
-        className={`relative z-20 w-full py-16 mobile-m:py-20 laptop:py-24 border-b transition-colors duration-300 shadow-[0_-30px_60px_rgba(0,0,0,0.55)] ${
+        className={`relative z-30 w-full py-16 mobile-m:py-20 laptop:py-24 border-b transition-colors duration-300 shadow-[0_-40px_80px_rgba(0,0,0,0.7)] lg:-mt-[100vh] mt-0 ${
           isDark ? 'border-slate-900 bg-[#060814]' : 'border-slate-100 bg-white'
         }`}
       >
        <ScrollReveal variant="fadeUp" delay={0.1}>
-        <div className="w-full px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 laptop-l:px-12 4k:px-20 max-w-6xl 4k:max-w-7xl mx-auto">
+        <div className="w-full px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 laptop-l:px-12 4k:px-20 max-w-7xl mx-auto">
           <div className="grid grid-cols-1 laptop:grid-cols-12 gap-8 laptop:gap-12 laptop-l:gap-16 items-center">
             
             {/* Left Column: The "Not a General Agency" card */}
@@ -294,10 +294,10 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
       </section>
 
       {/* SECTION 2: WHY STUDENTS CHOOSE EUROZIEL */}
-      <section className={`py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 border-b w-full transition-colors duration-300 ${
+      <section className={`relative z-30 py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 border-b w-full transition-colors duration-300 ${
         isDark ? 'border-slate-900 bg-[#060814]' : 'border-slate-100 bg-white'
       }`}>
-        <div className="w-full space-y-8 mobile-m:space-y-10 laptop:space-y-12 4k:space-y-16 max-w-6xl 4k:max-w-7xl mx-auto">
+        <div className="w-full space-y-8 mobile-m:space-y-10 laptop:space-y-12 4k:space-y-16 max-w-7xl mx-auto">
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -334,10 +334,10 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
       <Journey theme={theme} />
 
       {/* SECTION 4: TESTIMONIALS */}
-      <section className={`py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 border-b w-full transition-colors duration-300 ${
+      <section className={`relative z-30 py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 border-b w-full transition-colors duration-300 ${
         isDark ? 'border-slate-900 bg-[#060814]' : 'border-slate-100 bg-white'
       }`}>
-        <div className="w-full space-y-8 mobile-m:space-y-10 laptop:space-y-12 4k:space-y-16 max-w-6xl 4k:max-w-7xl mx-auto">
+        <div className="w-full space-y-8 mobile-m:space-y-10 laptop:space-y-12 4k:space-y-16 max-w-7xl mx-auto">
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -359,7 +359,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
             </p>
           </motion.div>
 
-          <ScrollReveal variant="blurIn" stagger={0.12} className="grid grid-cols-1 mobile-l:grid-cols-2 gap-4 mobile-m:gap-5 laptop:gap-6 4k:gap-8 max-w-2xl mobile-l:max-w-none laptop:max-w-4xl 4k:max-w-6xl mx-auto">
+          <ScrollReveal variant="blurIn" stagger={0.12} className="grid grid-cols-1 mobile-l:grid-cols-2 gap-4 mobile-m:gap-5 laptop:gap-6 4k:gap-8 mx-auto">
             {testimonials.map((test, index) => (
               <TestimonialCard
                 key={index}
@@ -376,7 +376,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
       <div className={`w-full relative z-30 py-16 ${
         isDark ? 'bg-[#060814]' : 'bg-white'
       }`}>
-        <section className="max-w-2xl mobile-m:max-w-3xl laptop:max-w-4xl 4k:max-w-5xl mx-auto px-4 mobile-m:px-5 laptop:px-8 4k:px-16 text-center">
+        <section className="max-w-7xl mx-auto px-4 mobile-m:px-5 laptop:px-8 4k:px-16 text-center">
          <ScrollReveal variant="flipUp">
           <div className={`relative rounded-sm overflow-hidden py-8 mobile-m:py-10 laptop:py-12 4k:py-20 px-5 mobile-m:px-8 laptop:px-12 4k:px-20 border border-[#e5a800]/20 text-white shadow-premium border-b-4 border-b-gold ${
             isDark ? 'bg-slate-950' : 'bg-slate-900'

@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, useSpring, useMotionValueEvent } from "motion/react";
+import { motion, AnimatePresence, useScroll, useTransform, useSpring, useMotionValueEvent } from "motion/react";
 import { Search, Map, FileText, Plane, Home, TrendingUp } from "lucide-react";
 
 /* ─── Step Data ─────────────────────────────────────────── */
@@ -56,23 +56,221 @@ const accentColors: Record<string, { bg: string; glow: string; iconBg: string; i
   teal:    { bg: "#14b8a6", glow: "rgba(20,184,166,0.5)", iconBg: "rgba(20,184,166,0.15)", iconText: "#2dd4bf" },
 };
 
-/* ─── Walking Student SVG ───────────────────────────────── */
-const StudentChar = () => (
+/* ─── Step-Specific Student SVG Characters ─────────────── */
+
+/** Step 01 — Discovery: Boy with magnifying glass, curious pose */
+const StudentDiscovery = () => (
   <svg width="56" height="56" viewBox="0 0 48 48" fill="none" className="w-14 h-14 drop-shadow-lg">
-    <line x1="20" y1="34" x2="17" y2="44" stroke="#475569" strokeWidth="4" strokeLinecap="round" />
-    <line x1="28" y1="34" x2="31" y2="44" stroke="#475569" strokeWidth="4" strokeLinecap="round" />
+    {/* Legs — standing still, curious */}
+    <line x1="20" y1="34" x2="18" y2="44" stroke="#475569" strokeWidth="4" strokeLinecap="round" />
+    <line x1="28" y1="34" x2="30" y2="44" stroke="#475569" strokeWidth="4" strokeLinecap="round" />
+    {/* Body (shirt) */}
     <rect x="17" y="20" width="14" height="14" rx="3" fill="#1b73ba" />
+    {/* Backpack strap */}
     <rect x="14" y="22" width="3" height="8" rx="1.5" fill="#ef4444" />
-    <line x1="17" y1="23" x2="12" y2="29" stroke="#475569" strokeWidth="3.5" strokeLinecap="round" />
-    <line x1="31" y1="23" x2="36" y2="17" stroke="#475569" strokeWidth="3.5" strokeLinecap="round" />
+    {/* Left arm — holding magnifying glass */}
+    <line x1="17" y1="23" x2="10" y2="18" stroke="#475569" strokeWidth="3.5" strokeLinecap="round" />
+    {/* Magnifying glass */}
+    <circle cx="8" cy="15" r="4" stroke="#f59e0b" strokeWidth="1.8" fill="none" />
+    <line x1="11" y1="18" x2="13" y2="20" stroke="#f59e0b" strokeWidth="1.8" strokeLinecap="round" />
+    {/* Right arm — by side */}
+    <line x1="31" y1="23" x2="35" y2="30" stroke="#475569" strokeWidth="3.5" strokeLinecap="round" />
+    {/* Head */}
     <circle cx="24" cy="13" r="6" fill="#fcd34d" stroke="#f59e0b" strokeWidth="1" />
-    <circle cx="22" cy="12.5" r="0.8" fill="#1e293b" />
-    <circle cx="26" cy="12.5" r="0.8" fill="#1e293b" />
-    <path d="M22 15C22.5 16 25.5 16 26 15" stroke="#1e293b" strokeWidth="0.8" strokeLinecap="round" />
+    {/* Eyes — looking curious (wider) */}
+    <circle cx="22" cy="12" r="1" fill="#1e293b" />
+    <circle cx="26" cy="12" r="1" fill="#1e293b" />
+    {/* Mouth — open, curious */}
+    <ellipse cx="24" cy="15.5" rx="1.2" ry="0.8" fill="#1e293b" />
+    {/* Graduation cap */}
     <path d="M14 9L24 5L34 9L24 13L14 9Z" fill="#1e293b" />
     <path d="M24 13V17M30 11.5L31 14.5" stroke="#e5a800" strokeWidth="1.2" strokeLinecap="round" />
   </svg>
 );
+
+/** Step 02 — Strategy: Boy thinking, hand on chin */
+const StudentStrategy = () => (
+  <svg width="56" height="56" viewBox="0 0 48 48" fill="none" className="w-14 h-14 drop-shadow-lg">
+    {/* Legs */}
+    <line x1="20" y1="34" x2="19" y2="44" stroke="#475569" strokeWidth="4" strokeLinecap="round" />
+    <line x1="28" y1="34" x2="29" y2="44" stroke="#475569" strokeWidth="4" strokeLinecap="round" />
+    {/* Body */}
+    <rect x="17" y="20" width="14" height="14" rx="3" fill="#1b73ba" />
+    <rect x="14" y="22" width="3" height="8" rx="1.5" fill="#ef4444" />
+    {/* Left arm — resting */}
+    <line x1="17" y1="23" x2="12" y2="29" stroke="#475569" strokeWidth="3.5" strokeLinecap="round" />
+    {/* Right arm — hand on chin (thinking) */}
+    <line x1="31" y1="23" x2="28" y2="16" stroke="#475569" strokeWidth="3.5" strokeLinecap="round" />
+    {/* Head */}
+    <circle cx="24" cy="13" r="6" fill="#fcd34d" stroke="#f59e0b" strokeWidth="1" />
+    {/* Eyes — looking up, thinking */}
+    <circle cx="22" cy="11.5" r="0.8" fill="#1e293b" />
+    <circle cx="26" cy="11.5" r="0.8" fill="#1e293b" />
+    {/* Eyebrows — raised */}
+    <line x1="20.5" y1="10" x2="23" y2="9.8" stroke="#1e293b" strokeWidth="0.7" strokeLinecap="round" />
+    <line x1="25" y1="9.8" x2="27.5" y2="10" stroke="#1e293b" strokeWidth="0.7" strokeLinecap="round" />
+    {/* Mouth — thinking, slight pout */}
+    <path d="M23 15.5C23.3 15 24.7 15 25 15.5" stroke="#1e293b" strokeWidth="0.8" strokeLinecap="round" />
+    {/* Thought bubble */}
+    <circle cx="36" cy="6" r="3.5" fill="white" stroke="#cbd5e1" strokeWidth="0.8" />
+    <circle cx="33" cy="10" r="1.5" fill="white" stroke="#cbd5e1" strokeWidth="0.6" />
+    <circle cx="31" cy="12" r="0.8" fill="white" stroke="#cbd5e1" strokeWidth="0.4" />
+    {/* Lightbulb inside thought bubble */}
+    <path d="M35 4.5C35 3.5 36 3 36 3C37.5 3 37.5 5 36.5 5.5L36 7" stroke="#f59e0b" strokeWidth="0.8" strokeLinecap="round" />
+    <line x1="35.5" y1="7.5" x2="36.5" y2="7.5" stroke="#f59e0b" strokeWidth="0.6" strokeLinecap="round" />
+    {/* Graduation cap */}
+    <path d="M14 9L24 5L34 9L24 13L14 9Z" fill="#1e293b" />
+    <path d="M24 13V17M30 11.5L31 14.5" stroke="#e5a800" strokeWidth="1.2" strokeLinecap="round" />
+  </svg>
+);
+
+/** Step 03 — Applications: Boy holding documents */
+const StudentApplications = () => (
+  <svg width="56" height="56" viewBox="0 0 48 48" fill="none" className="w-14 h-14 drop-shadow-lg">
+    {/* Legs */}
+    <line x1="20" y1="34" x2="18" y2="44" stroke="#475569" strokeWidth="4" strokeLinecap="round" />
+    <line x1="28" y1="34" x2="30" y2="44" stroke="#475569" strokeWidth="4" strokeLinecap="round" />
+    {/* Body */}
+    <rect x="17" y="20" width="14" height="14" rx="3" fill="#1b73ba" />
+    <rect x="14" y="22" width="3" height="8" rx="1.5" fill="#ef4444" />
+    {/* Left arm — holding documents up */}
+    <line x1="17" y1="24" x2="10" y2="20" stroke="#475569" strokeWidth="3.5" strokeLinecap="round" />
+    {/* Documents / papers stack */}
+    <rect x="5" y="13" width="9" height="7" rx="1" fill="white" stroke="#94a3b8" strokeWidth="0.8" />
+    <line x1="7" y1="15.5" x2="12" y2="15.5" stroke="#94a3b8" strokeWidth="0.5" />
+    <line x1="7" y1="17" x2="11" y2="17" stroke="#94a3b8" strokeWidth="0.5" />
+    <line x1="7" y1="18.5" x2="10" y2="18.5" stroke="#94a3b8" strokeWidth="0.5" />
+    {/* Checkmark on doc */}
+    <path d="M8 14.5L9 15.5L11 13.5" stroke="#10b981" strokeWidth="0.8" strokeLinecap="round" strokeLinejoin="round" />
+    {/* Right arm — by side */}
+    <line x1="31" y1="23" x2="35" y2="29" stroke="#475569" strokeWidth="3.5" strokeLinecap="round" />
+    {/* Head */}
+    <circle cx="24" cy="13" r="6" fill="#fcd34d" stroke="#f59e0b" strokeWidth="1" />
+    <circle cx="22" cy="12.5" r="0.8" fill="#1e293b" />
+    <circle cx="26" cy="12.5" r="0.8" fill="#1e293b" />
+    {/* Smile — confident */}
+    <path d="M22 15C22.5 16 25.5 16 26 15" stroke="#1e293b" strokeWidth="0.8" strokeLinecap="round" />
+    {/* Graduation cap */}
+    <path d="M14 9L24 5L34 9L24 13L14 9Z" fill="#1e293b" />
+    <path d="M24 13V17M30 11.5L31 14.5" stroke="#e5a800" strokeWidth="1.2" strokeLinecap="round" />
+  </svg>
+);
+
+/** Step 04 — Visa: Boy holding passport */
+const StudentVisa = () => (
+  <svg width="56" height="56" viewBox="0 0 48 48" fill="none" className="w-14 h-14 drop-shadow-lg">
+    {/* Legs */}
+    <line x1="20" y1="34" x2="19" y2="44" stroke="#475569" strokeWidth="4" strokeLinecap="round" />
+    <line x1="28" y1="34" x2="29" y2="44" stroke="#475569" strokeWidth="4" strokeLinecap="round" />
+    {/* Body */}
+    <rect x="17" y="20" width="14" height="14" rx="3" fill="#1b73ba" />
+    <rect x="14" y="22" width="3" height="8" rx="1.5" fill="#ef4444" />
+    {/* Left arm — down */}
+    <line x1="17" y1="23" x2="12" y2="29" stroke="#475569" strokeWidth="3.5" strokeLinecap="round" />
+    {/* Right arm — holding up passport proudly */}
+    <line x1="31" y1="22" x2="37" y2="14" stroke="#475569" strokeWidth="3.5" strokeLinecap="round" />
+    {/* Passport */}
+    <rect x="34" y="8" width="7" height="10" rx="1" fill="#1e3a5f" stroke="#2563eb" strokeWidth="0.8" />
+    {/* Passport details — German flag stripe */}
+    <rect x="35.5" y="10" width="4" height="1" rx="0.2" fill="#000000" />
+    <rect x="35.5" y="11" width="4" height="1" rx="0.2" fill="#dc2626" />
+    <rect x="35.5" y="12" width="4" height="1" rx="0.2" fill="#eab308" />
+    {/* Passport text lines */}
+    <line x1="35.5" y1="14.5" x2="39.5" y2="14.5" stroke="#94a3b8" strokeWidth="0.4" />
+    <line x1="36" y1="15.5" x2="39" y2="15.5" stroke="#94a3b8" strokeWidth="0.4" />
+    {/* Head */}
+    <circle cx="24" cy="13" r="6" fill="#fcd34d" stroke="#f59e0b" strokeWidth="1" />
+    <circle cx="22" cy="12.5" r="0.8" fill="#1e293b" />
+    <circle cx="26" cy="12.5" r="0.8" fill="#1e293b" />
+    {/* Big proud smile */}
+    <path d="M21.5 15C22.5 16.5 25.5 16.5 26.5 15" stroke="#1e293b" strokeWidth="0.8" strokeLinecap="round" />
+    {/* Graduation cap */}
+    <path d="M14 9L24 5L34 9L24 13L14 9Z" fill="#1e293b" />
+    <path d="M24 13V17M30 11.5L31 14.5" stroke="#e5a800" strokeWidth="1.2" strokeLinecap="round" />
+  </svg>
+);
+
+/** Step 05 — Settlement: Boy with suitcase */
+const StudentSettlement = () => (
+  <svg width="56" height="56" viewBox="0 0 48 48" fill="none" className="w-14 h-14 drop-shadow-lg">
+    {/* Legs — walking */}
+    <line x1="20" y1="34" x2="17" y2="44" stroke="#475569" strokeWidth="4" strokeLinecap="round" />
+    <line x1="28" y1="34" x2="31" y2="44" stroke="#475569" strokeWidth="4" strokeLinecap="round" />
+    {/* Body */}
+    <rect x="17" y="20" width="14" height="14" rx="3" fill="#1b73ba" />
+    <rect x="14" y="22" width="3" height="8" rx="1.5" fill="#ef4444" />
+    {/* Left arm — waving hello */}
+    <line x1="17" y1="23" x2="10" y2="16" stroke="#475569" strokeWidth="3.5" strokeLinecap="round" />
+    {/* Wave lines */}
+    <line x1="7" y1="13" x2="9" y2="14" stroke="#f59e0b" strokeWidth="0.8" strokeLinecap="round" />
+    <line x1="6" y1="15" x2="8" y2="15.5" stroke="#f59e0b" strokeWidth="0.8" strokeLinecap="round" />
+    {/* Right arm — pulling suitcase */}
+    <line x1="31" y1="25" x2="38" y2="30" stroke="#475569" strokeWidth="3.5" strokeLinecap="round" />
+    {/* Suitcase */}
+    <rect x="35" y="30" width="8" height="10" rx="1.5" fill="#8b5cf6" stroke="#7c3aed" strokeWidth="0.8" />
+    <line x1="37" y1="30" x2="37" y2="28" stroke="#7c3aed" strokeWidth="1" strokeLinecap="round" />
+    <line x1="41" y1="30" x2="41" y2="28" stroke="#7c3aed" strokeWidth="1" strokeLinecap="round" />
+    {/* Suitcase handle */}
+    <line x1="37" y1="28" x2="41" y2="28" stroke="#7c3aed" strokeWidth="1" strokeLinecap="round" />
+    {/* Suitcase wheels */}
+    <circle cx="37" cy="41" r="1" fill="#475569" />
+    <circle cx="41" cy="41" r="1" fill="#475569" />
+    {/* Suitcase strap */}
+    <line x1="36" y1="34" x2="42" y2="34" stroke="#7c3aed" strokeWidth="0.6" />
+    {/* Head */}
+    <circle cx="24" cy="13" r="6" fill="#fcd34d" stroke="#f59e0b" strokeWidth="1" />
+    <circle cx="22" cy="12.5" r="0.8" fill="#1e293b" />
+    <circle cx="26" cy="12.5" r="0.8" fill="#1e293b" />
+    <path d="M22 15C22.5 16 25.5 16 26 15" stroke="#1e293b" strokeWidth="0.8" strokeLinecap="round" />
+    {/* Graduation cap */}
+    <path d="M14 9L24 5L34 9L24 13L14 9Z" fill="#1e293b" />
+    <path d="M24 13V17M30 11.5L31 14.5" stroke="#e5a800" strokeWidth="1.2" strokeLinecap="round" />
+  </svg>
+);
+
+/** Step 06 — Career: Boy celebrating, arms up */
+const StudentCareer = () => (
+  <svg width="56" height="56" viewBox="0 0 48 48" fill="none" className="w-14 h-14 drop-shadow-lg">
+    {/* Legs — power stance */}
+    <line x1="20" y1="34" x2="16" y2="44" stroke="#475569" strokeWidth="4" strokeLinecap="round" />
+    <line x1="28" y1="34" x2="32" y2="44" stroke="#475569" strokeWidth="4" strokeLinecap="round" />
+    {/* Body */}
+    <rect x="17" y="20" width="14" height="14" rx="3" fill="#1b73ba" />
+    <rect x="14" y="22" width="3" height="8" rx="1.5" fill="#ef4444" />
+    {/* Left arm — raised celebrating */}
+    <line x1="17" y1="23" x2="9" y2="14" stroke="#475569" strokeWidth="3.5" strokeLinecap="round" />
+    {/* Right arm — raised celebrating */}
+    <line x1="31" y1="23" x2="39" y2="14" stroke="#475569" strokeWidth="3.5" strokeLinecap="round" />
+    {/* Sparkles / celebration marks */}
+    <line x1="6" y1="11" x2="8" y2="13" stroke="#f59e0b" strokeWidth="1" strokeLinecap="round" />
+    <line x1="7" y1="14" x2="5" y2="13" stroke="#f59e0b" strokeWidth="1" strokeLinecap="round" />
+    <line x1="42" y1="11" x2="40" y2="13" stroke="#f59e0b" strokeWidth="1" strokeLinecap="round" />
+    <line x1="41" y1="14" x2="43" y2="13" stroke="#f59e0b" strokeWidth="1" strokeLinecap="round" />
+    {/* Star sparks */}
+    <circle cx="8" cy="8" r="1" fill="#f59e0b" />
+    <circle cx="40" cy="8" r="1" fill="#f59e0b" />
+    <circle cx="24" cy="2" r="1.2" fill="#10b981" />
+    {/* Head */}
+    <circle cx="24" cy="13" r="6" fill="#fcd34d" stroke="#f59e0b" strokeWidth="1" />
+    <circle cx="22" cy="12" r="0.8" fill="#1e293b" />
+    <circle cx="26" cy="12" r="0.8" fill="#1e293b" />
+    {/* Big happy grin */}
+    <path d="M21 15C22 17 26 17 27 15" stroke="#1e293b" strokeWidth="0.9" strokeLinecap="round" />
+    {/* Graduation cap */}
+    <path d="M14 9L24 5L34 9L24 13L14 9Z" fill="#1e293b" />
+    <path d="M24 13V17M30 11.5L31 14.5" stroke="#e5a800" strokeWidth="1.2" strokeLinecap="round" />
+  </svg>
+);
+
+/** Maps step index to the matching character pose */
+const stepCharacters = [
+  StudentDiscovery,    // Step 01
+  StudentStrategy,     // Step 02
+  StudentApplications, // Step 03
+  StudentVisa,         // Step 04
+  StudentSettlement,   // Step 05
+  StudentCareer,       // Step 06
+];
 
 /* ─── Single Step Card ──────────────────────────────────── */
 function StepCard({ step, isActive, dark }: { step: typeof steps[0]; isActive: boolean; dark: boolean }) {
@@ -279,7 +477,7 @@ export default function Journey({ theme }: JourneyProps) {
                 })}
               </div>
 
-              {/* Walking student character */}
+              {/* Walking student character — changes per step */}
               <motion.div
                 style={{ left: charLeft }}
                 className="absolute -top-5 pointer-events-none z-20"
@@ -288,7 +486,20 @@ export default function Journey({ theme }: JourneyProps) {
                   animate={{ y: [0, -6, 0] }}
                   transition={{ duration: 0.6, repeat: Infinity, ease: "easeInOut" }}
                 >
-                  <StudentChar />
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeIndex}
+                      initial={{ opacity: 0, scale: 0.7 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.7 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
+                    >
+                      {(() => {
+                        const CharComponent = stepCharacters[activeIndex] || stepCharacters[0];
+                        return <CharComponent />;
+                      })()}
+                    </motion.div>
+                  </AnimatePresence>
                 </motion.div>
               </motion.div>
             </div>
