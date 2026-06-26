@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   Compass, Laptop, FileCode, Landmark, ShieldCheck, HelpCircle, ArrowRight, ClipboardCheck, Scroll, FileCheck, Award, GraduationCap, ChevronDown, CheckCircle 
 } from 'lucide-react';
+import ScrollReveal from './ScrollReveal';
 
 interface ServicesSectionProps {
   onOpenConsultation: () => void;
@@ -132,6 +133,7 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
       
       {/* SERVICES HERO */}
       <section className="max-w-7xl mx-auto px-4 text-left">
+       <ScrollReveal variant="glideUp">
         <div className={`relative rounded-sm overflow-hidden py-16 px-8 md:px-14 border border-b-4 border-b-gold shadow-premium ${
           dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200/50 bg-white'
         }`}>
@@ -152,11 +154,12 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
             </p>
           </div>
         </div>
+       </ScrollReveal>
       </section>
 
       {/* THREE PATHWAYS */}
       <section className="max-w-7xl mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <ScrollReveal variant="scaleUp" stagger={0.12} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {mainServices.map((service, sIdx) => (
             <div 
               key={sIdx}
@@ -182,11 +185,12 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
               </div>
             </div>
           ))}
-        </div>
+        </ScrollReveal>
       </section>
 
       {/* 15 STEPS DIARY DIRECTORY */}
       <section className="max-w-5xl mx-auto px-4 space-y-12">
+       <ScrollReveal variant="fadeUp">
         <div className="text-center max-w-2xl mx-auto space-y-3">
           <span className="text-[10px] font-bold text-gold uppercase tracking-[0.2em] bg-gold/5 border border-gold/30 px-3 py-1 rounded-sm">
             Active Support Directory
@@ -255,10 +259,12 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
             );
           })}
         </div>
+       </ScrollReveal>
       </section>
 
       {/* bottom CTA */}
       <section className="max-w-4xl mx-auto px-4 text-center">
+       <ScrollReveal variant="clipReveal">
         <div className={`p-8 md:p-12 rounded-sm border shadow-premium space-y-6 border-b-4 border-b-gold ${
           dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200 bg-white'
         }`}>
@@ -282,6 +288,7 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
             </button>
           </div>
         </div>
+       </ScrollReveal>
       </section>
 
     </div>

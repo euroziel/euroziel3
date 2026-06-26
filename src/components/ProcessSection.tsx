@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   Check, Info, HelpCircle, ArrowRight, Zap, Target, BookOpen, FileSpreadsheet, Backpack, CalendarDays, ClipboardCheck, Lightbulb, AlertCircle
 } from 'lucide-react';
+import ScrollReveal from './ScrollReveal';
 
 interface ProcessSectionProps {
   onOpenConsultation: () => void;
@@ -162,6 +163,7 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
       
       {/* PROCESS TEAM HERO HERO */}
       <section className="max-w-7xl mx-auto px-4 text-left">
+       <ScrollReveal variant="clipReveal">
         <div className="rounded-sm bg-slate-950 text-white p-8 md:p-14 relative overflow-hidden border border-[#e5a800]/20 border-b-4 border-b-gold shadow-premium">
           <div className="absolute top-0 right-0 w-80 h-80 bg-gold/10 rounded-full blur-3xl pointer-events-none" />
           
@@ -185,10 +187,12 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
             </div>
           </div>
         </div>
+       </ScrollReveal>
       </section>
 
       {/* YOUR GERMANY TIMELINE ROADMAP */}
       <section className="max-w-4xl mx-auto px-4 text-left space-y-12">
+       <ScrollReveal variant="fadeDown">
         <div className="space-y-2 text-center max-w-xl mx-auto">
           <span className={`text-[10px] font-bold text-navy uppercase tracking-[0.2em] border px-3 py-1 rounded-sm inline-block ${
             dark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
@@ -200,6 +204,7 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
             A structured roadmap designed to guide you from your first consultation to your arrival in Germany with complete clarity and support.
           </p>
         </div>
+       </ScrollReveal>
 
         {/* Timeline Path */}
         <div className={`relative border-l-2 ml-4 md:ml-6 space-y-12 py-4 ${dark ? 'border-slate-800' : 'border-slate-200'}`}>
@@ -252,6 +257,7 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
 
       {/* INTERACTIVE PRE-DEPARTURE CHECKLIST */}
       <section className="max-w-4xl mx-auto px-4">
+       <ScrollReveal variant="scaleUp">
         <div className={`p-6 md:p-10 rounded-sm border border-[#e5a800]/20 shadow-premium border-b-4 border-b-gold space-y-8 text-left relative ${
           dark ? 'bg-slate-950/80' : 'bg-white'
         }`}>
@@ -306,6 +312,7 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
             ))}
           </div>
         </div>
+       </ScrollReveal>
       </section>
 
       {/* GERMANY JOURNEY INSIGHTS FLASH CARDS */}
@@ -326,7 +333,7 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <ScrollReveal variant="blurIn" stagger={0.08} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {insights.map((ins, idx) => {
               const isSelected = activeInsight === idx;
               return (
@@ -382,13 +389,14 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
                 </div>
               );
             })}
-          </div>
+          </ScrollReveal>
 
         </div>
       </section>
 
       {/* PROCESS FINAL BOTTOM CTA */}
       <section className="max-w-4xl mx-auto px-4 text-center">
+       <ScrollReveal variant="flipUp">
         <div className={`relative rounded-sm overflow-hidden py-12 px-6 border border-gold/20 text-white shadow-premium border-b-4 border-b-gold ${
           dark ? 'bg-slate-950' : 'bg-slate-900'
         }`}>
@@ -407,6 +415,7 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
             </div>
           </div>
         </div>
+       </ScrollReveal>
       </section>
 
     </div>

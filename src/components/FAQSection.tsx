@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   Search, ChevronDown, BookOpen, GraduationCap, Coins, FileCheck, HelpCircle, Globe, ChevronRight 
 } from 'lucide-react';
+import ScrollReveal from './ScrollReveal';
 
 interface FAQSectionProps {
   onOpenConsultation: () => void;
@@ -150,6 +151,7 @@ export default function FAQSection({ onOpenConsultation, theme }: FAQSectionProp
     <div className="space-y-12 md:space-y-16 pb-20 max-w-5xl mx-auto px-4 text-left">
       
       {/* Category banner */}
+      <ScrollReveal variant="fadeDown">
       <div className="text-center max-w-2xl mx-auto space-y-3">
         <span className="text-[10px] font-bold text-navy uppercase tracking-[0.2em] bg-gold/5 border border-gold/30 px-3 py-1 rounded-sm inline-block">
           FAQ DIRECTORY
@@ -161,6 +163,7 @@ export default function FAQSection({ onOpenConsultation, theme }: FAQSectionProp
           Get authentic, ground-level answers regarding German admissions, blocked accounts, visas, and language targets.
         </p>
       </div>
+      </ScrollReveal>
 
       {/* SEARCH AND FILTERS ROW */}
       <div className="space-y-6">
@@ -207,6 +210,7 @@ export default function FAQSection({ onOpenConsultation, theme }: FAQSectionProp
       </div>
 
       {/* FAQ ITEMS ACCORDION WRAPPER */}
+      <ScrollReveal variant="glideUp">
       <div className={`border rounded-sm overflow-hidden shadow-premium ${
         dark ? 'border-slate-900 bg-slate-950' : 'border-slate-200/50 bg-white'
       }`}>
@@ -271,8 +275,10 @@ export default function FAQSection({ onOpenConsultation, theme }: FAQSectionProp
           </div>
         )}
       </div>
+      </ScrollReveal>
 
       {/* STILL HAVE QUESTIONS BOTTOM BLOCK */}
+      <ScrollReveal variant="elastic">
       <div className={`p-8 rounded-sm border text-center shadow-premium border-b-4 border-b-gold space-y-4 ${
         dark ? 'border-gold/20 bg-slate-950' : 'border-gold/20 bg-white'
       }`}>
@@ -289,6 +295,7 @@ export default function FAQSection({ onOpenConsultation, theme }: FAQSectionProp
           </button>
         </div>
       </div>
+      </ScrollReveal>
 
     </div>
   );
