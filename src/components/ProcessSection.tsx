@@ -191,7 +191,7 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
       </section>
 
       {/* YOUR GERMANY TIMELINE ROADMAP */}
-      <section className="max-w-4xl mx-auto px-4 text-left space-y-12">
+      <section className="max-w-7xl mx-auto px-4 text-left space-y-12">
        <ScrollReveal variant="fadeDown">
         <div className="space-y-2 text-center max-w-xl mx-auto">
           <span className={`text-[10px] font-bold text-navy uppercase tracking-[0.2em] border px-3 py-1 rounded-sm inline-block ${
@@ -256,7 +256,7 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
       </section>
 
       {/* INTERACTIVE PRE-DEPARTURE CHECKLIST */}
-      <section className="max-w-4xl mx-auto px-4">
+      <section className="max-w-7xl mx-auto px-4">
        <ScrollReveal variant="scaleUp">
         <div className={`p-6 md:p-10 rounded-sm border border-[#e5a800]/20 shadow-premium border-b-4 border-b-gold space-y-8 text-left relative ${
           dark ? 'bg-slate-950/80' : 'bg-white'
@@ -395,7 +395,7 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
       </section>
 
       {/* PROCESS FINAL BOTTOM CTA */}
-      <section className="max-w-4xl mx-auto px-4 text-center">
+      <section className="max-w-7xl mx-auto px-4 text-center">
        <ScrollReveal variant="flipUp">
         <div className={`relative rounded-sm overflow-hidden py-12 px-6 border border-gold/20 text-white shadow-premium border-b-4 border-b-gold ${
           dark ? 'bg-slate-950' : 'bg-slate-900'
