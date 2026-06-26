@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
-  Compass, Laptop, FileCode, Landmark, ShieldCheck, HelpCircle, ArrowRight, ClipboardCheck, Scroll, FileCheck, Award, GraduationCap, ChevronDown, CheckCircle 
+  Compass, Laptop, FileCode, Landmark, ShieldCheck, HelpCircle, ArrowRight, ClipboardCheck, Scroll, FileCheck, Award, GraduationCap, ChevronDown, CheckCircle, Lock
 } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 
@@ -140,11 +140,6 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
           <div className="absolute top-1/2 -translate-y-1/2 -right-32 w-80 h-80 bg-navy/10 rounded-full blur-3xl pointer-events-none" />
           
           <div className="relative z-10 max-w-3xl space-y-4">
-            <span className={`text-[10px] font-bold text-navy uppercase tracking-[0.2em] border px-3 py-1 rounded-sm ${
-              dark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
-            }`}>
-              OUR GUIDANCE SERVICES
-            </span>
             <h1 className={`text-3xl md:text-5xl font-bold font-sans leading-tight ${dark ? 'text-white' : 'text-slate-900'}`}>
               Complete support, <br />
               <span className="font-serif italic font-medium text-gold">zero gaps.</span>
@@ -189,12 +184,9 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
       </section>
 
       {/* 15 STEPS DIARY DIRECTORY */}
-      <section className="max-w-5xl mx-auto px-4 space-y-12">
+      <section className="max-w-7xl mx-auto px-4 space-y-12">
        <ScrollReveal variant="fadeUp">
         <div className="text-center max-w-2xl mx-auto space-y-3">
-          <span className="text-[10px] font-bold text-gold uppercase tracking-[0.2em] bg-gold/5 border border-gold/30 px-3 py-1 rounded-sm">
-            Active Support Directory
-          </span>
           <h2 className="text-2xl md:text-3.5xl font-bold tracking-tight font-sans">
             Our 15-Step End-To-End Support
           </h2>
@@ -209,6 +201,7 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
         }`}>
           {blockSteps.map((step, idx) => {
             const isExpanded = expandedStep === idx;
+            const isLocked = idx >= 3;
             return (
               <div 
                 key={idx}
@@ -217,9 +210,18 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
                 } ${isExpanded ? (dark ? 'bg-slate-900/20' : 'bg-slate-50/50') : ''}`}
               >
                 <button
-                  onClick={() => setExpandedStep(isExpanded ? null : idx)}
+                  onClick={() => {
+                    if (isLocked) {
+                      onOpenConsultation();
+                    } else {
+                      setExpandedStep(isExpanded ? null : idx);
+                    }
+                  }}
+                  title={isLocked ? "Complete profile verification to unlock this step" : undefined}
                   className={`w-full px-6 py-4 flex items-center justify-between text-left transition-colors pointer-cursor ${
-                    dark ? 'hover:bg-slate-900/40' : 'hover:bg-slate-100/40'
+                    isLocked 
+                      ? (dark ? 'opacity-75 hover:bg-slate-900/20' : 'opacity-80 hover:bg-slate-50/60') 
+                      : (dark ? 'hover:bg-slate-900/40' : 'hover:bg-slate-100/40')
                   }`}
                 >
                   <div className="flex items-center gap-4">
@@ -227,15 +229,26 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
                       {step.id}
                     </span>
                     <div>
-                      <h4 className={`font-extrabold text-sm ${dark ? 'text-slate-200' : 'text-slate-800'}`}>
-                        {step.title}
-                      </h4>
+                      <div className="flex items-center gap-2">
+                        <h4 className={`font-extrabold text-sm ${dark ? 'text-slate-200' : 'text-slate-800'}`}>
+                          {step.title}
+                        </h4>
+                        {isLocked && (
+                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-sm text-[8px] font-bold bg-amber-500/10 text-amber-500 border border-amber-500/20 uppercase tracking-widest leading-none">
+                            <Lock className="w-2.5 h-2.5" /> Locked
+                          </span>
+                        )}
+                      </div>
                       <p className="text-[10px] text-slate-400 mt-0.5">
                         {step.short}
                       </p>
                     </div>
                   </div>
-                  <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                  {isLocked ? (
+                    <Lock className="w-3.5 h-3.5 text-slate-500" />
+                  ) : (
+                    <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                  )}
                 </button>
 
                 <AnimatePresence>
@@ -263,16 +276,11 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
       </section>
 
       {/* bottom CTA */}
-      <section className="max-w-4xl mx-auto px-4 text-center">
+      <section className="max-w-7xl mx-auto px-4 text-center">
        <ScrollReveal variant="clipReveal">
         <div className={`p-8 md:p-12 rounded-sm border shadow-premium space-y-6 border-b-4 border-b-gold ${
           dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200 bg-white'
         }`}>
-          <span className={`text-[10px] font-bold text-navy uppercase tracking-[0.2em] border px-3 py-1 rounded-sm ${
-            dark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
-          }`}>
-            Need Expert Input?
-          </span>
           <h3 className={`text-2xl font-bold font-sans leading-tight ${dark ? 'text-white' : 'text-slate-900'}`}>
             Stop Guessing and Connect with Students Already Living Your Dream
           </h3>

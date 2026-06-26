@@ -83,9 +83,6 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
           <div className="absolute top-0 right-0 w-80 h-80 bg-navy/10 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative z-10 max-w-4xl space-y-6">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-[10px] font-bold tracking-widest bg-navy/35 text-slate-100 border border-navy/50 uppercase">
-              STUDY IN GERMANY & EUROPE
-            </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.15] font-sans">
               The degree costs nothing.<br />
               <span className="font-serif italic font-medium text-gold">The opportunity costs everything if you miss it.</span>
@@ -101,12 +98,9 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
       {/* SEMESTER CALENDAR & URGENCY */}
       <section className={`py-20 px-4 border-y ${dark ? 'bg-slate-950/50 border-slate-900' : 'bg-slate-50/50 border-slate-100'
         }`}>
-        <div className="max-w-4xl mx-auto text-left space-y-12">
+        <div className="max-w-7xl mx-auto text-left space-y-12">
 
           <div className="space-y-2">
-            <span className="text-[10px] font-bold text-rose-500 bg-rose-500/10 border border-rose-500/20 px-3 py-1 rounded-sm uppercase tracking-wide inline-block">
-              Important Urgency
-            </span>
             <h2 className={`text-2xl md:text-3.5xl font-bold tracking-tight font-sans ${dark ? 'text-white' : 'text-slate-900'}`}>
               Semester Academic Calendars
             </h2>
@@ -187,7 +181,6 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
       {/* STATS ROW WITH IMMEDIATE VISUAL IMPACT */}
       <section className="max-w-7xl mx-auto px-4 space-y-12">
         <div className="text-left max-w-2xl">
-          <span className="text-xs font-bold text-[#1b73ba] uppercase tracking-widest block mb-2">By the Numbers</span>
           <h3 className={`text-2xl md:text-3xl font-extrabold font-sans ${dark ? 'text-white' : 'text-slate-900'}`}>Facts That Matter</h3>
         </div>
 
@@ -217,9 +210,6 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
         <div className="max-w-7xl mx-auto space-y-12">
 
           <div className="text-center max-w-2xl mx-auto space-y-3">
-            <span className="text-[10px] font-bold text-gold uppercase tracking-[0.2em] bg-gold/5 border border-gold/30 px-3 py-1 rounded-sm">
-              Academics
-            </span>
             <h2 className={`text-3xl font-bold tracking-tight font-sans ${dark ? 'text-white' : 'text-slate-900'}`}>
               Fields & Specialisations
             </h2>
@@ -255,7 +245,6 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
           <ScrollReveal variant="swoopIn" className="lg:col-span-6 space-y-6 text-left">
-            <span className="text-xs font-extrabold text-[#1b73ba] uppercase tracking-widest">Post-Graduation Pathways</span>
             <h3 className={`text-2xl md:text-3.5xl font-black font-sans leading-tight ${dark ? 'text-white' : 'text-slate-900'}`}>
               What Happens After You Graduate?
             </h3>
@@ -312,17 +301,13 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
         </div>
       </section>
 
-      {/* BOTTOM CTA: INR 100 BOOKING */}
-      <section className="max-w-4xl mx-auto px-4 text-center">
+      {/* BOTTOM CTA: ₹9 PROFILE VERIFICATION */}
+      <section className="max-w-7xl mx-auto px-4 text-center">
        <ScrollReveal variant="flipUp">
-        <div className={`p-8 md:p-12 rounded-sm border shadow-premium space-y-6 border-b-4 border-b-gold ${dark ? 'border-slate-800 bg-slate-950 text-white' : 'border-slate-200 bg-white text-slate-800'
+        <div className={`p-8 md:p-12 rounded-sm border shadow-premium space-y-6 border-b-4 border-b-gold ${dark ? 'border-slate-800 bg-slate-950 text-white' : 'border-slate-200 bg-white text-slate-850'
           }`}>
-          <span className={`text-[10px] font-bold text-navy uppercase tracking-[0.2em] border px-3 py-1 rounded-sm ${dark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
-            }`}>
-            Stop Googling. Start Getting Answers.
-          </span>
           <h3 className={`text-2xl md:text-3xl font-bold font-sans max-w-xl mx-auto ${dark ? 'text-white' : 'text-slate-900'}`}>
-            ₹100 gets you 20 minutes with a credentialed Germany expert
+            Pay just <span className="line-through opacity-65 font-normal text-slate-450">₹1,500</span> ₹9 to verify your profile with a credentialed Germany expert
           </h3>
           <p className="text-slate-400 text-xs md:text-sm max-w-lg mx-auto font-sans leading-relaxed">
             Get an honest review pointing you in the right direction. We will tell you exactly where your profile stands. No sugarcoating, no false promises.

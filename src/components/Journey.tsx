@@ -433,7 +433,7 @@ export default function Journey({ theme }: JourneyProps) {
 
           {/* ─── Progress Bar + Walking Character ─── */}
           <div className="px-6 mobile-m:px-8 laptop:px-16 4k:px-24 py-4 flex-shrink-0">
-            <div className="max-w-3xl laptop:max-w-5xl 4k:max-w-7xl mx-auto relative">
+            <div className="w-full relative">
               {/* Track background */}
               <div className={`h-1.5 rounded-full ${dark ? "bg-slate-800" : "bg-slate-200"}`}>
                 <motion.div

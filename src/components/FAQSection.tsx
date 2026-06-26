@@ -148,14 +148,11 @@ export default function FAQSection({ onOpenConsultation, theme }: FAQSectionProp
   });
 
   return (
-    <div className="space-y-12 md:space-y-16 pb-20 max-w-5xl mx-auto px-4 text-left">
+    <div className="space-y-12 md:space-y-16 pb-20 max-w-7xl mx-auto px-4 text-left">
       
       {/* Category banner */}
       <ScrollReveal variant="fadeDown">
       <div className="text-center max-w-2xl mx-auto space-y-3">
-        <span className="text-[10px] font-bold text-navy uppercase tracking-[0.2em] bg-gold/5 border border-gold/30 px-3 py-1 rounded-sm inline-block">
-          FAQ DIRECTORY
-        </span>
         <h2 className={`text-3xl font-bold tracking-tight font-sans ${dark ? 'text-white' : 'text-slate-900'}`}>
           Frequently Asked Questions
         </h2>

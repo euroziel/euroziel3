@@ -5,6 +5,9 @@ import { X, Send, CheckCircle2, AlertCircle, Sparkles } from 'lucide-react';
 // Deployed Apps Script Web App Endpoint
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzbSFHQqPwUvxHgdesX8HAV_VdIlkvWc_N4c8_c6DpniqQ4uHCAasaXojRBp4Q8xMyTTg/exec';
 
+// Razorpay Payment Page URL
+const RAZORPAY_PAYMENT_URL = import.meta.env.VITE_RAZORPAY_PAYMENT_URL || 'https://rzp.io/l/euroziel-verify';
+
 interface ContactModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -112,6 +115,9 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
 
       setIsSubmitting(false);
       setIsSubmitted(true);
+
+      // Open Razorpay payment page in a new tab
+      window.open(RAZORPAY_PAYMENT_URL, '_blank');
     } catch (error) {
       console.error('Submission failed:', error);
       setSubmitError('System busy. Unable to submit data right now. Please try again.');
@@ -436,32 +442,42 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
                   </motion.div>
 
                   <h3 className="text-3xl font-extrabold font-sans mb-3 text-emerald-500">
-                    Application Received!
+                    Profile Submitted!
                   </h3>
                   <p className={`max-w-md text-sm mb-6 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
-                    Thank you, <span className="font-bold text-slate-900 dark:text-slate-100">{form.name}</span>. An expert from our Hamburg peer network will review your profile credentials and reach out within 24 hours on <span className="font-semibold text-amber-500">{form.email}</span>.
+                    Thank you, <span className="font-bold text-slate-900 dark:text-slate-100">{form.name}</span>. Please complete the ₹9 payment to confirm your expert review session.
                   </p>
 
-                  <div className={`p-4 rounded-sm border w-full max-w-sm mb-8 text-left text-xs space-y-2 ${
+                  <div className={`p-4 rounded-sm border w-full max-w-sm mb-6 text-left text-xs space-y-2 ${
                     theme === 'dark' ? 'bg-slate-950 border-slate-800' : 'bg-slate-100 border-slate-200'
                   }`}>
                     <div className="font-semibold text-blue-950 dark:text-amber-500 uppercase tracking-wider mb-2">Next Steps for You:</div>
                     <div className="flex gap-2">
                       <span className="font-bold text-amber-500">1.</span>
-                      <span>Review our **Process & Timeline** to understand APS wait times (typically 6-12 weeks).</span>
+                      <span>We have opened the payment page in a new tab. If it did not open, click the button below.</span>
                     </div>
                     <div className="flex gap-2">
                       <span className="font-bold text-amber-500">2.</span>
-                      <span>Keep your Semester Marksheets and language test drafts ready for fast verification.</span>
+                      <span>Once payment is done, our peer network in Germany will verify your credentials and contact you within 24 hours on <span className="font-semibold text-amber-500">{form.email}</span>.</span>
                     </div>
                   </div>
 
-                  <button
-                    onClick={handleClose}
-                    className="px-6 py-2.5 rounded-sm font-bold text-xs tracking-widest uppercase border border-slate-200 dark:border-slate-800 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 transition-all cursor-pointer"
-                  >
-                    Close Window
-                  </button>
+                  <div className="flex flex-col sm:flex-row gap-3 w-full max-w-sm justify-center mb-4">
+                    <a
+                      href={RAZORPAY_PAYMENT_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-6 py-2.5 rounded-sm font-bold text-xs tracking-widest uppercase bg-gold text-slate-950 hover:bg-opacity-90 transition-all text-center flex items-center justify-center gap-1.5 shadow-premium border-b-2 border-slate-950/20"
+                    >
+                      Pay ₹9 & Confirm Review
+                    </a>
+                    <button
+                      onClick={handleClose}
+                      className="px-6 py-2.5 rounded-sm font-bold text-xs tracking-widest uppercase border border-slate-200 dark:border-slate-800 bg-slate-100 hover:bg-slate-205 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 transition-all cursor-pointer text-center"
+                    >
+                      Close Window
+                    </button>
+                  </div>
                 </motion.div>
               )}
             </div>

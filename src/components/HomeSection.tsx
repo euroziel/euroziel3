@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { motion } from 'motion/react';
-import { ArrowRight, Star, ArrowLeftRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { ArrowRight, Star, ArrowLeftRight, CheckCircle2, XCircle, ShieldCheck, Users, GraduationCap, Sparkles } from 'lucide-react';
 import Journey from './Journey';
 import ScrollReveal from './ScrollReveal';
 
@@ -93,6 +93,7 @@ function TestimonialCard({ test, isDark }: TestimonialCardProps) {
 export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme }: HomeSectionProps) {
   const isDark = theme === 'dark';
   const section1Ref = useRef<HTMLDivElement>(null);
+  const [missionTab, setMissionTab] = useState<'euroziel' | 'typical'>('euroziel');
 
   const testimonials = [
     {
@@ -176,114 +177,256 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
         }`}
       >
        <ScrollReveal variant="fadeUp" delay={0.1}>
-        <div className="w-full px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 laptop-l:px-12 4k:px-20 max-w-7xl mx-auto">
+        <div className="w-full px-4 mobile-m:px-5 mobile-l:px-6 tablet:px-6 laptop:px-8 laptop-l:px-12 4k:px-20">
           <div className="grid grid-cols-1 laptop:grid-cols-12 gap-8 laptop:gap-12 laptop-l:gap-16 items-center">
             
-            {/* Left Column: The "Not a General Agency" card */}
+            {/* Left Column: The Interactive Glassmorphic Compare-Card */}
             <div className="laptop:col-span-5">
-              <div className={`relative rounded-xl overflow-hidden p-6 mobile-m:p-8 border border-b-4 border-b-gold ${
+              <div className={`relative rounded-2xl overflow-hidden p-6 mobile-m:p-8 border backdrop-blur-md transition-all duration-500 ${
                 isDark 
-                  ? 'bg-slate-950/40 border-slate-800/80 shadow-[0_0_50px_rgba(0,0,0,0.3)]' 
-                  : 'bg-slate-50/80 border-slate-200 shadow-sm'
+                  ? 'bg-slate-950/65 border-slate-800/80 shadow-[0_0_50px_rgba(27,115,186,0.15)]' 
+                  : 'bg-white/80 border-slate-200 shadow-xl'
               }`}>
-                {/* Header Row */}
-                <div className="flex items-center gap-4 mb-8">
-                  <div className={`flex items-center justify-center w-12 h-12 rounded-lg shrink-0 border ${
-                    isDark 
-                      ? 'bg-gold/10 border-gold/30 text-gold shadow-[0_0_15px_rgba(229,168,0,0.15)]' 
-                      : 'bg-[#1b73ba]/10 border-[#1b73ba]/30 text-[#1b73ba]'
-                  }`}>
-                    <ArrowLeftRight className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h3 className={`text-base mobile-m:text-lg font-extrabold tracking-tight ${
-                      isDark ? 'text-white' : 'text-slate-900'
-                    }`}>
-                      Not a General Agency
-                    </h3>
-                    <p className={`text-xs ${
-                      isDark ? 'text-slate-400' : 'text-slate-500'
-                    }`}>
-                      We are a dedicated knowledge pipeline
-                    </p>
-                  </div>
+                {/* Glow Effects */}
+                <div className={`absolute -top-12 -right-12 w-32 h-32 rounded-full blur-3xl pointer-events-none transition-colors duration-500 ${
+                  missionTab === 'euroziel' 
+                    ? 'bg-amber-500/20' 
+                    : 'bg-red-500/20'
+                }`} />
+                
+                {/* Tab Switcher */}
+                <div className={`flex p-1 rounded-lg mb-6 border relative z-10 ${
+                  isDark ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-105 border-slate-200'
+                }`}>
+                  <button
+                    onClick={() => setMissionTab('euroziel')}
+                    className={`flex-1 py-2 px-3 rounded-md text-[10px] mobile-m:text-xs font-bold uppercase tracking-wider relative transition-all duration-300 cursor-pointer ${
+                      missionTab === 'euroziel'
+                        ? 'text-white'
+                        : isDark ? 'text-slate-400 hover:text-slate-200' : 'text-slate-500 hover:text-slate-800'
+                    }`}
+                  >
+                    {missionTab === 'euroziel' && (
+                      <motion.div
+                        layoutId="activeTabBackground"
+                        className="absolute inset-0 bg-navy rounded-md z-0"
+                        transition={{ type: 'spring', damping: 20, stiffness: 150 }}
+                      />
+                    )}
+                    <span className="relative z-10 flex items-center justify-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-gold shrink-0 animate-pulse" />
+                      EuroZiel Way
+                    </span>
+                  </button>
+                  <button
+                    onClick={() => setMissionTab('typical')}
+                    className={`flex-1 py-2 px-3 rounded-md text-[10px] mobile-m:text-xs font-bold uppercase tracking-wider relative transition-all duration-300 cursor-pointer ${
+                      missionTab === 'typical'
+                        ? 'text-white'
+                        : isDark ? 'text-slate-400 hover:text-slate-200' : 'text-slate-500 hover:text-slate-800'
+                    }`}
+                  >
+                    {missionTab === 'typical' && (
+                      <motion.div
+                        layoutId="activeTabBackground"
+                        className="absolute inset-0 bg-red-600 rounded-md z-0"
+                        transition={{ type: 'spring', damping: 20, stiffness: 150 }}
+                      />
+                    )}
+                    <span className="relative z-10 flex items-center justify-center gap-1.5">
+                      Typical Agencies
+                    </span>
+                  </button>
                 </div>
 
-                {/* Box 1: Typical Consultancies */}
-                <div className="mb-6 space-y-2">
-                  <div className={`inline-block text-[9px] tracking-[0.2em] font-extrabold uppercase px-2.5 py-1 rounded border ${
-                    isDark 
-                      ? 'text-slate-400 bg-slate-900/60 border-slate-800/80' 
-                      : 'text-slate-500 bg-slate-100 border-slate-200'
-                  }`}>
-                    Typical Consultancies
-                  </div>
-                  <p className={`text-xs italic leading-relaxed pl-1 ${
-                    isDark ? 'text-slate-400' : 'text-slate-600'
-                  }`}>
-                    "Giving the same advice to every student regardless of background. No real experience with APS or ground realities of German visa offices."
-                  </p>
-                </div>
+                {/* Animated Content Section */}
+                <AnimatePresence mode="wait">
+                  {missionTab === 'euroziel' ? (
+                    <motion.div
+                      key="euroziel-content"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.25 }}
+                      className="space-y-6 text-left relative z-10"
+                    >
+                      <div>
+                        <span className="text-[10px] font-bold text-gold uppercase tracking-[0.2em] font-mono block mb-1">
+                          A Ground-Level Connection
+                        </span>
+                        <h4 className={`text-base font-extrabold font-sans ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                          Why our scholars land smoothly
+                        </h4>
+                      </div>
 
-                {/* Box 2: The EuroZiel Difference */}
-                <div className="space-y-2">
-                  <div className={`inline-block text-[9px] tracking-[0.2em] font-extrabold uppercase px-2.5 py-1 rounded border ${
-                    isDark 
-                      ? 'text-gold bg-gold/5 border-gold/20' 
-                      : 'text-[#1b73ba] bg-[#1b73ba]/5 border-[#1b73ba]/20'
-                  }`}>
-                    The EuroZiel Difference
-                  </div>
-                  <p className={`text-xs italic leading-relaxed pl-1 font-medium ${
-                    isDark ? 'text-slate-200' : 'text-slate-800'
-                  }`}>
-                    "Continuous 1-on-1 contact with active TU Munich, RWTH Aachen alumni and professionals. Transparent, honest, end-to-end guidance."
-                  </p>
-                </div>
+                      <div className="space-y-4">
+                        <div className="flex gap-3">
+                          <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
+                          <div>
+                            <h5 className={`text-xs font-bold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                              1-on-1 Native Mentorship
+                            </h5>
+                            <p className={`text-[11px] leading-relaxed mt-1 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                              Direct alignment sessions with TU Munich, RWTH Aachen alumni and professionals working in Germany.
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex gap-3">
+                          <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
+                          <div>
+                            <h5 className={`text-xs font-bold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                              Individually Drafted SOPs
+                            </h5>
+                            <p className={`text-[11px] leading-relaxed mt-1 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                              We help you articulate your real story into a compelling proposal. No AI templates, no reused text.
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex gap-3">
+                          <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
+                          <div>
+                            <h5 className={`text-xs font-bold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                              Roster On-Arrival Support
+                            </h5>
+                            <p className={`text-[11px] leading-relaxed mt-1 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                              Our student network supports you with local registration (Anmeldung), housing search, and bank setups.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="typical-content"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.25 }}
+                      className="space-y-6 text-left relative z-10"
+                    >
+                      <div>
+                        <span className="text-[10px] font-bold text-red-500 uppercase tracking-[0.2em] font-mono block mb-1">
+                          The Volumeist Approach
+                        </span>
+                        <h4 className={`text-base font-extrabold font-sans ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                          Where standard agencies fall short
+                        </h4>
+                      </div>
+
+                      <div className="space-y-4">
+                        <div className="flex gap-3">
+                          <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+                          <div>
+                            <h5 className={`text-xs font-bold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                              Recycled SOP Templates
+                            </h5>
+                            <p className={`text-[11px] leading-relaxed mt-1 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                              Generic cover letters that admission committees immediately flag as spam, leading to instant rejections.
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex gap-3">
+                          <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+                          <div>
+                            <h5 className={`text-xs font-bold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                              Abandonment After Visa
+                            </h5>
+                            <p className={`text-[11px] leading-relaxed mt-1 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                              Guidance terminates the moment they receive their consulting fees. No assistance for the tough German housing market.
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex gap-3">
+                          <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+                          <div>
+                            <h5 className={`text-xs font-bold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                              Pushing Commission Partners
+                            </h5>
+                            <p className={`text-[11px] leading-relaxed mt-1 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                              Steering students toward expensive private institutions rather than free public universities to collect sales cuts.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </div>
+            
+            {/* Right Column: Modernized Text & Pillars Grid */}
+            <div className="laptop:col-span-7 space-y-8 text-left">
+              <div className="space-y-4">
 
-            {/* Right Column: Text Content */}
-            <div className="laptop:col-span-7 space-y-6">
-              <span className={`inline-block text-[9px] mobile-m:text-[10px] 4k:text-xs font-bold uppercase tracking-[0.25em] px-3 py-1.5 rounded-full transition-all duration-300 ${
-                isDark 
-                  ? 'text-gold bg-gold/8 border border-gold/20' 
-                  : 'text-[#1b73ba] bg-[#1b73ba]/8 border border-[#1b73ba]/20'
-              }`}>
-                OUR MISSION
-              </span>
-              
-              <h2 className={`text-2xl mobile-m:text-3xl laptop:text-4xl 4k:text-5xl font-extrabold tracking-tight font-sans leading-tight ${
-                isDark ? 'text-white' : 'text-slate-900'
-              }`}>
-                More Than a Consultancy. <span className="italic text-[#1b73ba]">A Real Bridge to Germany.</span>
-              </h2>
+                
+                <h2 className={`text-3xl mobile-m:text-4xl laptop:text-5xl font-extrabold tracking-tight font-sans leading-tight ${
+                  isDark ? 'text-white' : 'text-slate-900'
+                }`}>
+                  More Than a Consultancy.<br />
+                  <span className="font-serif italic font-normal text-gold">A Real, Ground-Level Bridge to Germany.</span>
+                </h2>
 
-              <div className={`space-y-4 text-xs mobile-m:text-[13px] laptop:text-sm 4k:text-base leading-relaxed ${
-                isDark ? 'text-slate-400' : 'text-slate-500'
-              }`}>
-                <p>
-                  EuroZiel was founded to replace generic agent templates with a dedicated, ground-level knowledge pipeline. We believe that capable students shouldn't lose opportunities to copied strategies, unrealistic expectations, or a lack of understanding of ground realities.
+                <p className={`text-xs mobile-m:text-sm leading-relaxed max-w-2xl ${
+                  isDark ? 'text-slate-350' : 'text-slate-600'
+                }`}>
+                  EuroZiel was built to replace volume-driven agency shortcuts with direct ground realities. We connect Indian applicants directly with seniors already studying their fields in top public universities and professionals working in Europe.
                 </p>
-                <p>
-                  By combining structured, expert consultancy with direct mentorship from active alumni at top German public universities (like TU Munich and RWTH Aachen) and working professionals in Europe, we provide a transparent and honest pathway.
-                </p>
-                <p>
-                  From APS validation and visa filing to finding student accommodation and Werkstudent jobs, we don't just guide your application—we prepare you for long-term career success on the ground in Germany.
-                </p>
+              </div>
+
+              {/* Pillars Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className={`p-4 rounded-sm border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gold/30 hover:shadow-premium ${
+                  isDark ? 'border-slate-900 bg-slate-950/40' : 'border-slate-250 bg-slate-50/50'
+                }`}>
+                  <div className="w-9 h-9 rounded-sm bg-navy/10 text-navy flex items-center justify-center mb-3">
+                    <ShieldCheck className="w-5 h-5 text-[#1b73ba]" />
+                  </div>
+                  <h4 className={`text-xs font-bold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>98% Visa Success</h4>
+                  <p className="text-[10px] text-slate-400 mt-1 font-sans">
+                    Rigorous mock interview preps and compliant APS filing timelines.
+                  </p>
+                </div>
+
+                <div className={`p-4 rounded-sm border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gold/30 hover:shadow-premium ${
+                  isDark ? 'border-slate-900 bg-slate-950/40' : 'border-slate-250 bg-slate-50/50'
+                }`}>
+                  <div className="w-9 h-9 rounded-sm bg-gold/10 text-gold flex items-center justify-center mb-3">
+                    <GraduationCap className="w-5 h-5 text-gold" />
+                  </div>
+                  <h4 className={`text-xs font-bold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>0€ Tuition Focus</h4>
+                  <p className="text-[10px] text-slate-400 mt-1 font-sans">
+                    We target world-class free public universities, bypassing private fees.
+                  </p>
+                </div>
+
+                <div className={`p-4 rounded-sm border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gold/30 hover:shadow-premium ${
+                  isDark ? 'border-slate-900 bg-slate-950/40' : 'border-slate-250 bg-slate-50/50'
+                }`}>
+                  <div className="w-9 h-9 rounded-sm bg-[#10b981]/10 text-[#10b981] flex items-center justify-center mb-3">
+                    <Users className="w-5 h-5 text-[#10b981]" />
+                  </div>
+                  <h4 className={`text-xs font-bold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>1-on-1 Alumni</h4>
+                  <p className="text-[10px] text-slate-400 mt-1 font-sans">
+                    Ground-level counseling directly linked to active German scholars.
+                  </p>
+                </div>
               </div>
 
               <div className="pt-2">
                 <button
                   onClick={() => onNavigateToTab('about')}
-                  className={`group inline-flex items-center gap-2 text-xs mobile-m:text-sm font-bold transition-all duration-300 ${
+                  className={`group inline-flex items-center gap-2 text-xs mobile-m:text-sm font-bold transition-all duration-300 px-5 py-2.5 rounded-sm border shadow-sm ${
                     isDark 
-                      ? 'text-gold hover:text-white' 
-                      : 'text-[#1b73ba] hover:text-slate-900'
+                      ? 'border-slate-800 hover:border-slate-650 bg-slate-950/40 hover:bg-slate-900 text-gold hover:text-white' 
+                      : 'border-slate-250 hover:border-slate-350 bg-white hover:bg-slate-50 text-navy'
                   }`}
                 >
                   Read Yuvasri & Sarathkumar's complete story
-                  <ArrowRight className="w-3.5 h-3.5 mobile-m:w-4 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1.5" />
                 </button>
               </div>
             </div>
@@ -294,10 +437,10 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
       </section>
 
       {/* SECTION 2: WHY STUDENTS CHOOSE EUROZIEL */}
-      <section className={`relative z-30 py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 border-b w-full transition-colors duration-300 ${
+      <section className={`relative z-30 py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 tablet:px-6 laptop:px-8 laptop-l:px-12 4k:px-20 border-b w-full transition-colors duration-300 ${
         isDark ? 'border-slate-900 bg-[#060814]' : 'border-slate-100 bg-white'
       }`}>
-        <div className="w-full space-y-8 mobile-m:space-y-10 laptop:space-y-12 4k:space-y-16 max-w-7xl mx-auto">
+        <div className="w-full space-y-8 mobile-m:space-y-10 laptop:space-y-12 4k:space-y-16">
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -306,9 +449,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
             transition={{ duration: 0.6 }}
             className="text-center max-w-xl mobile-m:max-w-2xl 4k:max-w-3xl mx-auto space-y-2 mobile-m:space-y-3"
           >
-            <span className="text-[9px] mobile-m:text-[10px] 4k:text-xs font-bold text-gold uppercase tracking-[0.2em] bg-gold/5 border border-gold/30 px-2.5 mobile-m:px-3 py-1 rounded-sm">
-              Why EuroZiel?
-            </span>
+
             <h2 className="text-2xl mobile-m:text-3xl laptop:text-4xl 4k:text-5xl font-bold tracking-tight font-sans">
               Why Students Choose Us
             </h2>
@@ -334,10 +475,10 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
       <Journey theme={theme} />
 
       {/* SECTION 4: TESTIMONIALS */}
-      <section className={`relative z-30 py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 border-b w-full transition-colors duration-300 ${
+      <section className={`relative z-30 py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 tablet:px-6 laptop:px-8 laptop-l:px-12 4k:px-20 border-b w-full transition-colors duration-300 ${
         isDark ? 'border-slate-900 bg-[#060814]' : 'border-slate-100 bg-white'
       }`}>
-        <div className="w-full space-y-8 mobile-m:space-y-10 laptop:space-y-12 4k:space-y-16 max-w-7xl mx-auto">
+        <div className="w-full space-y-8 mobile-m:space-y-10 laptop:space-y-12 4k:space-y-16">
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -346,11 +487,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
             transition={{ duration: 0.6 }}
             className="text-center max-w-xl mobile-m:max-w-2xl 4k:max-w-3xl mx-auto space-y-2 mobile-m:space-y-3"
           >
-            <span className={`text-[9px] mobile-m:text-[10px] 4k:text-xs font-bold text-navy uppercase tracking-[0.2em] px-2.5 mobile-m:px-3 py-1 rounded-sm border ${
-              isDark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
-            }`}>
-              SUCCESS STORIES
-            </span>
+
             <h2 className="text-2xl mobile-m:text-3xl laptop:text-4xl 4k:text-5xl font-bold tracking-tight font-sans">
               What Our Students Say
             </h2>
@@ -376,7 +513,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
       <div className={`w-full relative z-30 py-16 ${
         isDark ? 'bg-[#060814]' : 'bg-white'
       }`}>
-        <section className="max-w-7xl mx-auto px-4 mobile-m:px-5 laptop:px-8 4k:px-16 text-center">
+        <section className="w-full px-4 mobile-m:px-5 mobile-l:px-6 tablet:px-6 laptop:px-8 laptop-l:px-12 4k:px-20 text-center">
          <ScrollReveal variant="flipUp">
           <div className={`relative rounded-sm overflow-hidden py-8 mobile-m:py-10 laptop:py-12 4k:py-20 px-5 mobile-m:px-8 laptop:px-12 4k:px-20 border border-[#e5a800]/20 text-white shadow-premium border-b-4 border-b-gold ${
             isDark ? 'bg-slate-950' : 'bg-slate-900'
@@ -386,9 +523,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
             <div className="absolute bottom-0 left-0 w-24 mobile-m:w-32 4k:w-48 h-24 mobile-m:h-32 4k:h-48 bg-navy/10 rounded-full blur-2xl pointer-events-none" />
 
             <div className="relative z-10 space-y-4 mobile-m:space-y-5 laptop:space-y-6 4k:space-y-8 max-w-xl mobile-m:max-w-2xl mx-auto">
-              <span className="text-[9px] mobile-m:text-[10px] 4k:text-xs font-bold tracking-[0.15em] text-gold uppercase bg-gold/5 border border-gold/30 px-2.5 mobile-m:px-3 py-1 rounded-sm">
-                Germany Is A Big Move
-              </span>
+
               <h3 className="text-xl mobile-m:text-2xl laptop:text-3xl 4k:text-4xl font-bold font-sans leading-tight">
                 You Should Not Have To Figure It Out Alone.
               </h3>

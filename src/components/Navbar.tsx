@@ -126,7 +126,7 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
             </button>
 
             <a
-              href="https://auth.euroziel.com"
+              href="https://dashboard.euroziel.com"
               title="Login"
               aria-label="Login"
               className={`px-3 py-2 rounded-sm text-[10px] laptop:text-xs font-bold tracking-widest uppercase transition-all flex items-center justify-center ${
@@ -201,7 +201,7 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
 
             <div className="px-3 mobile-m:px-4 pt-1">
               <button
-                onClick={() => { setIsOpen(false); window.location.href = 'https://auth.euroziel.com'; }}
+                onClick={() => { setIsOpen(false); window.location.href = 'https://dashboard.euroziel.com'; }}
                 className={`w-full py-2.5 mobile-m:py-3 rounded-sm font-bold text-[10px] mobile-m:text-xs uppercase tracking-wider text-center border transition-all flex items-center justify-center gap-2 ${
                   theme === 'dark' ? 'border-slate-700 text-slate-200 bg-transparent hover:bg-slate-800/60' : 'border-slate-200 text-slate-700 bg-transparent hover:bg-slate-50'
                 }`}

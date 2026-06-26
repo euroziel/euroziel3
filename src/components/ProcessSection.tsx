@@ -168,9 +168,6 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
           <div className="absolute top-0 right-0 w-80 h-80 bg-gold/10 rounded-full blur-3xl pointer-events-none" />
           
           <div className="relative z-10 max-w-4xl space-y-6">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-[10px] font-bold tracking-widest bg-gold/5 border border-gold/30 text-gold uppercase">
-              What Students often miss
-            </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-tight font-sans">
               Germany Is More Than Just an <span className="font-serif italic font-medium text-gold">Admission Letter.</span>
             </h2>
@@ -194,11 +191,6 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
       <section className="max-w-7xl mx-auto px-4 text-left space-y-12">
        <ScrollReveal variant="fadeDown">
         <div className="space-y-2 text-center max-w-xl mx-auto">
-          <span className={`text-[10px] font-bold text-navy uppercase tracking-[0.2em] border px-3 py-1 rounded-sm inline-block ${
-            dark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
-          }`}>
-            Step-By-Step
-          </span>
           <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Your Germany Timeline</h2>
           <p className={`text-xs font-sans ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
             A structured roadmap designed to guide you from your first consultation to your arrival in Germany with complete clarity and support.
@@ -261,10 +253,6 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
         <div className={`p-6 md:p-10 rounded-sm border border-[#e5a800]/20 shadow-premium border-b-4 border-b-gold space-y-8 text-left relative ${
           dark ? 'bg-slate-950/80' : 'bg-white'
         }`}>
-          <div className="absolute top-4 right-4 text-[9px] px-2 py-1 rounded-sm bg-gold/5 text-gold border border-gold/20 font-mono font-bold uppercase tracking-wider">
-            Interactive Checklist
-          </div>
-
           <div className="space-y-2">
             <h2 className={`text-2xl font-bold tracking-tight font-sans ${dark ? 'text-slate-100' : 'text-slate-800'}`}>
               Pre-Departure Readiness Checklist
@@ -322,9 +310,6 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
         <div className="max-w-7xl mx-auto space-y-12">
           
           <div className="text-center max-w-xl mx-auto space-y-3">
-            <span className="text-[10px] font-bold text-gold uppercase tracking-[0.2em] bg-gold/5 border border-gold/30 px-3 py-1 rounded-sm">
-              Flash Cards
-            </span>
             <h2 className="text-3xl font-bold tracking-tight font-sans">
               Germany Journey Insights
             </h2>
@@ -333,7 +318,7 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
             </p>
           </div>
 
-          <ScrollReveal variant="blurIn" stagger={0.08} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <ScrollReveal variant="blurIn" stagger={0.08} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
             {insights.map((ins, idx) => {
               const isSelected = activeInsight === idx;
               return (

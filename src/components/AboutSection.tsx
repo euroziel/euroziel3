@@ -43,10 +43,7 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
           <div className="absolute top-0 right-0 w-80 h-80 bg-gold/10 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative z-10 max-w-4xl space-y-4">
-            <span className={`text-[10px] font-bold text-navy uppercase tracking-[0.2em] border px-3 py-1 rounded-sm inline-block ${dark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
-              }`}>
-              ABOUT EUROZIEL
-            </span>
+
             <h1 className={`text-3xl md:text-5xl font-bold font-sans leading-tight ${dark ? 'text-white' : 'text-slate-900'}`}>
               We are not a consultancy <br />that read about Germany. <br />
               <span className="font-serif italic font-medium text-gold">We are connected to people living it right now.</span>
@@ -85,10 +82,7 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
           {/* Core Team Details Right */}
           <ScrollReveal variant="swoopIn" delay={0.15} className="lg:col-span-7 space-y-8">
             <div className="space-y-2">
-              <span className={`text-[10px] font-bold text-navy uppercase tracking-[0.2em] border px-3 py-1 rounded-sm inline-block mb-1 ${dark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
-                }`}>
-                Leadership Team
-              </span>
+
               <h2 className={`text-2xl md:text-3.5xl font-bold font-sans ${dark ? 'text-white' : 'text-slate-900'}`}>Meet the Founders Behind EuroZiel</h2>
               <p className={`text-xs md:text-sm font-sans pb-4 ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
                 Our founders bring together direct, student-centric counseling expertise and a robust European network that enables students to make completely informed decisions with absolute confidence.
@@ -140,9 +134,7 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
         <div className="max-w-7xl mx-auto space-y-12">
 
           <div className="text-center max-w-2xl mx-auto space-y-3">
-            <span className="text-[10px] font-bold text-gold uppercase tracking-[0.2em] bg-gold/5 border border-gold/30 px-3 py-1 rounded-sm">
-              Ethical Pillars
-            </span>
+
             <h2 className={`text-2xl md:text-3xl font-bold font-sans tracking-tight ${dark ? 'text-white' : 'text-slate-900'}`}>
               Why Students Trust Us
             </h2>
@@ -151,7 +143,7 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
             </p>
           </div>
 
-          <ScrollReveal variant="elastic" stagger={0.1} className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto text-left">
+          <ScrollReveal variant="elastic" stagger={0.1} className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-7xl mx-auto text-left">
             {trustPoints.map((point, index) => (
               <div
                 key={index}

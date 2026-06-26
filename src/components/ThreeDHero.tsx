@@ -77,8 +77,8 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
               German Public University Experts
             </span>
             <div className={`w-px h-3.5 4k:h-4 ${isDark ? 'bg-slate-700' : 'bg-slate-300'}`} />
-            <span className="text-[9px] mobile-m:text-[10px] 4k:text-xs font-bold text-[#e5a800] tracking-[0.15em] uppercase flex items-center gap-1">
-              INR 100 CONSULTATIONS <Sparkles className="w-3 h-3 4k:w-3.5 4k:h-3.5" />
+            <span className="text-[9px] mobile-m:text-[10px] 4k:text-xs font-bold text-[#e5a800] tracking-[0.15em] uppercase flex items-center gap-1.5">
+              Verify Profile: <span className="line-through opacity-60 font-normal text-slate-400">₹1,500</span> <span className="text-white font-extrabold">₹9</span> <Sparkles className="w-3 h-3 4k:w-3.5 4k:h-3.5 animate-pulse" />
             </span>
           </motion.div>
 
@@ -298,9 +298,12 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
                 style={{ transform: 'translateZ(50px)' }}
               >
                 <div className="text-left">
-                  <span className="text-[8px] mobile-m:text-[9px] 4k:text-[11px] uppercase tracking-widest text-slate-400 block font-sans">Consultation Fee</span>
-                  <span className="text-xs mobile-m:text-sm 4k:text-base font-bold text-gold">INR 100</span>
-                  <span className="text-[9px] mobile-m:text-[10px] 4k:text-xs text-slate-400 ml-1">for 20 mins</span>
+                  <span className="text-[8px] mobile-m:text-[9px] 4k:text-[11px] uppercase tracking-widest text-slate-400 block font-sans">Verification Fee</span>
+                  <div className="flex items-center gap-1 mt-0.5">
+                    <span className="text-[10px] mobile-m:text-xs line-through text-slate-500 font-normal">₹1,500</span>
+                    <span className="text-xs mobile-m:text-sm 4k:text-base font-extrabold text-gold">₹9</span>
+                  </div>
+                  <span className="text-[9px] mobile-m:text-[10px] 4k:text-xs text-slate-400 block font-sans">Start profile verification</span>
                 </div>
                 <button
                   onClick={onOpenConsultation}
