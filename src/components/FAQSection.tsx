@@ -148,7 +148,7 @@ export default function FAQSection({ onOpenConsultation, theme }: FAQSectionProp
   });
 
   return (
-    <div className="space-y-12 md:space-y-16 pb-20 max-w-7xl mx-auto px-4 text-left">
+    <div className="space-y-12 md:space-y-16 pb-20 max-w-7xl mx-auto px-4 text-left min-h-screen flex flex-col justify-center py-16">
       
       {/* Category banner */}
       <ScrollReveal variant="fadeDown">

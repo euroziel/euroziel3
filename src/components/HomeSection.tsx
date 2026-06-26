@@ -168,11 +168,11 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
 
 
   return (
-    <div className="pb-12 mobile-m:pb-16 laptop:pb-20 4k:pb-32">
+    <div className="w-full">
       {/* SECTION 1: OUR MISSION — stacks over the sticky hero */}
       <section
         ref={section1Ref}
-        className={`relative z-30 w-full py-16 mobile-m:py-20 laptop:py-24 border-b transition-colors duration-300 shadow-[0_-40px_80px_rgba(0,0,0,0.7)] lg:-mt-[100vh] mt-0 ${
+        className={`relative z-30 w-full min-h-screen flex flex-col justify-center py-16 mobile-m:py-20 laptop:py-24 border-b transition-colors duration-300 shadow-[0_-40px_80px_rgba(0,0,0,0.7)] lg:-mt-[100vh] mt-0 ${
           isDark ? 'border-slate-900 bg-[#060814]' : 'border-slate-100 bg-white'
         }`}
       >
@@ -437,7 +437,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
       </section>
 
       {/* SECTION 2: WHY STUDENTS CHOOSE EUROZIEL */}
-      <section className={`relative z-30 py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 tablet:px-6 laptop:px-8 laptop-l:px-12 4k:px-20 border-b w-full transition-colors duration-300 ${
+      <section className={`relative z-30 min-h-screen flex flex-col justify-center py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 tablet:px-6 laptop:px-8 laptop-l:px-12 4k:px-20 border-b w-full transition-colors duration-300 ${
         isDark ? 'border-slate-900 bg-[#060814]' : 'border-slate-100 bg-white'
       }`}>
         <div className="w-full space-y-8 mobile-m:space-y-10 laptop:space-y-12 4k:space-y-16">
@@ -475,7 +475,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
       <Journey theme={theme} />
 
       {/* SECTION 4: TESTIMONIALS */}
-      <section className={`relative z-30 py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 tablet:px-6 laptop:px-8 laptop-l:px-12 4k:px-20 border-b w-full transition-colors duration-300 ${
+      <section className={`relative z-30 min-h-screen flex flex-col justify-center py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 tablet:px-6 laptop:px-8 laptop-l:px-12 4k:px-20 border-b w-full transition-colors duration-300 ${
         isDark ? 'border-slate-900 bg-[#060814]' : 'border-slate-100 bg-white'
       }`}>
         <div className="w-full space-y-8 mobile-m:space-y-10 laptop:space-y-12 4k:space-y-16">
@@ -510,7 +510,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
       </section>
 
       {/* SECTION 5: BOTTOM CTA */}
-      <div className={`w-full relative z-30 py-16 ${
+      <div className={`w-full relative z-30 min-h-screen flex flex-col justify-center py-16 ${
         isDark ? 'bg-[#060814]' : 'bg-white'
       }`}>
         <section className="w-full px-4 mobile-m:px-5 mobile-l:px-6 tablet:px-6 laptop:px-8 laptop-l:px-12 4k:px-20 text-center">

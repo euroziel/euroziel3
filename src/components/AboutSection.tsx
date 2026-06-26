@@ -33,10 +33,10 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
   ];
 
   return (
-    <div className="space-y-24 md:space-y-36 pb-20">
+    <div className="w-full">
 
       {/* ABOUT INTRO HERO */}
-      <section className="max-w-7xl mx-auto px-4 text-left">
+      <section className="max-w-7xl mx-auto px-4 text-left min-h-screen flex flex-col justify-center py-16">
        <ScrollReveal variant="blurIn">
         <div className={`relative rounded-sm overflow-hidden py-16 px-8 md:px-14 border shadow-premium border-b-4 border-b-gold ${dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200/50 bg-white'
           }`}>
@@ -54,7 +54,7 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
       </section>
 
       {/* FOUNDER STORY SECTION */}
-      <section className="max-w-7xl mx-auto px-4">
+      <section className="max-w-7xl mx-auto px-4 min-h-screen flex flex-col justify-center py-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start text-left">
 
           {/* Founders visual card Left */}
@@ -129,7 +129,7 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
       </section>
 
       {/* WHY STUDENTS TRUST US */}
-      <section className={`py-20 px-4 border-y animate-fade-in ${dark ? 'bg-slate-950/50 border-slate-900' : 'bg-slate-50/50 border-slate-100'
+      <section className={`py-20 px-4 border-y animate-fade-in min-h-screen flex flex-col justify-center ${dark ? 'bg-slate-950/50 border-slate-900' : 'bg-slate-50/50 border-slate-100'
         }`}>
         <div className="max-w-7xl mx-auto space-y-12">
 

@@ -129,10 +129,10 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
   ];
 
   return (
-    <div className="space-y-24 md:space-y-36 pb-20">
+    <div className="w-full">
       
       {/* SERVICES HERO */}
-      <section className="max-w-7xl mx-auto px-4 text-left">
+      <section className="max-w-7xl mx-auto px-4 text-left min-h-screen flex flex-col justify-center py-16">
        <ScrollReveal variant="glideUp">
         <div className={`relative rounded-sm overflow-hidden py-16 px-8 md:px-14 border border-b-4 border-b-gold shadow-premium ${
           dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200/50 bg-white'
@@ -153,7 +153,7 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
       </section>
 
       {/* THREE PATHWAYS */}
-      <section className="max-w-7xl mx-auto px-4">
+      <section className="max-w-7xl mx-auto px-4 min-h-screen flex flex-col justify-center py-16">
         <ScrollReveal variant="scaleUp" stagger={0.12} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {mainServices.map((service, sIdx) => (
             <div 
@@ -184,7 +184,7 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
       </section>
 
       {/* 15 STEPS DIARY DIRECTORY */}
-      <section className="max-w-7xl mx-auto px-4 space-y-12">
+      <section className="max-w-7xl mx-auto px-4 min-h-screen flex flex-col justify-center py-20">
        <ScrollReveal variant="fadeUp">
         <div className="text-center max-w-2xl mx-auto space-y-3">
           <h2 className="text-2xl md:text-3.5xl font-bold tracking-tight font-sans">
@@ -276,7 +276,7 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
       </section>
 
       {/* bottom CTA */}
-      <section className="max-w-7xl mx-auto px-4 text-center">
+      <section className="max-w-7xl mx-auto px-4 text-center min-h-screen flex flex-col justify-center">
        <ScrollReveal variant="clipReveal">
         <div className={`p-8 md:p-12 rounded-sm border shadow-premium space-y-6 border-b-4 border-b-gold ${
           dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200 bg-white'

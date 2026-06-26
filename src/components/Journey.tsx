@@ -273,7 +273,7 @@ const stepCharacters = [
 ];
 
 /* ─── Single Step Card ──────────────────────────────────── */
-function StepCard({ step, isActive, dark }: { step: typeof steps[0]; isActive: boolean; dark: boolean }) {
+function StepCard({ step, isActive, dark, width }: { step: typeof steps[0]; isActive: boolean; dark: boolean; width: number }) {
   const colors = accentColors[step.accent] || accentColors.navy;
   return (
     <motion.div
@@ -282,7 +282,8 @@ function StepCard({ step, isActive, dark }: { step: typeof steps[0]; isActive: b
         opacity: isActive ? 1 : 0.4,
       }}
       transition={{ type: "spring", damping: 22, stiffness: 120 }}
-      className="flex-shrink-0 w-[85vw] mobile-m:w-[80vw] mobile-l:w-[70vw] md:w-[45vw] laptop:w-[380px] 4k:w-[480px]"
+      className="flex-shrink-0"
+      style={{ width }}
     >
       <div
         className="relative rounded-3xl overflow-hidden h-[340px] mobile-m:h-[380px] laptop:h-[420px] shadow-2xl"
@@ -356,9 +357,33 @@ export default function Journey({ theme }: JourneyProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [dimensions, setDimensions] = useState({ cardWidth: 380, gap: 40 });
 
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
+    const check = () => {
+      const w = window.innerWidth;
+      setIsMobile(w < 768);
+      
+      let cardWidth = 380;
+      let gap = 40;
+      if (w < 375) {
+        cardWidth = w * 0.85;
+        gap = 24;
+      } else if (w < 425) {
+        cardWidth = w * 0.80;
+        gap = 32;
+      } else if (w < 768) {
+        cardWidth = w * 0.70;
+        gap = 32;
+      } else if (w < 1024) {
+        cardWidth = w * 0.45;
+        gap = 32;
+      } else if (w >= 2560) {
+        cardWidth = 480;
+        gap = 40;
+      }
+      setDimensions({ cardWidth, gap });
+    };
     check();
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
@@ -372,23 +397,22 @@ export default function Journey({ theme }: JourneyProps) {
 
   const smoothProgress = useSpring(scrollYProgress, { damping: 20, stiffness: 80 });
 
-  // Determine active step
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    const idx = Math.min(5, Math.floor(v * 6));
-    setActiveIndex(Math.max(0, idx));
+  // Determine active step based on smooth progress (to match the card motion perfectly)
+  useMotionValueEvent(smoothProgress, "change", (v) => {
+    const idx = Math.round(v * 5);
+    setActiveIndex(Math.min(5, Math.max(0, idx)));
   });
 
   // ─── Horizontal Translation ──────────────────────────
-  // Total strip width ≈ 6 cards × card width + gaps
-  // We translate from 0% (showing card 1) to roughly -83% (showing card 6)
-  // The exact value = (numCards - 1) / numCards * 100
-  const translateX = useTransform(smoothProgress, [0, 1], ["0%", "-83.33%"]);
+  // Total translation centers each active card dynamically
+  const totalTranslation = -5 * (dimensions.cardWidth + dimensions.gap);
+  const translateX = useTransform(smoothProgress, [0, 1], [0, totalTranslation]);
 
   // ─── Progress bar width ──────────────────────────────
   const progressWidth = useTransform(smoothProgress, [0, 1], ["0%", "100%"]);
 
   // ─── Walking character position ──────────────────────
-  const charLeft = useTransform(smoothProgress, [0, 1], ["4%", "92%"]);
+  const charLeft = useTransform(smoothProgress, [0, 1], ["0%", "100%"]);
 
   return (
     <>
@@ -433,54 +457,21 @@ export default function Journey({ theme }: JourneyProps) {
 
           {/* ─── Progress Bar + Walking Character ─── */}
           <div className="px-6 mobile-m:px-8 laptop:px-16 4k:px-24 py-4 flex-shrink-0">
-            <div className="w-full relative">
-              {/* Track background */}
-              <div className={`h-1.5 rounded-full ${dark ? "bg-slate-800" : "bg-slate-200"}`}>
+            {/* Taller container to fit walking student and label without overlap */}
+            <div className="w-full relative pt-12 pb-16">
+              
+              {/* Track line */}
+              <div className={`absolute top-16 left-0 right-0 h-1.5 rounded-full ${dark ? "bg-slate-800" : "bg-slate-200"}`}>
                 <motion.div
                   style={{ width: progressWidth }}
                   className="h-full rounded-full bg-gradient-to-r from-[#1b73ba] via-[#4f46e5] to-[#e5a800]"
                 />
               </div>
 
-              {/* Step markers */}
-              <div className="flex justify-between mt-3">
-                {steps.map((s, idx) => {
-                  const active = activeIndex === idx;
-                  const past = idx < activeIndex;
-                  const colors = accentColors[s.accent] || accentColors.navy;
-                  return (
-                    <div key={s.number} className="flex flex-col items-center">
-                      <motion.div
-                        animate={{
-                          scale: active ? 1.4 : 1,
-                          backgroundColor: active ? colors.bg : past ? colors.bg : (dark ? "#334155" : "#cbd5e1"),
-                          boxShadow: active ? `0 0 16px ${colors.glow}` : "none",
-                        }}
-                        transition={{ type: "spring", damping: 18 }}
-                        className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white"
-                      >
-                        {past ? "✓" : idx + 1}
-                      </motion.div>
-                      <span
-                        className={`text-[8px] mobile-m:text-[9px] laptop:text-[11px] font-bold uppercase tracking-wider mt-1.5 transition-colors duration-200 ${
-                          active
-                            ? (dark ? "text-amber-400" : "text-indigo-600")
-                            : past
-                            ? (dark ? "text-slate-400" : "text-slate-600")
-                            : "text-slate-500"
-                        }`}
-                      >
-                        {isMobile ? s.number : s.label}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-
               {/* Walking student character — changes per step */}
               <motion.div
                 style={{ left: charLeft }}
-                className="absolute -top-5 pointer-events-none z-20"
+                className="absolute top-0 -translate-x-1/2 pointer-events-none z-20"
               >
                 <motion.div
                   animate={{ y: [0, -6, 0] }}
@@ -502,14 +493,59 @@ export default function Journey({ theme }: JourneyProps) {
                   </AnimatePresence>
                 </motion.div>
               </motion.div>
+
+              {/* Step markers (circles + labels) positioned absolutely to line up mathematically */}
+              <div className="absolute top-[50px] left-0 right-0">
+                {steps.map((s, idx) => {
+                  const active = activeIndex === idx;
+                  const past = idx < activeIndex;
+                  const colors = accentColors[s.accent] || accentColors.navy;
+                  return (
+                    <div
+                      key={s.number}
+                      className="absolute -translate-x-1/2 flex flex-col items-center"
+                      style={{ left: `${idx * 20}%` }}
+                    >
+                      <motion.div
+                        animate={{
+                          scale: active ? 1.4 : 1,
+                          backgroundColor: active ? colors.bg : past ? colors.bg : (dark ? "#334155" : "#cbd5e1"),
+                          boxShadow: active ? `0 0 16px ${colors.glow}` : "none",
+                        }}
+                        transition={{ type: "spring", damping: 18 }}
+                        className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white border-2 border-slate-900"
+                      >
+                        {past ? "✓" : idx + 1}
+                      </motion.div>
+                      <span
+                        className={`text-[8px] mobile-m:text-[9px] laptop:text-[11px] font-bold uppercase tracking-wider mt-2.5 transition-colors duration-200 ${
+                          active
+                            ? (dark ? "text-amber-400" : "text-indigo-600")
+                            : past
+                            ? (dark ? "text-slate-400" : "text-slate-600")
+                            : "text-slate-500"
+                        }`}
+                      >
+                        {isMobile ? s.number : s.label}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+
             </div>
           </div>
 
           {/* ─── Horizontal Card Strip ─── */}
           <div className="flex-1 flex items-center overflow-hidden">
             <motion.div
-              style={{ x: translateX }}
-              className="flex gap-6 mobile-m:gap-8 laptop:gap-10 pl-[8vw] pr-[20vw]"
+              style={{
+                x: translateX,
+                gap: dimensions.gap,
+                paddingLeft: `calc(50vw - ${dimensions.cardWidth / 2}px)`,
+                paddingRight: `calc(50vw - ${dimensions.cardWidth / 2}px)`,
+              }}
+              className="flex flex-row items-center"
             >
               {steps.map((step, i) => (
                 <StepCard
@@ -517,6 +553,7 @@ export default function Journey({ theme }: JourneyProps) {
                   step={step}
                   isActive={activeIndex === i}
                   dark={dark}
+                  width={dimensions.cardWidth}
                 />
               ))}
             </motion.div>

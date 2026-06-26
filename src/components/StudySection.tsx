@@ -74,10 +74,10 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
   ];
 
   return (
-    <div className="space-y-24 md:space-y-36 pb-20">
+    <div className="w-full">
 
       {/* HERO SECTION FOR STUDY IN GERMANY */}
-      <section className="max-w-7xl mx-auto px-4 text-left">
+      <section className="max-w-7xl mx-auto px-4 text-left min-h-screen flex flex-col justify-center py-16">
        <ScrollReveal variant="clipReveal">
         <div className="rounded-sm bg-slate-900 text-white p-8 md:p-14 relative overflow-hidden border border-slate-800 border-b-4 border-b-gold shadow-premium">
           <div className="absolute top-0 right-0 w-80 h-80 bg-navy/10 rounded-full blur-3xl pointer-events-none" />
@@ -96,7 +96,7 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
       </section>
 
       {/* SEMESTER CALENDAR & URGENCY */}
-      <section className={`py-20 px-4 border-y ${dark ? 'bg-slate-950/50 border-slate-900' : 'bg-slate-50/50 border-slate-100'
+      <section className={`py-20 px-4 border-y min-h-screen flex flex-col justify-center ${dark ? 'bg-slate-950/50 border-slate-900' : 'bg-slate-50/50 border-slate-100'
         }`}>
         <div className="max-w-7xl mx-auto text-left space-y-12">
 
@@ -179,7 +179,7 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
       </section>
 
       {/* STATS ROW WITH IMMEDIATE VISUAL IMPACT */}
-      <section className="max-w-7xl mx-auto px-4 space-y-12">
+      <section className="max-w-7xl mx-auto px-4 min-h-screen flex flex-col justify-center py-16">
         <div className="text-left max-w-2xl">
           <h3 className={`text-2xl md:text-3xl font-extrabold font-sans ${dark ? 'text-white' : 'text-slate-900'}`}>Facts That Matter</h3>
         </div>
@@ -205,7 +205,7 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
       </section>
 
       {/* FIELDS AND SPECIALISATIONS */}
-      <section className={`py-20 px-4 border-y ${dark ? 'bg-slate-950/50 border-slate-900' : 'bg-slate-50/50 border-slate-100'
+      <section className={`py-20 px-4 border-y min-h-screen flex flex-col justify-center ${dark ? 'bg-slate-950/50 border-slate-900' : 'bg-slate-50/50 border-slate-100'
         }`}>
         <div className="max-w-7xl mx-auto space-y-12">
 
@@ -241,7 +241,7 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
       </section>
 
       {/* CAREER PROSPECTS */}
-      <section className="max-w-7xl mx-auto px-4">
+      <section className="max-w-7xl mx-auto px-4 min-h-screen flex flex-col justify-center py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
           <ScrollReveal variant="swoopIn" className="lg:col-span-6 space-y-6 text-left">
@@ -302,7 +302,7 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
       </section>
 
       {/* BOTTOM CTA: ₹9 PROFILE VERIFICATION */}
-      <section className="max-w-7xl mx-auto px-4 text-center">
+      <section className="max-w-7xl mx-auto px-4 text-center min-h-screen flex flex-col justify-center">
        <ScrollReveal variant="flipUp">
         <div className={`p-8 md:p-12 rounded-sm border shadow-premium space-y-6 border-b-4 border-b-gold ${dark ? 'border-slate-800 bg-slate-950 text-white' : 'border-slate-200 bg-white text-slate-850'
           }`}>
