@@ -30,7 +30,7 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
   };
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-40 border-b transition-all duration-300 backdrop-blur-md ${
+    <nav className={`fixed top-4 left-30 right-30 z-40 border-b transition-all rounded-full duration-300 backdrop-blur-md bg-transparent ${
       theme === 'dark'
         ? 'bg-slate-950/85 border-slate-800 text-slate-100'
         : 'bg-white/85 border-slate-150 text-slate-900'
@@ -54,7 +54,8 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
                   onMouseEnter={() => setHoveredItem(id)}
                   onMouseLeave={() => setHoveredItem(null)}
                 >
-                  <button
+                  
+                 <button
                     onClick={() => handleNavClick(id)}
                     className={`relative flex items-center justify-center w-9 h-9 laptop:w-10 laptop:h-10 4k:w-13 4k:h-13 rounded-sm border transition-all duration-200 cursor-pointer ${
                       isActive
@@ -68,13 +69,11 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
                   >
                     <Icon className="w-4 h-4 laptop:w-4 laptop:h-4 4k:w-5 4k:h-5" strokeWidth={isActive ? 2.5 : 1.8} />
 
-                    {/* Active dot */}
                     {isActive && (
                       <span className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-gold" />
                     )}
                   </button>
 
-                  {/* Tooltip */}
                   <div
                     className={`absolute top-full left-1/2 -translate-x-1/2 mt-2.5 pointer-events-none transition-all duration-200 ease-out ${
                       hoveredItem === id
@@ -82,12 +81,10 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
                         : 'opacity-0 -translate-y-1'
                     }`}
                   >
-                    {/* Arrow */}
                     <div className={`absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 ${
                       theme === 'dark' ? 'bg-slate-800 border-l border-t border-slate-700' : 'bg-white border-l border-t border-slate-200'
                     }`} />
 
-                    {/* Label */}
                     <div className={`relative px-2.5 py-1.5 4k:px-3 4k:py-2 rounded-sm text-[10px] 4k:text-xs font-bold uppercase tracking-widest whitespace-nowrap shadow-lg border ${
                       theme === 'dark'
                         ? 'bg-slate-800 border-slate-700 text-slate-200'
@@ -95,7 +92,7 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
                     }`}>
                       {label}
                     </div>
-                  </div>
+                  </div> 
                 </div>
               );
             })}
