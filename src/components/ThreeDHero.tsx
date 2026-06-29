@@ -64,7 +64,7 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
         <div className="lg:col-span-8 space-y-4 mobile-m:space-y-5 laptop:space-y-6 4k:space-y-8 text-left">
 
           {/* Badge */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -80,7 +80,7 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
             <span className="text-[9px] mobile-m:text-[10px] 4k:text-xs font-bold text-[#e5a800] tracking-[0.15em] uppercase flex items-center gap-1">
               INR 100 CONSULTATIONS <Sparkles className="w-3 h-3 4k:w-3.5 4k:h-3.5" />
             </span>
-          </motion.div>
+          </motion.div> */}
 
           {/* Headline */}
           <motion.h1
