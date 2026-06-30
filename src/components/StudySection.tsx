@@ -78,24 +78,24 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
 
       {/* HERO SECTION FOR STUDY IN GERMANY */}
       <section className="max-w-7xl mx-auto px-4 text-left">
-       <ScrollReveal variant="clipReveal">
-        <div className="rounded-sm bg-slate-900 text-white p-8 md:p-14 relative overflow-hidden border border-slate-800 border-b-4 border-b-gold shadow-premium">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-navy/10 rounded-full blur-3xl pointer-events-none" />
+        <ScrollReveal variant="clipReveal">
+          <div className="rounded-sm bg-slate-900 text-white p-8 md:p-14 relative overflow-hidden border border-slate-800 border-b-4 border-b-gold shadow-premium">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-navy/10 rounded-full blur-3xl pointer-events-none" />
 
-          <div className="relative z-10 max-w-4xl space-y-6">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-[10px] font-bold tracking-widest bg-navy/35 text-slate-100 border border-navy/50 uppercase">
-              STUDY IN GERMANY & EUROPE
-            </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.15] font-sans">
-              The degree costs nothing.<br />
-              <span className="font-serif italic font-medium text-gold">The opportunity costs everything if you miss it.</span>
-            </h2>
-            <p className="text-slate-350 text-sm md:text-base leading-relaxed max-w-2xl font-sans">
-              Germany's public universities charge zero tuition fees to international students. These are the same universities that train stellar engineers at Siemens, researchers at BASF, and tech pioneers at SAP. You pay only for your standard living costs. The high-class world education itself is completely free.
-            </p>
+            <div className="relative z-10 max-w-4xl space-y-6">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-[10px] font-bold tracking-widest bg-navy/35 text-slate-100 border border-navy/50 uppercase">
+                STUDY IN GERMANY & EUROPE
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.15] font-sans">
+                The degree costs nothing.<br />
+                <span className="font-serif italic font-medium text-gold">The opportunity costs everything if you miss it.</span>
+              </h2>
+              <p className="text-slate-350 text-sm md:text-base leading-relaxed max-w-2xl font-sans">
+                Germany's public universities charge zero tuition fees to international students. These are the same universities that train stellar engineers at Siemens, researchers at BASF, and tech pioneers at SAP. You pay only for your standard living costs. The high-class world education itself is completely free.
+              </p>
+            </div>
           </div>
-        </div>
-       </ScrollReveal>
+        </ScrollReveal>
       </section>
 
       {/* SEMESTER CALENDAR & URGENCY */}
@@ -118,68 +118,68 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
             {/* Winter Semester Card */}
-           <ScrollReveal variant="slideLeft" delay={0.1}>
-            <div className={`rounded-sm border p-6 md:p-8 space-y-4 shadow-premium border-b-4 border-b-rose-500 ${dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200 bg-white'
-              }`}>
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-navy uppercase tracking-widest font-sans">Winter Intake</span>
-                <span className="px-2 py-1 rounded-sm text-[9px] bg-red-500/10 text-red-500 font-bold uppercase tracking-wider animate-pulse flex items-center gap-1 border border-red-500/20">
-                  <Flame className="w-3 h-3" /> Priority
-                </span>
-              </div>
-              <h3 className={`text-lg font-bold font-sans ${dark ? 'text-white' : 'text-slate-900'}`}>October Start (Main Intake)</h3>
-              <p className={`text-xs leading-relaxed font-sans ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
-                The widest choice of programmes, most seats, and the most competitive. If targeting the winter semester, you must start your APS and language prep at least **12 months** before October.
-              </p>
-              <div className={`grid grid-cols-2 gap-3 text-xs border-t pt-4 ${dark ? 'border-slate-900' : 'border-slate-100'}`}>
-                <div>
-                  <span className="text-[9px] text-slate-400 block uppercase font-mono">Applications Open</span>
-                  <span className="font-semibold text-gold">January</span>
+            <ScrollReveal variant="slideLeft" delay={0.1}>
+              <div className={`rounded-sm border p-6 md:p-8 space-y-4 shadow-premium border-b-4 border-b-rose-500 ${dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200 bg-white'
+                }`}>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-navy uppercase tracking-widest font-sans">Winter Intake</span>
+                  <span className="px-2 py-1 rounded-sm text-[9px] bg-red-500/10 text-red-500 font-bold uppercase tracking-wider animate-pulse flex items-center gap-1 border border-red-500/20">
+                    <Flame className="w-3 h-3" /> Priority
+                  </span>
                 </div>
-                <div>
-                  <span className="text-[9px] text-slate-400 block uppercase font-mono">Deadline Date</span>
-                  <span className="font-semibold text-rose-500">July 15</span>
+                <h3 className={`text-lg font-bold font-sans ${dark ? 'text-white' : 'text-slate-900'}`}>October Start (Main Intake)</h3>
+                <p className={`text-xs leading-relaxed font-sans ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
+                  The widest choice of programmes, most seats, and the most competitive. If targeting the winter semester, you must start your APS and language prep at least **12 months** before October.
+                </p>
+                <div className={`grid grid-cols-2 gap-3 text-xs border-t pt-4 ${dark ? 'border-slate-900' : 'border-slate-100'}`}>
+                  <div>
+                    <span className="text-[9px] text-slate-400 block uppercase font-mono">Applications Open</span>
+                    <span className="font-semibold text-gold">January</span>
+                  </div>
+                  <div>
+                    <span className="text-[9px] text-slate-400 block uppercase font-mono">Deadline Date</span>
+                    <span className="font-semibold text-rose-500">July 15</span>
+                  </div>
                 </div>
               </div>
-            </div>
-           </ScrollReveal>
+            </ScrollReveal>
 
             {/* Summer Semester Card */}
-           <ScrollReveal variant="slideRight" delay={0.2}>
-            <div className={`rounded-sm border p-6 md:p-8 space-y-4 shadow-premium border-b-4 border-b-emerald-500 ${dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200 bg-white'
-              }`}>
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-emerald-500 uppercase tracking-widest font-sans">Summer Intake</span>
-              </div>
-              <h3 className={`text-lg font-bold font-sans ${dark ? 'text-white' : 'text-slate-900'}`}>April Start</h3>
-              <p className={`text-xs leading-relaxed font-sans ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
-                Fewer programmes offer a summer intake. Competition is slightly lower because fewer students know about it. A good option if your profile is already strong and you want a faster start.
-              </p>
-              <div className={`grid grid-cols-2 gap-3 text-xs border-t pt-4 ${dark ? 'border-slate-900' : 'border-slate-100'}`}>
-                <div>
-                  <span className="text-[9px] text-slate-400 block uppercase font-mono">Applications Open</span>
-                  <span className="font-semibold text-gold">July</span>
+            <ScrollReveal variant="slideRight" delay={0.2}>
+              <div className={`rounded-sm border p-6 md:p-8 space-y-4 shadow-premium border-b-4 border-b-emerald-500 ${dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200 bg-white'
+                }`}>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-emerald-500 uppercase tracking-widest font-sans">Summer Intake</span>
                 </div>
-                <div>
-                  <span className="text-[9px] text-slate-400 block uppercase font-mono">Deadline Date</span>
-                  <span className="font-semibold text-rose-500">January 15</span>
+                <h3 className={`text-lg font-bold font-sans ${dark ? 'text-white' : 'text-slate-900'}`}>April Start</h3>
+                <p className={`text-xs leading-relaxed font-sans ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
+                  Fewer programmes offer a summer intake. Competition is slightly lower because fewer students know about it. A good option if your profile is already strong and you want a faster start.
+                </p>
+                <div className={`grid grid-cols-2 gap-3 text-xs border-t pt-4 ${dark ? 'border-slate-900' : 'border-slate-100'}`}>
+                  <div>
+                    <span className="text-[9px] text-slate-400 block uppercase font-mono">Applications Open</span>
+                    <span className="font-semibold text-gold">July</span>
+                  </div>
+                  <div>
+                    <span className="text-[9px] text-slate-400 block uppercase font-mono">Deadline Date</span>
+                    <span className="font-semibold text-rose-500">January 15</span>
+                  </div>
                 </div>
               </div>
-            </div>
-           </ScrollReveal>
+            </ScrollReveal>
 
           </div>
 
           <ScrollReveal variant="fadeUp" delay={0.3}>
-          <div className="p-5 rounded-sm border border-gold/20 bg-gold/5 text-xs text-slate-600 dark:text-slate-400 space-y-2">
-            <span className="font-bold text-gold uppercase tracking-wider font-mono flex items-center gap-1.5">
-              <AlertTriangle className="w-4 h-4 text-gold" style={{ strokeWidth: 2.5 }} /> Ground Advice from Founders:
-            </span>
-            <p className="font-sans leading-relaxed">
-              "Start the process the moment you make the decision. Not when your final semester results are out. Not after holidays. The APS certification process alone can require **up to 3 months**. Language preparation to B2 takes **10 to 14 months minimum**. Successful students started earlier than felt necessary."
-            </p>
-          </div>
-         </ScrollReveal>
+            <div className="p-5 rounded-sm border border-gold/20 bg-gold/5 text-xs text-slate-600 dark:text-slate-400 space-y-2">
+              <span className="font-bold text-gold uppercase tracking-wider font-mono flex items-center gap-1.5">
+                <AlertTriangle className="w-4 h-4 text-gold" style={{ strokeWidth: 2.5 }} /> Ground Advice from Founders:
+              </span>
+              <p className="font-sans leading-relaxed">
+                "Start the process the moment you make the decision. Not when your final semester results are out. Not after holidays. The APS certification process alone can require **up to 3 months**. Language preparation to B2 takes **10 to 14 months minimum**. Successful students started earlier than felt necessary."
+              </p>
+            </div>
+          </ScrollReveal>
 
         </div>
       </section>
@@ -314,29 +314,42 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
 
       {/* BOTTOM CTA: INR 100 BOOKING */}
       <section className="max-w-4xl mx-auto px-4 text-center">
-       <ScrollReveal variant="flipUp">
-        <div className={`p-8 md:p-12 rounded-sm border shadow-premium space-y-6 border-b-4 border-b-gold ${dark ? 'border-slate-800 bg-slate-950 text-white' : 'border-slate-200 bg-white text-slate-800'
-          }`}>
-          <span className={`text-[10px] font-bold text-navy uppercase tracking-[0.2em] border px-3 py-1 rounded-sm ${dark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
+        <ScrollReveal variant="flipUp">
+          <div className={`p-8 md:p-12 rounded-sm border shadow-premium space-y-6 border-b-4 border-b-gold ${dark ? 'border-slate-800 bg-slate-950 text-white' : 'border-slate-200 bg-white text-slate-800'
             }`}>
-            Stop Googling. Start Getting Answers.
-          </span>
-          <h3 className={`text-2xl md:text-3xl font-bold font-sans max-w-xl mx-auto ${dark ? 'text-white' : 'text-slate-900'}`}>
-            ₹100 gets you 20 minutes with a credentialed Germany expert
-          </h3>
-          <p className="text-slate-400 text-xs md:text-sm max-w-lg mx-auto font-sans leading-relaxed">
-            Get an honest review pointing you in the right direction. We will tell you exactly where your profile stands. No sugarcoating, no false promises.
-          </p>
-          <div>
-            <button
-              onClick={onOpenConsultation}
-              className="px-8 py-3.5 rounded-sm font-bold text-xs uppercase tracking-widest bg-navy hover:bg-opacity-90 text-white border-b-2 border-gold transition-all cursor-pointer shadow-premium"
-            >
-              Book Your Evaluation Session
-            </button>
+            {/* <span className={`text-[10px] font-bold text-navy uppercase tracking-[0.2em] border px-3 py-1 rounded-sm ${dark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
+              }`}>
+              Stop Googling. Start Getting Answers.
+            </span> */}
+            <span className={'text-3xl laptop:text-4xl sm:text-3xl font-bold text-gold pr-96'}>₹9</span>
+            <h3 className={`text-2xl md:text-3xl font-bold font-sans max-w-xl mx-auto ${dark ? 'text-white' : 'text-slate-900'}`}>
+    
+              <span
+                style={{
+                  background: 'linear-gradient(to top left, transparent 47%, currentColor 48%, currentColor 52%, transparent 53%) no-repeat center',
+                  padding: '0 4px',
+                  display: 'inline-block'
+                }}
+                className="text-base md:text-xl font-normal opacity-80"
+              >
+                1500
+              </span>
+              gets you 20 minutes with a credentialed Germany expert
+            </h3>
+
+            <p className="text-slate-400 text-xs md:text-sm max-w-lg mx-auto font-sans leading-relaxed">
+              Get an honest review pointing you in the right direction. We will tell you exactly where your profile stands. No sugarcoating, no false promises.
+            </p>
+            <div>
+              <button
+                onClick={onOpenConsultation}
+                className="px-8 py-3.5 rounded-sm font-bold text-xs uppercase tracking-widest bg-navy hover:bg-opacity-90 text-white border-b-2 border-gold transition-all cursor-pointer shadow-premium"
+              >
+                Book Your Evaluation Session
+              </button>
+            </div>
           </div>
-        </div>
-       </ScrollReveal>
+        </ScrollReveal>
       </section>
 
     </div>
