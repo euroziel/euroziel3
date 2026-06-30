@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send, CheckCircle2, AlertCircle, Sparkles } from 'lucide-react';
 
 // Deployed Apps Script Web App Endpoint
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzbSFHQqPwUvxHgdesX8HAV_VdIlkvWc_N4c8_c6DpniqQ4uHCAasaXojRBp4Q8xMyTTg/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyc_4-9z_maCezngz3lRY4ZHN2HUGJoeTLpW3HQ8O7sfHqih1DMXRMgGAS3dDoJWKGu9g/exec';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -103,7 +103,7 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, formType: 'modal1' }),
       });
 
       const submissions = JSON.parse(localStorage.getItem('euroziel_leads') || '[]');
