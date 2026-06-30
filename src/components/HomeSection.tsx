@@ -26,8 +26,8 @@ function ChooseCard({ card, isDark }: ChooseCardProps) {
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       }}
-      whileHover={{ y: -4 }}
-      className={`p-5 mobile-m:p-6 laptop:p-7 rounded-sm border text-left min-h-[280px] mobile-m:min-h-[300px] laptop:min-h-[320px] flex flex-col justify-end shadow-premium hover:border-gold transition-all duration-300 ${
+      whileHover={{ y: -27 }}
+      className={`p-5 mobile-m:p-6 laptop:p-7 rounded-sm border text-left min-h-[280px] mobile-m:min-h-[300px] laptop:min-h-[320px] flex flex-col justify-end shadow-premium hover:border-blue-500 transition-all duration-100 ${
         isDark ? 'border-slate-900' : 'border-slate-200/50'
       }`}
     >
@@ -171,11 +171,11 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
       {/* SECTION 1: OUR MISSION — stacks over the sticky hero */}
       <section
         ref={section1Ref}
-        className={`relative z-30 w-full py-16 mobile-m:py-20 laptop:py-24 border-b transition-colors duration-300 shadow-[0_-40px_80px_rgba(0,0,0,0.7)] lg:-mt-[100vh] mt-0 ${
+        className={`relative z-30 w-full py-16 mobile-m:py-20 laptop:py-76 laptop-l:py-100 border-b transition-colors duration-300 shadow-[0_-40px_80px_rgba(0,0,0,0.7)] lg:-mt-[100vh] mt-0 ${
           isDark ? 'border-slate-900 bg-[#060814]' : 'border-slate-100 bg-white'
         }`}
       >
-       <ScrollReveal variant="fadeUp" delay={0.1}>
+       <ScrollReveal variant="fadeUp" delay={0.3} >
         <div className="w-full px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 laptop-l:px-12 4k:px-20 max-w-7xl mx-auto">
           <div className="grid grid-cols-1 laptop:grid-cols-12 gap-8 laptop:gap-12 laptop-l:gap-16 items-center">
             
@@ -244,14 +244,14 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
             </div>
 
             {/* Right Column: Text Content */}
-            <div className="laptop:col-span-7 space-y-6">
-              <span className={`inline-block text-[9px] mobile-m:text-[10px] 4k:text-xs font-bold uppercase tracking-[0.25em] px-3 py-1.5 rounded-full transition-all duration-300 ${
+            <div className="laptop:col-span-7 space-y-10 mobile-m:space-y-12 laptop:space-y-14 4k:space-y-16">
+              {/* <span className={`inline-block text-[9px] mobile-m:text-[10px] 4k:text-xs font-bold uppercase tracking-[0.25em] px-3 py-1.5 rounded-full transition-all duration-300 ${
                 isDark 
                   ? 'text-gold bg-gold/8 border border-gold/20' 
                   : 'text-[#1b73ba] bg-[#1b73ba]/8 border border-[#1b73ba]/20'
               }`}>
                 OUR MISSION
-              </span>
+              </span> */}
               
               <h2 className={`text-2xl mobile-m:text-3xl laptop:text-4xl 4k:text-5xl font-extrabold tracking-tight font-sans leading-tight ${
                 isDark ? 'text-white' : 'text-slate-900'
@@ -294,7 +294,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
       </section>
 
       {/* SECTION 2: WHY STUDENTS CHOOSE EUROZIEL */}
-      <section className={`relative z-30 py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 border-b w-full transition-colors duration-300 ${
+      <section className={`relative z-30 py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 border-b w-full transition-colors duration-600 ${
         isDark ? 'border-slate-900 bg-[#060814]' : 'border-slate-100 bg-white'
       }`}>
         <div className="w-full space-y-8 mobile-m:space-y-10 laptop:space-y-12 4k:space-y-16 max-w-7xl mx-auto">
@@ -303,12 +303,12 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.9 }}
             className="text-center max-w-xl mobile-m:max-w-2xl 4k:max-w-3xl mx-auto space-y-2 mobile-m:space-y-3"
           >
-            <span className="text-[9px] mobile-m:text-[10px] 4k:text-xs font-bold text-gold uppercase tracking-[0.2em] bg-gold/5 border border-gold/30 px-2.5 mobile-m:px-3 py-1 rounded-sm">
+            {/* <span className="text-[9px] mobile-m:text-[10px] 4k:text-xs font-bold text-gold uppercase tracking-[0.2em] bg-gold/5 border border-gold/30 px-2.5 mobile-m:px-3 py-1 rounded-sm">
               Why EuroZiel?
-            </span>
+            </span> */}
             <h2 className="text-2xl mobile-m:text-3xl laptop:text-4xl 4k:text-5xl font-bold tracking-tight font-sans">
               Why Students Choose Us
             </h2>
@@ -317,7 +317,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
             </p>
           </motion.div>
 
-          <ScrollReveal variant="scaleUp" stagger={0.08} className="grid grid-cols-1 mobile-l:grid-cols-2 lg:grid-cols-3 gap-4 mobile-m:gap-5 laptop:gap-6 4k:gap-8">
+          <ScrollReveal variant="scaleUp" stagger={0.4} className="grid grid-cols-1 mobile-l:grid-cols-2 lg:grid-cols-3 gap-4 mobile-m:gap-5 laptop:gap-6 4k:gap-8">
             {chooseCards.map((card, idx) => (
               <ChooseCard
                 key={idx}
