@@ -9,12 +9,14 @@ import ProcessSection from './components/ProcessSection';
 import AboutSection from './components/AboutSection';
 import FAQSection from './components/FAQSection';
 import ContactModal from './components/ContactModal';
+import ContactModal2 from './components/ContactModal2';
 import { Calendar, CheckCircle2, ChevronUp } from 'lucide-react';
 
 export default function App() {
   const [currentTab, setCurrentTab] = useState('home');
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
+  const [isConsultation2Open, setIsConsultation2Open] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   // Sync dark class on document element
@@ -41,22 +43,29 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    // 1. Check persistent memory first
     const hasSeenModal = localStorage.getItem('hasSeenContactModal');
+    console.log('hasSeenModal:', hasSeenModal);
 
-    // 2. Only start the timer if they haven't seen it before
     if (!hasSeenModal) {
       const timer = setTimeout(() => {
-        setIsConsultationOpen(true); // 3. Set volatile UI state to open
+        console.log('Opening modal2 now');
+        setIsConsultation2Open(true);
       }, 5000);
 
       return () => clearTimeout(timer);
     }
   }, []);
 
-  const handleCloseModal = () => {
-    setIsConsultationOpen(false); // Close it visually right now
-    localStorage.setItem('hasSeenContactModal', 'true'); // Remember never to open it again
+  // Close handler for the AUTO-POPUP modal (ContactModal2) only.
+  // This is the one that should set the "don't show again" flag.
+  const handleCloseModal2 = () => {
+    setIsConsultation2Open(false);
+    localStorage.setItem('hasSeenContactModal', 'true');
+  };
+
+  // Close handler for the MANUALLY-TRIGGERED modal (ContactModal).
+  const handleCloseModal1 = () => {
+    setIsConsultationOpen(false);
   };
 
   const toggleTheme = () => {
@@ -161,10 +170,17 @@ export default function App() {
         onOpenConsultation={() => setIsConsultationOpen(true)}
       />
 
-      {/* Contact modal popup */}
+      {/* Manually-triggered consultation modal (simple form -> Enquiries_Simple sheet) */}
       <ContactModal
         isOpen={isConsultationOpen}
-        onClose={() => setIsConsultationOpen(false)}
+        onClose={handleCloseModal1}
+        theme={theme}
+      />
+
+      {/* Auto-popup consultation modal (detailed form -> Enquiries_Detailed sheet) */}
+      <ContactModal2
+        isOpen={isConsultation2Open}
+        onClose={handleCloseModal2}
         theme={theme}
       />
 

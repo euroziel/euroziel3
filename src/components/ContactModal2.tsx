@@ -87,7 +87,7 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ ...form, formType: 'modal2' }),
+        body: JSON.stringify({ ...form, formType: 'modal1' }),
       });
 
       const submissions = JSON.parse(localStorage.getItem('euroziel_leads') || '[]');
@@ -168,9 +168,9 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
               {!isSubmitted ? (
                 <>
                   <div className="mb-6 pr-6">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-sm text-[10px] font-bold tracking-[0.15em] uppercase mb-2 bg-amber-500/5 border border-amber-500/35 text-amber-500">
+                    {/* <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-sm text-[10px] font-bold tracking-[0.15em] uppercase mb-2 bg-amber-500/5 border border-amber-500/35 text-amber-500">
                       <Sparkles className="w-3.5 h-3.5" /> Direct Access Setup
-                    </span>
+                    </span> */}
                     <h3 className="text-2xl font-bold font-sans text-slate-900 dark:text-white">
                       Start Your <span className="font-serif italic font-medium text-blue-950 dark:text-amber-500">Germany</span> Profile Audit
                     </h3>
