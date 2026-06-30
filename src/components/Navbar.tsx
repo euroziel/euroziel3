@@ -113,7 +113,7 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
 
           {/* Mobile Controls */}
           <div className="flex laptop:hidden items-center gap-1.5 mobile-m:gap-2 ml-auto">
-            <button
+            {/* <button
               onClick={onThemeToggle}
               className={`p-1.5 rounded-full border transition-colors cursor-pointer ${theme === 'dark' ? 'border-slate-700 bg-slate-900 text-gold' : 'border-slate-200 bg-slate-50 text-slate-600'
                 }`}
@@ -121,7 +121,7 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
               {theme === 'dark'
                 ? <Sun className="w-3.5 h-3.5" />
                 : <Moon className="w-3.5 h-3.5" />}
-            </button>
+            </button> */}
 
             <button
               onClick={() => setIsOpen(!isOpen)}
