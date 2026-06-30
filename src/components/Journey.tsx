@@ -382,13 +382,13 @@ export default function Journey({ theme }: JourneyProps) {
   // Total strip width ≈ 6 cards × card width + gaps
   // We translate from 0% (showing card 1) to roughly -83% (showing card 6)
   // The exact value = (numCards - 1) / numCards * 100
-  const translateX = useTransform(smoothProgress, [0, 1], ["0%", "-83.33%"]);
+  const translateX = useTransform(smoothProgress, [0, 1], ["0%", "-99%"]);
 
   // ─── Progress bar width ──────────────────────────────
-  const progressWidth = useTransform(smoothProgress, [0, 1], ["0%", "100%"]);
+  const progressWidth = useTransform(smoothProgress, [0, 1], ["3%", "100%"]);
 
   // ─── Walking character position ──────────────────────
-  const charLeft = useTransform(smoothProgress, [0, 1], ["4%", "92%"]);
+  const charLeft = useTransform(smoothProgress, [0, 1], ["2%", "100%"]);
 
   return (
     <>
@@ -400,7 +400,7 @@ export default function Journey({ theme }: JourneyProps) {
       <div
         ref={sectionRef}
         className="relative z-40"
-        style={{ height: "400vh" }}
+        style={{ height: "600vh" }}
       >
         {/*
           Sticky inner viewport — pins to screen while scrolling through the tall container.
@@ -411,7 +411,7 @@ export default function Journey({ theme }: JourneyProps) {
             dark ? "bg-[#060814]" : "bg-white"
           }`}
           style={{
-            boxShadow: "0 -30px 60px rgba(0,0,0,0.55)",
+            boxShadow: "0 -30px 90px rgba(0,0,0,0.55)",
           }}
         >
           {/* ─── Section Title ─── */}
@@ -432,8 +432,8 @@ export default function Journey({ theme }: JourneyProps) {
           </div>
 
           {/* ─── Progress Bar + Walking Character ─── */}
-          <div className="px-6 mobile-m:px-8 laptop:px-16 4k:px-24 py-4 flex-shrink-0">
-            <div className="max-w-3xl laptop:max-w-5xl 4k:max-w-7xl mx-auto relative">
+          <div className="px-6 mobile-m:px-8 laptop:px-16 4k:px-24 py-8 flex-shrink-0">
+            <div className="pt-10 max-w-3xl laptop:max-w-5xl 4k:max-w-7xl mx-auto relative">
               {/* Track background */}
               <div className={`h-1.5 rounded-full ${dark ? "bg-slate-800" : "bg-slate-200"}`}>
                 <motion.div
@@ -509,7 +509,7 @@ export default function Journey({ theme }: JourneyProps) {
           <div className="flex-1 flex items-center overflow-hidden">
             <motion.div
               style={{ x: translateX }}
-              className="flex gap-6 mobile-m:gap-8 laptop:gap-10 pl-[8vw] pr-[20vw]"
+              className="flex gap-6 mobile-m:gap-8 laptop:gap-24 px-6 mobile-m:px-8 laptop:px-16 4k:px-24 py-8 laptop:h-[420px] 4k:h-[480px] items-center"
             >
               {steps.map((step, i) => (
                 <StepCard
