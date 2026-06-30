@@ -29,31 +29,29 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
   };
 
   return (
-    <nav className={`fixed top-4 left-1/2 -translate-x-1/2 z-40 border transition-all rounded-full duration-300 backdrop-blur-md w-max ${theme === 'dark'
+    <nav className={`fixed top-3 mobile-m:top-4 left-1/2 -translate-x-1/2 z-40 border transition-all rounded-full duration-300 backdrop-blur-md w-[calc(100%-0.75rem)] mobile-m:w-[calc(100%-1rem)] tablet:w-full max-w-[calc(100%-0.75rem)] laptop:max-w-[95vw] laptop-l:max-w-[80vw] ${theme === 'dark'
         ? 'bg-transparent border-slate-800 text-slate-100'
         : 'bg-transparent border-slate-200 text-slate-900'
       }`}>
-      <div className="px-3 laptop:px-4">
-        <div className="flex items-center gap-1 h-14 laptop:h-16">
+      <div className="px-2 mobile-m:px-3 tablet:px-4 laptop:px-0">
+        <div className="flex items-center justify-center gap-1 h-12 mobile-m:h-14 tablet:h-14 laptop:h-16">
 
           {/* Logo */}
-          <div className="flex-shrink-0 cursor-pointer pr-2 mr-1 ${
-            theme === 'dark' ? 'border-slate-700' : 'border-slate-200'
-          }" onClick={() => handleNavClick('home')}>
+          <div className={`flex-shrink-0 cursor-pointer pr-1 mobile-m:pr-2 mr-0.5 mobile-m:mr-1 laptop:w-1/5 ${theme === 'dark' ? 'border-slate-700' : 'border-slate-200'}`} onClick={() => handleNavClick('home')}>
             <Logo isDark={theme === 'dark'} />
           </div>
 
-          <div className={`hidden lg:block h-6 w-px mx-2 ${theme === 'dark' ? 'bg-slate-700' : 'bg-slate-200'}`} />
+          <div className={`hidden laptop:block h-6 w-px mx-2 ${theme === 'dark' ? 'bg-slate-700' : 'bg-slate-200'}`} />
 
           {/* Desktop Nav — icon + label */}
-          <div className="hidden lg:flex items-center gap-0.5">
+          <div className="hidden laptop:flex items-center gap-0.5">
             {menuItems.map(({ id, label, Icon }) => {
               const isActive = currentTab === id;
               return (
                 <button
                   key={id}
                   onClick={() => handleNavClick(id)}
-                  className={`relative flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-semibold tracking-wide whitespace-nowrap transition-all duration-200 cursor-pointer ${isActive
+                  className={`relative flex items-center gap-1.5 px-2.5 laptop:px-3 py-1.5 rounded-full text-[10px] mobile-m:text-[11px] laptop:text-[9px] laptop-l:text-[12px] font-semibold tracking-wide whitespace-nowrap transition-all duration-200 cursor-pointer ${isActive
                       ? theme === 'dark'
                         ? 'bg-navy/40 text-white'
                         : 'bg-navy/10 text-navy'
@@ -62,7 +60,7 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
                         : 'text-slate-500 hover:bg-slate-100 hover:text-slate-800'
                     }`}
                 >
-                  <Icon className="w-3.5 h-3.5 shrink-0" strokeWidth={isActive ? 2.5 : 1.8} />
+                  <Icon className="w-3.5 h-3.5 shrink-0 laptop:hidden" strokeWidth={isActive ? 2.5 : 1.8} />
                   {label}
                   {isActive && (
                     <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-gold" />
@@ -73,10 +71,10 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
           </div>
 
           {/* Divider */}
-          <div className={`hidden lg:block h-6 w-px mx-2 ${theme === 'dark' ? 'bg-slate-700' : 'bg-slate-200'}`} />
+          <div className={`hidden laptop:block h-6 w-px mx-2 ${theme === 'dark' ? 'bg-slate-700' : 'bg-slate-200'}`} />
 
           {/* Desktop Controls */}
-          <div className="hidden lg:flex items-center gap-2">
+          <div className="hidden laptop:flex items-center gap-2">
             {/* <button
               onClick={onThemeToggle}
               className={`p-2 rounded-full border transition-all cursor-pointer hover:scale-105 active:scale-95 ${
@@ -94,7 +92,7 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
 
             <button
               onClick={onOpenConsultation}
-              className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[11px] font-bold tracking-widest uppercase bg-navy text-white hover:bg-opacity-90 border-b-2 border-gold cursor-pointer transition-all duration-300 whitespace-nowrap"
+              className="flex items-center gap-1.5 px-3 mobile-m:px-4 py-1.5 rounded-full text-[10px] mobile-m:text-[11px] laptop:text-[9px] font-bold tracking-widest uppercase bg-navy text-white hover:bg-opacity-90 border-b-2 border-gold cursor-pointer transition-all duration-300 whitespace-nowrap"
             >
               <Calendar className="w-3.5 h-3.5 text-gold shrink-0" />
               Book Free Call
@@ -114,7 +112,7 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
           </div>
 
           {/* Mobile Controls */}
-          <div className="flex lg:hidden items-center gap-2 ml-2">
+          <div className="flex laptop:hidden items-center gap-1.5 mobile-m:gap-2 ml-auto">
             <button
               onClick={onThemeToggle}
               className={`p-1.5 rounded-full border transition-colors cursor-pointer ${theme === 'dark' ? 'border-slate-700 bg-slate-900 text-gold' : 'border-slate-200 bg-slate-50 text-slate-600'
@@ -130,7 +128,7 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
               className="p-1.5 rounded-full text-slate-500 hover:text-navy focus:outline-none cursor-pointer"
               aria-label="Toggle navigation menu"
             >
-              {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {isOpen ? <X className="w-4.5 h-4.5 mobile-m:w-5 mobile-m:h-5" /> : <Menu className="w-4.5 h-4.5 mobile-m:w-5 mobile-m:h-5" />}
             </button>
           </div>
 
@@ -139,15 +137,15 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
 
       {/* Mobile Drawer */}
       {isOpen && (
-        <div className={`lg:hidden border-t absolute top-14 left-0 right-0 shadow-xl z-50 rounded-b-2xl overflow-hidden ${theme === 'dark' ? 'bg-slate-950 border-slate-800' : 'bg-white border-slate-100'
+        <div className={`laptop:hidden border-t absolute top-[3.25rem] mobile-m:top-14 left-0 right-0 shadow-xl z-50 rounded-b-2xl overflow-hidden ${theme === 'dark' ? 'bg-slate-950 border-slate-800' : 'bg-white border-slate-100'
           }`}>
-          <div className="px-4 pt-3 pb-5 space-y-3">
+          <div className="px-3 mobile-m:px-4 pt-3 pb-5 space-y-3">
             <div className="flex flex-col space-y-0.5">
               {menuItems.map(({ id, label, Icon }) => (
                 <button
                   key={id}
                   onClick={() => handleNavClick(id)}
-                  className={`w-full text-left py-2.5 px-3 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-colors cursor-pointer flex items-center gap-3 ${currentTab === id
+                  className={`w-full text-left py-2.5 px-3 rounded-xl text-[10px] mobile-m:text-[11px] font-bold uppercase tracking-wider transition-colors cursor-pointer flex items-center gap-3 ${currentTab === id
                       ? 'bg-navy/10 text-navy'
                       : theme === 'dark' ? 'text-slate-400 hover:bg-slate-900' : 'text-slate-600 hover:bg-slate-50'
                     }`}
@@ -161,7 +159,7 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
             <div className="pt-1">
               <button
                 onClick={() => { setIsOpen(false); onOpenConsultation(); }}
-                className="w-full py-2.5 rounded-xl font-bold text-[11px] uppercase tracking-wider text-center bg-navy text-white hover:bg-opacity-90 border-b-2 border-gold flex items-center justify-center gap-1.5 shadow-md cursor-pointer"
+                className="w-full py-2.5 rounded-xl font-bold text-[10px] mobile-m:text-[11px] laptop:text-[9px] uppercase tracking-wider text-center bg-navy text-white hover:bg-opacity-90 border-b-2 border-gold flex items-center justify-center gap-1.5 shadow-md cursor-pointer"
               >
                 <Calendar className="w-4 h-4 text-gold" style={{ strokeWidth: 2.5 }} />
                 Book Consultation Call
@@ -171,7 +169,7 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
             <div className="pt-1">
               <button
                 onClick={() => { setIsOpen(false); window.location.href = 'https://dashboard.euroziel.com'; }}
-                className={`w-full py-2.5 rounded-xl font-bold text-[11px] uppercase tracking-wider text-center border transition-all flex items-center justify-center gap-2 ${theme === 'dark' ? 'border-slate-700 text-slate-200 hover:bg-slate-800/60' : 'border-slate-200 text-slate-700 hover:bg-slate-50'
+                className={`w-full py-2.5 rounded-xl font-bold text-[10px] mobile-m:text-[11px] laptop:text-[9px] uppercase tracking-wider text-center border transition-all flex items-center justify-center gap-2 ${theme === 'dark' ? 'border-slate-700 text-slate-200 hover:bg-slate-800/60' : 'border-slate-200 text-slate-700 hover:bg-slate-50'
                   }`}
               >
                 <LogIn className="w-4 h-4" />
