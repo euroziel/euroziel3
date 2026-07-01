@@ -1,7 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 import { Sparkles, Calendar, GraduationCap, ChevronRight, CheckCircle } from 'lucide-react';
 import { FaInstagram, FaLinkedin, FaYoutube, FaWhatsapp, FaEnvelope } from 'react-icons/fa';
+import { animate } from "framer-motion";
 
 interface ThreeDHeroProps {
   onOpenConsultation: () => void;
@@ -38,6 +39,27 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
   };
 
   const isDark = theme === 'dark';
+
+  // Custom hook for count-up animation
+
+  function useCountUp(target: number, start: number, duration = 2) {
+    const [value, setValue] = useState(start);
+
+    useEffect(() => {
+      const controls = animate(start, target, {
+        duration,
+        ease: "easeOut",
+        onUpdate: (latest) => setValue(Math.round(latest)),
+      });
+      return () => controls.stop();
+    }, [target, start, duration]);
+
+    return value;
+  }
+
+  // Inside your component:
+  const tuitionFee = useCountUp(0, 1000, 2); // Count up from 1000 to 0 over 2 seconds
+  const successRate = useCountUp(98, 0, 2); // Count up from 0 to 98 over 2 seconds
 
   return (
     <div className="relative lg:h-[200vh] h-auto">
@@ -109,26 +131,26 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
               className={`grid grid-cols-3 gap-3 mobile-m:gap-4 laptop:gap-6 4k:gap-8 py-3 mobile-m:py-4 4k:py-5 border-y max-w-xs mobile-m:max-w-sm laptop:max-w-lg ${isDark ? 'border-slate-800/50' : 'border-slate-200/50'
                 }`}
             >
               <div>
-                <div className={`text-lg mobile-m:text-xl laptop:text-2xl 4k:text-3xl font-bold ${isDark ? 'text-blue-400' : 'text-navy'}`}>
-                  0€ <span className="text-[10px] mobile-m:text-xs 4k:text-sm font-normal text-slate-400 font-sans">Tuition fees</span>
+                <div className={`text-lg mobile-m:text-xl laptop:text-3xl 4k:text-3xl font-bold ${isDark ? 'text-blue-400' : 'text-navy'}`}>
+                  {tuitionFee}€ <span className="text-[10px] mobile-m:text-xs 4k:text-sm font-normal text-slate-400 font-sans">Tuition fees</span>
                 </div>
                 <div className={`text-[9px] mobile-m:text-[10px] 4k:text-xs tracking-widest uppercase mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-500'
                   }`}>Most German States</div>
               </div>
               <div>
-                <div className="text-lg mobile-m:text-xl laptop:text-2xl 4k:text-3xl font-bold text-[#e5a800]">
-                  98% <span className="text-[10px] mobile-m:text-xs 4k:text-sm font-normal text-slate-400 font-sans">Success</span>
+                <div className="text-lg mobile-m:text-xl laptop:text-3xl 4k:text-3xl font-bold text-[#e5a800]">
+                  {successRate}% <span className="text-[10px] mobile-m:text-xs 4k:text-sm font-normal text-slate-400 font-sans">Success</span>
                 </div>
                 <div className={`text-[9px] mobile-m:text-[10px] 4k:text-xs tracking-widest uppercase mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-500'
                   }`}>Visa Accomplishment</div>
               </div>
               <div>
-                <div className={`text-lg mobile-m:text-xl laptop:text-2xl 4k:text-3xl font-bold ${isDark ? 'text-teal-400' : 'text-teal-600'
+                <div className={`text-lg mobile-m:text-xl laptop:text-3xl 4k:text-3xl font-bold ${isDark ? 'text-teal-400' : 'text-teal-600'
                   }`}>1-on-1</div>
                 <div className={`text-[9px] mobile-m:text-[10px] 4k:text-xs tracking-widest uppercase mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-500'
                   }`}>Native Mentorship</div>
@@ -302,7 +324,7 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
                       }`}>Start Profile verification</span> <br />
                     <span className={`text-[10px] mobile-m:text-xs 4k:text-sm font-bold tracking-widest  ${isDark ? 'text-slate-400' : 'text-slate-500'
                       }`}>@ just</span>
-                    <span className="text-[12px] mobile-m:text-[9px] laptop-l:text-[30px] 4k:text-[11px] uppercase tracking-widest font-sans text-gold">₹9</span> <br />
+                    <span className="text-[12px] mobile-m:text-[9px] laptop:text-[24px] laptop-l:text-[30px] 4k:text-[11px] uppercase tracking-widest font-sans text-bold pl-1 text-gold">₹9</span> <br />
                     <span
                       style={{
                         background: 'linear-gradient(to top left, transparent 47%, currentColor 48%, currentColor 52%, transparent 53%) no-repeat center',
