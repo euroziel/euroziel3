@@ -55,7 +55,7 @@ interface TestimonialCardProps {
 function TestimonialCard({ test, isDark }: TestimonialCardProps) {
   return (
     <motion.div
-      whileHover={{ y: -4 }}
+      whileHover={{ y: -14 }}
       className={`p-4 mobile-m:p-5 laptop:p-6 4k:p-8 rounded-sm border text-left shadow-premium flex flex-col justify-between transition-all duration-300 hover:border-gold/30 ${isDark ? 'border-slate-800 bg-slate-950' : 'border-slate-200/50 bg-white'
         }`}
     >
@@ -148,11 +148,11 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
       ]
     },
     {
-      title: "Language Coaching Support",
+      title: "Target Exam Training",
       image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800",
       points: [
-        "Preparation support for TestDaF, Goethe-Zertifikat, or DSH",
-        "Practical speaking sessions to handle daily life in Germany"
+        "Preparation support for IELTS, GRE, or DSH",
+        "Practical exam strategies from alumni who aced the tests"
       ]
     }
   ];
@@ -366,7 +366,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
               Why EuroZiel?
             </span> */}
             <h2 className="text-2xl mobile-m:text-3xl laptop:text-4xl 4k:text-5xl font-bold tracking-tight font-sans">
-              Why Students Choose Us
+              Why Students Choose EuroZiel
             </h2>
             <p className={`text-xs mobile-m:text-sm 4k:text-base ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
               We focus on a single European pathway so we can offer deeper, more comprehensive expertise than any generalist agent.
