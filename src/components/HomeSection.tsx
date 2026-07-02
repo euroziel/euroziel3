@@ -1,6 +1,6 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { motion,  AnimatePresence, useScroll, useMotionValueEvent, } from 'motion/react';
-import { ArrowRight, Star, ArrowLeftRight, Quote } from 'lucide-react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
+import { motion, AnimatePresence, useScroll, useMotionValueEvent, } from 'motion/react';
+import { ArrowRight, Star, ArrowLeftRight, Quote,  CheckCircle2, Pause, Play } from 'lucide-react';
 import Journey from './Journey';
 import ScrollReveal from './ScrollReveal';
 
@@ -126,7 +126,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
     },
   ];
 
-  const N = testimonials.length;
+  const testimonialCount = testimonials.length;
 
   /* accent used for the quote mark, dots, and avatar-ring per card */
   const ACCENTS = ["#3b82c4", "#e5a800", "#1fae7a", "#8b6fd8"];
@@ -233,7 +233,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
      SCROLL-DRIVEN TESTIMONIAL SWAPPER
      ──────────────────────────────────────────────────────────── */
   function ScrollingTestimonials({ isDark }: { isDark: boolean }) {
-    const sectionRef = useRef(null);
+    const sectionRef = useRef<HTMLDivElement | null>(null);
     const [active, setActive] = useState(0);
     const [dir, setDir] = useState(1);
     const prevActive = useRef(0);
@@ -244,7 +244,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
     });
 
     useMotionValueEvent(scrollYProgress, "change", (v) => {
-      const idx = Math.min(N - 1, Math.max(0, Math.round(v * (N - 1))));
+      const idx = Math.min(testimonialCount - 1, Math.max(0, Math.round(v * (testimonialCount - 1))));
       if (idx !== prevActive.current) {
         setDir(idx > prevActive.current ? 1 : -1);
         prevActive.current = idx;
@@ -257,7 +257,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
     const photoSide = active % 2 === 0 ? "left" : "right"; // alternates every testimonial
 
     return (
-      <div ref={sectionRef} className="relative" style={{ height: `${N * 100}vh` }}>
+      <div ref={sectionRef} className="relative" style={{ height: `${testimonialCount * 100}vh` }}>
         <div className="sticky top-0 h-screen flex items-center overflow-hidden">
           <div className="w-full max-w-6xl mx-auto px-4 mobile-m:px-6 laptop:px-10">
             <div className="relative grid grid-cols-1 mobile-l:grid-cols-2 gap-10 mobile-m:gap-14 items-center min-h-[380px]">
@@ -298,7 +298,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
                 ))}
               </div>
               <span className={`text-xs font-semibold tabular-nums ${isDark ? "text-slate-500" : "text-slate-400"}`}>
-                {String(active + 1).padStart(2, "0")} / {String(N).padStart(2, "0")}
+                {String(active + 1).padStart(2, "0")} / {String(testimonialCount).padStart(2, "0")}
               </span>
             </div>
           </div>
@@ -308,56 +308,292 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
   }
 
 
+
+  /* ────────────────────────────────────────────────────────────
+     DATA — unchanged
+     ──────────────────────────────────────────────────────────── */
   const chooseCards = [
     {
       title: "Real People. Real Guidance.",
       image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800",
       points: [
         "1-on-1 contact with TU Munich and RWTH Aachen alumni",
-        "Direct feedback from professionals working across Europe"
-      ]
+        "Direct feedback from professionals working across Europe",
+      ],
     },
     {
       title: "Germany Exclusive Focus",
       image: "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=800",
       points: [
         "Specialized strategy for German public university admissions",
-        "Deep knowledge of APS validation and German visa filing"
-      ]
+        "Deep knowledge of APS validation and German visa filing",
+      ],
     },
     {
       title: "Domain-Based Experts",
       image: "https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=800",
       points: [
         "Guidance from seniors who studied in your exact field",
-        "Tailored roadmaps for IT, Engineering, and Healthcare"
-      ]
+        "Tailored roadmaps for IT, Engineering, and Healthcare",
+      ],
     },
     {
       title: "Personalized Strategy",
       image: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=800",
       points: [
         "Shortlists curated for your specific CGPA and profile",
-        "Custom plan tailored to language levels and budget"
-      ]
+        "Custom plan tailored to language levels and budget",
+      ],
     },
     {
       title: "End-to-End Support",
       image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800",
       points: [
         "Assistance from APS submission to visa approval",
-        "Ground setup: blocking account, Anmeldung, housing"
-      ]
+        "Ground setup: blocking account, Anmeldung, housing",
+      ],
     },
     {
       title: "Target Exam Training",
       image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800",
       points: [
         "Preparation support for IELTS, GRE, or DSH",
-        "Practical exam strategies from alumni who aced the tests"
-      ]
-    }
+        "Practical exam strategies from alumni who aced the tests",
+      ],
+    },
   ];
+
+  const cardCount = chooseCards.length;
+  const N = cardCount;
+  const STEP = 360 / cardCount;
+
+  /* one gradient pair per card — the backdrop glow shifts through these */
+  const GRADIENTS = [
+    ["#3b82c4", "#1fae7a"],
+    ["#e5a800", "#e08a3c"],
+    ["#8b6fd8", "#3b82c4"],
+    ["#2bb3ab", "#1fae7a"],
+    ["#e08a3c", "#e5a800"],
+    ["#1fae7a", "#8b6fd8"],
+  ];
+
+  const HOLD_MS = 2700; // how long each card stays centered
+
+  /* ────────────────────────────────────────────────────────────
+     helper — shortest signed angular distance from a card's base
+     angle to the current front-facing rotation
+     ──────────────────────────────────────────────────────────── */
+  function angleDelta(base: number, rotation: number): number {
+    let d = (base - rotation) % 360;
+    if (d > 180) d -= 360;
+    if (d < -180) d += 360;
+    return d;
+  }
+
+  /* ────────────────────────────────────────────────────────────
+     360° ROTATING CAROUSEL
+     ──────────────────────────────────────────────────────────── */
+  function ChooseCarousel({ isDark }: { isDark: boolean }) {
+    const [active, setActive] = useState(0);
+    const [paused, setPaused] = useState(false);
+    const [radius, setRadius] = useState(360);
+    const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+    // responsive ring radius
+    useEffect(() => {
+      const setR = () => {
+        const w = window.innerWidth;
+        if (w < 480) setRadius(190);
+        else if (w < 768) setRadius(240);
+        else if (w < 1024) setRadius(320);
+        else setRadius(400);
+      };
+      setR();
+      window.addEventListener("resize", setR);
+      return () => window.removeEventListener("resize", setR);
+    }, []);
+
+    const advance = useCallback(() => {
+      setActive((a) => (a + 1) % N);
+    }, []);
+
+    useEffect(() => {
+      if (paused) return;
+      timerRef.current = setInterval(advance, HOLD_MS);
+      return () => {
+        if (timerRef.current) {
+          clearInterval(timerRef.current);
+        }
+      };
+    }, [paused, advance]);
+
+    const rotation = -active * STEP; // rotates the whole ring so `active` faces front
+    const [g1, g2] = GRADIENTS[active % GRADIENTS.length];
+
+    return (
+      <div
+        className="relative w-full flex flex-col items-center"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+      >
+        {/* synced ambient gradient backdrop */}
+        <motion.div
+          className="pointer-events-none absolute -z-10 w-[600px] h-[600px] rounded-full blur-[120px] opacity-25"
+          animate={{
+            background: `linear-gradient(135deg, ${g1}, ${g2})`,
+          }}
+          transition={{ duration: 1.1, ease: "easeInOut" }}
+        />
+
+        {/* 3D stage */}
+        <div
+          className="relative w-full flex items-center justify-center"
+          style={{
+            height: "clamp(360px, 46vw, 520px)",
+            perspective: "1600px",
+          }}
+        >
+          <div
+            className="relative w-full h-full"
+            style={{
+              transformStyle: "preserve-3d",
+              transform: `rotateY(${rotation}deg)`,
+              transition: "transform 1s cubic-bezier(0.65,0,0.35,1)",
+            }}
+          >
+            {chooseCards.map((card, i) => {
+              const base = i * STEP;
+              const delta = angleDelta(base, rotation === 0 ? 0 : -rotation); // delta relative to camera
+              // frontness: 1 at delta=0, 0 at |delta|=180
+              const frontness = 1 - Math.min(180, Math.abs(delta)) / 180;
+              const isFront = i === active;
+              const scale = 0.5 + frontness * 0.5;
+              const opacity = 0.25 + frontness * 0.75;
+              const blur = isFront ? 0 : (1 - frontness) * 3;
+              const zIndex = Math.round(frontness * 100);
+              const accent = GRADIENTS[i % GRADIENTS.length][0];
+
+              return (
+                <div
+                  key={card.title}
+                  className="absolute left-1/2 top-1/2"
+                  style={{
+                    width: "min(78vw, 340px)",
+                    transform: `translate(-50%, -50%) rotateY(${base}deg) translateZ(${radius}px) scale(${scale})`,
+                    transformStyle: "preserve-3d",
+                    opacity,
+                    zIndex,
+                    filter: `blur(${blur}px)`,
+                    transition:
+                      "transform 1s cubic-bezier(0.65,0,0.35,1), opacity 0.9s ease, filter 0.9s ease",
+                  }}
+                >
+                  <div
+                    className="relative rounded-[26px] overflow-hidden"
+                    style={{
+                      backgroundImage: `linear-gradient(180deg, rgba(6,12,22,${isFront ? 0.15 : 0.55
+                        }) 0%, rgba(6,12,22,0.94) 100%), url(${card.image})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                      aspectRatio: isFront ? "3 / 3.6" : "1 / 1",
+                      boxShadow: isFront
+                        ? `0 30px 70px -18px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.08), 0 0 50px ${accent}55`
+                        : "0 10px 30px rgba(0,0,0,0.3)",
+                    }}
+                  >
+                    <div className="absolute inset-0 flex flex-col justify-end p-5 mobile-m:p-6">
+                      <span
+                        className="text-[10px] font-bold uppercase tracking-[0.2em] mb-2"
+                        style={{ color: accent }}
+                      >
+                        {String(i + 1).padStart(2, "0")} / {String(N).padStart(2, "0")}
+                      </span>
+                      <h3 className="text-white font-bold text-lg mobile-m:text-xl leading-snug mb-2">
+                        {card.title}
+                      </h3>
+
+                      {/* points only shown clearly on the front card */}
+                      <AnimatePresence>
+                        {isFront && (
+                          <motion.ul
+                            initial={{ opacity: 0, y: 8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 8 }}
+                            transition={{ delay: 0.25, duration: 0.4 }}
+                            className="space-y-1.5 mt-1"
+                          >
+                            {card.points.map((p) => (
+                              <li
+                                key={p}
+                                className="flex items-start gap-2 text-xs mobile-m:text-sm text-white/80"
+                              >
+                                <CheckCircle2
+                                  className="w-3.5 h-3.5 mt-0.5 flex-shrink-0"
+                                  style={{ color: accent }}
+                                />
+                                <span>{p}</span>
+                              </li>
+                            ))}
+                          </motion.ul>
+                        )}
+                      </AnimatePresence>
+                    </div>
+
+                    {isFront && (
+                      <div
+                        className="absolute inset-0 rounded-[26px] pointer-events-none"
+                        style={{ boxShadow: `inset 0 0 0 1.5px ${accent}66` }}
+                      />
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* progress dots + play/pause */}
+        <div className="flex items-center gap-4 mt-8 mobile-m:mt-10">
+          <div className="flex items-center gap-2">
+            {chooseCards.map((_, i) => (
+              <button
+                key={i}
+                aria-label={`Go to card ${i + 1}`}
+                onClick={() => setActive(i)}
+                className="p-1"
+              >
+                <motion.span
+                  animate={{
+                    width: i === active ? 24 : 7,
+                    backgroundColor:
+                      i === active
+                        ? GRADIENTS[i % GRADIENTS.length][0]
+                        : isDark
+                          ? "#334155"
+                          : "#cbd5e1",
+                  }}
+                  transition={{ type: "spring", stiffness: 200, damping: 22 }}
+                  className="block h-1.5 rounded-full"
+                />
+              </button>
+            ))}
+          </div>
+
+          <button
+            onClick={() => setPaused((p) => !p)}
+            className={`w-7 h-7 rounded-full flex items-center justify-center border transition-colors ${isDark
+              ? "border-slate-700 text-slate-400 hover:text-white"
+              : "border-slate-300 text-slate-500 hover:text-slate-900"
+              }`}
+            aria-label={paused ? "Resume auto-rotate" : "Pause auto-rotate"}
+          >
+            {paused ? <Play className="w-3.5 h-3.5" /> : <Pause className="w-3.5 h-3.5" />}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
 
 
 
@@ -553,10 +789,11 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
       </section>
 
       {/* SECTION 2: WHY STUDENTS CHOOSE EUROZIEL */}
-      <section className={`relative z-30 py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 border-b w-full transition-colors duration-600 ${isDark ? 'border-slate-900 bg-[#060814]' : 'border-slate-100 bg-white'
-        }`}>
+      <section
+        className={`relative z-30 py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 border-b w-full transition-colors duration-600 ${isDark ? "border-slate-900 bg-[#060814]" : "border-slate-100 bg-white"
+          }`}
+      >
         <div className="w-full space-y-8 mobile-m:space-y-10 laptop:space-y-12 4k:space-y-16 max-w-7xl mx-auto">
-
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -564,36 +801,22 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
             transition={{ duration: 0.9 }}
             className="text-center max-w-xl mobile-m:max-w-2xl 4k:max-w-3xl mx-auto space-y-2 mobile-m:space-y-3"
           >
-            {/* <span className="text-[9px] mobile-m:text-[10px] 4k:text-xs font-bold text-gold uppercase tracking-[0.2em] bg-gold/5 border border-gold/30 px-2.5 mobile-m:px-3 py-1 rounded-sm">
-              Why EuroZiel?
-            </span> */}
             <h2 className="text-2xl mobile-m:text-3xl laptop:text-4xl 4k:text-5xl font-bold tracking-tight font-sans">
               Why Students Choose EuroZiel
             </h2>
-            <p className={`text-xs mobile-m:text-sm 4k:text-base ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+            <p className={`text-xs mobile-m:text-sm 4k:text-base ${isDark ? "text-slate-400" : "text-slate-500"}`}>
               We focus on a single European pathway so we can offer deeper, more comprehensive expertise than any generalist agent.
             </p>
           </motion.div>
 
-          <ScrollReveal variant="scaleUp" stagger={0.4} className="grid grid-cols-1 mobile-l:grid-cols-2 lg:grid-cols-3 gap-4 mobile-m:gap-5 laptop:gap-6 4k:gap-8">
-            {chooseCards.map((card, idx) => (
-              <ChooseCard
-                key={idx}
-                card={card}
-                isDark={isDark}
-              />
-            ))}
-          </ScrollReveal>
-
+          <ChooseCarousel isDark={isDark} />
         </div>
       </section>
 
       {/* SECTION 3: DYNAMIC COMPONENT FOR THE 6-STEP PATHWAY */}
       <Journey theme={theme} />
 
-      /* ────────────────────────────────────────────────────────────
-      SECTION 4: TESTIMONIALS
-      ──────────────────────────────────────────────────────────── */
+      {/* SECTION 4: TESTIMONIALS — scroll-driven swapper with photo + quote panels */}
       <section
         className={`relative z-30 py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 border-b w-full transition-colors duration-300 ${isDark ? "border-slate-900 bg-[#060814]" : "border-slate-100 bg-white"
           }`}
