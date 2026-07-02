@@ -377,7 +377,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
     ["#1fae7a", "#8b6fd8"],
   ];
 
-  const HOLD_MS = 2700; // how long each card stays centered
+  const HOLD_MS = 3100; // how long each card stays centered
 
   /* ────────────────────────────────────────────────────────────
      helper — shortest signed angular distance from a card's base
