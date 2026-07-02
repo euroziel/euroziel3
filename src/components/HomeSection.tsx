@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useScroll, useMotionValueEvent, } from 'motion
 import { ArrowRight, Star, ArrowLeftRight, Quote,  CheckCircle2, Pause, Play } from 'lucide-react';
 import Journey from './Journey';
 import ScrollReveal from './ScrollReveal';
+import OurMission from './OurMission';
 
 interface HomeSectionProps {
   onOpenConsultation: () => void;
@@ -619,7 +620,6 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
                 },
               }}
             >
-              {/* Left Column: The "Not a General Agency" card */}
               <motion.div
                 className="laptop:col-span-5"
                 variants={{
@@ -635,13 +635,11 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
                     : 'bg-slate-50/80 border-slate-200 shadow-sm hover:shadow-xl'
                     }`}
                 >
-                  {/* Decorative glow */}
                   <div
                     className={`absolute -top-10 -right-10 w-40 h-40 rounded-full blur-3xl opacity-20 pointer-events-none ${isDark ? 'bg-gold' : 'bg-[#1b73ba]'
                       }`}
                   />
 
-                  {/* Header Row */}
                   <div className="flex items-center gap-4 mb-8 relative">
                     <motion.div
                       whileHover={{ rotate: 12, scale: 1.1 }}
@@ -666,7 +664,6 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
                     </div>
                   </div>
 
-                  {/* Box 1: Typical Consultancies */}
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -688,7 +685,6 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
                     </p>
                   </motion.div>
 
-                  {/* Box 2: The EuroZiel Difference */}
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -715,7 +711,6 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
                 </motion.div>
               </motion.div>
 
-              {/* Right Column: Text Content */}
               <motion.div
                 className="laptop:col-span-7 space-y-10 mobile-m:space-y-12 laptop:space-y-14 4k:space-y-16"
                 variants={{
@@ -787,6 +782,10 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
           </div>
         </ScrollReveal>
       </section>
+
+
+    {/* <OurMission isDark={isDark} /> */}
+
 
       {/* SECTION 2: WHY STUDENTS CHOOSE EUROZIEL */}
       <section
