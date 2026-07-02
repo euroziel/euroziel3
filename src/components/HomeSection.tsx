@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { motion } from 'motion/react';
-import { ArrowRight, Star, ArrowLeftRight } from 'lucide-react';
+import { motion,  AnimatePresence, useScroll, useMotionValueEvent, } from 'motion/react';
+import { ArrowRight, Star, ArrowLeftRight, Quote } from 'lucide-react';
 import Journey from './Journey';
 import ScrollReveal from './ScrollReveal';
 
@@ -26,7 +26,7 @@ function ChooseCard({ card, isDark }: ChooseCardProps) {
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       }}
-      whileHover={{ y: -27 }}
+      whileHover={{ y: -17 }}
       className={`p-5 mobile-m:p-6 laptop:p-7 rounded-sm border text-left min-h-[280px] mobile-m:min-h-[300px] laptop:min-h-[320px] flex flex-col justify-end shadow-premium hover:border-blue-500 transition-all duration-100 ${isDark ? 'border-slate-900' : 'border-slate-200/50'
         }`}
     >
@@ -87,24 +87,226 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
   const isDark = theme === 'dark';
   const section1Ref = useRef<HTMLDivElement>(null);
 
+  /* ────────────────────────────────────────────────────────────
+   DATA — add a `photo` (optional) and `rating`; falls back to
+   an initials avatar if no photo is supplied
+   ──────────────────────────────────────────────────────────── */
   const testimonials = [
     {
-      name: "Aditya R.", prog: "M.Sc Computer Science, Germany",
-      quote: "EuroZiel didn't just file applications—they explained the entire journey. Speaking directly with seniors already studying in Germany gave me the clarity I needed to make the right choice."
+      name: "Aditya R.",
+      prog: "M.Sc Computer Science, Germany",
+      quote:
+        "EuroZiel didn't just file applications—they explained the entire journey. Speaking directly with seniors already studying in Germany gave me the clarity I needed to make the right choice.",
+      photo: "", // e.g. "/students/aditya.jpg"
+      rating: 5,
     },
     {
-      name: "Keerthana S.", prog: "Mechanical Engineering Student",
-      quote: "The honesty was refreshing. Instead of false promises, they told me exactly where my profile stood and how to improve it. That transparent feedback saved me months."
+      name: "Keerthana S.",
+      prog: "Mechanical Engineering Student",
+      quote:
+        "The honesty was refreshing. Instead of false promises, they told me exactly where my profile stood and how to improve it. That transparent feedback saved me months.",
+      photo: "",
+      rating: 5,
     },
     {
-      name: "Vishnu Prasad", prog: "TU Berlin Student",
-      quote: "They guided me from APS validation all the way to finding accommodation. Even after landing, their student network helped me avoid the mistakes most newcomers make."
+      name: "Vishnu Prasad",
+      prog: "TU Berlin Student",
+      quote:
+        "They guided me from APS validation all the way to finding accommodation. Even after landing, their student network helped me avoid the mistakes most newcomers make.",
+      photo: "",
+      rating: 5,
     },
     {
-      name: "Nithya M.", prog: "Healthcare Ausbildung Pathway",
-      quote: "The Ausbildung visa and language steps were overwhelming. EuroZiel connected me with people already working in Germany, making the entire transition incredibly smooth."
-    }
+      name: "Nithya M.",
+      prog: "Healthcare Ausbildung Pathway",
+      quote:
+        "The Ausbildung visa and language steps were overwhelming. EuroZiel connected me with people already working in Germany, making the entire transition incredibly smooth.",
+      photo: "",
+      rating: 5,
+    },
   ];
+
+  const N = testimonials.length;
+
+  /* accent used for the quote mark, dots, and avatar-ring per card */
+  const ACCENTS = ["#3b82c4", "#e5a800", "#1fae7a", "#8b6fd8"];
+
+  /* ────────────────────────────────────────────────────────────
+     PHOTO PANEL — slides in from the direction of travel
+     ──────────────────────────────────────────────────────────── */
+  function PhotoPanel({ test, dir, accent, side }: { test: { name: string; prog?: string; quote?: string; photo?: string; rating?: number }; dir: number; accent: string; side: 'left' | 'right' }) {
+    const initials = test.name
+      .split(" ")
+      .map((w) => w[0])
+      .join("")
+      .slice(0, 2)
+      .toUpperCase();
+
+    return (
+      <motion.div
+        key={`photo-${test.name}`}
+        initial={{ x: side === "left" ? -dir * 60 : dir * 60, opacity: 0, scale: 0.92 }}
+        animate={{ x: 0, opacity: 1, scale: 1 }}
+        exit={{ x: side === "left" ? -dir * 60 : dir * 60, opacity: 0, scale: 0.92 }}
+        transition={{ type: "spring", stiffness: 260, damping: 28 }}
+        className="relative flex items-center justify-center"
+      >
+        <div
+          className="relative w-40 h-40 mobile-m:w-48 mobile-m:h-48 laptop:w-56 laptop:h-56 rounded-full overflow-hidden flex items-center justify-center"
+          style={{
+            boxShadow: `0 0 0 4px ${accent}33, 0 0 0 1px ${accent}, 0 25px 50px -12px ${accent}55`,
+          }}
+        >
+          {test.photo ? (
+            <img
+              src={test.photo}
+              alt={test.name}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div
+              className="w-full h-full flex items-center justify-center text-4xl mobile-m:text-5xl font-bold text-white"
+              style={{
+                background: `linear-gradient(135deg, ${accent}, ${accent}99)`,
+              }}
+            >
+              {initials}
+            </div>
+          )}
+        </div>
+
+        {/* orbiting ring accent */}
+        <motion.div
+          className="absolute w-48 h-48 mobile-m:w-56 mobile-m:h-56 laptop:w-64 laptop:h-64 rounded-full pointer-events-none"
+          style={{ border: `1px dashed ${accent}66` }}
+          animate={{ rotate: 360 }}
+          transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+        />
+      </motion.div>
+    );
+  }
+
+  /* ────────────────────────────────────────────────────────────
+     QUOTE PANEL — slides in from the opposite side of the photo
+     ──────────────────────────────────────────────────────────── */
+  function QuotePanel({ test, dir, accent, side, isDark }: { test: { name: string; prog?: string; quote?: string; photo?: string; rating?: number }; dir: number; accent: string; side: 'left' | 'right'; isDark: boolean }) {
+    return (
+      <motion.div
+        key={`quote-${test.name}`}
+        initial={{ x: side === "left" ? -dir * 60 : dir * 60, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        exit={{ x: side === "left" ? -dir * 60 : dir * 60, opacity: 0 }}
+        transition={{ type: "spring", stiffness: 260, damping: 28, delay: 0.05 }}
+        className="relative"
+      >
+        <Quote
+          className="w-10 h-10 mobile-m:w-12 mobile-m:h-12 mb-3 opacity-90"
+          style={{ color: accent, fill: accent, fillOpacity: 0.15 }}
+        />
+
+        <p
+          className={`text-base mobile-m:text-lg laptop:text-xl leading-relaxed font-medium ${isDark ? "text-slate-100" : "text-slate-800"
+            }`}
+        >
+          “{test.quote}”
+        </p>
+
+        <div className="flex items-center gap-1 mt-5">
+          {Array.from({ length: test.rating ?? 0 }).map((_, i) => (
+            <Star key={i} className="w-4 h-4" style={{ color: accent, fill: accent }} />
+          ))}
+        </div>
+
+        <div className="mt-3">
+          <div className={`font-bold text-sm mobile-m:text-base ${isDark ? "text-white" : "text-slate-900"}`}>
+            {test.name}
+          </div>
+          <div className={`text-xs mobile-m:text-sm ${isDark ? "text-slate-400" : "text-slate-500"}`}>
+            {test.prog}
+          </div>
+        </div>
+      </motion.div>
+    );
+  }
+
+  /* ────────────────────────────────────────────────────────────
+     SCROLL-DRIVEN TESTIMONIAL SWAPPER
+     ──────────────────────────────────────────────────────────── */
+  function ScrollingTestimonials({ isDark }: { isDark: boolean }) {
+    const sectionRef = useRef(null);
+    const [active, setActive] = useState(0);
+    const [dir, setDir] = useState(1);
+    const prevActive = useRef(0);
+
+    const { scrollYProgress } = useScroll({
+      target: sectionRef,
+      offset: ["start start", "end end"],
+    });
+
+    useMotionValueEvent(scrollYProgress, "change", (v) => {
+      const idx = Math.min(N - 1, Math.max(0, Math.round(v * (N - 1))));
+      if (idx !== prevActive.current) {
+        setDir(idx > prevActive.current ? 1 : -1);
+        prevActive.current = idx;
+        setActive(idx);
+      }
+    });
+
+    const test = testimonials[active];
+    const accent = ACCENTS[active % ACCENTS.length];
+    const photoSide = active % 2 === 0 ? "left" : "right"; // alternates every testimonial
+
+    return (
+      <div ref={sectionRef} className="relative" style={{ height: `${N * 100}vh` }}>
+        <div className="sticky top-0 h-screen flex items-center overflow-hidden">
+          <div className="w-full max-w-6xl mx-auto px-4 mobile-m:px-6 laptop:px-10">
+            <div className="relative grid grid-cols-1 mobile-l:grid-cols-2 gap-10 mobile-m:gap-14 items-center min-h-[380px]">
+              {/* Photo column */}
+              <div className={`flex justify-center ${photoSide === "right" ? "mobile-l:order-2" : "mobile-l:order-1"}`}>
+                <AnimatePresence mode="wait" custom={dir}>
+                  <PhotoPanel test={test} dir={dir} accent={accent} side={photoSide} />
+                </AnimatePresence>
+              </div>
+
+              {/* Quote column */}
+              <div className={`${photoSide === "right" ? "mobile-l:order-1" : "mobile-l:order-2"}`}>
+                <AnimatePresence mode="wait" custom={dir}>
+                  <QuotePanel
+                    test={test}
+                    dir={dir}
+                    accent={accent}
+                    side={photoSide === "right" ? "right" : "left"}
+                    isDark={isDark}
+                  />
+                </AnimatePresence>
+              </div>
+            </div>
+
+            {/* progress dots + counter */}
+            <div className="flex items-center justify-center gap-4 mt-10 mobile-m:mt-14">
+              <div className="flex items-center gap-2">
+                {testimonials.map((_, i) => (
+                  <motion.div
+                    key={i}
+                    animate={{
+                      width: i === active ? 26 : 8,
+                      backgroundColor: i === active ? ACCENTS[i % ACCENTS.length] : isDark ? "#334155" : "#cbd5e1",
+                    }}
+                    transition={{ type: "spring", stiffness: 200, damping: 22 }}
+                    className="h-2 rounded-full"
+                  />
+                ))}
+              </div>
+              <span className={`text-xs font-semibold tabular-nums ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+                {String(active + 1).padStart(2, "0")} / {String(N).padStart(2, "0")}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
 
   const chooseCards = [
     {
@@ -193,8 +395,8 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
                   whileHover={{ y: -6, scale: 1.01 }}
                   transition={{ type: 'spring', stiffness: 200, damping: 20 }}
                   className={`relative rounded-xl overflow-hidden p-6 mobile-m:p-8 border border-b-4 border-b-gold transition-shadow duration-500 ${isDark
-                      ? 'bg-slate-950/40 border-slate-800/80 shadow-[0_0_50px_rgba(0,0,0,0.3)] hover:shadow-[0_0_70px_rgba(229,168,0,0.15)]'
-                      : 'bg-slate-50/80 border-slate-200 shadow-sm hover:shadow-xl'
+                    ? 'bg-slate-950/40 border-slate-800/80 shadow-[0_0_50px_rgba(0,0,0,0.3)] hover:shadow-[0_0_70px_rgba(229,168,0,0.15)]'
+                    : 'bg-slate-50/80 border-slate-200 shadow-sm hover:shadow-xl'
                     }`}
                 >
                   {/* Decorative glow */}
@@ -209,8 +411,8 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
                       whileHover={{ rotate: 12, scale: 1.1 }}
                       transition={{ type: 'spring', stiffness: 300, damping: 15 }}
                       className={`flex items-center justify-center w-12 h-12 rounded-lg shrink-0 border ${isDark
-                          ? 'bg-gold/10 border-gold/30 text-gold shadow-[0_0_15px_rgba(229,168,0,0.15)]'
-                          : 'bg-[#1b73ba]/10 border-[#1b73ba]/30 text-[#1b73ba]'
+                        ? 'bg-gold/10 border-gold/30 text-gold shadow-[0_0_15px_rgba(229,168,0,0.15)]'
+                        : 'bg-[#1b73ba]/10 border-[#1b73ba]/30 text-[#1b73ba]'
                         }`}
                     >
                       <ArrowLeftRight className="w-6 h-6" />
@@ -238,8 +440,8 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
                   >
                     <div
                       className={`inline-block text-[9px] tracking-[0.2em] font-extrabold uppercase px-2.5 py-1 rounded border ${isDark
-                          ? 'text-slate-400 bg-slate-900/60 border-slate-800/80'
-                          : 'text-slate-500 bg-slate-100 border-slate-200'
+                        ? 'text-slate-400 bg-slate-900/60 border-slate-800/80'
+                        : 'text-slate-500 bg-slate-100 border-slate-200'
                         }`}
                     >
                       Typical Consultancies
@@ -260,8 +462,8 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
                   >
                     <div
                       className={`inline-block text-[9px] tracking-[0.2em] font-extrabold uppercase px-2.5 py-1 rounded border ${isDark
-                          ? 'text-gold bg-gold/5 border-gold/20'
-                          : 'text-[#1b73ba] bg-[#1b73ba]/5 border-[#1b73ba]/20'
+                        ? 'text-gold bg-gold/5 border-gold/20'
+                        : 'text-[#1b73ba] bg-[#1b73ba]/5 border-[#1b73ba]/20'
                         }`}
                     >
                       The EuroZiel Difference
@@ -389,11 +591,14 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
       {/* SECTION 3: DYNAMIC COMPONENT FOR THE 6-STEP PATHWAY */}
       <Journey theme={theme} />
 
-      {/* SECTION 4: TESTIMONIALS */}
-      <section className={`relative z-30 py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 border-b w-full transition-colors duration-300 ${isDark ? 'border-slate-900 bg-[#060814]' : 'border-slate-100 bg-white'
-        }`}>
+      /* ────────────────────────────────────────────────────────────
+      SECTION 4: TESTIMONIALS
+      ──────────────────────────────────────────────────────────── */
+      <section
+        className={`relative z-30 py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 border-b w-full transition-colors duration-300 ${isDark ? "border-slate-900 bg-[#060814]" : "border-slate-100 bg-white"
+          }`}
+      >
         <div className="w-full space-y-8 mobile-m:space-y-10 laptop:space-y-12 4k:space-y-16 max-w-7xl mx-auto">
-
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -401,28 +606,21 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
             transition={{ duration: 0.6 }}
             className="text-center max-w-xl mobile-m:max-w-2xl 4k:max-w-3xl mx-auto space-y-2 mobile-m:space-y-3"
           >
-            <span className={`text-[9px] mobile-m:text-[10px] 4k:text-xs font-bold text-navy uppercase tracking-[0.2em] px-2.5 mobile-m:px-3 py-1 rounded-sm border ${isDark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
-              }`}>
+            <span
+              className={`text-[9px] mobile-m:text-[10px] 4k:text-xs font-bold text-navy uppercase tracking-[0.2em] px-2.5 mobile-m:px-3 py-1 rounded-sm border ${isDark ? "bg-slate-900 border-slate-800" : "bg-slate-100 border-slate-200"
+                }`}
+            >
               SUCCESS STORIES
             </span>
             <h2 className="text-2xl mobile-m:text-3xl laptop:text-4xl 4k:text-5xl font-bold tracking-tight font-sans">
               What Our Students Say
             </h2>
-            <p className={`text-[10px] mobile-m:text-xs laptop:text-sm 4k:text-base ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+            <p className={`text-[10px] mobile-m:text-xs laptop:text-sm 4k:text-base ${isDark ? "text-slate-400" : "text-slate-500"}`}>
               Real experiences from students who trusted EuroZiel for their Germany journey.
             </p>
           </motion.div>
 
-          <ScrollReveal variant="blurIn" stagger={0.12} className="grid grid-cols-1 mobile-l:grid-cols-2 gap-4 mobile-m:gap-5 laptop:gap-6 4k:gap-8 mx-auto">
-            {testimonials.map((test, index) => (
-              <TestimonialCard
-                key={index}
-                test={test}
-                isDark={isDark}
-              />
-            ))}
-          </ScrollReveal>
-
+          <ScrollingTestimonials isDark={isDark} />
         </div>
       </section>
 
