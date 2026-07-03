@@ -288,7 +288,7 @@ export default function GermanyJourney({ theme = "dark" }) {
   return (
     <div
       ref={sectionRef}
-      className="relative z-10"
+      className="relative z-40"
       style={{ height: "620vh" }}
     >
       <div

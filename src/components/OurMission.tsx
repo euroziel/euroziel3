@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { X, Check, Sparkles } from "lucide-react";
+import { X, Check } from "lucide-react";
 
 // ------------------------------------------------------------------
 // Data
@@ -44,8 +44,11 @@ const comparePoints: ComparePoint[] = [
   },
 ];
 
-const centerParagraph =
-  "EuroZiel was founded with a clear purpose to give students access to guidance that is honest, Germany-focused, and built on real experience instead of generic consultancy advice. We saw too many capable students lose opportunities because they were given copied strategies, unrealistic expectations, and little understanding of how the German system actually works. That is why EuroZiel combines structured consultancy with direct insight from students currently studying at German public universities, Indian professionals working across Europe, and domain-specific mentors who understand your academic and career pathway. From university applications and APS to visas, accommodation, and settling in Germany, every step is designed to give students clarity, confidence, and practical direction. At EuroZiel, we do not just help you apply to Germany, we help you prepare for life and long-term success there.";
+const paragraphs: string[] = [
+  "EuroZiel was founded with a clear purpose to give students access to guidance that is honest, Germany-focused, and built on real experience instead of generic consultancy advice. We saw too many capable students lose opportunities because they were given copied strategies, unrealistic expectations, and little understanding of how the German system actually works.",
+  "That is why EuroZiel combines structured consultancy with direct insight from students currently studying at German public universities, Indian professionals working across Europe, and domain-specific mentors who understand your academic and career pathway.",
+  "From university applications and APS to visas, accommodation, and settling in Germany, every step is designed to give students clarity, confidence, and practical direction. At EuroZiel, we do not just help you apply to Germany, we help you prepare for life and long-term success there.",
+];
 
 // ------------------------------------------------------------------
 // Hook: trigger once when element scrolls into view
@@ -77,26 +80,32 @@ function useInView<T extends HTMLElement>(threshold = 0.3) {
 }
 
 // ------------------------------------------------------------------
-// Hook: word-by-word typewriter effect
+// Hook: word-by-word typewriter across multiple paragraphs
 // ------------------------------------------------------------------
 
-function useTypewriter(text: string, active: boolean, speed = 60) {
-  const [displayed, setDisplayed] = useState("");
+function useMultiParagraphTypewriter(
+  paragraphsArr: string[],
+  active: boolean,
+  speed = 45
+) {
+  const wordArrays = paragraphsArr.map((p) => p.split(" "));
+  const totalWords = wordArrays.reduce((sum, arr) => sum + arr.length, 0);
+
+  const [wordsTyped, setWordsTyped] = useState(0);
   const [done, setDone] = useState(false);
 
   useEffect(() => {
     if (!active) return;
 
-    const words = text.split(" ");
     let currentIndex = 0;
-    setDisplayed("");
+    setWordsTyped(0);
     setDone(false);
 
     const interval = setInterval(() => {
       currentIndex++;
-      setDisplayed(words.slice(0, currentIndex).join(" "));
+      setWordsTyped(currentIndex);
 
-      if (currentIndex >= words.length) {
+      if (currentIndex >= totalWords) {
         clearInterval(interval);
         setDone(true);
       }
@@ -106,14 +115,70 @@ function useTypewriter(text: string, active: boolean, speed = 60) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active]);
 
-  return { displayed, done };
+  const displayedParagraphs: string[] = [];
+  let remaining = wordsTyped;
+  let activeParagraphIndex = -1;
+
+  for (let i = 0; i < wordArrays.length; i++) {
+    const wordsInThisParagraph = wordArrays[i].length;
+    const take = Math.max(0, Math.min(wordsInThisParagraph, remaining));
+    displayedParagraphs.push(wordArrays[i].slice(0, take).join(" "));
+
+    if (take > 0 && take < wordsInThisParagraph && activeParagraphIndex === -1) {
+      activeParagraphIndex = i;
+    }
+    remaining -= take;
+  }
+
+  if (activeParagraphIndex === -1 && !done) {
+    for (let i = displayedParagraphs.length - 1; i >= 0; i--) {
+      if (displayedParagraphs[i].length < paragraphsArr[i].length) {
+        activeParagraphIndex = i;
+        break;
+      }
+    }
+  }
+
+  return { displayedParagraphs, done, activeParagraphIndex };
+}
+
+// ------------------------------------------------------------------
+// NEW Hook: scroll progress of this section relative to viewport.
+// Drives the "rising over hero" entrance (scale + opacity + shadow)
+// as the sticky section approaches and locks to the top of the
+// viewport. progress: 0 (not reached yet) -> 1 (fully stacked).
+// ------------------------------------------------------------------
+
+function useStackProgress<T extends HTMLElement>() {
+  const ref = useRef<T | null>(null);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const handleScroll = () => {
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const raw = 1 - rect.top / vh;
+      const clamped = Math.min(1, Math.max(0, raw));
+      setProgress(clamped);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, []);
+
+  return { ref, progress };
 }
 
 // ------------------------------------------------------------------
 // Side Card (Consultancy / EuroZiel)
-// Sits in normal flex flow (NOT absolute) so it can never overlap
-// the center content — negative margin + section overflow-hidden
-// creates the "peeking off-screen" effect instead.
 // ------------------------------------------------------------------
 
 interface SideCardProps {
@@ -127,13 +192,10 @@ interface SideCardProps {
 const SideCard: React.FC<SideCardProps> = ({ side, theme, title, subtitle, points }) => {
   const isRed = theme === "red";
 
-  // Negative margin pulls ~25% of the card past the section edge,
-  // which then gets clipped by overflow-hidden on the section —
-  // giving the "75% visible" peek without absolute/overlap risk.
   const marginClasses =
     side === "left"
-      ? "-ml-14 lg:-ml-8 xl:-ml-10 2xl:-ml-24"
-      : "-mr-14 lg:-mr-8 xl:-mr-10 2xl:-mr-24";
+      ? "-ml-10 lg:-ml-14 xl:-ml-8 2xl:-ml-20"
+      : "-mr-10 lg:-mr-14 xl:-mr-8 2xl:-mr-20";
 
   const themeClasses = isRed
     ? {
@@ -160,47 +222,46 @@ const SideCard: React.FC<SideCardProps> = ({ side, theme, title, subtitle, point
   return (
     <div
       className={`
-        hidden lg:block flex-shrink-0
-        w-[190px] lg:w-[190px] xl:w-[230px] 2xl:w-[260px]
+        hidden lg:block
+        w-[260px] lg:w-[260px] xl:w-[280px] 2xl:w-[300px]
         ${marginClasses}
-        z-10
+        z-40
       `}
     >
       <div
         className={`
-          relative overflow-hidden rounded-xl border ${themeClasses.border} ${themeClasses.glow}
+          relative overflow-hidden rounded-2xl border ${themeClasses.border} ${themeClasses.glow}
           bg-gradient-to-br ${themeClasses.bgFrom} ${themeClasses.bgTo}
-          backdrop-blur-xl p-3.5 lg:p-3.5 xl:p-4.5 2xl:p-5
+          backdrop-blur-xl p-4 lg:p-5 xl:p-5 2xl:p-6
           transition-transform duration-500 ease-out
           hover:${side === "left" ? "-translate-x-[3%]" : "translate-x-[3%]"}
         `}
       >
-        {/* badge */}
         <div
-          className={`inline-flex items-center gap-1 rounded-full border px-2 lg:px-2 xl:px-2.5 py-0.5 text-[8px] lg:text-[8px] xl:text-[10px] font-semibold uppercase tracking-wider mb-2 xl:mb-2.5 ${themeClasses.badge}`}
+          className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[9px] lg:text-[10px] font-semibold uppercase tracking-wider mb-2.5 lg:mb-3 ${themeClasses.badge}`}
         >
           {isRed ? <X className="w-2.5 h-2.5" /> : <Check className="w-2.5 h-2.5" />}
           {isRed ? "Typical Consultancy" : "The EuroZiel Way"}
         </div>
 
-        <h3 className="text-xs lg:text-xs xl:text-base font-bold text-white mb-0.5">{title}</h3>
-        <p className={`text-[9px] lg:text-[9px] xl:text-xs mb-2.5 xl:mb-3 ${themeClasses.heading}`}>
-          {subtitle}
-        </p>
+        <h3 className="text-base lg:text-lg xl:text-xl font-bold text-white mb-0.5">{title}</h3>
+        <p className={`text-[11px] lg:text-xs mb-3 lg:mb-4 ${themeClasses.heading}`}>{subtitle}</p>
 
-        <div className={`h-px w-full mb-2.5 xl:mb-3 ${themeClasses.line}`} />
+        <div className={`h-px w-full mb-3 lg:mb-4 ${themeClasses.line}`} />
 
-        <ul className="space-y-1.5 xl:space-y-2.5">
+        <ul className="space-y-2 lg:space-y-2.5">
           {points.map((point, idx) => (
-            <li key={idx} className="flex items-start gap-1.5 xl:gap-2">
+            <li key={idx} className="flex items-start gap-2 lg:gap-2.5">
               <span
-                className={`flex-shrink-0 mt-0.5 w-3 h-3 xl:w-3.5 xl:h-3.5 rounded-full border flex items-center justify-center ${themeClasses.icon}`}
+                className={`flex-shrink-0 mt-0.5 w-3.5 h-3.5 lg:w-4 lg:h-4 rounded-full border flex items-center justify-center ${themeClasses.icon}`}
               >
-                {isRed ? <X className="w-1.5 h-1.5 xl:w-2 xl:h-2" /> : <Check className="w-1.5 h-1.5 xl:w-2 xl:h-2" />}
+                {isRed ? (
+                  <X className="w-2 h-2 lg:w-2.5 lg:h-2.5" />
+                ) : (
+                  <Check className="w-2 h-2 lg:w-2.5 lg:h-2.5" />
+                )}
               </span>
-              <span className="text-[9px] lg:text-[9px] xl:text-xs text-gray-200 leading-snug">
-                {point}
-              </span>
+              <span className="text-[11px] lg:text-xs text-gray-200 leading-snug">{point}</span>
             </li>
           ))}
         </ul>
@@ -210,8 +271,7 @@ const SideCard: React.FC<SideCardProps> = ({ side, theme, title, subtitle, point
 };
 
 // ------------------------------------------------------------------
-// Mobile / Tablet comparison — clean, mobile-friendly two-card layout
-// Shown only below lg, where side-by-side peek cards don't fit
+// Mobile / Tablet comparison stack
 // ------------------------------------------------------------------
 
 const MobileCompareStack: React.FC<{
@@ -219,46 +279,43 @@ const MobileCompareStack: React.FC<{
   eurozielPoints: string[];
 }> = ({ consultancyPoints, eurozielPoints }) => {
   return (
-    <div className="lg:hidden w-full max-w-xl mx-auto mt-10 sm:mt-12 px-1">
-      <div className="relative flex flex-col gap-4 sm:gap-5">
-        {/* Consultancy - Red */}
-        <div className="rounded-2xl border border-red-500/30 bg-gradient-to-br from-red-950/95 to-red-900/80 backdrop-blur-xl p-5 sm:p-6 shadow-[0_0_40px_-15px_rgba(239,68,68,0.4)]">
-          <div className="inline-flex items-center gap-1.5 rounded-full border border-red-500/30 bg-red-500/15 text-red-400 px-3 py-1 text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider mb-4">
+    <div className="lg:hidden w-full max-w-xl mx-auto mt-6 px-1 overflow-y-auto">
+      <div className="relative flex flex-col gap-3">
+        <div className="rounded-2xl border border-red-500/30 bg-gradient-to-br from-red-950/95 to-red-900/80 backdrop-blur-xl p-4 shadow-[0_0_40px_-15px_rgba(239,68,68,0.4)]">
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-red-500/30 bg-red-500/15 text-red-400 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider mb-3">
             <X className="w-3 h-3" />
             Typical Consultancy
           </div>
-          <ul className="space-y-3">
-            {consultancyPoints.map((point, idx) => (
-              <li key={idx} className="flex items-start gap-3">
-                <span className="flex-shrink-0 mt-0.5 w-5 h-5 rounded-full border border-red-500/30 bg-red-500/10 text-red-400 flex items-center justify-center">
-                  <X className="w-3 h-3" />
+          <ul className="space-y-2">
+            {consultancyPoints.slice(0, 4).map((point, idx) => (
+              <li key={idx} className="flex items-start gap-2.5">
+                <span className="flex-shrink-0 mt-0.5 w-4 h-4 rounded-full border border-red-500/30 bg-red-500/10 text-red-400 flex items-center justify-center">
+                  <X className="w-2.5 h-2.5" />
                 </span>
-                <span className="text-sm text-gray-200 leading-relaxed">{point}</span>
+                <span className="text-xs text-gray-200 leading-snug">{point}</span>
               </li>
             ))}
           </ul>
         </div>
 
-        {/* VS divider */}
-        <div className="flex items-center justify-center -my-1 sm:-my-1.5 relative z-10">
-          <div className="flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#0a0e17] border border-white/15 shadow-lg">
-            <span className="text-[10px] font-bold text-gray-400">VS</span>
+        <div className="flex items-center justify-center -my-1 relative z-10">
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[#0a0e17] border border-white/15 shadow-lg">
+            <span className="text-[9px] font-bold text-gray-400">VS</span>
           </div>
         </div>
 
-        {/* EuroZiel - Green */}
-        <div className="rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-950/95 to-emerald-900/80 backdrop-blur-xl p-5 sm:p-6 shadow-[0_0_40px_-15px_rgba(16,185,129,0.4)]">
-          <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/15 text-emerald-400 px-3 py-1 text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider mb-4">
+        <div className="rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-950/95 to-emerald-900/80 backdrop-blur-xl p-4 shadow-[0_0_40px_-15px_rgba(16,185,129,0.4)]">
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/15 text-emerald-400 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider mb-3">
             <Check className="w-3 h-3" />
             The EuroZiel Way
           </div>
-          <ul className="space-y-3">
-            {eurozielPoints.map((point, idx) => (
-              <li key={idx} className="flex items-start gap-3">
-                <span className="flex-shrink-0 mt-0.5 w-5 h-5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
-                  <Check className="w-3 h-3" />
+          <ul className="space-y-2">
+            {eurozielPoints.slice(0, 4).map((point, idx) => (
+              <li key={idx} className="flex items-start gap-2.5">
+                <span className="flex-shrink-0 mt-0.5 w-4 h-4 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+                  <Check className="w-2.5 h-2.5" />
                 </span>
-                <span className="text-sm text-gray-200 leading-relaxed">{point}</span>
+                <span className="text-xs text-gray-200 leading-snug">{point}</span>
               </li>
             ))}
           </ul>
@@ -269,90 +326,131 @@ const MobileCompareStack: React.FC<{
 };
 
 // ------------------------------------------------------------------
-// Main Section
+// Main Section — now a STICKY OVERLAY that stacks over the Hero,
+// and gets pushed away naturally when the next section scrolls up.
 // ------------------------------------------------------------------
 
 const WhyEuroZielSection: React.FC = () => {
   const { ref: centerRef, inView } = useInView<HTMLDivElement>(0.3);
-  const { displayed, done } = useTypewriter(centerParagraph, inView, 45);
+  const { displayedParagraphs, done, activeParagraphIndex } = useMultiParagraphTypewriter(
+    paragraphs,
+    inView,
+    45
+  );
+
+  const { ref: stackRef, progress } = useStackProgress<HTMLElement>();
 
   const consultancyPoints = comparePoints.map((p) => p.consultancy);
   const eurozielPoints = comparePoints.map((p) => p.euroziel);
 
+  const entranceScale = 0.94 + progress * 0.06; // 0.94 -> 1
+  const entranceOpacity = 0.4 + progress * 0.6; // 0.4 -> 1
+  const shadowOpacity = 0.15 + progress * 0.35;
+
   return (
-    <section className="relative w-full min-h-screen overflow-hidden bg-[#0a0e17] flex flex-col items-center justify-center py-14 sm:py-20 px-4 sm:px-6">
-      {/* background ambience */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute top-1/4 left-1/3 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-red-600/10 rounded-full blur-[100px] sm:blur-[120px]" />
-        <div className="absolute bottom-1/4 right-1/3 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-emerald-600/10 rounded-full blur-[100px] sm:blur-[120px]" />
-      </div>
-
-      {/* Desktop/laptop row: left card | center content | right card — normal flex flow, never overlaps */}
-      <div className="relative z-20 w-full flex items-center justify-center lg:justify-between max-w-[1440px] mx-auto">
-        {/* Left Card - Consultancy (Red) */}
-        <SideCard
-          side="left"
-          theme="red"
-          title="Typical Consultancy"
-          subtitle="What most students go through"
-          points={consultancyPoints}
-        />
-
-        {/* Center Content */}
-        <div
-          ref={centerRef}
-          className="relative z-20 w-full max-w-[92%] sm:max-w-xl md:max-w-2xl lg:max-w-md xl:max-w-xl 2xl:max-w-2xl mx-auto text-center"
-        >
-          {/* Glass overlay panel behind text for readability */}
-          <div
-            className="
-              relative rounded-3xl
-              bg-[#0a0e17]/70 sm:bg-[#0a0e17]/60
-              backdrop-blur-md sm:backdrop-blur-lg
-              border border-white/5
-              shadow-[0_8px_60px_-15px_rgba(0,0,0,0.6)]
-              px-5 py-8 sm:px-8 sm:py-10 md:px-10 md:py-12 lg:px-6 lg:py-8 xl:px-8 xl:py-10
-            "
-          >
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 mb-5 sm:mb-6 backdrop-blur-sm">
-              <Sparkles className="w-3.5 h-3.5 text-amber-300 flex-shrink-0" />
-              <span className="text-[10px] sm:text-xs font-semibold tracking-wider uppercase text-gray-300">
-                Why EuroZiel?
-              </span>
-            </div>
-
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-extrabold text-white mb-4 sm:mb-5 leading-tight">
-              More Than a Consultancy.
-              <br />
-              <span className="bg-gradient-to-r from-red-400 via-white to-emerald-400 bg-clip-text text-transparent">
-                A Real Bridge to Germany.
-              </span>
-            </h2>
-
-            <p className="text-sm sm:text-base md:text-lg lg:text-sm xl:text-base 2xl:text-lg text-gray-300 leading-relaxed min-h-[180px] sm:min-h-[160px] md:min-h-[150px] text-left sm:text-center">
-              {displayed}
-              {!done && (
-                <span className="inline-block w-[2px] h-4 sm:h-5 bg-emerald-400 ml-1 align-middle animate-pulse" />
-              )}
-            </p>
-          </div>
+    <section
+      ref={stackRef}
+      className="
+        sticky top-0 z-30
+        w-full h-screen
+        overflow-hidden
+        bg-[#0a0e17]
+        flex flex-col items-center justify-center
+        py-6 sm:py-8 px-4 sm:px-6
+      "
+      style={{
+        boxShadow: `0 -40px 80px -20px rgba(0,0,0,${shadowOpacity})`,
+      }}
+    >
+      {/* Inner wrapper handles the rise/fade entrance so the sticky
+          element itself is never transformed (transforms on a sticky
+          element can break stickiness in some browsers). */}
+      <div
+        className="absolute inset-0 flex flex-col items-center justify-center py-6 sm:py-8 px-4 sm:px-6"
+        style={{
+          transform: `scale(${entranceScale})`,
+          opacity: entranceOpacity,
+          transition: "transform 0.05s linear, opacity 0.05s linear",
+        }}
+      >
+        {/* background ambience */}
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute top-1/4 left-1/3 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-red-600/10 rounded-full blur-[100px] sm:blur-[120px]" />
+          <div className="absolute bottom-1/4 right-1/3 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-emerald-600/10 rounded-full blur-[100px] sm:blur-[120px]" />
         </div>
 
-        {/* Right Card - EuroZiel (Green) */}
-        <SideCard
-          side="right"
-          theme="green"
-          title="EuroZiel"
-          subtitle="What we actually deliver"
-          points={eurozielPoints}
-        />
-      </div>
+        {/* Big standalone section heading */}
+        <h2 className="relative z-20 text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-extrabold text-white text-center mb-3 sm:mb-4 tracking-tight flex-shrink-0">
+          <span className="bg-gradient-to-r from-red-400 via-white to-emerald-400 bg-clip-text text-transparent">
+            Why EuroZiel?
+          </span>
+        </h2>
 
-      {/* Comparison cards for mobile/tablet only — below lg */}
-      <MobileCompareStack
-        consultancyPoints={consultancyPoints}
-        eurozielPoints={eurozielPoints}
-      />
+        <div className="relative z-20 w-full max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-[auto_1fr_auto] items-center gap-0 flex-1 min-h-0">
+          {/* Left Card - Consultancy (Red) */}
+          <SideCard
+            side="left"
+            theme="red"
+            title="Typical Consultancy"
+            subtitle="What most students go through"
+            points={consultancyPoints}
+          />
+
+          {/* Center Content */}
+          <div
+            ref={centerRef}
+            className="relative z-20 w-full max-w-[92%] sm:max-w-xl md:max-w-2xl lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl mx-auto text-center"
+          >
+            <div
+              className="
+                relative rounded-3xl
+                bg-[#0a0e17]/70 sm:bg-[#0a0e17]/60
+                backdrop-blur-md sm:backdrop-blur-lg
+                border border-white/5
+                shadow-[0_8px_60px_-15px_rgba(0,0,0,0.6)]
+                px-5 py-6 sm:px-8 sm:py-8 md:px-10 md:py-9 lg:px-7 lg:py-7 xl:px-8 xl:py-8
+              "
+            >
+              <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-2xl xl:text-3xl font-bold text-white mb-3 sm:mb-4 leading-tight">
+                More Than a Consultancy.
+                <br />
+                <span className="text-emerald-300">A Real Bridge to Germany.</span>
+              </h3>
+
+              <div className="space-y-3 text-left sm:text-center">
+                {displayedParagraphs.map((text, idx) => (
+                  <p
+                    key={idx}
+                    className="text-xs sm:text-sm md:text-base lg:text-xs xl:text-sm 2xl:text-base text-gray-300 leading-relaxed"
+                  >
+                    {text}
+                    {!done && activeParagraphIndex === idx && (
+                      <span className="inline-block w-[2px] h-4 bg-emerald-400 ml-1 align-middle animate-pulse" />
+                    )}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Right Card - EuroZiel (Green) */}
+          <SideCard
+            side="right"
+            theme="green"
+            title="EuroZiel"
+            subtitle="What we actually deliver"
+            points={eurozielPoints}
+          />
+        </div>
+
+        {/* Comparison cards for mobile/tablet only */}
+        <div className="lg:hidden flex-shrink-0 w-full max-h-[38vh] overflow-y-auto">
+          <MobileCompareStack
+            consultancyPoints={consultancyPoints}
+            eurozielPoints={eurozielPoints}
+          />
+        </div>
+      </div>
     </section>
   );
 };
