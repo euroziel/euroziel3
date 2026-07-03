@@ -79,21 +79,12 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
       {/* HERO SECTION FOR STUDY IN GERMANY */}
       <section className="max-w-7xl mx-auto px-4 text-left">
         <ScrollReveal variant="clipReveal">
-          <div className="rounded-sm bg-slate-900 text-white p-8 md:p-14 relative overflow-hidden border border-slate-800 border-b-4 border-b-gold shadow-premium">
-            <div className="absolute top-0 right-0 w-80 h-80 bg-navy/10 rounded-full blur-3xl pointer-events-none" />
-
-            <div className="relative z-10 max-w-4xl space-y-6">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-[10px] font-bold tracking-widest bg-navy/35 text-slate-100 border border-navy/50 uppercase">
-                STUDY IN GERMANY & EUROPE
-              </span>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.15] font-sans">
-                The degree costs nothing.<br />
-                <span className="font-serif italic font-medium text-gold">The opportunity costs everything if you miss it.</span>
-              </h2>
-              <p className="text-slate-350 text-sm md:text-base leading-relaxed max-w-2xl font-sans">
-                Germany's public universities charge zero tuition fees to international students. These are the same universities that train stellar engineers at Siemens, researchers at BASF, and tech pioneers at SAP. You pay only for your standard living costs. The high-class world education itself is completely free.
-              </p>
-            </div>
+          <div className="rounded-sm bg-gradient-to-br from-amber-400 via-yellow-400 to-gold relative overflow-hidden border border-amber-500/30 border-b-4 border-b-slate-900 shadow-premium">
+            <img
+              src="/assets/studyin.png"
+              alt="Study in Germany & Europe"
+              className="w-full h-full object-cover"
+            />
           </div>
         </ScrollReveal>
       </section>
@@ -101,9 +92,9 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
       {/* SEMESTER CALENDAR & URGENCY */}
       <section className={`py-20 px-4 border-y ${dark ? 'bg-slate-950/50 border-slate-900' : 'bg-slate-50/50 border-slate-100'
         }`}>
-        <div className="max-w-4xl mx-auto text-left space-y-12">
+        <div className="max-w-5xl mx-auto text-left space-y-12">
 
-          <div className="space-y-2">
+          {/* <div className="space-y-2">
             <span className="text-[10px] font-bold text-rose-500 bg-rose-500/10 border border-rose-500/20 px-3 py-1 rounded-sm uppercase tracking-wide inline-block">
               Important Urgency
             </span>
@@ -113,65 +104,38 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
             <p className={`text-xs md:text-sm font-sans ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
               German university intakes operate with extremely strict deadlines. Missing a timeline puts you back a full academic year.
             </p>
-          </div>
+          </div> */}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Two images, stacked one below the other */}
+          <div className="flex flex-col gap-32">
 
-            {/* Winter Semester Card */}
+            {/* Winter Semester Image */}
             <ScrollReveal variant="slideLeft" delay={0.1}>
-              <div className={`rounded-sm border p-6 md:p-8 space-y-4 shadow-premium border-b-4 border-b-rose-500 ${dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200 bg-white'
+              <div className={`rounded-4xl shadow-premium border-b-4 border-b-rose-500 overflow-hidden ${dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200 bg-white'
                 }`}>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-navy uppercase tracking-widest font-sans">Winter Intake</span>
-                  <span className="px-2 py-1 rounded-sm text-[9px] bg-red-500/10 text-red-500 font-bold uppercase tracking-wider animate-pulse flex items-center gap-1 border border-red-500/20">
-                    <Flame className="w-3 h-3" /> Priority
-                  </span>
-                </div>
-                <h3 className={`text-lg font-bold font-sans ${dark ? 'text-white' : 'text-slate-900'}`}>October Start (Main Intake)</h3>
-                <p className={`text-xs leading-relaxed font-sans ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
-                  The widest choice of programmes, most seats, and the most competitive. If targeting the winter semester, you must start your APS and language prep at least **12 months** before October.
-                </p>
-                <div className={`grid grid-cols-2 gap-3 text-xs border-t pt-4 ${dark ? 'border-slate-900' : 'border-slate-100'}`}>
-                  <div>
-                    <span className="text-[9px] text-slate-400 block uppercase font-mono">Applications Open</span>
-                    <span className="font-semibold text-gold">January</span>
-                  </div>
-                  <div>
-                    <span className="text-[9px] text-slate-400 block uppercase font-mono">Deadline Date</span>
-                    <span className="font-semibold text-rose-500">July 15</span>
-                  </div>
-                </div>
+                <img
+                  src="/assets/winter.png"
+                  alt="Winter Intake - October Start"
+                  className="w-full h-auto object-cover"
+                />
               </div>
             </ScrollReveal>
 
-            {/* Summer Semester Card */}
+            {/* Summer Semester Image */}
             <ScrollReveal variant="slideRight" delay={0.2}>
-              <div className={`rounded-sm border p-6 md:p-8 space-y-4 shadow-premium border-b-4 border-b-emerald-500 ${dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200 bg-white'
+              <div className={`rounded-4xl shadow-premium border-b-4 border-b-emerald-500 overflow-hidden ${dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200 bg-white'
                 }`}>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-emerald-500 uppercase tracking-widest font-sans">Summer Intake</span>
-                </div>
-                <h3 className={`text-lg font-bold font-sans ${dark ? 'text-white' : 'text-slate-900'}`}>April Start</h3>
-                <p className={`text-xs leading-relaxed font-sans ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
-                  Fewer programmes offer a summer intake. Competition is slightly lower because fewer students know about it. A good option if your profile is already strong and you want a faster start.
-                </p>
-                <div className={`grid grid-cols-2 gap-3 text-xs border-t pt-4 ${dark ? 'border-slate-900' : 'border-slate-100'}`}>
-                  <div>
-                    <span className="text-[9px] text-slate-400 block uppercase font-mono">Applications Open</span>
-                    <span className="font-semibold text-gold">July</span>
-                  </div>
-                  <div>
-                    <span className="text-[9px] text-slate-400 block uppercase font-mono">Deadline Date</span>
-                    <span className="font-semibold text-rose-500">January 15</span>
-                  </div>
-                </div>
+                <img
+                  src="/assets/summer1.png"
+                  alt="Summer Intake - April Start"
+                  className="w-full h-auto object-cover"
+                />
               </div>
             </ScrollReveal>
-
           </div>
-
+                
           <ScrollReveal variant="fadeUp" delay={0.3}>
-            <div className="p-5 rounded-sm border border-gold/20 bg-gold/5 text-xs text-slate-600 dark:text-slate-400 space-y-2">
+            <div className="p-5 rounded-3xl border border-gold/20 bg-gold/5 text-xs text-slate-600 dark:text-slate-400 space-y-2">
               <span className="font-bold text-gold uppercase tracking-wider font-mono flex items-center gap-1.5">
                 <AlertTriangle className="w-4 h-4 text-gold" style={{ strokeWidth: 2.5 }} /> Ground Advice from Founders:
               </span>
@@ -195,7 +159,7 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
           {stats.map((stat, idx) => (
             <div
               key={idx}
-              className={`p-6 rounded-sm border text-left space-y-3 shadow-premium hover:border-gold hover:shadow-premium transition-all relative overflow-hidden group border-b-2 border-b-navy ${dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200/50 bg-white'
+              className={`p-6 rounded-3xl border text-left space-y-3 shadow-premium hover:border-gold hover:shadow-premium transition-all relative overflow-hidden group border-b-2 border-b-navy ${dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200/50 bg-white'
                 }`}
             >
               <div className="absolute top-0 left-0 w-1.5 h-full bg-navy transition-all group-hover:h-3" />
