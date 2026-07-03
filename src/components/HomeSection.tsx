@@ -601,7 +601,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
   return (
     <div className="pb-12 mobile-m:pb-16 laptop:pb-20 4k:pb-32">
       {/* SECTION 1: OUR MISSION — stacks over the sticky hero */}
-      <section
+      {/* <section
         ref={section1Ref}
         className={`relative z-30 w-full py-6 mobile-m:py-20 laptop:py-76 laptop-l:py-100 border-b transition-colors duration-300 shadow-[0_-40px_80px_rgba(0,0,0,0.7)] lg:-mt-[100vh] mt-0 ${isDark ? 'border-slate-900 bg-[#060814]' : 'border-slate-100 bg-white'
           }`}
@@ -781,10 +781,10 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
             </motion.div>
           </div>
         </ScrollReveal>
-      </section>
+      </section> */}
 
 
-    {/* <OurMission isDark={isDark} /> */}
+    <OurMission />
 
 
       {/* SECTION 2: WHY STUDENTS CHOOSE EUROZIEL */}

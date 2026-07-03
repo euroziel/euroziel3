@@ -1,237 +1,277 @@
-/* ────────────────────────────────────────────────────────────
-   IMPORTS — add these to your existing imports
-   ──────────────────────────────────────────────────────────── */
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "motion/react";
+import React, { useEffect, useRef, useState } from "react";
+import { X, Check, Sparkles } from "lucide-react";
 
-/* ────────────────────────────────────────────────────────────
-   HIGHLIGHT — wraps key phrases with an accent underline/glow
-   ──────────────────────────────────────────────────────────── */
-function Hi({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="relative inline font-semibold text-gold whitespace-normal">
-      {children}
-      <span
-        aria-hidden
-        className="absolute left-0 right-0 -bottom-0.5 h-[6px] rounded-full bg-gold/25 -z-10"
-      />
-    </span>
-  );
+// ------------------------------------------------------------------
+// Data
+// ------------------------------------------------------------------
+
+interface ComparePoint {
+  id: number;
+  consultancy: string;
+  euroziel: string;
 }
 
-/* ────────────────────────────────────────────────────────────
-   MISSION CONTENT — broken into ordered chunks that reveal
-   as you scroll, arranged around the rover
-   ──────────────────────────────────────────────────────────── */
-const MISSION_CHUNKS = [
+const comparePoints: ComparePoint[] = [
   {
-    pos: "laptop:col-start-1 laptop:row-start-1 laptop:text-left",
-    content: (
-      <>
-        EuroZiel was founded with a clear purpose — to give students access to
-        guidance that is <Hi>honest, Germany-focused, and built on real
-        experience</Hi> instead of generic consultancy advice.
-      </>
-    ),
+    id: 1,
+    consultancy: "Generic, copy-paste strategies for every student",
+    euroziel: "Personalized strategy built around your profile & goals",
   },
   {
-    pos: "laptop:col-start-3 laptop:row-start-1 laptop:text-right",
-    content: (
-      <>
-        We saw too many capable students lose opportunities because they were
-        given <Hi>copied strategies, unrealistic expectations</Hi>, and
-        little understanding of how the German system actually works.
-      </>
-    ),
+    id: 2,
+    consultancy: "No real insight into how German universities actually work",
+    euroziel: "Direct insight from students currently studying in Germany",
   },
   {
-    pos: "laptop:col-start-1 laptop:row-start-2 laptop:text-left",
-    content: (
-      <>
-        That is why EuroZiel combines structured consultancy with{" "}
-        <Hi>direct insight from students currently studying at German
-        public universities</Hi>, Indian professionals working across
-        Europe, and domain-specific mentors who understand your academic
-        and career pathway.
-      </>
-    ),
+    id: 3,
+    consultancy: "Support disappears the moment your visa is stamped",
+    euroziel: "End-to-end support until you're settled in Germany",
   },
   {
-    pos: "laptop:col-start-3 laptop:row-start-2 laptop:text-right",
-    content: (
-      <>
-        From <Hi>university applications and APS</Hi> to{" "}
-        <Hi>visas, accommodation, and settling in Germany</Hi>, every step
-        is designed to give students clarity, confidence, and practical
-        direction.
-      </>
-    ),
+    id: 4,
+    consultancy: "Mentors with little to no real Germany experience",
+    euroziel: "Mentors who are Indian professionals working across Europe",
   },
   {
-    pos: "laptop:col-start-2 laptop:row-start-3 laptop:text-center",
-    content: (
-      <>
-        At EuroZiel, we do not just help you apply to Germany — we help you{" "}
-        <Hi>prepare for life and long-term success there</Hi>.
-      </>
-    ),
+    id: 5,
+    consultancy: "Slow, vague, and inconsistent communication",
+    euroziel: "Fast, transparent, and honest communication — always",
+  },
+  {
+    id: 6,
+    consultancy: "One-size-fits-all applications and unrealistic promises",
+    euroziel: "Tailored academic & career pathway guidance, grounded in reality",
   },
 ];
 
-/* ────────────────────────────────────────────────────────────
-   SECTION: WHY EUROZIEL
-   ──────────────────────────────────────────────────────────── */
-function WhyEuroziel({ isDark }: { isDark: boolean }) {
-  const sectionRef = useRef<HTMLDivElement>(null);
+const centerParagraph =
+  "EuroZiel was founded with a clear purpose to give students access to guidance that is honest, Germany-focused, and built on real experience instead of generic consultancy advice. We saw too many capable students lose opportunities because they were given copied strategies, unrealistic expectations, and little understanding of how the German system actually works. That is why EuroZiel combines structured consultancy with direct insight from students currently studying at German public universities, Indian professionals working across Europe, and domain-specific mentors who understand your academic and career pathway. From university applications and APS to visas, accommodation, and settling in Germany, every step is designed to give students clarity, confidence, and practical direction. At EuroZiel, we do not just help you apply to Germany, we help you prepare for life and long-term success there.";
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start 0.85", "end 0.25"],
-  });
+// ------------------------------------------------------------------
+// Hook: trigger once when element scrolls into view
+// ------------------------------------------------------------------
 
-  /* rover — starts small/high/transparent, lands centered as background */
-  const roverY = useTransform(scrollYProgress, [0, 0.4], [-140, 0]);
-  const roverScale = useTransform(scrollYProgress, [0, 0.4], [0.55, 1]);
-  const roverOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.15, 0.4, 1],
-    [0, 0.5, 0.22, 0.22]
-  );
-  const roverRotate = useTransform(scrollYProgress, [0, 0.4], [-8, 0]);
+function useInView<T extends HTMLElement>(threshold = 0.3) {
+  const ref = useRef<T | null>(null);
+  const [inView, setInView] = useState(false);
 
-  /* each mission chunk gets its own scrubbed window, revealing in order */
-  const chunkRanges = MISSION_CHUNKS.map((_, i) => {
-    const start = 0.3 + i * 0.11;
-    const end = start + 0.22;
-    return [Math.min(start, 0.9), Math.min(end, 1)] as [number, number];
-  });
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
 
-  return (
-    <section
-      ref={sectionRef}
-      className={`relative z-30 overflow-hidden py-16 mobile-m:py-20 laptop:py-28 4k:py-36 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 border-b w-full transition-colors duration-300 ${
-        isDark ? "border-slate-900 bg-[#060814]" : "border-slate-100 bg-white"
-      }`}
-    >
-      <div className="w-full max-w-7xl mx-auto">
-        {/* ── Eyebrow + Heading, plain text with entrance transition ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="text-center max-w-2xl mx-auto mb-10 mobile-m:mb-14 laptop:mb-20"
-        >
-          <span
-            className={`inline-block text-[9px] mobile-m:text-[10px] 4k:text-xs font-bold uppercase tracking-[0.25em] px-2.5 mobile-m:px-3 py-1 rounded-sm border mb-3 ${
-              isDark
-                ? "bg-slate-900 border-slate-800 text-gold"
-                : "bg-slate-100 border-slate-200 text-navy"
-            }`}
-          >
-            Why EuroZiel?
-          </span>
-          <h2 className="text-2xl mobile-m:text-3xl laptop:text-4xl 4k:text-5xl font-bold tracking-tight font-sans">
-            More Than a Consultancy.{" "}
-            <span className="font-serif italic text-gold">
-              A Real Bridge to Germany.
-            </span>
-          </h2>
-        </motion.div>
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold }
+    );
 
-        {/* ── Intro row: side image + short lead-in, stacks on mobile ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
-          className="flex flex-col mobile-l:flex-row-reverse items-center gap-6 mobile-m:gap-8 laptop:gap-14 mb-14 mobile-m:mb-16 laptop:mb-24"
-        >
-          {/* Replace this block's inner content with your <img /> */}
-          <div className="w-full mobile-l:w-2/5 flex-shrink-0">
-            <div
-              className={`relative aspect-[4/3] rounded-3xl overflow-hidden border ${
-                isDark ? "border-slate-800 bg-slate-900" : "border-slate-200 bg-slate-100"
-              }`}
-            >
-              {/* ── IMAGE SLOT — drop your <img src="..." className="w-full h-full object-cover" /> here ── */}
-              <div className="absolute inset-0 flex items-center justify-center text-xs uppercase tracking-widest text-slate-500">
-                Image
-              </div>
-            </div>
-          </div>
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [threshold]);
 
-          <div className="w-full mobile-l:w-3/5 text-center mobile-l:text-left">
-            <p
-              className={`text-sm mobile-m:text-base laptop:text-lg leading-relaxed ${
-                isDark ? "text-slate-300" : "text-slate-600"
-              }`}
-            >
-              A mission built on <Hi>honesty</Hi>, shaped by{" "}
-              <Hi>real experience</Hi>, and focused on one goal — helping you
-              succeed in Germany, not just apply to it.
-            </p>
-          </div>
-        </motion.div>
-
-        {/* ── Rover landing zone + mission chunks arranged around it ── */}
-        <div className="relative min-h-[560px] mobile-m:min-h-[620px] laptop:min-h-[640px] flex items-center justify-center">
-          {/* ROVER ASSET — parallax-lands centered, sits behind the text */}
-          <motion.div
-            style={{
-              y: roverY,
-              scale: roverScale,
-              opacity: roverOpacity,
-              rotate: roverRotate,
-            }}
-            className="absolute inset-0 flex items-center justify-center pointer-events-none z-0"
-          >
-            <div className="relative w-[220px] h-[220px] mobile-m:w-[300px] mobile-m:h-[300px] laptop:w-[420px] laptop:h-[420px] 4k:w-[520px] 4k:h-[520px]">
-              {/* ── ROVER IMAGE SLOT ──
-                  Replace with: <img src="/assets/rover.png" alt="" className="w-full h-full object-contain" />
-              */}
-              <div
-                className={`w-full h-full rounded-full ${
-                  isDark ? "bg-gold/5" : "bg-gold/10"
-                }`}
-                style={{
-                  boxShadow: isDark
-                    ? "0 0 120px 40px rgba(229,168,0,0.08)"
-                    : "0 0 120px 40px rgba(229,168,0,0.12)",
-                }}
-              />
-            </div>
-          </motion.div>
-
-          {/* MISSION TEXT — reveals in order, arranged around the rover */}
-          <div className="relative z-10 w-full laptop:grid laptop:grid-cols-3 laptop:grid-rows-3 laptop:gap-x-10 laptop:gap-y-8 flex flex-col gap-6 mobile-m:gap-7">
-            {MISSION_CHUNKS.map((chunk, i) => {
-              const [start, end] = chunkRanges[i];
-              const opacity = useTransform(scrollYProgress, [start, end], [0, 1]);
-              const y = useTransform(scrollYProgress, [start, end], [26, 0]);
-              const blur = useTransform(scrollYProgress, [start, end], [6, 0]);
-
-              return (
-                <motion.p
-                  key={i}
-                  style={{
-                    opacity,
-                    y,
-                    filter: useTransform(blur, (v) => `blur(${v}px)`),
-                  }}
-                  className={`text-sm mobile-m:text-base laptop:text-[15px] 4k:text-lg leading-relaxed max-w-md mx-auto laptop:mx-0 text-center ${chunk.pos} ${
-                    isDark ? "text-slate-300" : "text-slate-600"
-                  }`}
-                >
-                  {chunk.content}
-                </motion.p>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+  return { ref, inView };
 }
 
-export default WhyEuroziel;
+// ------------------------------------------------------------------
+// Hook: word-by-word typewriter effect
+// ------------------------------------------------------------------
+
+function useTypewriter(text: string, active: boolean, speed = 60) {
+  const [displayed, setDisplayed] = useState("");
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    if (!active) return;
+
+    const words = text.split(" ");
+    let currentIndex = 0;
+    setDisplayed("");
+    setDone(false);
+
+    const interval = setInterval(() => {
+      currentIndex++;
+      setDisplayed(words.slice(0, currentIndex).join(" "));
+
+      if (currentIndex >= words.length) {
+        clearInterval(interval);
+        setDone(true);
+      }
+    }, speed);
+
+    return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active]);
+
+  return { displayed, done };
+}
+
+// ------------------------------------------------------------------
+// Side Card (Consultancy / EuroZiel)
+// ------------------------------------------------------------------
+
+interface SideCardProps {
+  side: "left" | "right";
+  theme: "red" | "green";
+  title: string;
+  subtitle: string;
+  points: string[];
+}
+
+const SideCard: React.FC<SideCardProps> = ({ side, theme, title, subtitle, points }) => {
+  const isRed = theme === "red";
+
+  const positionClasses =
+    side === "left"
+      ? "left-0 -translate-x-[5%] lg:-translate-x-[5%]"
+      : "right-0 translate-x-[5%] lg:translate-x-[5%]";
+
+  const themeClasses = isRed
+    ? {
+        border: "border-red-500/30",
+        glow: "shadow-[0_0_60px_-15px_rgba(239,68,68,0.45)]",
+        bgFrom: "from-red-950/90",
+        bgTo: "to-red-900/70",
+        badge: "bg-red-500/15 text-red-400 border-red-500/30",
+        icon: "text-red-400 bg-red-500/10 border-red-500/30",
+        heading: "text-red-300",
+        line: "bg-red-500/20",
+      }
+    : {
+        border: "border-emerald-500/30",
+        glow: "shadow-[0_0_60px_-15px_rgba(16,185,129,0.45)]",
+        bgFrom: "from-emerald-950/90",
+        bgTo: "to-emerald-900/70",
+        badge: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
+        icon: "text-emerald-400 bg-emerald-500/10 border-emerald-500/30",
+        heading: "text-emerald-300",
+        line: "bg-emerald-500/20",
+      };
+
+  return (
+    <div
+      className={`
+        hidden md:block
+        absolute top-1/2 -translate-y-1/2 ${positionClasses}
+        w-[280px] sm:w-[320px] lg:w-[360px]
+        z-10
+      `}
+    >
+      <div
+        className={`
+          relative overflow-hidden rounded-2xl border ${themeClasses.border} ${themeClasses.glow}
+          bg-gradient-to-br ${themeClasses.bgFrom} ${themeClasses.bgTo}
+          backdrop-blur-xl p-6 sm:p-7
+          transition-transform duration-500 ease-out
+          hover:${side === "left" ? "-translate-x-[2%]" : "translate-x-[2%]"}
+        `}
+      >
+        {/* badge */}
+        <div
+          className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider mb-4 ${themeClasses.badge}`}
+        >
+          {isRed ? <X className="w-3 h-3" /> : <Check className="w-3 h-3" />}
+          {isRed ? "Typical Consultancy" : "The EuroZiel Way"}
+        </div>
+
+        <h3 className={`text-xl sm:text-2xl font-bold text-white mb-1`}>{title}</h3>
+        <p className={`text-sm mb-5 ${themeClasses.heading}`}>{subtitle}</p>
+
+        <div className={`h-px w-full mb-5 ${themeClasses.line}`} />
+
+        <ul className="space-y-3.5">
+          {points.map((point, idx) => (
+            <li key={idx} className="flex items-start gap-3">
+              <span
+                className={`flex-shrink-0 mt-0.5 w-5 h-5 rounded-full border flex items-center justify-center ${themeClasses.icon}`}
+              >
+                {isRed ? <X className="w-3 h-3" /> : <Check className="w-3 h-3" />}
+              </span>
+              <span className="text-sm text-gray-200 leading-relaxed">{point}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+// ------------------------------------------------------------------
+// Main Section
+// ------------------------------------------------------------------
+
+const WhyEuroZielSection: React.FC = () => {
+  const { ref: centerRef, inView } = useInView<HTMLDivElement>(0.35);
+  const { displayed, done } = useTypewriter(centerParagraph, inView, 50);
+
+  const consultancyPoints = comparePoints.map((p) => p.consultancy);
+  const eurozielPoints = comparePoints.map((p) => p.euroziel);
+
+  return (
+    <section className="relative w-full min-h-screen overflow-hidden bg-[#0a0e17] flex items-center justify-center py-20 px-4">
+      {/* background ambience */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute top-1/4 left-1/3 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 right-1/3 w-[500px] h-[500px] bg-emerald-600/10 rounded-full blur-[120px]" />
+      </div>
+
+      {/* Left Card - Consultancy (Red) */}
+      <SideCard
+        side="left"
+        theme="red"
+        title="Typical Consultancy"
+        subtitle="What most students go through"
+        points={consultancyPoints}
+      />
+
+      {/* Right Card - EuroZiel (Green) */}
+      <SideCard
+        side="right"
+        theme="green"
+        title="EuroZiel"
+        subtitle="What we actually deliver"
+        points={eurozielPoints}
+      />
+
+      {/* Center Content */}
+      <div
+        ref={centerRef}
+        className="relative z-20 max-w-3xl mx-auto text-center px-4 sm:px-8"
+      >
+        <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 mb-6 backdrop-blur-sm">
+          <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+          <span className="text-xs font-semibold tracking-wider uppercase text-gray-300">
+            Why EuroZiel?
+          </span>
+        </div>
+
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4 leading-tight">
+          More Than a Consultancy.
+          <br />
+          <span className="bg-gradient-to-r from-red-400 via-white to-emerald-400 bg-clip-text text-transparent">
+            A Real Bridge to Germany.
+          </span>
+        </h2>
+
+        <p className="text-base sm:text-lg text-gray-300 leading-relaxed min-h-[220px] sm:min-h-[180px] text-left sm:text-center">
+          {displayed}
+          {!done && (
+            <span className="inline-block w-[2px] h-5 bg-emerald-400 ml-1 align-middle animate-pulse" />
+          )}
+        </p>
+      </div>
+
+      <style>{`
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
+        }
+      `}</style>
+    </section>
+  );
+};
+
+export default WhyEuroZielSection;
