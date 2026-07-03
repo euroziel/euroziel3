@@ -225,7 +225,7 @@ const SideCard: React.FC<SideCardProps> = ({ side, theme, title, subtitle, point
         hidden lg:block
         w-[260px] lg:w-[260px] xl:w-[280px] 2xl:w-[300px]
         ${marginClasses}
-        z-40
+         relative z-40
       `}
     >
       <div
@@ -351,7 +351,7 @@ const WhyEuroZielSection: React.FC = () => {
     <section
       ref={stackRef}
       className="
-        sticky top-0 z-30
+        sticky top-0 z-40
         w-full h-screen
         overflow-hidden
         bg-[#0a0e17]
