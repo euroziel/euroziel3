@@ -57,7 +57,7 @@ function TestimonialCard({ test, isDark }: TestimonialCardProps) {
   return (
     <motion.div
       whileHover={{ y: -14 }}
-      className={`p-4 mobile-m:p-5 laptop:p-6 4k:p-8 rounded-sm border text-left shadow-premium flex flex-col justify-between transition-all duration-300 hover:border-gold/30 ${isDark ? 'border-slate-800 bg-slate-950' : 'border-slate-200/50 bg-white'
+      className={`p-4 mobile-m:p-5 laptop:p-6 4k:p-8 rounded-sm border text-left shadow-premium flex flex-col justify-between transition-all duration-300 hover:border-gold/30 ${isDark ? 'border-slate-800 bg-transparent' : 'border-slate-200/50 bg-transparent'
         }`}
     >
       <div className="space-y-2 mobile-m:space-y-4">
@@ -789,7 +789,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
 
       {/* SECTION 2: WHY STUDENTS CHOOSE EUROZIEL */}
       <section
-        className={`relative z-40 py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 border-b w-full transition-colors duration-600 ${isDark ? "border-slate-900 bg-[#060814]" : "border-slate-100 bg-white"
+        className={`relative z-40 py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 border-b w-full transition-colors duration-600 ${isDark ? "border-slate-900 bg-transparent" : "border-slate-100 bg-transparent"
           }`}
       >
         <div className="w-full space-y-8 mobile-m:space-y-10 laptop:space-y-12 4k:space-y-16 max-w-7xl mx-auto">
@@ -817,7 +817,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
 
       {/* SECTION 4: TESTIMONIALS — scroll-driven swapper with photo + quote panels */}
       <section
-        className={`relative z-40 py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 border-b w-full transition-colors duration-300 ${isDark ? "border-slate-900 bg-[#060814]" : "border-slate-100 bg-white"
+        className={`relative z-40 py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 border-b w-full transition-colors duration-300 ${isDark ? "border-slate-900 bg-transparent" : "border-slate-100 bg-transparent"
           }`}
       >
         <div className="w-full space-y-8 mobile-m:space-y-10 laptop:space-y-12 4k:space-y-16 max-w-7xl mx-auto">
@@ -847,7 +847,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
       </section>
 
       {/* SECTION 5: BOTTOM CTA */}
-      <div className={`w-full relative z-40 py-16 ${isDark ? 'bg-[#060814]' : 'bg-white'
+      <div className={`w-full relative z-40 py-16 ${isDark ? 'bg-transparent' : 'bg-transparent'
         }`}>
         <section className="max-w-7xl mx-auto px-4 mobile-m:px-5 laptop:px-8 4k:px-16 text-center">
           <ScrollReveal variant="flipUp">

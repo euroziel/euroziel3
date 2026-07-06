@@ -11,6 +11,7 @@ import FAQSection from './components/FAQSection';
 import ContactModal from './components/ContactModal';
 import ContactModal2 from './components/ContactModal2';
 import { Calendar, CheckCircle2, ChevronUp } from 'lucide-react';
+import Particles from './../components/Particles';
 
 export default function App() {
   const [currentTab, setCurrentTab] = useState('home');
@@ -84,7 +85,21 @@ export default function App() {
   return (
     <div className={`min-h-screen flex flex-col font-sans transition-colors duration-300 ${theme === 'dark' ? 'bg-[#060814] text-slate-100' : 'bg-white text-slate-900'
       }`}>
-
+     
+       <div style={{ width: '100%', height: '600px', position: 'relative' }}>
+        <Particles
+          particleColors={["#ffffff"]}
+          particleCount={200}
+          particleSpread={10}
+          speed={0.1}
+          particleBaseSize={100}
+          moveParticlesOnHover
+          alphaParticles={false}
+          disableRotation={false}
+          pixelRatio={1}
+        />
+      </div>
+      
       {/* Sticky Premium Header navigation with logo trigger */}
       <Navbar
         currentTab={currentTab}
@@ -116,48 +131,38 @@ export default function App() {
         )}
 
         {currentTab === 'study' && (
-          <div className="py-8">
-            <StudySection
-              onOpenConsultation={() => setIsConsultationOpen(true)}
-              theme={theme}
-            />
-          </div>
+          <StudySection
+            onOpenConsultation={() => setIsConsultationOpen(true)}
+            theme={theme}
+          />
         )}
 
         {currentTab === 'services' && (
-          <div className="py-8">
-            <ServicesSection
-              onOpenConsultation={() => setIsConsultationOpen(true)}
-              theme={theme}
-            />
-          </div>
+          <ServicesSection
+            onOpenConsultation={() => setIsConsultationOpen(true)}
+            theme={theme}
+          />
         )}
 
         {currentTab === 'process' && (
-          <div className="py-8">
-            <ProcessSection
-              onOpenConsultation={() => setIsConsultationOpen(true)}
-              theme={theme}
-            />
-          </div>
+          <ProcessSection
+            onOpenConsultation={() => setIsConsultationOpen(true)}
+            theme={theme}
+          />
         )}
 
         {currentTab === 'about' && (
-          <div className="py-8">
-            <AboutSection
-              onOpenConsultation={() => setIsConsultationOpen(true)}
-              theme={theme}
-            />
-          </div>
+          <AboutSection
+            onOpenConsultation={() => setIsConsultationOpen(true)}
+            theme={theme}
+          />
         )}
 
         {currentTab === 'faq' && (
-          <div className="py-8">
-            <FAQSection
-              onOpenConsultation={() => setIsConsultationOpen(true)}
-              theme={theme}
-            />
-          </div>
+          <FAQSection
+            onOpenConsultation={() => setIsConsultationOpen(true)}
+            theme={theme}
+          />
         )}
 
       </main>

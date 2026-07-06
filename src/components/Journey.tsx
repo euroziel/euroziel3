@@ -293,7 +293,7 @@ export default function GermanyJourney({ theme = "dark" }) {
     >
       <div
         className={`sticky top-0 h-screen w-full flex flex-col overflow-hidden ${
-          dark ? "bg-[#070b14]" : "bg-[#f7f6f2]"
+          dark ? "bg-transparent" : "bg-transparent"
         }`}
       >
         {/* ambient backdrop glow, follows active accent */}
@@ -304,7 +304,7 @@ export default function GermanyJourney({ theme = "dark" }) {
         />
 
         {/* ── Heading ── */}
-        <div className="relative pt-16 mobile-m:pt-10 pb-2 text-center px-6 flex-shrink-0">
+        <div className="relative pt-16 mobile-m:pt-0 pb-2 text-center px-6 flex-shrink-0">
           <span
             className={`text-xs font-semibold uppercase tracking-[0.3em] ${
               dark ? "text-white/40" : "text-slate-500"
@@ -313,7 +313,7 @@ export default function GermanyJourney({ theme = "dark" }) {
             Your Complete Journey With EuroZiel
           </span>
           <h2
-            className={`mt-3 font-bold text-3xl mobile-m:text-4xl laptop:text-5xl tracking-tight ${
+            className={`mt-1 font-bold text-3xl mobile-m:text-4xl laptop:text-5xl tracking-tight ${
               dark ? "text-slate-100" : "text-slate-900"
             }`}
           >
@@ -328,7 +328,7 @@ export default function GermanyJourney({ theme = "dark" }) {
         </div>
 
         {/* ── Progress rail + walking student ── */}
-        <div className="relative px-6 mobile-m:px-10 laptop:px-20 4k:px-32 pt-14 pb-6 flex-shrink-0">
+        <div className="relative px-6 mobile-m:px-10 laptop:px-20 4k:px-32 pt-10 pb-6 flex-shrink-0">
           <div className="max-w-3xl laptop:max-w-5xl 4k:max-w-7xl mx-auto relative">
             {/* track */}
             <div

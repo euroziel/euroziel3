@@ -67,12 +67,12 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
         ref={containerRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className={`sticky top-[80px] lg:h-[calc(100vh-80px)] h-auto overflow-hidden pt-6 pb-6 mobile-m:pt-8 mobile-m:pb-8 mobile-l:pt-10 mobile-l:pb-10 tablet:pt-5 tablet:pb-5 laptop:pt-12 laptop:pb-12 laptop-l:pt-16 laptop-l:pb-16 4k:pt-24 4k:pb-24 px-4 mobile-m:px-5 mobile-l:px-6 tablet:px-6 laptop:px-8 laptop-l:px-12 4k:px-20 select-none lg:flex lg:items-center lg:justify-center z-40 ${isDark ? 'bg-[#060814]' : 'bg-white'
+        className={`sticky top-[80px] lg:h-[calc(100vh-80px)] h-auto overflow-hidden pt-6 pb-6 mobile-m:pt-8 mobile-m:pb-8 mobile-l:pt-10 mobile-l:pb-10 tablet:pt-5 tablet:pb-5 laptop:pt-12 laptop:pb-12 laptop-l:pt-16 laptop-l:pb-16 4k:pt-24 4k:pb-24 px-4 mobile-m:px-5 mobile-l:px-6 tablet:px-6 laptop:px-8 laptop-l:px-12 4k:px-20 select-none lg:flex lg:items-center lg:justify-center z-40 ${isDark ? 'bg-transparent' : 'bg-transparent'
           }`}
       >
         {/* Decorative Grid Gradients */}
-        <div className={`absolute inset-0 pointer-events-none bg-[radial-gradient(#1b73ba_1.5px,transparent_1.5px)] [background-size:24px_24px] laptop:[background-size:28px_28px] 4k:[background-size:36px_36px] ${isDark ? 'opacity-20' : 'opacity-30'
-          }`} />
+        {/* <div className={`absolute inset-0 pointer-events-none bg-[radial-gradient(#1b73ba_1.5px,transparent_1.5px)] [background-size:24px_24px] laptop:[background-size:28px_28px] 4k:[background-size:36px_36px] ${isDark ? 'opacity-20' : 'opacity-30'
+          }`} /> */}
 
         {/* Glowing Blobs */}
         <div className={`absolute top-1/4 -left-24 mobile-l:-left-28 laptop:-left-32 4k:-left-48 w-72 h-72 mobile-l:w-80 mobile-l:h-80 laptop:w-96 laptop:h-96 4k:w-[32rem] 4k:h-[32rem] rounded-full blur-3xl pointer-events-none ${isDark ? 'bg-[#1b73ba]/20' : 'bg-[#1b73ba]/10'

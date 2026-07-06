@@ -30,8 +30,8 @@ export default function Footer({ currentTab, onTabChange, theme, onOpenConsultat
   return (
     <footer className={`border-t select-none transition-colors duration-300 relative z-60 shadow-[0_-30px_60px_rgba(0,0,0,0.55)] ${
       dark 
-        ? 'bg-[#060814] border-slate-900 text-slate-400' 
-        : 'bg-white border-slate-200 text-slate-500'
+        ? 'bg-transparent border-slate-900 text-slate-400' 
+        : 'bg-transparent border-slate-200 text-slate-500'
     }`}>
       {/* Decorative colored glow on foot */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-[#e5a800] to-transparent" />

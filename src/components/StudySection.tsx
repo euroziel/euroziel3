@@ -148,7 +148,7 @@ export default function StudySection({
   };
 
   return (
-    <div className="space-y-24 md:space-y-36 pb-20">
+    <div className="space-y-24 md:space-y-36 pb-20 bg-slate-950/50 border-slate-100">
       {/* HERO SECTION FOR STUDY IN GERMANY */}
       {/*
         FIX: previously wrapped in <ScrollReveal variant="clipReveal">.
@@ -161,7 +161,7 @@ export default function StudySection({
       */}
       <HeroReveal />
 
-      <section className="max-w-7xl mx-auto px-4 space-y-12">
+      <section className="max-w-7xl mx-auto px-4 space-y-12 ">
         {/* <div className="text-left max-w-2xl">
           <span className="text-xs font-bold text-[#1b73ba] uppercase tracking-widest block mb-2">
             By the Numbers
@@ -196,7 +196,7 @@ export default function StudySection({
 
       {/* SEMESTER CALENDAR & URGENCY */}
       <section
-        className={`py-20 px-4 border-y ${
+        className={`py-20 px-4 ${
           dark
             ? "bg-slate-950/50 border-slate-900"
             : "bg-slate-50/50 border-slate-100"
@@ -372,7 +372,7 @@ function HeroReveal() {
         <img
           src="/assets/studyin.png"
           alt="Study in Germany & Europe"
-          className="absolute inset-0 w-full h-full object-cover object-center"
+          className="absolute inset-0 w-full h-full object-contain"
           loading="eager"
         />
 
