@@ -89,6 +89,35 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
         </ScrollReveal>
       </section>
 
+
+
+      {/* STATS ROW WITH IMMEDIATE VISUAL IMPACT */}
+      <section className="max-w-7xl mx-auto px-4 space-y-12">
+        <div className="text-left max-w-2xl">
+          <span className="text-xs font-bold text-[#1b73ba] uppercase tracking-widest block mb-2">By the Numbers</span>
+          <h3 className={`text-2xl md:text-3xl font-extrabold font-sans ${dark ? 'text-white' : 'text-slate-900'}`}>Facts That Matter</h3>
+        </div>
+
+        <ScrollReveal variant="elastic" stagger={0.1} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {stats.map((stat, idx) => (
+            <div
+              key={idx}
+              className={`p-6 rounded-3xl border text-left space-y-3 shadow-premium hover:border-gold hover:shadow-premium transition-all relative overflow-hidden group border-b-2 border-b-navy ${dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200/50 bg-white'
+                }`}
+            >
+              <div className="absolute top-0 left-0 w-1.5 h-full bg-navy transition-all group-hover:h-3" />
+              <div className="text-3xl md:text-4xl font-black font-sans text-navy select-none tracking-tight">
+                {stat.num}
+              </div>
+              <div>
+                <h4 className={`text-sm font-bold ${dark ? 'text-slate-200' : 'text-slate-800'}`}>{stat.label}</h4>
+                <p className={`text-xs mt-2 leading-relaxed font-sans ${dark ? 'text-slate-400' : 'text-slate-500'}`}>{stat.desc}</p>
+              </div>
+            </div>
+          ))}
+        </ScrollReveal>
+      </section>
+
       {/* SEMESTER CALENDAR & URGENCY */}
       <section className={`py-20 px-4 border-y ${dark ? 'bg-slate-950/50 border-slate-900' : 'bg-slate-50/50 border-slate-100'
         }`}>
@@ -148,32 +177,7 @@ export default function StudySection({ onOpenConsultation, theme }: StudySection
         </div>
       </section>
 
-      {/* STATS ROW WITH IMMEDIATE VISUAL IMPACT */}
-      <section className="max-w-7xl mx-auto px-4 space-y-12">
-        <div className="text-left max-w-2xl">
-          <span className="text-xs font-bold text-[#1b73ba] uppercase tracking-widest block mb-2">By the Numbers</span>
-          <h3 className={`text-2xl md:text-3xl font-extrabold font-sans ${dark ? 'text-white' : 'text-slate-900'}`}>Facts That Matter</h3>
-        </div>
-
-        <ScrollReveal variant="elastic" stagger={0.1} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {stats.map((stat, idx) => (
-            <div
-              key={idx}
-              className={`p-6 rounded-3xl border text-left space-y-3 shadow-premium hover:border-gold hover:shadow-premium transition-all relative overflow-hidden group border-b-2 border-b-navy ${dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200/50 bg-white'
-                }`}
-            >
-              <div className="absolute top-0 left-0 w-1.5 h-full bg-navy transition-all group-hover:h-3" />
-              <div className="text-3xl md:text-4xl font-black font-sans text-navy select-none tracking-tight">
-                {stat.num}
-              </div>
-              <div>
-                <h4 className={`text-sm font-bold ${dark ? 'text-slate-200' : 'text-slate-800'}`}>{stat.label}</h4>
-                <p className={`text-xs mt-2 leading-relaxed font-sans ${dark ? 'text-slate-400' : 'text-slate-500'}`}>{stat.desc}</p>
-              </div>
-            </div>
-          ))}
-        </ScrollReveal>
-      </section>
+      
 
       {/* FIELDS AND SPECIALISATIONS */}
       <section className={`py-20 px-4 border-y ${dark ? 'bg-slate-950/50 border-slate-900' : 'bg-slate-50/50 border-slate-100'
