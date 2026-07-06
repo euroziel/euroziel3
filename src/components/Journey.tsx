@@ -304,7 +304,7 @@ export default function GermanyJourney({ theme = "dark" }) {
         />
 
         {/* ── Heading ── */}
-        <div className="relative pt-16 mobile-m:pt-20 pb-2 text-center px-6 flex-shrink-0">
+        <div className="relative pt-16 mobile-m:pt-10 pb-2 text-center px-6 flex-shrink-0">
           <span
             className={`text-xs font-semibold uppercase tracking-[0.3em] ${
               dark ? "text-white/40" : "text-slate-500"
