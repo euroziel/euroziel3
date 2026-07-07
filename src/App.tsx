@@ -83,7 +83,7 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen flex flex-col font-sans transition-colors duration-300 ${theme === 'dark' ? 'bg-[#060814] text-slate-100' : 'bg-white text-slate-900'
+    <div className={`min-h-screen flex flex-col font-sans transition-colors duration-300 ${theme === 'dark' ? 'bg-transparent text-slate-100' : 'bg-white text-slate-900'
       }`}>
      
        <div style={{ width: '100%', height: '600px', position: 'absolute' }}>

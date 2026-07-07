@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Compass, Laptop, FileCode, Landmark, ShieldCheck, HelpCircle, ArrowRight, ClipboardCheck, Scroll, FileCheck, Award, GraduationCap, ChevronDown, CheckCircle 
+import {
+  Compass, Laptop, FileCode, Landmark, ShieldCheck, HelpCircle, ArrowRight, ClipboardCheck, Scroll, FileCheck, Award, GraduationCap, ChevronDown, CheckCircle
 } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 
@@ -129,58 +129,103 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
   ];
 
   return (
-    <div className="space-y-24 md:space-y-36 pb-20">
-      
+    <div className="space-y-24 md:space-y-36 pb-0">
+
       {/* SERVICES HERO */}
-      <section className="max-w-7xl mx-auto px-4 text-left">
-       <ScrollReveal variant="glideUp">
-        <div className={`relative rounded-sm overflow-hidden py-16 px-8 md:px-14 border border-b-4 border-b-gold shadow-premium ${
-          dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200/50 bg-white'
-        }`}>
-          <div className="absolute top-1/2 -translate-y-1/2 -right-32 w-80 h-80 bg-navy/10 rounded-full blur-3xl pointer-events-none" />
-          
-          <div className="relative z-10 max-w-3xl space-y-4">
-            <span className={`text-[10px] font-bold text-navy uppercase tracking-[0.2em] border px-3 py-1 rounded-sm ${
-              dark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
-            }`}>
-              OUR GUIDANCE SERVICES
-            </span>
-            <h1 className={`text-3xl md:text-5xl font-bold font-sans leading-tight ${dark ? 'text-white' : 'text-slate-900'}`}>
-              Complete support, <br />
-              <span className="font-serif italic font-medium text-gold">zero gaps.</span>
-            </h1>
-            <p className={`text-sm md:text-base font-sans leading-relaxed ${dark ? 'text-slate-300' : 'text-slate-600'}`}>
-              From your first enquiry to your first day on a German campus—EuroZiel covers every aspect of your study abroad journey. Guided by mentors currently studying your fields in Germany.
-            </p>
+      <section className="relative top-0 left-0 w-full min-h-screen z-0 bg-transparent overflow-hidden flex items-center justify-center">
+  <ScrollReveal variant="glideUp">
+    <div className="relative z-10 max-w-7xl mx-auto px-4 w-full">
+      {/* Decorative background glows */}
+      <div className="absolute top-1/4 -translate-y-1/2 -right-32 w-[30rem] h-[30rem] bg-navy/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-1/4 -translate-x-1/2 w-96 h-96 bg-gold/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 bg-navy/5 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="relative max-w-3xl mx-auto space-y-6 text-center flex flex-col items-center">
+        {/* <span
+          className={`inline-block text-[10px] font-bold text-navy uppercase tracking-[0.2em] border px-4 py-1.5 rounded-full backdrop-blur-sm ${
+            dark
+              ? 'bg-slate-900/40 border-slate-800'
+              : 'bg-slate-100/40 border-slate-200'
+          }`}
+        >
+          ✦ OUR GUIDANCE SERVICES ✦
+        </span> */}
+
+        <h1
+          className={`text-4xl md:text-6xl lg:text-7xl font-bold font-sans leading-tight ${
+            dark ? 'text-white' : 'text-slate-900'
+          }`}
+        >
+          Complete support, <br />
+          <span className="font-serif italic font-medium text-gold">
+            zero gaps.
+          </span>
+        </h1>
+
+        <p
+          className={`text-sm md:text-lg font-sans leading-relaxed max-w-xl mx-auto ${
+            dark ? 'text-slate-300' : 'text-slate-600'
+          }`}
+        >
+          From your first enquiry to your first day on a German campus—EuroZiel
+          covers every aspect of your study abroad journey. Guided by mentors
+          currently studying your fields in Germany.
+        </p>
+
+        <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
+          <button className="bg-navy text-white text-sm font-semibold px-8 py-3.5 rounded-sm hover:bg-navy/90 hover:scale-[1.02] transition-all shadow-premium">
+            Book a Free Consultation
+          </button>
+          <button
+            className={`text-sm font-semibold px-8 py-3.5 rounded-sm border transition-colors ${
+              dark
+                ? 'border-slate-700 text-white hover:bg-slate-800/60'
+                : 'border-slate-300 text-slate-900 hover:bg-slate-100/60'
+            }`}
+          >
+            Explore Services
+          </button>
+        </div>
+
+        <div className="flex flex-wrap items-center justify-center gap-8 pt-6 text-xs font-sans">
+          <div className={dark ? 'text-slate-400' : 'text-slate-500'}>
+            <span className="text-gold font-bold text-base">500+</span> Students Guided
+          </div>
+          <div className={`w-px h-4 ${dark ? 'bg-slate-700' : 'bg-slate-300'}`} />
+          <div className={dark ? 'text-slate-400' : 'text-slate-500'}>
+            <span className="text-gold font-bold text-base">98%</span> Visa Success Rate
+          </div>
+          <div className={`w-px h-4 ${dark ? 'bg-slate-700' : 'bg-slate-300'}`} />
+          <div className={dark ? 'text-slate-400' : 'text-slate-500'}>
+            <span className="text-gold font-bold text-base">50+</span> Partner Universities
           </div>
         </div>
-       </ScrollReveal>
-      </section>
+      </div>
+    </div>
+  </ScrollReveal>
+</section>
 
       {/* THREE PATHWAYS */}
       <section className="max-w-7xl mx-auto px-4">
         <ScrollReveal variant="scaleUp" stagger={0.12} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {mainServices.map((service, sIdx) => (
-            <div 
+            <div
               key={sIdx}
-              className={`p-8 rounded-sm border text-left space-y-4 relative shadow-premium hover:border-gold transition-all duration-300 ${
-                dark ? 'border-slate-900 bg-slate-950' : 'border-slate-100 bg-white'
-              }`}
+              className={`p-8 rounded-sm border text-left space-y-4 relative shadow-premium hover:border-gold transition-all duration-300 ${dark ? 'border-slate-900 bg-slate-950' : 'border-slate-100 bg-white'
+                }`}
             >
               <div className="absolute top-4 right-4 text-[9px] font-bold text-gold uppercase bg-gold/5 border border-gold/20 px-2 py-0.5 rounded-sm">
                 {service.tag}
               </div>
-              <h3 className={`text-lg font-bold font-sans border-b pb-3 ${
-                dark ? 'border-slate-900 text-slate-100' : 'border-slate-100 text-slate-800'
-              }`}>
+              <h3 className={`text-lg font-bold font-sans border-b pb-3 ${dark ? 'border-slate-900 text-slate-100' : 'border-slate-100 text-slate-800'
+                }`}>
                 {service.title}
               </h3>
               <p className={`text-xs leading-relaxed font-sans ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
                 {service.desc}
               </p>
-              <div className={`p-4 rounded-sm border text-xs font-sans leading-relaxed ${
-                dark ? 'bg-slate-900 border-slate-800 text-slate-400' : 'bg-slate-50 border-slate-100 text-slate-600'
-              }`}>
+              <div className={`p-4 rounded-sm border text-xs font-sans leading-relaxed ${dark ? 'bg-slate-900 border-slate-800 text-slate-400' : 'bg-slate-50 border-slate-100 text-slate-600'
+                }`}>
                 <strong>Ground Rule:</strong> {service.rules}
               </div>
             </div>
@@ -190,105 +235,99 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
 
       {/* 15 STEPS DIARY DIRECTORY */}
       <section className="max-w-5xl mx-auto px-4 space-y-12">
-       <ScrollReveal variant="fadeUp">
-        <div className="text-center max-w-2xl mx-auto space-y-3">
-          <span className="text-[10px] font-bold text-gold uppercase tracking-[0.2em] bg-gold/5 border border-gold/30 px-3 py-1 rounded-sm">
-            Active Support Directory
-          </span>
-          <h2 className="text-2xl md:text-3.5xl font-bold tracking-tight font-sans">
-            Our 15-Step End-To-End Support
-          </h2>
-          <p className={`text-xs md:text-sm ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
-            We handle the intricate details so you can focus entirely on your academics and language goals. Click any step below to explore.
-          </p>
-        </div>
+        <ScrollReveal variant="fadeUp">
+          <div className="text-center max-w-2xl mx-auto space-y-3">
+            <span className="text-[10px] font-bold text-gold uppercase tracking-[0.2em] bg-gold/5 border border-gold/30 px-3 py-1 rounded-sm">
+              Active Support Directory
+            </span>
+            <h2 className="text-2xl md:text-3.5xl font-bold tracking-tight font-sans">
+              Our 15-Step End-To-End Support
+            </h2>
+            <p className={`text-xs md:text-sm ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
+              We handle the intricate details so you can focus entirely on your academics and language goals. Click any step below to explore.
+            </p>
+          </div>
 
-        {/* Directory List Accordion Style */}
-        <div className={`border rounded-sm overflow-hidden shadow-premium ${
-          dark ? 'border-slate-800 bg-slate-950/65' : 'border-slate-200/50 bg-white'
-        }`}>
-          {blockSteps.map((step, idx) => {
-            const isExpanded = expandedStep === idx;
-            return (
-              <div 
-                key={idx}
-                className={`border-b last:border-b-0 border-slate-200/50 transition-all ${
-                  dark ? 'border-slate-800' : 'border-slate-200/50'
-                } ${isExpanded ? (dark ? 'bg-slate-900/20' : 'bg-slate-50/50') : ''}`}
-              >
-                <button
-                  onClick={() => setExpandedStep(isExpanded ? null : idx)}
-                  className={`w-full px-6 py-4 flex items-center justify-between text-left transition-colors pointer-cursor ${
-                    dark ? 'hover:bg-slate-900/40' : 'hover:bg-slate-100/40'
-                  }`}
+          {/* Directory List Accordion Style */}
+          <div className={`border rounded-sm overflow-hidden shadow-premium ${dark ? 'border-slate-800 bg-slate-950/65' : 'border-slate-200/50 bg-white'
+            }`}>
+            {blockSteps.map((step, idx) => {
+              const isExpanded = expandedStep === idx;
+              return (
+                <div
+                  key={idx}
+                  className={`border-b last:border-b-0 border-slate-200/50 transition-all ${dark ? 'border-slate-800' : 'border-slate-200/50'
+                    } ${isExpanded ? (dark ? 'bg-slate-900/20' : 'bg-slate-50/50') : ''}`}
                 >
-                  <div className="flex items-center gap-4">
-                    <span className="font-extrabold text-sm text-[#e5a800] tracking-wider w-6">
-                      {step.id}
-                    </span>
-                    <div>
-                      <h4 className={`font-extrabold text-sm ${dark ? 'text-slate-200' : 'text-slate-800'}`}>
-                        {step.title}
-                      </h4>
-                      <p className="text-[10px] text-slate-400 mt-0.5">
-                        {step.short}
-                      </p>
-                    </div>
-                  </div>
-                  <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
-                </button>
-
-                <AnimatePresence>
-                  {isExpanded && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.25 }}
-                      className="overflow-hidden"
-                    >
-                      <div className={`px-12 pb-6 pt-1 text-xs md:text-sm leading-relaxed font-sans border-l-2 border-[#1b73ba] ${
-                        dark ? 'text-slate-300' : 'text-slate-600'
-                      }`}>
-                        {step.full}
+                  <button
+                    onClick={() => setExpandedStep(isExpanded ? null : idx)}
+                    className={`w-full px-6 py-4 flex items-center justify-between text-left transition-colors pointer-cursor ${dark ? 'hover:bg-slate-900/40' : 'hover:bg-slate-100/40'
+                      }`}
+                  >
+                    <div className="flex items-center gap-4">
+                      <span className="font-extrabold text-sm text-[#e5a800] tracking-wider w-6">
+                        {step.id}
+                      </span>
+                      <div>
+                        <h4 className={`font-extrabold text-sm ${dark ? 'text-slate-200' : 'text-slate-800'}`}>
+                          {step.title}
+                        </h4>
+                        <p className="text-[10px] text-slate-400 mt-0.5">
+                          {step.short}
+                        </p>
                       </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            );
-          })}
-        </div>
-       </ScrollReveal>
+                    </div>
+                    <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                  </button>
+
+                  <AnimatePresence>
+                    {isExpanded && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.25 }}
+                        className="overflow-hidden"
+                      >
+                        <div className={`px-12 pb-6 pt-1 text-xs md:text-sm leading-relaxed font-sans border-l-2 border-[#1b73ba] ${dark ? 'text-slate-300' : 'text-slate-600'
+                          }`}>
+                          {step.full}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
+          </div>
+        </ScrollReveal>
       </section>
 
       {/* bottom CTA */}
       <section className="max-w-4xl mx-auto px-4 text-center">
-       <ScrollReveal variant="clipReveal">
-        <div className={`p-8 md:p-12 rounded-sm border shadow-premium space-y-6 border-b-4 border-b-gold ${
-          dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200 bg-white'
-        }`}>
-          <span className={`text-[10px] font-bold text-navy uppercase tracking-[0.2em] border px-3 py-1 rounded-sm ${
-            dark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
-          }`}>
-            Need Expert Input?
-          </span>
-          <h3 className={`text-2xl font-bold font-sans leading-tight ${dark ? 'text-white' : 'text-slate-900'}`}>
-            Stop Guessing and Connect with Students Already Living Your Dream
-          </h3>
-          <p className={`text-xs max-w-md mx-auto leading-relaxed ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
-            Our mentors are not sitting in an office in India guessing what Germany is like. They are there. Right now. And they are part of your team.
-          </p>
-          <div>
-            <button
-              onClick={onOpenConsultation}
-              className="px-8 py-3.5 rounded-sm font-bold text-xs uppercase tracking-widest bg-navy hover:bg-opacity-90 text-white border-b-2 border-gold transition-all cursor-pointer shadow-premium"
-            >
-              Consult with a Mentor Now
-            </button>
+        <ScrollReveal variant="clipReveal">
+          <div className={`p-8 md:p-12 rounded-sm border shadow-premium space-y-6 border-b-4 border-b-gold ${dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200 bg-white'
+            }`}>
+            <span className={`text-[10px] font-bold text-navy uppercase tracking-[0.2em] border px-3 py-1 rounded-sm ${dark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
+              }`}>
+              Need Expert Input?
+            </span>
+            <h3 className={`text-2xl font-bold font-sans leading-tight ${dark ? 'text-white' : 'text-slate-900'}`}>
+              Stop Guessing and Connect with Students Already Living Your Dream
+            </h3>
+            <p className={`text-xs max-w-md mx-auto leading-relaxed ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
+              Our mentors are not sitting in an office in India guessing what Germany is like. They are there. Right now. And they are part of your team.
+            </p>
+            <div>
+              <button
+                onClick={onOpenConsultation}
+                className="px-8 py-3.5 rounded-sm font-bold text-xs uppercase tracking-widest bg-navy hover:bg-opacity-90 text-white border-b-2 border-gold transition-all cursor-pointer shadow-premium"
+              >
+                Consult with a Mentor Now
+              </button>
+            </div>
           </div>
-        </div>
-       </ScrollReveal>
+        </ScrollReveal>
       </section>
 
     </div>
