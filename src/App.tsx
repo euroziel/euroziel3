@@ -86,7 +86,7 @@ export default function App() {
     <div className={`min-h-screen flex flex-col font-sans transition-colors duration-300 ${theme === 'dark' ? 'bg-[#060814] text-slate-100' : 'bg-white text-slate-900'
       }`}>
      
-       <div style={{ width: '100%', height: '600px', position: 'relative' }}>
+       <div style={{ width: '100%', height: '600px', position: 'absolute' }}>
         <Particles
           particleColors={["#ffffff"]}
           particleCount={200}
