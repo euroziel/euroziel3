@@ -249,7 +249,7 @@ const Particles: React.FC<ParticlesProps> = ({
     pixelRatio
   ]);
 
-  return <div ref={containerRef} className={`fixed inset-0 w-[100vw] h-[100vh] ${className}`} />;
+  return <div ref={containerRef} className={`fixed inset-0 w-[100vw] h-[100vh] ${className}`} style={{zIndex: 0}} />;
 };
 
 export default Particles;

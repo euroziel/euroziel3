@@ -83,10 +83,7 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen flex flex-col font-sans transition-colors duration-300 ${theme === 'dark' ? 'bg-transparent text-slate-100' : 'bg-white text-slate-900'
-      }`}>
-     
-       <div style={{ width: '100%', height: '600px', position: 'absolute' }}>
+    <div style={{ width: '100%', height: '600px', position: 'absolute' }}>
         <Particles
           particleColors={["#ffffff"]}
           particleCount={200}
@@ -98,7 +95,8 @@ export default function App() {
           disableRotation={false}
           pixelRatio={1}
         />
-      </div>
+    <div className={`relative z-10 min-h-screen flex flex-col font-sans transition-colors duration-300 ${theme === 'dark' ? 'bg-transparent text-slate-100' : 'bg-white text-slate-900'
+      }`}>
       
       {/* Sticky Premium Header navigation with logo trigger */}
       <Navbar
@@ -110,7 +108,7 @@ export default function App() {
       />
 
       {/* Main workspace */}
-      <main className="flex-grow pt-20">
+      <main className="flex-grow pt-0">
 
         {/* Dynamic section rendering according to state */}
         {currentTab === 'home' && (
@@ -201,6 +199,7 @@ export default function App() {
         </button>
       )}
 
+    </div>
     </div>
   );
 }
