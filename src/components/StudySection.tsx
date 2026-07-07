@@ -196,10 +196,10 @@ export default function StudySection({
 
       {/* SEMESTER CALENDAR & URGENCY */}
       <section
-        className={`py-20 px-4 ${
+        className={`py-10 px-4 ${
           dark
-            ? "bg-slate-950/50 border-slate-900"
-            : "bg-slate-50/50 border-slate-100"
+            ? "bg-transparent border-slate-900"
+            : "bg-transparent border-slate-100"
         }`}
       >
         <div className="max-w-5xl mx-auto text-left space-y-12">
@@ -216,20 +216,22 @@ export default function StudySection({
           </div> */}
 
           {/* Two images, stacked one below the other */}
-          <div className="flex flex-col gap-32">
+          <div className="flex flex-col gap-22">
             {/* Winter Semester Image */}
-            <ScrollReveal variant="slideLeft" delay={0.1}>
+            <ScrollReveal z-40 variant="slideLeft" delay={0.1}>
               <div
-                className={`rounded-4xl shadow-premium border-b-4 border-b-rose-500 overflow-hidden ${
+                onClick={onOpenConsultation}
+                className={`rounded-4xl shadow-premium border-b-4 border-b-rose-500 overflow-hidden z-40 ${
                   dark
-                    ? "border-slate-800 bg-slate-950"
-                    : "border-slate-200 bg-white"
+                    ? "border-slate-800 bg-transparent"
+                    : "border-slate-200 bg-transparent"
                 }`}
               >
                 <img
                   src="/assets/winter.png"
                   alt="Winter Intake - October Start"
                   className="w-full h-auto object-cover"
+                  
                 />
               </div>
             </ScrollReveal>
@@ -239,8 +241,8 @@ export default function StudySection({
               <div
                 className={`rounded-4xl shadow-premium border-b-4 border-b-emerald-500 overflow-hidden ${
                   dark
-                    ? "border-slate-800 bg-slate-950"
-                    : "border-slate-200 bg-white"
+                    ? "border-slate-800 bg-transparent"
+                    : "border-slate-200 bg-transparent"
                 }`}
               >
                 <img
@@ -277,6 +279,7 @@ export default function StudySection({
 
       <Fields dark={dark} />
 
+      {/* COMPANIES */}
       <Companies />
 
       {/* BOTTOM CTA: INR 100 BOOKING */}
@@ -357,7 +360,7 @@ function HeroReveal() {
   return (
     <section className="w-full text-left">
       <div
-        className="relative w-full bg-gold overflow-hidden border-b-4 border-b-slate-900 shadow-premium
+        className="relative w-full bg-transparent overflow-hidden shadow-premium
           h-[60vh] min-h-[320px]
           sm:h-[65vh] sm:min-h-[380px]
           md:h-[75vh] md:min-h-[450px]
