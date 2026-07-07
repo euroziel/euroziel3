@@ -148,7 +148,7 @@ export default function StudySection({
   };
 
   return (
-    <div className="space-y-24 md:space-y-36 pb-20 bg-slate-950/50 border-slate-100">
+    <div className="space-y-24 md:space-y-36 pb-20 bg-transparent ">
       {/* HERO SECTION FOR STUDY IN GERMANY */}
       {/*
         FIX: previously wrapped in <ScrollReveal variant="clipReveal">.
@@ -196,10 +196,10 @@ export default function StudySection({
 
       {/* SEMESTER CALENDAR & URGENCY */}
       <section
-        className={`py-10 px-4 ${
+        className={`py-0 px-4 ${
           dark
-            ? "bg-transparent border-slate-900"
-            : "bg-transparent border-slate-100"
+            ? "bg-transparent "
+            : "bg-transparent "
         }`}
       >
         <div className="max-w-5xl mx-auto text-left space-y-12">
@@ -255,7 +255,7 @@ export default function StudySection({
           </div>
 
           <ScrollReveal variant="fadeUp" delay={0.3}>
-            <div className="p-5 rounded-3xl border border-gold/20 bg-gold/5 text-xs text-slate-600 dark:text-slate-400 space-y-2">
+            <div className="p-5 rounded-3xl border border-gold/20 bg-gold/3 text-xs text-slate-600 dark:text-slate-400 space-y-2">
               <span className="font-bold text-gold uppercase tracking-wider font-mono flex items-center gap-1.5">
                 <AlertTriangle
                   className="w-4 h-4 text-gold"
@@ -376,7 +376,7 @@ function HeroReveal() {
           src="/assets/studyin.png"
           alt="Study in Germany & Europe"
           className="absolute inset-0 w-full h-full object-contain"
-          loading="eager"
+          loading="lazy"
         />
 
         {/* Optional subtle overlay for text/logo legibility if you ever add content on top */}

@@ -157,10 +157,10 @@ interface FieldsProps {
 const Fields: React.FC<FieldsProps> = ({ dark = false }) => {
   return (
     <section
-      className={`py-20 px-4 border-y ${
+      className={`py-0 px-4  ${
         dark
-          ? "bg-slate-950/50 border-slate-900"
-          : "bg-slate-50/50 border-slate-100"
+          ? "bg-transparent border-slate-900"
+          : "bg-transparent border-slate-100"
       }`}
     >
       <div className="max-w-6xl mx-auto space-y-16">
