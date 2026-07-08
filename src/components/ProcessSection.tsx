@@ -4,7 +4,7 @@ import {
   Check, Info, HelpCircle, ArrowRight, Zap, Target, BookOpen, FileSpreadsheet, Backpack, CalendarDays, ClipboardCheck, Lightbulb, AlertCircle
 } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
-import TimeLine from './timeline';
+import TimeLine from '@/src/components/TimeLine';
 
 interface ProcessSectionProps {
   onOpenConsultation: () => void;
