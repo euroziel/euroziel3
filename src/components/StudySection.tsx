@@ -375,7 +375,7 @@ function HeroReveal() {
         <img
           src="/assets/studyin.png"
           alt="Study in Germany & Europe"
-          className="absolute inset-0 w-full h-full object-contain"
+          className="absolute inset-0 w-full h-[100vh] object-contain"
           loading="lazy"
         />
 
