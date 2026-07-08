@@ -96,7 +96,6 @@ export default function App() {
           disableRotation={false}
           pixelRatio={1}
         />
-        <CanvasPlaneCursor />
     <div className={`relative z-10 min-h-screen flex flex-col font-sans transition-colors duration-300 ${theme === 'dark' ? 'bg-transparent text-slate-100' : 'bg-white text-slate-900'
       }`}>
       
@@ -189,6 +188,8 @@ export default function App() {
         theme={theme}
       />
 
+      <CanvasPlaneCursor />
+
       {/* Scroll to top floating button */}
       {showScrollTop && (
         <button
@@ -202,6 +203,7 @@ export default function App() {
       )}
 
     </div>
+    
     </div>
   );
 }
