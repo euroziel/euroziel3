@@ -14,7 +14,7 @@ import { Calendar, CheckCircle2, ChevronUp } from 'lucide-react';
 import Particles from './../components/Particles';
 import CanvasPlaneCursor from '@/components/CanvasPlaneCursor';
 
-export default function App() {
+export default function App1() {
   const [currentTab, setCurrentTab] = useState('home');
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
