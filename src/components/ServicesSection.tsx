@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
-  Compass, Laptop, FileCode, Landmark, ShieldCheck, HelpCircle, ArrowRight, ClipboardCheck, Scroll, FileCheck, Award, GraduationCap, ChevronDown, CheckCircle
+  Compass, Laptop, FileCode, Landmark, ShieldCheck, HelpCircle, ArrowRight, ClipboardCheck, Scroll, FileCheck, Award, GraduationCap, ChevronDown, CheckCircle, Check, Lock
 } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 
@@ -15,7 +15,7 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
   const dark = theme === 'dark';
 
   const mainServices = [
-    
+
     {
       step: "01",
       title: "Bachelor's Programmes",
@@ -180,6 +180,41 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
       full: "The first few weeks involve Anmeldung at the Bürgeramt, opening your German bank account, activating your health card, and understanding local recycling rules (your neighbors will notice if you get it wrong!). Our connected network is reachable throughout. You are never navigating it alone."
     }
   ];
+
+  // ── Add these inside your component, near your other useState hooks ──
+  const FREE_STEPS = 3; // first 3 steps are open for everyone
+
+  const [paidSteps, setPaidSteps] = useState<Set<number>>(new Set()); // indices unlocked via successful payment
+  const [lockedPopup, setLockedPopup] = useState<number | null>(null); // index of step showing the "unlock" popup
+  const [paymentLoadingStep, setPaymentLoadingStep] = useState<number | null>(null); // step currently "processing" payment
+
+  const isStepUnlocked = (idx: number) => idx < FREE_STEPS || paidSteps.has(idx);
+  const totalUnlocked = FREE_STEPS + paidSteps.size;
+
+  const handleStepClick = (idx: number) => {
+    if (!isStepUnlocked(idx)) {
+      // Locked step clicked → show the fade-in unlock popup, do NOT open it
+      setLockedPopup(idx);
+      return;
+    }
+    setLockedPopup(null);
+    setExpandedStep(expandedStep === idx ? null : idx);
+  };
+
+  // PLACEHOLDER: Razorpay is not wired up yet.
+  // This only simulates "opening the payment gateway" — it does NOT unlock the step.
+  // Once Razorpay is integrated, call setPaidSteps(...) ONLY inside the actual
+  // payment success callback (e.g. handler.on('payment.success', ...)), not here.
+  const handleUnlockPay = (idx: number) => {
+    setPaymentLoadingStep(idx);
+
+    // Simulated gateway redirect delay — replace this entire block with real Razorpay checkout.open()
+    setTimeout(() => {
+      setPaymentLoadingStep(null);
+      // Intentionally NOT unlocking or expanding the step here.
+      // Step remains locked and closed until real payment confirms.
+    }, 1500);
+  };
 
   return (
     <div className="space-y-24 md:space-y-36 pb-0">
@@ -425,71 +460,192 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
       </section>
 
       {/* 15 STEPS DIARY DIRECTORY */}
-      <section className="max-w-5xl mx-auto px-4 mt-15 space-y-12">
+      <section className="max-w-4xl mx-auto px-4 mt-15 space-y-12 relative">
         <ScrollReveal variant="fadeUp">
-          <div className="text-center max-w-2xl mx-auto space-y-3">
-            {/* <span className="text-[10px] font-bold text-gold uppercase tracking-[0.2em] bg-gold/5 border border-gold/30 px-3 py-1 rounded-sm">
-              Active Support Directory
-            </span> */}
+          <div className="text-center max-w-2xl mx-auto space-y-3 mb-12">
+            <span className="text-[10px] font-bold text-gold uppercase tracking-[0.2em] bg-gold/5 border border-gold/30 px-3 py-1 rounded-sm">
+              {totalUnlocked} of {blockSteps.length} Steps Unlocked
+            </span>
             <h2 className="text-2xl md:text-3.5xl font-bold tracking-tight font-sans">
               Our 15-Step End-To-End Support
             </h2>
             <p className={`text-xs md:text-sm ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
-              We handle the intricate details so you can focus entirely on your academics and language goals. Click any step below to explore.
+              The first 3 steps are open to explore. Unlock the rest for just ₹9 per step.
             </p>
+
+            {/* Overall progress bar */}
+            <div className={`w-full max-w-md mx-auto h-1.5 rounded-full overflow-hidden mt-4 ${dark ? 'bg-slate-800' : 'bg-slate-200'}`}>
+              <motion.div
+                className="h-full bg-gold rounded-full"
+                initial={{ width: 0 }}
+                animate={{ width: `${(totalUnlocked / blockSteps.length) * 100}%` }}
+                transition={{ duration: 0.4, ease: 'easeOut' }}
+              />
+            </div>
           </div>
 
-          {/* Directory List Accordion Style */}
-          <div className={`border rounded-sm overflow-hidden shadow-premium ${dark ? 'border-slate-800 bg-slate-950/65' : 'border-slate-200/50 bg-white'
-            }`}>
-            {blockSteps.map((step, idx) => {
-              const isExpanded = expandedStep === idx;
-              return (
-                <div
-                  key={idx}
-                  className={`border-b last:border-b-0 border-slate-200/50 transition-all ${dark ? 'border-slate-800' : 'border-slate-200/50'
-                    } ${isExpanded ? (dark ? 'bg-slate-900/20' : 'bg-slate-50/50') : ''}`}
-                >
-                  <button
-                    onClick={() => setExpandedStep(isExpanded ? null : idx)}
-                    className={`w-full px-6 py-4 flex items-center justify-between text-left transition-colors pointer-cursor ${dark ? 'hover:bg-slate-900/40' : 'hover:bg-slate-100/40'
-                      }`}
-                  >
-                    <div className="flex items-center gap-4">
-                      <span className="font-extrabold text-sm text-[#e5a800] tracking-wider w-6">
-                        {step.id}
-                      </span>
-                      <div>
-                        <h4 className={`font-extrabold text-sm ${dark ? 'text-slate-200' : 'text-slate-800'}`}>
-                          {step.title}
-                        </h4>
-                        <p className="text-[10px] text-slate-400 mt-0.5">
-                          {step.short}
-                        </p>
-                      </div>
-                    </div>
-                    <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
-                  </button>
+          {/* Vertical timeline design */}
+          <div className="relative">
+            {/* Base connecting line */}
+            <div className={`absolute left-6 top-2 bottom-2 w-[2px] ${dark ? 'bg-slate-800' : 'bg-slate-200'}`} />
+            {/* Progress-filled connecting line */}
+            <motion.div
+              className="absolute left-6 top-2 w-[2px] bg-gold"
+              initial={{ height: 0 }}
+              animate={{
+                height: `${((totalUnlocked - 1) / (blockSteps.length - 1)) * 100}%`
+              }}
+              transition={{ duration: 0.5, ease: 'easeOut' }}
+            />
 
-                  <AnimatePresence>
-                    {isExpanded && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.25 }}
-                        className="overflow-hidden"
+            <div className="space-y-3 relative">
+              {blockSteps.map((step, idx) => {
+                const isUnlocked = isStepUnlocked(idx);
+                const isPaidUnlock = paidSteps.has(idx);
+                const isExpanded = expandedStep === idx;
+                const isPaying = paymentLoadingStep === idx;
+
+                return (
+                  <div key={idx} className="relative pl-16">
+                    {/* Node */}
+                    <div
+                      className={`absolute left-0 top-3 w-12 h-12 rounded-full flex items-center justify-center border-4 z-10 transition-colors ${isUnlocked
+                          ? isPaidUnlock
+                            ? 'bg-gold border-gold text-slate-950'
+                            : dark
+                              ? 'bg-slate-950 border-gold text-gold'
+                              : 'bg-white border-gold text-gold'
+                          : dark
+                            ? 'bg-slate-900 border-slate-800 text-slate-600'
+                            : 'bg-slate-100 border-slate-200 text-slate-400'
+                        }`}
+                    >
+                      {isUnlocked ? (
+                        <span className="font-extrabold text-sm">{step.id}</span>
+                      ) : (
+                        <Lock className="w-4 h-4" strokeWidth={2.5} />
+                      )}
+                    </div>
+
+                    {/* Card */}
+                    <div
+                      className={`rounded-sm border overflow-hidden transition-all shadow-premium ${isUnlocked
+                          ? dark
+                            ? 'border-slate-800 bg-slate-950/65'
+                            : 'border-slate-200/60 bg-white'
+                          : dark
+                            ? 'border-slate-900 bg-slate-950/30 opacity-60'
+                            : 'border-slate-100 bg-slate-50/60 opacity-70'
+                        } ${isExpanded ? (dark ? 'bg-slate-900/20' : 'bg-slate-50/50') : ''}`}
+                    >
+                      <button
+                        onClick={() => handleStepClick(idx)}
+                        className={`w-full px-5 py-4 flex items-center justify-between text-left transition-colors cursor-pointer ${isUnlocked
+                            ? dark ? 'hover:bg-slate-900/40' : 'hover:bg-slate-100/40'
+                            : ''
+                          }`}
                       >
-                        <div className={`px-12 pb-6 pt-1 text-xs md:text-sm leading-relaxed font-sans border-l-2 border-[#1b73ba] ${dark ? 'text-slate-300' : 'text-slate-600'
-                          }`}>
-                          {step.full}
+                        <div>
+                          <h4 className={`font-extrabold text-sm flex items-center gap-2 ${isUnlocked
+                              ? dark ? 'text-slate-200' : 'text-slate-800'
+                              : dark ? 'text-slate-600' : 'text-slate-400'
+                            }`}>
+                            {step.title}
+                            {!isUnlocked && (
+                              <span className="text-[9px] font-bold uppercase bg-gold/10 border border-gold/30 text-gold px-1.5 py-0.5 rounded-sm">
+                                Locked
+                              </span>
+                            )}
+                          </h4>
+                          <p className={`text-[10px] mt-0.5 ${isUnlocked ? 'text-slate-400' : 'text-slate-500'}`}>
+                            {step.short}
+                          </p>
                         </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              );
-            })}
+
+                        {isUnlocked ? (
+                          <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform flex-shrink-0 ${isExpanded ? 'rotate-180' : ''}`} />
+                        ) : (
+                          <Lock className="w-4 h-4 text-slate-400 flex-shrink-0" />
+                        )}
+                      </button>
+
+                      <AnimatePresence>
+                        {isExpanded && isUnlocked && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.25 }}
+                            className="overflow-hidden"
+                          >
+                            <div className={`px-8 pb-5 pt-1 text-xs md:text-sm leading-relaxed font-sans border-l-2 border-[#1b73ba] ml-2 ${dark ? 'text-slate-300' : 'text-slate-600'
+                              }`}>
+                              {step.full}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+
+                    {/* Fade popup: shown when a locked step is clicked */}
+                    <AnimatePresence>
+                      {lockedPopup === idx && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -6, scale: 0.97 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: -6, scale: 0.97 }}
+                          transition={{ duration: 0.2 }}
+                          className={`absolute left-16 right-0 top-full mt-2 z-30 rounded-sm border p-5 shadow-premium ${dark ? 'bg-slate-950 border-gold/30' : 'bg-white border-gold/30'
+                            }`}
+                        >
+                          <div className="flex items-start gap-4">
+                            <div className="w-10 h-10 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center flex-shrink-0">
+                              <Lock className="w-5 h-5 text-gold" strokeWidth={2.5} />
+                            </div>
+                            <div className="flex-1">
+                              <h5 className={`font-extrabold text-sm mb-1 ${dark ? 'text-slate-100' : 'text-slate-800'}`}>
+                                Step {step.id} is locked
+                              </h5>
+                              <p className={`text-xs leading-relaxed mb-4 ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
+                                This step stays locked until payment is complete. Unlock it instantly for just ₹9.
+                              </p>
+
+                              {isPaying ? (
+                                <div className="flex items-center gap-2 text-xs font-semibold text-gold">
+                                  <motion.span
+                                    animate={{ rotate: 360 }}
+                                    transition={{ repeat: Infinity, duration: 0.8, ease: 'linear' }}
+                                    className="inline-block w-3.5 h-3.5 border-2 border-gold border-t-transparent rounded-full"
+                                  />
+                                  Opening payment gateway...
+                                </div>
+                              ) : (
+                                <div className="flex items-center gap-3">
+                                  <button
+                                    onClick={() => handleUnlockPay(idx)}
+                                    className="flex items-center gap-2 text-xs font-bold bg-gold text-slate-950 px-4 py-2 rounded-sm hover:brightness-95 transition-all"
+                                  >
+                                    <Lock className="w-3.5 h-3.5" strokeWidth={3} />
+                                    Unlock for ₹9
+                                  </button>
+                                  <button
+                                    onClick={() => setLockedPopup(null)}
+                                    className={`text-xs font-semibold px-3 py-2 rounded-sm transition-colors ${dark ? 'text-slate-400 hover:text-slate-200' : 'text-slate-500 hover:text-slate-700'
+                                      }`}
+                                  >
+                                    Cancel
+                                  </button>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </ScrollReveal>
       </section>

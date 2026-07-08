@@ -12,6 +12,7 @@ import ContactModal from './components/ContactModal';
 import ContactModal2 from './components/ContactModal2';
 import { Calendar, CheckCircle2, ChevronUp } from 'lucide-react';
 import Particles from './../components/Particles';
+import CanvasPlaneCursor from '@/components/CanvasPlaneCursor';
 
 export default function App() {
   const [currentTab, setCurrentTab] = useState('home');
@@ -95,6 +96,7 @@ export default function App() {
           disableRotation={false}
           pixelRatio={1}
         />
+        <CanvasPlaneCursor />
     <div className={`relative z-10 min-h-screen flex flex-col font-sans transition-colors duration-300 ${theme === 'dark' ? 'bg-transparent text-slate-100' : 'bg-white text-slate-900'
       }`}>
       
