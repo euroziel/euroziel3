@@ -16,11 +16,11 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
 
   // Pre-departure Checklist state
   const [checklist, setChecklist] = useState([
-    { id: 1, text: "APS Certificate Obtained", checked: true },
-    { id: 2, text: "IELTS / German Language Requirement Completed", checked: true },
+    { id: 1, text: "APS Certificate Obtained", checked: false },
+    { id: 2, text: "IELTS / German Language Requirement Completed", checked: false },
     { id: 3, text: "SOP Finalized & Reviewed", checked: false },
     { id: 4, text: "LORs Prepared on Official Letterhead", checked: false },
-    { id: 5, text: "European Format CV Updated", checked: true },
+    { id: 5, text: "European Format CV Updated", checked: false },
     { id: 6, text: "University Applications Submitted", checked: false },
     { id: 7, text: "Offer Letter Received", checked: false },
     { id: 8, text: "Blocked Account Funded (€11,904)", checked: false },
@@ -30,12 +30,16 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
     { id: 12, text: "Flight Tickets Booked", checked: false },
   ]);
 
-  const toggleCheck = (id: number) => {
-    setChecklist(prev => prev.map(item => item.id === id ? { ...item, checked: !item.checked } : item));
-  };
-
-  const checkedCount = checklist.filter(item => item.checked).length;
+  const checkedCount = checklist.filter((item) => item.checked).length;
   const progressPercent = Math.round((checkedCount / checklist.length) * 100);
+
+  const toggleCheck = (id: number) => {
+    setChecklist((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, checked: !item.checked } : item
+      )
+    );
+  };
 
   // Timeline list
   const timeline = [
@@ -124,38 +128,72 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
   ];
 
   // Journey insights cards
-  const [activeInsight, setActiveInsight] = useState<number | null>(null);
-
   const insights = [
     {
       title: "APS Processing Times",
-      short: "Pre-evaluating takes 6-12 weeks",
-      full: "Academic Evaluation Centre (APS) verifies that your Indian educational transcripts match German guidelines. Do not wait for admissions to open. Apply first thing, as this certificate is mandatory for most public university portals."
+      short: "Pre-evaluation takes 6-12 weeks",
+      image: "https://images.unsplash.com/photo-1568992687947-868a62a9f521?auto=format&fit=crop&w=800&q=80",
+      points: [
+        "APS verifies your Indian transcripts against German academic guidelines",
+        "Processing typically takes 6 to 12 weeks — apply early",
+        "Certificate is mandatory for most public university portals",
+        "Do not wait for admissions to open before applying"
+      ]
     },
     {
       title: "Public Universities",
       short: "World-class and tuition-free",
-      full: "Most public universities in Germany are completely free of tuition, only requiring a nominal block semester contribution of €200 to €400 which typically includes your city public transport pass!"
+      image: "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=800&q=80",
+      points: [
+        "Most public universities charge zero tuition fees",
+        "Only a nominal semester contribution of €200–€400 applies",
+        "This fee typically includes a city-wide public transport pass",
+        "Applies to both EU and non-EU international students"
+      ]
     },
     {
       title: "Language Advantage",
       short: "B1/B2 level opens all doors",
-      full: "While English-taught programs are available, even basic conversational German (A1-A2) significantly improves daily life, Anmeldung, and student part-time jobs. For Ausbildung, B1/B2 is absolutely critical."
+      image: "https://images.unsplash.com/photo-1527866959252-deab85ef7d1b?auto=format&fit=crop&w=800&q=80",
+      points: [
+        "English-taught programs are widely available",
+        "Basic German (A1–A2) improves daily life and Anmeldung",
+        "Helps significantly with part-time student jobs",
+        "B1/B2 is critical and often mandatory for Ausbildung"
+      ]
     },
     {
       title: "Career Opportunities",
       short: "1.7M unfilled skilled jobs",
-      full: "Germany's job seeker visa is highly favorable, but you must start your search before graduation month. Focus heavily on internships and 'Werkstudent' student assistant roles to gain local experience early."
+      image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80",
+      points: [
+        "Germany's job seeker visa policy is highly favorable",
+        "Start your job search before your graduation month",
+        "Prioritize internships to build local work experience",
+        "'Werkstudent' roles are ideal for early industry exposure"
+      ]
     },
     {
       title: "Student Networking",
       short: "Build connections on the ground",
-      full: "Connect with students already at your destination university to learn housing tips, local Bürgeramt registration queues, and transport routes before landing in Germany."
+      image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80",
+      points: [
+        "Connect with current students at your target university",
+        "Learn practical housing and WG-hunting tips early",
+        "Understand local Bürgeramt registration queues in advance",
+        "Get insider info on transport routes before landing"
+      ]
     },
     {
       title: "Structured Planning Matters",
       short: "Start 12 months ahead",
-      full: "Students who plan ahead experience smoother admissions, visa approvals, and blocked account setup. Last-minute timelines often lead to missed intake dates."
+      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
+      points: [
+        "Begin your planning at least 12 months in advance",
+        "Early planning leads to smoother admissions and visa approval",
+        "Gives adequate time to set up your blocked account",
+        "Last-minute timelines risk missing intake deadlines"
+      ]
     }
   ];
 
@@ -242,24 +280,30 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
       </section>
 
       {/* YOUR GERMANY TIMELINE ROADMAP */}
-      
-      <TimeLine  />
+
+      <TimeLine />
 
       {/* INTERACTIVE PRE-DEPARTURE CHECKLIST */}
       <section className="max-w-7xl mx-auto px-4">
         <ScrollReveal variant="scaleUp">
-          <div className={`p-6 md:p-10 rounded-sm border border-[#e5a800]/20 shadow-premium border-b-4 border-b-gold space-y-8 text-left relative ${dark ? 'bg-slate-950/80' : 'bg-white'
-            }`}>
+          <div
+            className={`p-6 md:p-10 rounded-sm border border-[#e5a800]/20 shadow-premium border-b-4 border-b-gold space-y-8 text-left relative ${dark ? "bg-slate-950/80" : "bg-white"
+              }`}
+          >
             <div className="absolute top-4 right-4 text-[9px] px-2 py-1 rounded-sm bg-gold/5 text-gold border border-gold/20 font-mono font-bold uppercase tracking-wider">
               Interactive Checklist
             </div>
 
+            {/* Header */}
             <div className="space-y-2">
-              <h2 className={`text-2xl font-bold tracking-tight font-sans ${dark ? 'text-slate-100' : 'text-slate-800'}`}>
+              <h2
+                className={`text-2xl font-bold tracking-tight font-sans ${dark ? "text-slate-100" : "text-slate-800"
+                  }`}
+              >
                 Pre-Departure Readiness Checklist
               </h2>
-              <p className={`text-xs font-sans ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
-                Plan and tick off milestones. See if you are fully prepared for your flight.
+              <p className={`text-xs font-sans ${dark ? "text-slate-400" : "text-slate-500"}`}>
+                Follow each step in order and tick it off once completed. Track how prepared you are for your flight.
               </p>
             </div>
 
@@ -267,9 +311,14 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
             <div className="space-y-2">
               <div className="flex justify-between items-center text-xs">
                 <span className="font-semibold text-slate-500">Your Progress</span>
-                <span className="font-bold text-gold">{checkedCount} of {checklist.length} Completed ({progressPercent}%)</span>
+                <span className="font-bold text-gold">
+                  {checkedCount} of {checklist.length} Completed ({progressPercent}%)
+                </span>
               </div>
-              <div className={`h-2 rounded-sm overflow-hidden border border-slate-200/20 ${dark ? 'bg-slate-900' : 'bg-slate-105'}`}>
+              <div
+                className={`h-2 rounded-sm overflow-hidden border border-slate-200/20 ${dark ? "bg-slate-900" : "bg-slate-105"
+                  }`}
+              >
                 <div
                   className="h-full bg-navy transition-all duration-500"
                   style={{ width: `${progressPercent}%` }}
@@ -277,24 +326,41 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
               </div>
             </div>
 
-            {/* Checklist Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 pt-2">
-              {checklist.map((item) => (
+            {/* Ordered Step-by-Step Checklist */}
+            <div className="flex flex-col divide-y divide-slate-200/10">
+              {checklist.map((item, index) => (
                 <label
                   key={item.id}
                   onClick={() => toggleCheck(item.id)}
-                  className={`p-3.5 rounded-sm border flex items-center gap-3.5 cursor-pointer transition-all ${item.checked
-                    ? `border-navy/30 bg-navy/5 ${dark ? 'text-slate-200' : 'text-slate-800'}`
-                    : `${dark ? 'border-slate-800 bg-slate-900/40 text-slate-400' : 'border-slate-200 bg-slate-50/50 text-slate-500'}`
+                  className={`py-3.5 flex items-center gap-3.5 cursor-pointer transition-all ${item.checked
+                    ? `${dark ? "text-slate-200" : "text-slate-800"}`
+                    : `${dark ? "text-slate-400" : "text-slate-500"}`
                     }`}
                 >
-                  <div className={`w-5 h-5 rounded-sm flex items-center justify-center border transition-all ${item.checked
-                    ? 'bg-navy border-navy text-white'
-                    : `${dark ? 'border-slate-700' : 'border-slate-300'}`
-                    }`}>
+                  {/* Step Number Badge */}
+                  <div
+                    className={`w-6 h-6 shrink-0 rounded-full flex items-center justify-center text-[10px] font-bold font-mono border transition-all ${item.checked
+                      ? "bg-navy/10 border-navy/40 text-navy"
+                      : `${dark ? "border-slate-700 text-slate-500" : "border-slate-300 text-slate-400"}`
+                      }`}
+                  >
+                    {index + 1}
+                  </div>
+
+                  {/* Checkbox */}
+                  <div
+                    className={`w-5 h-5 shrink-0 rounded-sm flex items-center justify-center border transition-all ${item.checked
+                      ? "bg-navy border-navy text-white"
+                      : `${dark ? "border-slate-700" : "border-slate-300"}`
+                      }`}
+                  >
                     {item.checked && <Check className="w-3.5 h-3.5 stroke-[3.5]" />}
                   </div>
-                  <span className="text-xs font-semibold select-none font-sans leading-none">{item.text}</span>
+
+                  {/* Step Text */}
+                  <span className="text-xs font-semibold select-none font-sans leading-none">
+                    {item.text}
+                  </span>
                 </label>
               ))}
             </div>
@@ -303,76 +369,93 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
       </section>
 
       {/* GERMANY JOURNEY INSIGHTS FLASH CARDS */}
-      <section className={`py-20 px-4 border-y animate-fade-in ${dark ? 'bg-slate-950/50 border-slate-900' : 'bg-slate-50/50 border-slate-100'
-        }`}>
+      <section className={`py-10 px-4 animate-fade-in ${dark ? 'bg-transparent' : 'bg-transparent'}`}>
         <div className="max-w-7xl mx-auto space-y-12">
 
           <div className="text-center max-w-xl mx-auto space-y-3">
-            <span className="text-[10px] font-bold text-gold uppercase tracking-[0.2em] bg-gold/5 border border-gold/30 px-3 py-1 rounded-sm">
-              Flash Cards
-            </span>
             <h2 className="text-3xl font-bold tracking-tight font-sans">
               Germany Journey Insights
             </h2>
             <p className={`text-xs md:text-sm ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
-              Click any flash card below to flip it over and read vital insights about student life and legal compliance in Germany.
+              Hover over any card to flip it and reveal detailed insights about student life and legal compliance in Germany.
             </p>
           </div>
 
-          <ScrollReveal variant="blurIn" stagger={0.08} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {insights.map((ins, idx) => {
-              const isSelected = activeInsight === idx;
-              return (
+          <ScrollReveal
+            variant="blurIn"
+            stagger={0.08}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto"
+          >
+            {insights.map((ins, idx) => (
+              <div
+                key={idx}
+                className="group h-96 rounded-sm"
+                style={{ perspective: '1200px' }}
+              >
                 <div
-                  key={idx}
-                  onClick={() => setActiveInsight(isSelected ? null : idx)}
-                  className={`h-48 rounded-sm border cursor-pointer relative overflow-hidden transition-all duration-300 transform ${isSelected
-                    ? 'border-gold bg-slate-950 text-gold shadow-premium border-b-4 border-b-gold'
-                    : `shadow-premium hover:border-gold ${dark ? 'border-slate-900 bg-slate-950 text-slate-100' : 'border-slate-200/50 bg-white text-slate-800'
-                    }`
-                    }`}
+                  className="relative w-full h-full transition-transform duration-700 ease-in-out [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]"
                 >
-                  <div className="p-6 h-full flex flex-col justify-between text-left">
-                    <div>
+                  {/* FRONT FACE */}
+                  <div
+                    className="absolute inset-0 rounded-sm border overflow-hidden shadow-premium border-b-4 border-b-gold [backface-visibility:hidden]"
+                  >
+                    <div
+                      className="absolute inset-0 bg-cover bg-center"
+                      style={{ backgroundImage: `url(${ins.image})` }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/50 to-slate-950/20" />
+
+                    <div className="relative p-8 h-full flex flex-col justify-between text-left">
                       <div className="flex justify-between items-center">
-                        <span className="text-[8px] font-mono tracking-widest text-[#1b73ba] uppercase font-bold">Fact Card 0{idx + 1}</span>
-                        <Lightbulb className={`w-4 h-4 ${isSelected ? 'text-gold' : 'text-slate-400'}`} />
+                        <span className="text-[9px] font-mono tracking-widest text-gold uppercase font-bold bg-slate-950/40 px-2.5 py-1.5 rounded-sm border border-gold/20">
+                          Fact Card 0{idx + 1}
+                        </span>
+                        <Lightbulb className="w-5 h-5 text-gold" />
                       </div>
 
-                      <AnimatePresence mode="wait">
-                        {!isSelected ? (
-                          <motion.div
-                            key="front"
-                            initial={{ opacity: 0, y: 5 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -5 }}
-                            className="mt-4"
-                          >
-                            <h4 className="font-bold text-sm">{ins.title}</h4>
-                            <p className="text-xs text-slate-400 mt-2 font-sans">{ins.short}</p>
-                          </motion.div>
-                        ) : (
-                          <motion.div
-                            key="back"
-                            initial={{ opacity: 0, y: 5 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -5 }}
-                            className="mt-3 overflow-y-auto max-h-[100px] pr-1"
-                          >
-                            <p className="text-xs text-slate-300 leading-relaxed font-sans">{ins.full}</p>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                      <div>
+                        <h4 className="font-bold text-xl text-white font-sans">{ins.title}</h4>
+                        <p className="text-sm text-slate-200 mt-2 font-sans">{ins.short}</p>
+                      </div>
+
+                      <div className="text-[10px] text-slate-300 border-t border-white/15 pt-3 flex items-center justify-between">
+                        <span className="font-sans uppercase tracking-wider text-[9px]">Hover to Read Detail</span>
+                        <ArrowRight className="w-3.5 h-3.5 text-gold" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* BACK FACE */}
+                  <div
+                    className={`absolute inset-0 rounded-sm border p-8 flex flex-col justify-between text-left shadow-premium border-gold border-b-4 border-b-gold [backface-visibility:hidden] [transform:rotateY(180deg)] ${dark ? 'bg-slate-950 text-slate-100' : 'bg-slate-950 text-slate-100'
+                      }`}
+                  >
+                    <div>
+                      <div className="flex justify-between items-center mb-4">
+                        <span className="text-[9px] font-mono tracking-widest text-gold uppercase font-bold">
+                          {ins.title}
+                        </span>
+                        <Lightbulb className="w-5 h-5 text-gold" />
+                      </div>
+
+                      <ul className="space-y-2.5 overflow-y-auto max-h-[220px] pr-1">
+                        {ins.points.map((pt, pIdx) => (
+                          <li key={pIdx} className="flex items-start gap-2.5 text-[13px] leading-relaxed text-slate-300 font-sans">
+                            <span className="text-gold mt-0.5 shrink-0">▹</span>
+                            <span>{pt}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
 
-                    <div className="text-[9px] text-slate-400 border-t border-slate-100/15 pt-2 flex items-center justify-between">
-                      <span className="font-sans uppercase tracking-wider text-[8px]">{isSelected ? "Click to Flip Back" : "Click to Read Detail"}</span>
-                      <ArrowRight className="w-3 h-3 text-gold" />
+                    <div className="text-[10px] text-slate-400 border-t border-slate-100/15 pt-3 flex items-center justify-between">
+                      <span className="font-sans uppercase tracking-wider text-[9px]">Move Away to Flip Back</span>
+                      <ArrowRight className="w-3.5 h-3.5 text-gold rotate-180" />
                     </div>
                   </div>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </ScrollReveal>
 
         </div>
