@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ThreeDHero from './components/ThreeDHero';
@@ -10,18 +11,23 @@ import AboutSection from './components/AboutSection';
 import FAQSection from './components/FAQSection';
 import ContactModal from './components/ContactModal';
 import ContactModal2 from './components/ContactModal2';
-import { Calendar, CheckCircle2, ChevronUp } from 'lucide-react';
+import { ChevronUp } from 'lucide-react';
 import Particles from './../components/Particles';
 import CanvasPlaneCursor from '@/components/CanvasPlaneCursor';
 
 export default function App() {
-  const [currentTab, setCurrentTab] = useState('home');
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Derive "currentTab" from the URL path so existing components
+  // that expect a `currentTab` string keep working unchanged.
+  const currentTab = location.pathname === '/' ? 'home' : location.pathname.slice(1);
+
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
   const [isConsultation2Open, setIsConsultation2Open] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
-  // Sync dark class on document element
   useEffect(() => {
     const root = window.document.documentElement;
     if (theme === 'dark') {
@@ -31,14 +37,9 @@ export default function App() {
     }
   }, [theme]);
 
-  // Track scroll position for backing up
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 400) {
-        setShowScrollTop(true);
-      } else {
-        setShowScrollTop(false);
-      }
+      setShowScrollTop(window.scrollY > 400);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -46,26 +47,19 @@ export default function App() {
 
   useEffect(() => {
     const hasSeenModal = localStorage.getItem('hasSeenContactModal');
-    console.log('hasSeenModal:', hasSeenModal);
-
     if (!hasSeenModal) {
       const timer = setTimeout(() => {
-        console.log('Opening modal2 now');
         setIsConsultation2Open(true);
       }, 5000);
-
       return () => clearTimeout(timer);
     }
   }, []);
 
-  // Close handler for the AUTO-POPUP modal (ContactModal2) only.
-  // This is the one that should set the "don't show again" flag.
   const handleCloseModal2 = () => {
     setIsConsultation2Open(false);
     localStorage.setItem('hasSeenContactModal', 'true');
   };
 
-  // Close handler for the MANUALLY-TRIGGERED modal (ContactModal).
   const handleCloseModal1 = () => {
     setIsConsultationOpen(false);
   };
@@ -74,8 +68,9 @@ export default function App() {
     setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
   };
 
+  // Replaces old setState-based tab switching with real navigation.
   const handleTabChange = (tabId: string) => {
-    setCurrentTab(tabId);
+    navigate(tabId === 'home' ? '/' : `/${tabId}`);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -85,125 +80,95 @@ export default function App() {
 
   return (
     <div style={{ width: '100%', height: '600px', position: 'absolute' }}>
-        <Particles
-          particleColors={["#ffffff"]}
-          particleCount={200}
-          particleSpread={10}
-          speed={0.1}
-          particleBaseSize={100}
-          moveParticlesOnHover
-          alphaParticles={false}
-          disableRotation={false}
-          pixelRatio={1}
+      <Particles
+        particleColors={["#ffffff"]}
+        particleCount={200}
+        particleSpread={10}
+        speed={0.1}
+        particleBaseSize={100}
+        moveParticlesOnHover
+        alphaParticles={false}
+        disableRotation={false}
+        pixelRatio={1}
+      />
+      <div
+        className={`relative z-10 min-h-screen flex flex-col font-sans transition-colors duration-300 ${
+          theme === 'dark' ? 'bg-transparent text-slate-100' : 'bg-white text-slate-900'
+        }`}
+      >
+        <Navbar
+          currentTab={currentTab}
+          onTabChange={handleTabChange}
+          theme={theme}
+          onThemeToggle={toggleTheme}
+          onOpenConsultation={() => setIsConsultationOpen(true)}
         />
-    <div className={`relative z-10 min-h-screen flex flex-col font-sans transition-colors duration-300 ${theme === 'dark' ? 'bg-transparent text-slate-100' : 'bg-white text-slate-900'
-      }`}>
-      
-      {/* Sticky Premium Header navigation with logo trigger */}
-      <Navbar
-        currentTab={currentTab}
-        onTabChange={handleTabChange}
-        theme={theme}
-        onThemeToggle={toggleTheme}
-        onOpenConsultation={() => setIsConsultationOpen(true)}
-      />
 
-      {/* Main workspace */}
-      <main className="flex-grow pt-0">
-
-        {/* Dynamic section rendering according to state */}
-        {currentTab === 'home' && (
-          <>
-            {/* Immersive 3D Parallax Mouse Tracker Section */}
-            <ThreeDHero
-              onOpenConsultation={() => setIsConsultationOpen(true)}
-              onNavigateToTab={handleTabChange}
-              theme={theme}
+        <main className="flex-grow pt-0">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <ThreeDHero
+                    onOpenConsultation={() => setIsConsultationOpen(true)}
+                    onNavigateToTab={handleTabChange}
+                    theme={theme}
+                  />
+                  <HomeSection
+                    onOpenConsultation={() => setIsConsultationOpen(true)}
+                    onNavigateToTab={handleTabChange}
+                    theme={theme}
+                  />
+                </>
+              }
             />
-            {/* Core Home Sections (Why EuroZiel, Timeline Slider, Testimonials) */}
-            <HomeSection
-              onOpenConsultation={() => setIsConsultationOpen(true)}
-              onNavigateToTab={handleTabChange}
-              theme={theme}
+            <Route
+              path="/study"
+              element={<StudySection onOpenConsultation={() => setIsConsultationOpen(true)} theme={theme} />}
             />
-          </>
+            <Route
+              path="/services"
+              element={<ServicesSection onOpenConsultation={() => setIsConsultationOpen(true)} theme={theme} />}
+            />
+            <Route
+              path="/process"
+              element={<ProcessSection onOpenConsultation={() => setIsConsultationOpen(true)} theme={theme} />}
+            />
+            <Route
+              path="/about"
+              element={<AboutSection onOpenConsultation={() => setIsConsultationOpen(true)} theme={theme} />}
+            />
+            <Route
+              path="/faq"
+              element={<FAQSection onOpenConsultation={() => setIsConsultationOpen(true)} theme={theme} />}
+            />
+          </Routes>
+        </main>
+
+        <Footer
+          currentTab={currentTab}
+          onTabChange={handleTabChange}
+          theme={theme}
+          onOpenConsultation={() => setIsConsultationOpen(true)}
+        />
+
+        <ContactModal isOpen={isConsultationOpen} onClose={handleCloseModal1} theme={theme} />
+        <ContactModal2 isOpen={isConsultation2Open} onClose={handleCloseModal2} theme={theme} />
+
+        <CanvasPlaneCursor />
+
+        {showScrollTop && (
+          <button
+            onClick={handleScrollToTop}
+            className="fixed bottom-6 right-6 p-3 rounded-sm bg-navy text-white hover:bg-opacity-90 border-b border-gold transition-all shadow-premium active:scale-95 z-30 cursor-pointer"
+            title="Scroll back up"
+            aria-label="Scroll back up"
+          >
+            <ChevronUp className="w-5 h-5 stroke-[2.5]" />
+          </button>
         )}
-
-        {currentTab === 'study' && (
-          <StudySection
-            onOpenConsultation={() => setIsConsultationOpen(true)}
-            theme={theme}
-          />
-        )}
-
-        {currentTab === 'services' && (
-          <ServicesSection
-            onOpenConsultation={() => setIsConsultationOpen(true)}
-            theme={theme}
-          />
-        )}
-
-        {currentTab === 'process' && (
-          <ProcessSection
-            onOpenConsultation={() => setIsConsultationOpen(true)}
-            theme={theme}
-          />
-        )}
-
-        {currentTab === 'about' && (
-          <AboutSection
-            onOpenConsultation={() => setIsConsultationOpen(true)}
-            theme={theme}
-          />
-        )}
-
-        {currentTab === 'faq' && (
-          <FAQSection
-            onOpenConsultation={() => setIsConsultationOpen(true)}
-            theme={theme}
-          />
-        )}
-
-      </main>
-
-      {/* Corporate compliant Foot note */}
-      <Footer
-        currentTab={currentTab}
-        onTabChange={handleTabChange}
-        theme={theme}
-        onOpenConsultation={() => setIsConsultationOpen(true)}
-      />
-
-      {/* Manually-triggered consultation modal (simple form -> Enquiries_Simple sheet) */}
-      <ContactModal
-        isOpen={isConsultationOpen}
-        onClose={handleCloseModal1}
-        theme={theme}
-      />
-
-      {/* Auto-popup consultation modal (detailed form -> Enquiries_Detailed sheet) */}
-      <ContactModal2
-        isOpen={isConsultation2Open}
-        onClose={handleCloseModal2}
-        theme={theme}
-      />
-
-      <CanvasPlaneCursor />
-
-      {/* Scroll to top floating button */}
-      {showScrollTop && (
-        <button
-          onClick={handleScrollToTop}
-          className="fixed bottom-6 right-6 p-3 rounded-sm bg-navy text-white hover:bg-opacity-90 border-b border-gold transition-all shadow-premium active:scale-95 z-30 cursor-pointer"
-          title="Scroll back up"
-          aria-label="Scroll back up"
-        >
-          <ChevronUp className="w-5 h-5 stroke-[2.5]" />
-        </button>
-      )}
-
-    </div>
-    
+      </div>
     </div>
   );
 }
