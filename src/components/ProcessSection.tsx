@@ -237,7 +237,10 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
                   <button className="bg-gold text-slate-950 text-sm font-bold px-8 py-3.5 rounded-sm hover:bg-gold/90 hover:scale-[1.02] transition-all shadow-premium">
                     Start Your Journey Today
                   </button>
-                  <button className="text-sm font-semibold px-8 py-3.5 rounded-sm border border-slate-600 text-white hover:bg-white/5 transition-colors">
+                  <button 
+                  onClick={()=>{navigation.navigate('/#/services')}}
+                  className="text-sm font-semibold px-8 py-3.5 rounded-sm border border-slate-600 text-white hover:bg-white/5 transition-colors"
+                  >
                     Explore Services
                   </button>
                 </div>

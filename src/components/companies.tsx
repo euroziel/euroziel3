@@ -40,7 +40,7 @@ const pathwayStats = [
   },
   {
     icon: <Clock className="w-5 h-5" />,
-    value: "18 Months",
+    value: "78 Weeks",
     accent: "gold",
     label: "Job Seeker Visa",
     desc: "No pressure countdown to find the right role",
@@ -220,10 +220,10 @@ const Companies: React.FC<{ dark?: boolean }> = ({ dark = false }) => {
       --------------------------------------------------------- */}
       <ScrollReveal variant="fadeUp" className="space-y-8">
         <div className="text-center max-w-2xl mx-auto space-y-3">
-          <span className="inline-flex items-center gap-1.5 text-xs font-extrabold text-[#1b73ba] uppercase tracking-widest bg-[#1b73ba]/5 border border-[#1b73ba]/20 px-3 py-1 rounded-full transition-all duration-300 hover:bg-[#1b73ba]/10 hover:border-[#1b73ba]/30 hover:scale-105">
+          {/* <span className="inline-flex items-center gap-1.5 text-xs font-extrabold text-[#1b73ba] uppercase tracking-widest bg-[#1b73ba]/5 border border-[#1b73ba]/20 px-3 py-1 rounded-full transition-all duration-300 hover:bg-[#1b73ba]/10 hover:border-[#1b73ba]/30 hover:scale-105">
             <Sparkles className="w-3 h-3" />
             Post-Graduation Pathways
-          </span>
+          </span> */}
           <h3
             className={`text-2xl md:text-4xl font-black font-sans leading-tight ${
               dark ? "text-white" : "text-gold"

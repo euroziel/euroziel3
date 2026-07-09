@@ -165,9 +165,9 @@ const Fields: React.FC<FieldsProps> = ({ dark = false }) => {
     >
       <div className="max-w-6xl mx-auto space-y-16">
         <div className="text-center max-w-2xl mx-auto space-y-3">
-          <span className="text-[10px] font-bold text-gold uppercase tracking-[0.2em] bg-gold/5 border border-gold/30 px-3 py-1 rounded-sm">
+          {/* <span className="text-[10px] font-bold text-gold uppercase tracking-[0.2em] bg-gold/5 border border-gold/30 px-3 py-1 rounded-sm">
             Academics
-          </span>
+          </span> */}
           <h2
             className={`text-3xl font-bold tracking-tight font-sans ${dark ? "text-white" : "text-slate-900"}`}
           >

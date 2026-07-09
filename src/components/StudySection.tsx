@@ -175,9 +175,8 @@ export default function StudySection({
 
         <div
           ref={statsRef}
-          className={`flex flex-col md:flex-row items-center md:items-start justify-center ${
-            stats.length === 2 ? "gap-14 md:gap-24" : "gap-14 md:gap-16"
-          } divide-y md:divide-y-0 md:divide-x divide-slate-200/20`}
+          className={`flex flex-col md:flex-row items-center md:items-start justify-center ${stats.length === 2 ? "gap-14 md:gap-24" : "gap-14 md:gap-16"
+            } divide-y md:divide-y-0 md:divide-x divide-slate-200/20`}
         >
           {stats.map((stat, idx) => (
             <div key={idx} className="pt-10 md:pt-0 md:px-10 first:pt-0">
@@ -196,11 +195,10 @@ export default function StudySection({
 
       {/* SEMESTER CALENDAR & URGENCY */}
       <section
-        className={`py-0 px-4 ${
-          dark
+        className={`py-0 px-4 ${dark
             ? "bg-transparent "
             : "bg-transparent "
-        }`}
+          }`}
       >
         <div className="max-w-5xl mx-auto text-left space-y-12">
           {/* <div className="space-y-2">
@@ -221,17 +219,16 @@ export default function StudySection({
             <ScrollReveal z-40 variant="slideLeft" delay={0.1}>
               <div
                 onClick={onOpenConsultation}
-                className={`rounded-4xl shadow-premium border-b-4 border-b-rose-500 overflow-hidden z-40 ${
-                  dark
+                className={`rounded-4xl shadow-premium border-b-4 border-b-rose-500 overflow-hidden z-40 ${dark
                     ? "border-slate-800 bg-transparent"
                     : "border-slate-200 bg-transparent"
-                }`}
+                  }`}
               >
                 <img
                   src="/assets/winter.png"
                   alt="Winter Intake - October Start"
                   className="w-full h-auto object-cover"
-                  
+
                 />
               </div>
             </ScrollReveal>
@@ -239,11 +236,11 @@ export default function StudySection({
             {/* Summer Semester Image */}
             <ScrollReveal variant="slideRight" delay={0.2}>
               <div
-                className={`rounded-4xl shadow-premium border-b-4 border-b-emerald-500 overflow-hidden ${
-                  dark
+                onClick={onOpenConsultation}
+                className={`rounded-4xl shadow-premium border-b-4 border-b-emerald-500 overflow-hidden ${dark
                     ? "border-slate-800 bg-transparent"
                     : "border-slate-200 bg-transparent"
-                }`}
+                  }`}
               >
                 <img
                   src="/assets/summer1.png"
@@ -286,11 +283,10 @@ export default function StudySection({
       <section className="max-w-4xl mx-auto px-4 text-center">
         <ScrollReveal variant="flipUp">
           <div
-            className={`p-8 md:p-12 rounded-sm border shadow-premium space-y-6 border-b-4 border-b-gold ${
-              dark
+            className={`p-8 md:p-12 rounded-sm border shadow-premium space-y-6 border-b-4 border-b-gold ${dark
                 ? "border-slate-800 bg-slate-950 text-white"
                 : "border-slate-200 bg-white text-slate-800"
-            }`}
+              }`}
           >
             {/* <span className={`text-[10px] font-bold text-navy uppercase tracking-[0.2em] border px-3 py-1 rounded-sm ${dark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
               }`}>
@@ -330,7 +326,7 @@ export default function StudySection({
                 onClick={onOpenConsultation}
                 className="px-8 py-3.5 rounded-sm font-bold text-xs uppercase tracking-widest bg-navy hover:bg-opacity-90 text-white border-b-2 border-gold transition-all cursor-pointer shadow-premium"
               >
-                Book Your Evaluation Session
+                Book Your Session
               </button>
             </div>
           </div>

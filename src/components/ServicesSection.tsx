@@ -259,8 +259,10 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
               </p>
 
               <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-                <button className="bg-navy text-white text-sm font-semibold px-8 py-3.5 rounded-sm hover:bg-navy/90 hover:scale-[1.02] transition-all shadow-premium">
-                  Book a Free Consultation
+                <button
+                  onClick={onOpenConsultation}
+                  className="bg-navy text-white text-sm font-semibold px-8 py-3.5 rounded-sm hover:bg-navy/90 hover:scale-[1.02] transition-all shadow-premium">
+                  Book Your Session
                 </button>
                 <button
                   className={`text-sm font-semibold px-8 py-3.5 rounded-sm border transition-colors ${dark
@@ -510,14 +512,14 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
                     {/* Node */}
                     <div
                       className={`absolute left-0 top-3 w-12 h-12 rounded-full flex items-center justify-center border-4 z-10 transition-colors ${isUnlocked
-                          ? isPaidUnlock
-                            ? 'bg-gold border-gold text-slate-950'
-                            : dark
-                              ? 'bg-slate-950 border-gold text-gold'
-                              : 'bg-white border-gold text-gold'
+                        ? isPaidUnlock
+                          ? 'bg-gold border-gold text-slate-950'
                           : dark
-                            ? 'bg-slate-900 border-slate-800 text-slate-600'
-                            : 'bg-slate-100 border-slate-200 text-slate-400'
+                            ? 'bg-slate-950 border-gold text-gold'
+                            : 'bg-white border-gold text-gold'
+                        : dark
+                          ? 'bg-slate-900 border-slate-800 text-slate-600'
+                          : 'bg-slate-100 border-slate-200 text-slate-400'
                         }`}
                     >
                       {isUnlocked ? (
@@ -530,25 +532,25 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
                     {/* Card */}
                     <div
                       className={`rounded-sm border overflow-hidden transition-all shadow-premium ${isUnlocked
-                          ? dark
-                            ? 'border-slate-800 bg-slate-950/65'
-                            : 'border-slate-200/60 bg-white'
-                          : dark
-                            ? 'border-slate-900 bg-slate-950/30 opacity-60'
-                            : 'border-slate-100 bg-slate-50/60 opacity-70'
+                        ? dark
+                          ? 'border-slate-800 bg-slate-950/65'
+                          : 'border-slate-200/60 bg-white'
+                        : dark
+                          ? 'border-slate-900 bg-slate-950/30 opacity-60'
+                          : 'border-slate-100 bg-slate-50/60 opacity-70'
                         } ${isExpanded ? (dark ? 'bg-slate-900/20' : 'bg-slate-50/50') : ''}`}
                     >
                       <button
                         onClick={() => handleStepClick(idx)}
                         className={`w-full px-5 py-4 flex items-center justify-between text-left transition-colors cursor-pointer ${isUnlocked
-                            ? dark ? 'hover:bg-slate-900/40' : 'hover:bg-slate-100/40'
-                            : ''
+                          ? dark ? 'hover:bg-slate-900/40' : 'hover:bg-slate-100/40'
+                          : ''
                           }`}
                       >
                         <div>
                           <h4 className={`font-extrabold text-sm flex items-center gap-2 ${isUnlocked
-                              ? dark ? 'text-slate-200' : 'text-slate-800'
-                              : dark ? 'text-slate-600' : 'text-slate-400'
+                            ? dark ? 'text-slate-200' : 'text-slate-800'
+                            : dark ? 'text-slate-600' : 'text-slate-400'
                             }`}>
                             {step.title}
                             {!isUnlocked && (
@@ -670,7 +672,7 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
                 onClick={onOpenConsultation}
                 className="px-8 py-3.5 rounded-sm font-bold text-xs uppercase tracking-widest bg-navy hover:bg-opacity-90 text-white border-b-2 border-gold transition-all cursor-pointer shadow-premium"
               >
-                Consult with a Mentor Now
+                Schedule a Meeting
               </button>
             </div>
           </div>
