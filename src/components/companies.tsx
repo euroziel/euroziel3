@@ -127,7 +127,7 @@ const PathwayStat: React.FC<{
 
 const LogoChip: React.FC<{ brand: string; dark: boolean }> = ({ brand, dark }) => {
   const [imgFailed, setImgFailed] = useState(false);
-  const src = `/images/logos/${slugify(brand)}.png`;
+  const src = `/images/logos/${brand}.png`;
 
   return (
     <span
