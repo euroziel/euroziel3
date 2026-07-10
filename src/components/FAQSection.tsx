@@ -194,7 +194,7 @@ export default function FAQSection({ onOpenConsultation, theme }: FAQSectionProp
                   setActiveCategory(cat);
                   setExpandedIndex(null);
                 }}
-                className={`px-3 py-1.5 rounded-sm text-[13px] font-bold uppercase tracking-widest transition-all cursor-pointer border ${
+                className={`px-3 py-1.5 rounded-sm text-[10px] font-bold uppercase tracking-widest transition-all cursor-pointer border ${
                   isSelected
                     ? 'bg-navy text-white border-navy border-b-2 border-b-gold shadow-premium'
                     : dark

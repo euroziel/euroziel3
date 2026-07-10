@@ -211,15 +211,15 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-navy/30 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 min-h-screen flex items-center">
-          <div className="grid md:grid-cols-2 gap-10 items-center w-full py-24">
+          <div className="grid md:grid-cols-2 gap-10 items-center w-full py-16 md:py-24">
             {/* Left: text content */}
             <ScrollReveal variant="glideUp">
-              <div className="space-y-6 text-left">
+              <div className="space-y-6 text-left order-2 md:order-1">
                 <span className="inline-block text-[10px] font-bold text-gold uppercase tracking-[0.2em] border border-gold/30 bg-gold/5 px-3 py-1.5 rounded-sm">
                   Study Abroad Guidance
                 </span>
 
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-sans leading-[1.1] text-white">
+                <h1 className="text-3xl mobile-m:text-4xl sm:text-5xl md:text-6xl font-bold font-sans leading-[1.1] text-white">
                   Smart Guidance For a
                   <br />
                   <span className="font-serif italic font-medium text-gold">
@@ -237,15 +237,15 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
                   <button className="bg-gold text-slate-950 text-sm font-bold px-8 py-3.5 rounded-sm hover:bg-gold/90 hover:scale-[1.02] transition-all shadow-premium">
                     Start Your Journey Today
                   </button>
-                  <button 
-                  onClick={()=>{navigation.navigate('/#/services')}}
-                  className="text-sm font-semibold px-8 py-3.5 rounded-sm border border-slate-600 text-white hover:bg-white/5 transition-colors"
+                  <button
+                    onClick={() => { navigation.navigate('/#/services') }}
+                    className="text-sm font-semibold px-8 py-3.5 rounded-sm border border-slate-600 text-white hover:bg-white/5 transition-colors"
                   >
                     Explore Services
                   </button>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-6 pt-6 text-xs font-sans">
+                <div className="flex flex-wrap items-center gap-4 mobile-m:gap-6 pt-6 text-xs font-sans">
                   <div className="text-slate-400">
                     <span className="text-gold font-bold text-base">500+</span> Students Guided
                   </div>
@@ -263,18 +263,20 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
 
             {/* Right: sample image */}
             <ScrollReveal variant="clipReveal">
-              <div className="relative flex justify-center md:justify-end">
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent md:hidden" />
-                <img
-                  src="/assets/process.jpg"
-                  alt="Graduate student smiling"
-                  className="relative w-full max-w-md md:max-w-lg rounded-sm object-cover object-top h-[420px] md:h-[520px] shadow-premium border-b-4 border-b-gold"
-                />
-                {/* Floating badge on the image */}
-                <div className="absolute -bottom-6 -left-6 md:left-auto md:-right-6 bg-gold text-slate-900 rounded-sm px-5 py-4 shadow-premium border-l-4 border-l-gold max-w-[220px]">
-                  <p className="text-[11px] font-sans mb-5 text-black leading-snug">
-                    Personalized courses, expert mentors, and flexible guidance built for real results.
-                  </p>
+              <div className="relative w-full flex justify-center md:justify-end order-1 md:order-2 pb-8 md:pb-0">
+                <div className="relative w-full max-w-sm mobile-l:max-w-md md:max-w-lg">
+                  <img
+                    src="/assets/process.jpg"
+                    alt="Graduate student smiling"
+                    className="w-full rounded-sm object-cover object-top h-[300px] mobile-m:h-[360px] mobile-l:h-[420px] md:h-[520px] shadow-premium border-b-4 border-b-gold"
+                  />
+
+                  {/* Floating badge on the image */}
+                  <div className="absolute -bottom-8 left-4 right-4 mobile-l:left-auto mobile-l:right-4 md:-right-6 md:left-auto md:bottom-[-1.5rem] bg-gold text-slate-900 rounded-sm px-4 py-3.5 mobile-l:px-5 mobile-l:py-4 shadow-premium border-l-4 border-l-gold max-w-full mobile-l:max-w-[220px]">
+                    <p className="text-[11px] font-sans pb-3 text-black leading-snug">
+                      Personalized courses, expert mentors, and flexible guidance built for real results.
+                    </p>
+                  </div>
                 </div>
               </div>
             </ScrollReveal>

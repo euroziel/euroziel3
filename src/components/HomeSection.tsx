@@ -369,8 +369,6 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
   const N = cardCount;
   const STEP = 360 / cardCount;
 
-  /* one gradient pair per card — used for the backdrop glow, the card's
-     own border gradient, and the point icons on that card */
   const GRADIENTS = [
     ["#3b82c4", "#1fae7a"],
     ["#e5a800", "#e08a3c"],
@@ -387,33 +385,33 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
     return a;
   }
 
-  /* ────────────────────────────────────────────────────────────
-     360° SCROLL-DRIVEN 3D CAROUSEL
-     Heading + dots are pinned inside the same sticky block as the
-     ring, so nothing scrolls away while the cards rotate.
-     ──────────────────────────────────────────────────────────── */
   function ChooseCarousel({ isDark }: { isDark: boolean }) {
     const [active, setActive] = useState(0);
     const [radius, setRadius] = useState(360);
     const [vhPerCard, setVhPerCard] = useState(100);
+    const [sideScale, setSideScale] = useState(0.82); // only affects non-front cards
     const containerRef = useRef<HTMLDivElement>(null);
 
-    // responsive ring radius + scroll distance per card
+    // responsive ring radius + scroll distance per card + side-card scale
     useEffect(() => {
       const setR = () => {
         const w = window.innerWidth;
         if (w < 480) {
           setRadius(130);
           setVhPerCard(65);
+          setSideScale(0.55); // smaller side cards on small mobile
         } else if (w < 768) {
           setRadius(190);
           setVhPerCard(75);
+          setSideScale(0.62); // smaller side cards on mobile
         } else if (w < 1024) {
           setRadius(290);
           setVhPerCard(90);
+          setSideScale(0.82); // unchanged from before
         } else {
           setRadius(400);
           setVhPerCard(100);
+          setSideScale(0.82); // unchanged from before
         }
       };
       setR();
@@ -421,7 +419,6 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
       return () => window.removeEventListener("resize", setR);
     }, []);
 
-    // track scroll progress through the tall pinned wrapper
     const { scrollYProgress } = useScroll({
       target: containerRef,
       offset: ["start start", "end end"],
@@ -436,11 +433,8 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
     const [g1, g2] = GRADIENTS[active % GRADIENTS.length];
 
     return (
-      // tall wrapper — its height controls how much scrolling it takes
-      // to move through every card
       <div ref={containerRef} style={{ height: `${N * vhPerCard}vh` }} className="relative">
         <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden px-4">
-          {/* backdrop glow, shifts per active card */}
           <div
             className="absolute inset-0 opacity-25 blur-3xl transition-all duration-700 pointer-events-none"
             style={{
@@ -448,23 +442,21 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
             }}
           />
 
-          {/* HEADLINE — pinned inside the sticky block, stays put while scrolling */}
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.9 }}
             className="relative z-10 text-center max-w-xl mobile-m:max-w-2xl 4k:max-w-3xl mx-auto space-y-2 mobile-m:space-y-3 mb-6 mobile-m:mb-8 laptop:mb-10"
           >
-            <h2 className="text-2xl pb-0 mobile-m:text-3xl laptop:text-4xl 4k:text-5xl font-bold tracking-tight font-sans">
+            <h2 className="text-2xl mobile-m:text-3xl pb-0 laptop:text-4xl 4k:text-5xl font-bold tracking-tight font-sans">
               Why Students Choose EuroZiel
             </h2>
-            <p className={`text-xs pb-16 mobile-m:text-sm 4k:text-base ${isDark ? "text-slate-400" : "text-slate-500"}`}>
+            <p className={`text-xs pb-14 mobile-m:text-sm 4k:text-base ${isDark ? "text-slate-400" : "text-slate-500"}`}>
               We focus on a single European pathway so we can offer deeper, more comprehensive expertise than any generalist agent.
             </p>
           </motion.div>
 
-          {/* 3D ring */}
           <div
             className="relative flex items-center justify-center w-full"
             style={{
@@ -485,7 +477,8 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
                 const absAngle = Math.abs(effectiveAngle);
                 const isFront = absAngle < STEP / 2;
                 const opacity = absAngle > 100 ? 0 : isFront ? 1 : 0.35;
-                const scale = isFront ? 1 : 0.82;
+                // front card scale is always 1 (unchanged), side cards use responsive sideScale
+                const scale = isFront ? 1 : sideScale;
                 const [cg1, cg2] = GRADIENTS[i % GRADIENTS.length];
 
                 return (
@@ -499,7 +492,6 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
                       pointerEvents: isFront ? "auto" : "none",
                     }}
                   >
-                    {/* colorful gradient border wrapper */}
                     <div
                       className="rounded-2xl p-[2px] shadow-xl"
                       style={{
@@ -551,8 +543,9 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
             </motion.div>
           </div>
 
-          {/* DOTS — moved below the ring */}
-          <div className="flex gap-1.5 mobile-m:gap-2 mt-6 mobile-m:mt-23 laptop:mt-25 relative z-10">
+          
+
+          <div className="flex gap-1.5 mobile-m:gap-2 mt-6 pt-12 mobile-m:mt-8 laptop:mt-10 relative z-10">
             {chooseCards.map((_, i) => (
               <div
                 key={i}
@@ -580,10 +573,12 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
 
 
 
+
+
   return (
     <div className="pb-12 mobile-m:pb-16 laptop:pb-20 4k:pb-32">
 
-      
+
       <OurMission />
 
 

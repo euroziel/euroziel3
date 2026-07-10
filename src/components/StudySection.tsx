@@ -207,7 +207,7 @@ export default function StudySection({
 
         <div className="relative max-w-5xl mx-auto text-left space-y-12">
           <div className="space-y-2">
-            <h2 className={`text-3xl text-center md:text-3.5xl font-bold tracking-tight font-sans ${dark ? 'text-white' : 'text-slate-900'}`}>
+            <h2 className={`text-4xl text-center md:text-3.5xl font-bold tracking-tight font-sans ${dark ? 'text-white' : 'text-slate-900'}`}>
               Semester Academic Calendars
             </h2>
             <p className={`text-xs md:text-sm text-center font-sans ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
