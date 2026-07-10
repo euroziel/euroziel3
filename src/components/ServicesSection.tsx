@@ -264,14 +264,14 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
                   className="bg-navy text-white text-sm font-semibold px-8 py-3.5 rounded-sm hover:bg-navy/90 hover:scale-[1.02] transition-all shadow-premium">
                   Book Your Session
                 </button>
-                <button
+                {/* <button
                   className={`text-sm font-semibold px-8 py-3.5 rounded-sm border transition-colors ${dark
                     ? 'border-slate-700 text-white hover:bg-slate-800/60'
                     : 'border-slate-300 text-slate-900 hover:bg-slate-100/60'
                     }`}
                 >
                   Explore Services
-                </button>
+                </button> */}
               </div>
 
               <div className="flex flex-wrap items-center justify-center gap-8 pt-6 text-xs font-sans">

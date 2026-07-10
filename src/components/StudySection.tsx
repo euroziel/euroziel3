@@ -15,6 +15,8 @@ import {
   Palette,
   Compass,
   Zap,
+  Sun,
+  Snowflake,
 } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
 import { useState, useEffect, useRef } from "react";
@@ -188,58 +190,197 @@ export default function StudySection({
 
       {/* SEMESTER CALENDAR & URGENCY */}
       <section
-        className={`py-0 px-4 ${dark
-          ? "bg-transparent "
-          : "bg-transparent "
+        className={`relative py-16 md:py-24 px-4 overflow-hidden ${dark
+            ? "bg-[#050b14]"
+            : "bg-slate-50"
           }`}
       >
-        <div className="max-w-5xl mx-auto text-left space-y-12">
-          {/* <div className="space-y-2">
-            <span className="text-[10px] font-bold text-rose-500 bg-rose-500/10 border border-rose-500/20 px-3 py-1 rounded-sm uppercase tracking-wide inline-block">
-              Important Urgency
-            </span>
-            <h2 className={`text-2xl md:text-3.5xl font-bold tracking-tight font-sans ${dark ? 'text-white' : 'text-slate-900'}`}>
+        {/* ambient section-wide glow so it doesn't feel like a flat block */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: dark
+              ? "radial-gradient(circle at 20% 10%, rgba(56,189,248,0.08), transparent 45%), radial-gradient(circle at 85% 90%, rgba(251,191,36,0.07), transparent 45%)"
+              : "radial-gradient(circle at 20% 10%, rgba(56,189,248,0.10), transparent 45%), radial-gradient(circle at 85% 90%, rgba(251,191,36,0.10), transparent 45%)",
+          }}
+        />
+
+        <div className="relative max-w-5xl mx-auto text-left space-y-12">
+          <div className="space-y-2">
+            <h2 className={`text-3xl text-center md:text-3.5xl font-bold tracking-tight font-sans ${dark ? 'text-white' : 'text-slate-900'}`}>
               Semester Academic Calendars
             </h2>
-            <p className={`text-xs md:text-sm font-sans ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
+            <p className={`text-xs md:text-sm text-center font-sans ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
               German university intakes operate with extremely strict deadlines. Missing a timeline puts you back a full academic year.
             </p>
-          </div> */}
+          </div>
 
-          {/* Two images, stacked one below the other */}
-          <div className="flex flex-col gap-22">
-            {/* Winter Semester Image */}
-            <ScrollReveal z-40 variant="slideLeft" delay={0.1}>
+          {/* Two seasonal-themed panels */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
+            {/* ── WINTER PANEL ── */}
+            <ScrollReveal variant="slideLeft" delay={0.1}>
               <div
                 onClick={onOpenConsultation}
-                className={`rounded-4xl shadow-premium border-b-4 border-b-rose-500 overflow-hidden z-40 ${dark
-                  ? "border-slate-800 bg-transparent"
-                  : "border-slate-200 bg-transparent"
-                  }`}
+                className="relative rounded-4xl shadow-premium border border-sky-400/20 overflow-hidden cursor-pointer group min-h-[440px] p-7 mobile-m:p-9 flex flex-col"
+                style={{
+                  background:
+                    "radial-gradient(circle at 15% 0%, rgba(125,211,252,0.25), transparent 55%), radial-gradient(circle at 90% 100%, rgba(99,179,237,0.20), transparent 55%), linear-gradient(160deg, #0b1c2c 0%, #0e2740 45%, #123453 100%)",
+                }}
               >
-                <img
-                  src="/assets/winter.png"
-                  alt="Winter Intake - October Start"
-                  className="w-full h-auto object-cover"
+                {/* frosted top border glow */}
+                <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-sky-300 to-transparent opacity-70" />
 
+                {/* falling snowflakes */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                  {[
+                    { l: "6%", s: 14, d: "0s", dur: "9s" },
+                    { l: "18%", s: 8, d: "1.2s", dur: "7s" },
+                    { l: "30%", s: 12, d: "2.4s", dur: "10s" },
+                    { l: "44%", s: 6, d: "0.6s", dur: "8s" },
+                    { l: "58%", s: 16, d: "3s", dur: "11s" },
+                    { l: "70%", s: 9, d: "1.8s", dur: "7.5s" },
+                    { l: "82%", s: 13, d: "0.3s", dur: "9.5s" },
+                    { l: "92%", s: 7, d: "2.1s", dur: "8.5s" },
+                  ].map((f, i) => (
+                    <span
+                      key={i}
+                      className="absolute top-[-5%] rounded-full bg-white/70"
+                      style={{
+                        left: f.l,
+                        width: f.s,
+                        height: f.s,
+                        filter: "blur(0.5px)",
+                        animation: `euroziel-snowfall ${f.dur} linear ${f.d} infinite`,
+                      }}
+                    />
+                  ))}
+                </div>
+
+                {/* icy corner glyph */}
+                <Snowflake
+                  className="absolute -right-6 -bottom-6 w-40 h-40 text-sky-300/10"
+                  strokeWidth={1}
                 />
+
+                <div className="relative z-10 flex flex-col h-full">
+                  <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-sky-300 bg-sky-400/10 border border-sky-400/30 px-3 py-1 rounded-full w-fit">
+                    <Snowflake className="w-3.5 h-3.5" strokeWidth={2.5} />
+                    Winter Semester — October Start
+                  </span>
+
+                  <h3 className="text-2xl mobile-m:text-3xl font-bold text-white tracking-tight leading-snug mt-4">
+                    The Main Intake.
+                    <br />
+                    The Widest Choice.
+                  </h3>
+
+                  <p className="text-xs md:text-sm text-sky-100/70 leading-relaxed mt-3">
+                    The widest choice of programmes, the most seats, and the most competitive. If you are targeting winter semester, start your APS and language preparation at least 12 months before October.
+                  </p>
+
+                  <div className="flex flex-wrap gap-2 mt-5">
+                    <span className="text-[10px] md:text-[11px] font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full border border-white/15 text-white/85 bg-white/5">
+                      Opens: January
+                    </span>
+                    <span className="text-[10px] md:text-[11px] font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full border border-rose-400/30 text-rose-300 bg-rose-500/10">
+                      Deadline: July 15
+                    </span>
+                  </div>
+
+                  <div className="mt-auto pt-6 border-t border-white/10">
+                    <p className="text-[11px] md:text-xs text-sky-100/50 italic">
+                      Reading this in June and haven't started APS yet? You're applying next year.
+                    </p>
+                  </div>
+                </div>
               </div>
             </ScrollReveal>
 
-            {/* Summer Semester Image */}
+            {/* ── SUMMER PANEL ── */}
             <ScrollReveal variant="slideRight" delay={0.2}>
               <div
                 onClick={onOpenConsultation}
-                className={`rounded-4xl shadow-premium border-b-4 border-b-emerald-500 overflow-hidden ${dark
-                  ? "border-slate-800 bg-transparent"
-                  : "border-slate-200 bg-transparent"
-                  }`}
+                className="relative rounded-4xl shadow-premium border border-amber-400/20 overflow-hidden cursor-pointer group min-h-[440px] p-7 mobile-m:p-9 flex flex-col"
+                style={{
+                  background:
+                    "radial-gradient(circle at 85% 0%, rgba(253,224,71,0.30), transparent 55%), radial-gradient(circle at 10% 100%, rgba(251,146,60,0.22), transparent 55%), linear-gradient(160deg, #2c1a0b 0%, #402710 45%, #532f0f 100%)",
+                }}
               >
-                <img
-                  src="/assets/summer1.png"
-                  alt="Summer Intake - April Start"
-                  className="w-full h-auto object-cover"
+                {/* warm top border glow */}
+                <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-amber-300 to-transparent opacity-70" />
+
+                {/* pulsing sunburst */}
+                <div
+                  className="absolute -top-16 -right-16 w-56 h-56 rounded-full pointer-events-none"
+                  style={{
+                    background:
+                      "radial-gradient(circle, rgba(253,224,71,0.35) 0%, rgba(251,191,36,0.15) 45%, transparent 70%)",
+                    animation: "euroziel-sunpulse 4s ease-in-out infinite",
+                  }}
                 />
+
+                {/* floating light particles */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                  {[
+                    { l: "10%", b: "20%", s: 5, dl: "0s" },
+                    { l: "25%", b: "60%", s: 3, dl: "0.8s" },
+                    { l: "40%", b: "15%", s: 6, dl: "1.6s" },
+                    { l: "55%", b: "70%", s: 4, dl: "0.4s" },
+                    { l: "68%", b: "35%", s: 3, dl: "2s" },
+                    { l: "80%", b: "55%", s: 5, dl: "1.1s" },
+                  ].map((p, i) => (
+                    <span
+                      key={i}
+                      className="absolute rounded-full bg-amber-200/70"
+                      style={{
+                        left: p.l,
+                        bottom: p.b,
+                        width: p.s,
+                        height: p.s,
+                        boxShadow: "0 0 6px rgba(253,224,71,0.8)",
+                        animation: `euroziel-float 5s ease-in-out ${p.dl} infinite`,
+                      }}
+                    />
+                  ))}
+                </div>
+
+                {/* sun corner glyph */}
+                <Sun
+                  className="absolute -right-6 -bottom-6 w-40 h-40 text-amber-300/10"
+                  strokeWidth={1}
+                />
+
+                <div className="relative z-10 flex flex-col h-full">
+                  <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-amber-300 bg-amber-400/10 border border-amber-400/30 px-3 py-1 rounded-full w-fit">
+                    <Sun className="w-3.5 h-3.5" strokeWidth={2.5} />
+                    Summer Semester — April Start
+                  </span>
+
+                  <h3 className="text-2xl mobile-m:text-3xl font-bold text-white tracking-tight leading-snug mt-4">
+                    Fewer Seats.
+                    <br />
+                    Lower Competition.
+                  </h3>
+
+                  <p className="text-xs md:text-sm text-amber-100/70 leading-relaxed mt-3">
+                    Fewer programmes offer a summer intake, but competition is slightly lower because fewer students know about it. A good option if your profile is strong and you don't want to wait a full year.
+                  </p>
+
+                  <div className="flex flex-wrap gap-2 mt-5">
+                    <span className="text-[10px] md:text-[11px] font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full border border-white/15 text-white/85 bg-white/5">
+                      Opens: July
+                    </span>
+                    <span className="text-[10px] md:text-[11px] font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full border border-emerald-400/30 text-emerald-300 bg-emerald-500/10">
+                      Deadline: January 15
+                    </span>
+                  </div>
+
+                  <div className="mt-auto pt-6 border-t border-white/10">
+                    <p className="text-[11px] md:text-xs text-amber-100/50 italic">
+                      Strong profile and don't want to wait a year? Summer intake is your fast track.
+                    </p>
+                  </div>
+                </div>
               </div>
             </ScrollReveal>
           </div>
@@ -263,6 +404,24 @@ export default function StudySection({
             </div>
           </ScrollReveal>
         </div>
+
+        {/* Keyframes for the seasonal effects — add once, globally */}
+        <style>{`
+    @keyframes euroziel-snowfall {
+      0% { transform: translateY(-10%) translateX(0); opacity: 0; }
+      10% { opacity: 0.9; }
+      90% { opacity: 0.9; }
+      100% { transform: translateY(480px) translateX(14px); opacity: 0; }
+    }
+    @keyframes euroziel-sunpulse {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.15); opacity: 1; }
+    }
+    @keyframes euroziel-float {
+      0%, 100% { transform: translateY(0) scale(1); opacity: 0.5; }
+      50% { transform: translateY(-18px) scale(1.3); opacity: 1; }
+    }
+  `}</style>
       </section>
 
       {/* FIELDS OF STUDY */}
