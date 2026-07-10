@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent, } from 'motion/react';
-import { ArrowRight, Star, ArrowLeftRight, Quote,  CheckCircle2, Pause, Play } from 'lucide-react';
+import { ArrowRight, Star, ArrowLeftRight, Quote, CheckCircle2, Pause, Play } from 'lucide-react';
 import Journey from './Journey';
 import ScrollReveal from './ScrollReveal';
 import OurMission from './OurMission';
@@ -313,6 +313,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
   /* ────────────────────────────────────────────────────────────
      DATA — unchanged
      ──────────────────────────────────────────────────────────── */
+
   const chooseCards = [
     {
       title: "Real People. Real Guidance.",
@@ -368,7 +369,8 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
   const N = cardCount;
   const STEP = 360 / cardCount;
 
-  /* one gradient pair per card — the backdrop glow shifts through these */
+  /* one gradient pair per card — used for the backdrop glow, the card's
+     own border gradient, and the point icons on that card */
   const GRADIENTS = [
     ["#3b82c4", "#1fae7a"],
     ["#e5a800", "#e08a3c"],
@@ -378,218 +380,197 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
     ["#1fae7a", "#8b6fd8"],
   ];
 
-  const HOLD_MS = 3100; // how long each card stays centered
-
-  /* ────────────────────────────────────────────────────────────
-     helper — shortest signed angular distance from a card's base
-     angle to the current front-facing rotation
-     ──────────────────────────────────────────────────────────── */
-  function angleDelta(base: number, rotation: number): number {
-    let d = (base - rotation) % 360;
-    if (d > 180) d -= 360;
-    if (d < -180) d += 360;
-    return d;
+  function normalizeAngle(angle: number): number {
+    let a = angle % 360;
+    if (a > 180) a -= 360;
+    if (a < -180) a += 360;
+    return a;
   }
 
   /* ────────────────────────────────────────────────────────────
-     360° ROTATING CAROUSEL
+     360° SCROLL-DRIVEN 3D CAROUSEL
+     Heading + dots are pinned inside the same sticky block as the
+     ring, so nothing scrolls away while the cards rotate.
      ──────────────────────────────────────────────────────────── */
   function ChooseCarousel({ isDark }: { isDark: boolean }) {
     const [active, setActive] = useState(0);
-    const [paused, setPaused] = useState(false);
     const [radius, setRadius] = useState(360);
-    const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+    const [vhPerCard, setVhPerCard] = useState(100);
+    const containerRef = useRef<HTMLDivElement>(null);
 
-    // responsive ring radius
+    // responsive ring radius + scroll distance per card
     useEffect(() => {
       const setR = () => {
         const w = window.innerWidth;
-        if (w < 480) setRadius(190);
-        else if (w < 768) setRadius(240);
-        else if (w < 1024) setRadius(320);
-        else setRadius(400);
+        if (w < 480) {
+          setRadius(130);
+          setVhPerCard(65);
+        } else if (w < 768) {
+          setRadius(190);
+          setVhPerCard(75);
+        } else if (w < 1024) {
+          setRadius(290);
+          setVhPerCard(90);
+        } else {
+          setRadius(400);
+          setVhPerCard(100);
+        }
       };
       setR();
       window.addEventListener("resize", setR);
       return () => window.removeEventListener("resize", setR);
     }, []);
 
-    const advance = useCallback(() => {
-      setActive((a) => (a + 1) % N);
-    }, []);
+    // track scroll progress through the tall pinned wrapper
+    const { scrollYProgress } = useScroll({
+      target: containerRef,
+      offset: ["start start", "end end"],
+    });
 
-    useEffect(() => {
-      if (paused) return;
-      timerRef.current = setInterval(advance, HOLD_MS);
-      return () => {
-        if (timerRef.current) {
-          clearInterval(timerRef.current);
-        }
-      };
-    }, [paused, advance]);
+    useMotionValueEvent(scrollYProgress, "change", (latest) => {
+      const idx = Math.min(N - 1, Math.max(0, Math.round(latest * (N - 1))));
+      setActive((prev) => (prev !== idx ? idx : prev));
+    });
 
-    const rotation = -active * STEP; // rotates the whole ring so `active` faces front
+    const rotation = -active * STEP;
     const [g1, g2] = GRADIENTS[active % GRADIENTS.length];
 
     return (
-      <div
-        className="relative w-full flex flex-col items-center"
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-      >
-        {/* synced ambient gradient backdrop */}
-        <motion.div
-          className="pointer-events-none absolute -z-10 w-[600px] h-[600px] rounded-full blur-[120px] opacity-25"
-          animate={{
-            background: `linear-gradient(135deg, ${g1}, ${g2})`,
-          }}
-          transition={{ duration: 1.1, ease: "easeInOut" }}
-        />
-
-        {/* 3D stage */}
-        <div
-          className="relative w-full flex items-center justify-center"
-          style={{
-            height: "clamp(360px, 46vw, 520px)",
-            perspective: "1600px",
-          }}
-        >
+      // tall wrapper — its height controls how much scrolling it takes
+      // to move through every card
+      <div ref={containerRef} style={{ height: `${N * vhPerCard}vh` }} className="relative">
+        <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden px-4">
+          {/* backdrop glow, shifts per active card */}
           <div
-            className="relative w-full h-full"
+            className="absolute inset-0 opacity-25 blur-3xl transition-all duration-700 pointer-events-none"
             style={{
-              transformStyle: "preserve-3d",
-              transform: `rotateY(${rotation}deg)`,
-              transition: "transform 1s cubic-bezier(0.65,0,0.35,1)",
+              background: `radial-gradient(circle at center, ${g1}, ${g2}, transparent 70%)`,
+            }}
+          />
+
+          {/* HEADLINE — pinned inside the sticky block, stays put while scrolling */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.9 }}
+            className="relative z-10 text-center max-w-xl mobile-m:max-w-2xl 4k:max-w-3xl mx-auto space-y-2 mobile-m:space-y-3 mb-6 mobile-m:mb-8 laptop:mb-10"
+          >
+            <h2 className="text-2xl pb-0 mobile-m:text-3xl laptop:text-4xl 4k:text-5xl font-bold tracking-tight font-sans">
+              Why Students Choose EuroZiel
+            </h2>
+            <p className={`text-xs pb-16 mobile-m:text-sm 4k:text-base ${isDark ? "text-slate-400" : "text-slate-500"}`}>
+              We focus on a single European pathway so we can offer deeper, more comprehensive expertise than any generalist agent.
+            </p>
+          </motion.div>
+
+          {/* 3D ring */}
+          <div
+            className="relative flex items-center justify-center w-full"
+            style={{
+              perspective: "1200px",
+              height: "min(60vw, 400px)",
+              maxWidth: "900px",
             }}
           >
-            {chooseCards.map((card, i) => {
-              const base = i * STEP;
-              const delta = angleDelta(base, rotation === 0 ? 0 : -rotation); // delta relative to camera
-              // frontness: 1 at delta=0, 0 at |delta|=180
-              const frontness = 1 - Math.min(180, Math.abs(delta)) / 180;
-              const isFront = i === active;
-              const scale = 0.5 + frontness * 0.5;
-              const opacity = 0.25 + frontness * 0.75;
-              const blur = isFront ? 0 : (1 - frontness) * 3;
-              const zIndex = Math.round(frontness * 100);
-              const accent = GRADIENTS[i % GRADIENTS.length][0];
+            <motion.div
+              className="relative w-full h-full mx-auto"
+              style={{ transformStyle: "preserve-3d" }}
+              animate={{ rotateY: rotation }}
+              transition={{ type: "spring", stiffness: 60, damping: 18 }}
+            >
+              {chooseCards.map((card, i) => {
+                const base = i * STEP;
+                const effectiveAngle = normalizeAngle(base + rotation);
+                const absAngle = Math.abs(effectiveAngle);
+                const isFront = absAngle < STEP / 2;
+                const opacity = absAngle > 100 ? 0 : isFront ? 1 : 0.35;
+                const scale = isFront ? 1 : 0.82;
+                const [cg1, cg2] = GRADIENTS[i % GRADIENTS.length];
 
-              return (
-                <div
-                  key={card.title}
-                  className="absolute left-1/2 top-1/2"
-                  style={{
-                    width: "min(78vw, 340px)",
-                    transform: `translate(-50%, -50%) rotateY(${base}deg) translateZ(${radius}px) scale(${scale})`,
-                    transformStyle: "preserve-3d",
-                    opacity,
-                    zIndex,
-                    filter: `blur(${blur}px)`,
-                    transition:
-                      "transform 1s cubic-bezier(0.65,0,0.35,1), opacity 0.9s ease, filter 0.9s ease",
-                  }}
-                >
+                return (
                   <div
-                    className="relative rounded-[26px] overflow-hidden"
+                    key={card.title}
+                    className="absolute top-1/2 left-1/2 w-[210px] mobile-m:w-[240px] mobile-l:w-[260px] laptop:w-[300px]"
                     style={{
-                      backgroundImage: `linear-gradient(180deg, rgba(6,12,22,${isFront ? 0.15 : 0.55
-                        }) 0%, rgba(6,12,22,0.94) 100%), url(${card.image})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                      aspectRatio: isFront ? "3 / 3.6" : "1 / 1",
-                      boxShadow: isFront
-                        ? `0 30px 70px -18px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.08), 0 0 50px ${accent}55`
-                        : "0 10px 30px rgba(0,0,0,0.3)",
+                      transform: `translate(-50%, -50%) rotateY(${base}deg) translateZ(${radius}px) scale(${scale})`,
+                      opacity,
+                      transition: "opacity 0.5s ease, transform 0.5s ease",
+                      pointerEvents: isFront ? "auto" : "none",
                     }}
                   >
-                    <div className="absolute inset-0 flex flex-col justify-end p-5 mobile-m:p-6">
-                      <span
-                        className="text-[10px] font-bold uppercase tracking-[0.2em] mb-2"
-                        style={{ color: accent }}
+                    {/* colorful gradient border wrapper */}
+                    <div
+                      className="rounded-2xl p-[2px] shadow-xl"
+                      style={{
+                        background: `linear-gradient(135deg, ${cg1}, ${cg2})`,
+                      }}
+                    >
+                      <div
+                        className={`rounded-[14px] overflow-hidden backdrop-blur-sm ${isDark ? "bg-slate-950/90" : "bg-white/95"
+                          }`}
                       >
-                        {String(i + 1).padStart(2, "0")} / {String(N).padStart(2, "0")}
-                      </span>
-                      <h3 className="text-white font-bold text-lg mobile-m:text-xl leading-snug mb-2">
-                        {card.title}
-                      </h3>
-
-                      {/* points only shown clearly on the front card */}
-                      <AnimatePresence>
-                        {isFront && (
-                          <motion.ul
-                            initial={{ opacity: 0, y: 8 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 8 }}
-                            transition={{ delay: 0.25, duration: 0.4 }}
-                            className="space-y-1.5 mt-1"
+                        <div className="w-full aspect-[4/3] overflow-hidden">
+                          <img
+                            src={card.image}
+                            alt={card.title}
+                            className="w-full h-full object-cover"
+                            draggable={false}
+                          />
+                        </div>
+                        <div className="p-3 mobile-m:p-4 laptop:p-5 space-y-2">
+                          <h3
+                            className={`text-xs mobile-m:text-sm laptop:text-base font-semibold ${isDark ? "text-white" : "text-slate-900"
+                              }`}
                           >
-                            {card.points.map((p) => (
-                              <li
-                                key={p}
-                                className="flex items-start gap-2 text-xs mobile-m:text-sm text-white/80"
-                              >
+                            {card.title}
+                          </h3>
+                          <ul className="space-y-1.5">
+                            {card.points.map((point, pi) => (
+                              <li key={pi} className="flex items-start gap-1.5">
                                 <CheckCircle2
-                                  className="w-3.5 h-3.5 mt-0.5 flex-shrink-0"
-                                  style={{ color: accent }}
+                                  className="w-3.5 h-3.5 mobile-m:w-4 mobile-m:h-4 shrink-0 mt-[1px]"
+                                  style={{ color: cg1 }}
+                                  strokeWidth={2.5}
                                 />
-                                <span>{p}</span>
+                                <span
+                                  className={`text-[10px] mobile-m:text-xs leading-snug ${isDark ? "text-slate-400" : "text-slate-500"
+                                    }`}
+                                >
+                                  {point}
+                                </span>
                               </li>
                             ))}
-                          </motion.ul>
-                        )}
-                      </AnimatePresence>
+                          </ul>
+                        </div>
+                      </div>
                     </div>
-
-                    {isFront && (
-                      <div
-                        className="absolute inset-0 rounded-[26px] pointer-events-none"
-                        style={{ boxShadow: `inset 0 0 0 1.5px ${accent}66` }}
-                      />
-                    )}
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </motion.div>
           </div>
-        </div>
 
-        {/* progress dots + play/pause */}
-        <div className="flex items-center gap-4 mt-8 mobile-m:mt-10">
-          <div className="flex items-center gap-2">
+          {/* DOTS — moved below the ring */}
+          <div className="flex gap-1.5 mobile-m:gap-2 mt-6 mobile-m:mt-23 laptop:mt-25 relative z-10">
             {chooseCards.map((_, i) => (
-              <button
+              <div
                 key={i}
-                aria-label={`Go to card ${i + 1}`}
-                onClick={() => setActive(i)}
-                className="p-1"
-              >
-                <motion.span
-                  animate={{
-                    width: i === active ? 24 : 7,
-                    backgroundColor:
-                      i === active
-                        ? GRADIENTS[i % GRADIENTS.length][0]
-                        : isDark
-                          ? "#334155"
-                          : "#cbd5e1",
-                  }}
-                  transition={{ type: "spring", stiffness: 200, damping: 22 }}
-                  className="block h-1.5 rounded-full"
-                />
-              </button>
+                className={`h-1.5 rounded-full transition-all duration-300 ${i === active ? "w-6" : "w-1.5 opacity-30"
+                  }`}
+                style={{
+                  background: i === active ? `linear-gradient(90deg, ${g1}, ${g2})` : isDark ? "#fff" : "#0f172a",
+                }}
+              />
             ))}
           </div>
 
-          <button
-            onClick={() => setPaused((p) => !p)}
-            className={`w-7 h-7 rounded-full flex items-center justify-center border transition-colors ${isDark
-              ? "border-slate-700 text-slate-400 hover:text-white"
-              : "border-slate-300 text-slate-500 hover:text-slate-900"
+          <p
+            className={`mt-3 mobile-m:mt-4 text-[10px] mobile-m:text-xs relative z-10 tracking-wide uppercase ${isDark ? "text-slate-500" : "text-slate-400"
               }`}
-            aria-label={paused ? "Resume auto-rotate" : "Pause auto-rotate"}
           >
-            {paused ? <Play className="w-3.5 h-3.5" /> : <Pause className="w-3.5 h-3.5" />}
-          </button>
+            {active === N - 1 ? "Keep scrolling" : "Scroll to explore"}
+          </p>
         </div>
       </div>
     );
@@ -598,193 +579,12 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
 
 
 
+
   return (
     <div className="pb-12 mobile-m:pb-16 laptop:pb-20 4k:pb-32">
-      {/* SECTION 1: OUR MISSION — stacks over the sticky hero */}
-      {/* <section
-        ref={section1Ref}
-        className={`relative z-30 w-full py-6 mobile-m:py-20 laptop:py-76 laptop-l:py-100 border-b transition-colors duration-300 shadow-[0_-40px_80px_rgba(0,0,0,0.7)] lg:-mt-[100vh] mt-0 ${isDark ? 'border-slate-900 bg-[#060814]' : 'border-slate-100 bg-white'
-          }`}
-      >
-        <ScrollReveal variant="fadeUp" delay={0.3}>
-          <div className="w-full px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 laptop-l:px-12 4k:px-20 max-w-7xl mx-auto">
-            <motion.div
-              className="grid grid-cols-1 laptop:grid-cols-12 gap-8 laptop:gap-12 laptop-l:gap-16 items-center"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-              variants={{
-                hidden: {},
-                visible: {
-                  transition: { staggerChildren: 0.15 },
-                },
-              }}
-            >
-              <motion.div
-                className="laptop:col-span-5"
-                variants={{
-                  hidden: { opacity: 0, x: -40 },
-                  visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: 'easeOut' } },
-                }}
-              >
-                <motion.div
-                  whileHover={{ y: -6, scale: 1.01 }}
-                  transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-                  className={`relative rounded-xl overflow-hidden p-6 mobile-m:p-8 border border-b-4 border-b-gold transition-shadow duration-500 ${isDark
-                    ? 'bg-slate-950/40 border-slate-800/80 shadow-[0_0_50px_rgba(0,0,0,0.3)] hover:shadow-[0_0_70px_rgba(229,168,0,0.15)]'
-                    : 'bg-slate-50/80 border-slate-200 shadow-sm hover:shadow-xl'
-                    }`}
-                >
-                  <div
-                    className={`absolute -top-10 -right-10 w-40 h-40 rounded-full blur-3xl opacity-20 pointer-events-none ${isDark ? 'bg-gold' : 'bg-[#1b73ba]'
-                      }`}
-                  />
 
-                  <div className="flex items-center gap-4 mb-8 relative">
-                    <motion.div
-                      whileHover={{ rotate: 12, scale: 1.1 }}
-                      transition={{ type: 'spring', stiffness: 300, damping: 15 }}
-                      className={`flex items-center justify-center w-12 h-12 rounded-lg shrink-0 border ${isDark
-                        ? 'bg-gold/10 border-gold/30 text-gold shadow-[0_0_15px_rgba(229,168,0,0.15)]'
-                        : 'bg-[#1b73ba]/10 border-[#1b73ba]/30 text-[#1b73ba]'
-                        }`}
-                    >
-                      <ArrowLeftRight className="w-6 h-6" />
-                    </motion.div>
-                    <div>
-                      <h3
-                        className={`text-base mobile-m:text-lg font-extrabold tracking-tight ${isDark ? 'text-white' : 'text-slate-900'
-                          }`}
-                      >
-                        Not a General Agency
-                      </h3>
-                      <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                        We are a dedicated knowledge pipeline
-                      </p>
-                    </div>
-                  </div>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.2, duration: 0.5 }}
-                    className="mb-6 space-y-2 relative"
-                  >
-                    <div
-                      className={`inline-block text-[9px] tracking-[0.2em] font-extrabold uppercase px-2.5 py-1 rounded border ${isDark
-                        ? 'text-slate-400 bg-slate-900/60 border-slate-800/80'
-                        : 'text-slate-500 bg-slate-100 border-slate-200'
-                        }`}
-                    >
-                      Typical Consultancies
-                    </div>
-                    <p className={`text-xs italic leading-relaxed pl-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                      "Giving the same advice to every student regardless of background. No real experience with APS or
-                      ground realities of German visa offices."
-                    </p>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.35, duration: 0.5 }}
-                    className="space-y-2 relative"
-                  >
-                    <div
-                      className={`inline-block text-[9px] tracking-[0.2em] font-extrabold uppercase px-2.5 py-1 rounded border ${isDark
-                        ? 'text-gold bg-gold/5 border-gold/20'
-                        : 'text-[#1b73ba] bg-[#1b73ba]/5 border-[#1b73ba]/20'
-                        }`}
-                    >
-                      The EuroZiel Difference
-                    </div>
-                    <p
-                      className={`text-xs italic leading-relaxed pl-1 font-medium ${isDark ? 'text-slate-200' : 'text-slate-800'
-                        }`}
-                    >
-                      "Continuous 1-on-1 contact with active TU Munich, RWTH Aachen alumni and professionals.
-                      Transparent, honest, end-to-end guidance."
-                    </p>
-                  </motion.div>
-                </motion.div>
-              </motion.div>
-
-              <motion.div
-                className="laptop:col-span-7 space-y-10 mobile-m:space-y-12 laptop:space-y-14 4k:space-y-16"
-                variants={{
-                  hidden: { opacity: 0, x: 40 },
-                  visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: 'easeOut' } },
-                }}
-              >
-                <motion.h2
-                  initial={{ opacity: 0, y: 15 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
-                  className={`text-2xl mobile-m:text-3xl laptop:text-4xl 4k:text-5xl font-extrabold tracking-tight font-sans leading-tight ${isDark ? 'text-white' : 'text-slate-900'
-                    }`}
-                >
-                  More Than a Consultancy.{' '}
-                  <span className="italic text-[#1b73ba]">A Real Bridge to Germany.</span>
-                </motion.h2>
-
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.15 }}
-                  className={`space-y-4 text-xs mobile-m:text-[13px] laptop:text-sm 4k:text-base leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-500'
-                    }`}
-                >
-                  <p>
-                    EuroZiel was founded to replace generic agent templates with a dedicated, ground-level knowledge
-                    pipeline. We believe that capable students shouldn't lose opportunities to copied strategies,
-                    unrealistic expectations, or a lack of understanding of ground realities.
-                  </p>
-                  <p>
-                    By combining structured, expert consultancy with direct mentorship from active alumni at top German
-                    public universities (like TU Munich and RWTH Aachen) and working professionals in Europe, we provide
-                    a transparent and honest pathway.
-                  </p>
-                  <p>
-                    From APS validation and visa filing to finding student accommodation and Werkstudent jobs, we don't
-                    just guide your application—we prepare you for long-term career success on the ground in Germany.
-                  </p>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                  className="pt-2"
-                >
-                  <motion.button
-                    onClick={() => onNavigateToTab('about')}
-                    whileHover={{ x: 4 }}
-                    transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                    className={`group inline-flex items-center gap-2 text-xs mobile-m:text-sm font-bold transition-all duration-300 ${isDark ? 'text-gold hover:text-white' : 'text-[#1b73ba] hover:text-slate-900'
-                      }`}
-                  >
-                    Read Yuvasri & Sarathkumar's complete story
-                    <motion.span
-                      animate={{ x: [0, 4, 0] }}
-                      transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
-                    >
-                      <ArrowRight className="w-3.5 h-3.5 mobile-m:w-4" />
-                    </motion.span>
-                  </motion.button>
-                </motion.div>
-              </motion.div>
-            </motion.div>
-          </div>
-        </ScrollReveal>
-      </section> */}
-
-
-    <OurMission />
+      
+      <OurMission />
 
 
       {/* SECTION 2: WHY STUDENTS CHOOSE EUROZIEL */}
@@ -792,22 +592,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
         className={`relative z-40 py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 border-b w-full transition-colors duration-600 ${isDark ? "border-slate-900 bg-transparent" : "border-slate-100 bg-transparent"
           }`}
       >
-        <div className="w-full space-y-8 mobile-m:space-y-10 laptop:space-y-12 4k:space-y-16 max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.9 }}
-            className="text-center max-w-xl mobile-m:max-w-2xl 4k:max-w-3xl mx-auto space-y-2 mobile-m:space-y-3"
-          >
-            <h2 className="text-2xl mobile-m:text-3xl laptop:text-4xl 4k:text-5xl font-bold tracking-tight font-sans">
-              Why Students Choose EuroZiel
-            </h2>
-            <p className={`text-xs mobile-m:text-sm 4k:text-base ${isDark ? "text-slate-400" : "text-slate-500"}`}>
-              We focus on a single European pathway so we can offer deeper, more comprehensive expertise than any generalist agent.
-            </p>
-          </motion.div>
-
+        <div className="w-full max-w-7xl mx-auto">
           <ChooseCarousel isDark={isDark} />
         </div>
       </section>
@@ -817,7 +602,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
 
       {/* SECTION 4: TESTIMONIALS — scroll-driven swapper with photo + quote panels */}
       <section
-        className={`relative z-40 py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 border-b w-full transition-colors duration-300 ${isDark ? "border-slate-900 bg-transparent" : "border-slate-100 bg-transparent"
+        className={`relative z-40 pt-[30px] pb-[10px] py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 w-full transition-colors duration-300 ${isDark ? "border-slate-900 bg-transparent" : "border-slate-100 bg-transparent"
           }`}
       >
         <div className="w-full space-y-8 mobile-m:space-y-10 laptop:space-y-12 4k:space-y-16 max-w-7xl mx-auto">
@@ -828,12 +613,12 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
             transition={{ duration: 0.6 }}
             className="text-center max-w-xl mobile-m:max-w-2xl 4k:max-w-3xl mx-auto space-y-2 mobile-m:space-y-3"
           >
-            <span
+            {/* <span
               className={`text-[9px] mobile-m:text-[10px] 4k:text-xs font-bold text-navy uppercase tracking-[0.2em] px-2.5 mobile-m:px-3 py-1 rounded-sm border ${isDark ? "bg-slate-900 border-slate-800" : "bg-slate-100 border-slate-200"
                 }`}
             >
               SUCCESS STORIES
-            </span>
+            </span> */}
             <h2 className="text-2xl mobile-m:text-3xl laptop:text-4xl 4k:text-5xl font-bold tracking-tight font-sans">
               What Our Students Say
             </h2>

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useMemo } from "react";
 import {
   motion,
   AnimatePresence,
@@ -176,11 +176,12 @@ function StepCard({ step, dir, dark }: { step: Step; dir: number; dark: boolean 
       initial="enter"
       animate="center"
       exit="exit"
-      transition={{ type: "spring", stiffness: 260, damping: 30, mass: 0.8 }}
+      transition={{ type: "tween", ease: [0.22, 1, 0.36, 1], duration: 0.45 }}
+      style={{ willChange: "transform, opacity" }}
       className="absolute inset-0"
     >
       <div
-        className="relative w-full h-full rounded-[28px] overflow-hidden"
+        className="relative w-full h-full rounded-[20px] mobile-m:rounded-[28px] overflow-hidden"
         style={{
           backgroundImage: `linear-gradient(100deg, rgba(6,12,22,.97) 0%, rgba(6,12,22,.86) 38%, rgba(6,12,22,.35) 72%, rgba(6,12,22,.15) 100%), url(${step.image})`,
           backgroundSize: "cover",
@@ -188,22 +189,31 @@ function StepCard({ step, dir, dark }: { step: Step; dir: number; dark: boolean 
           boxShadow: `0 30px 70px -20px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06), 0 0 60px ${c.glow}`,
         }}
       >
+        {/* mobile-only scrim — guarantees text contrast regardless of image crop on narrow/tall screens */}
+        <div
+          className="absolute inset-0 mobile-l:hidden pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(6,12,22,.55) 0%, rgba(6,12,22,.90) 55%, rgba(6,12,22,.97) 100%)",
+          }}
+        />
+
         {/* watermark step number */}
-        <span className="pointer-events-none select-none absolute -right-2 -top-6 text-[170px] leading-none font-black text-white/[0.05]">
+        <span className="pointer-events-none select-none absolute -right-1 -top-3 mobile-m:-right-2 mobile-m:-top-6 text-[90px] mobile-m:text-[130px] laptop:text-[170px] leading-none font-black text-white/[0.05]">
           {step.number}
         </span>
 
-        <div className="relative h-full flex flex-col justify-center gap-5 px-7 py-8 mobile-m:px-10 mobile-m:py-10 laptop:px-16 laptop:py-14 max-w-2xl">
+        <div className="relative h-full flex flex-col justify-center gap-3 mobile-m:gap-5 px-5 py-6 mobile-m:px-10 mobile-m:py-10 laptop:px-16 laptop:py-14 max-w-2xl overflow-y-auto">
           {/* eyebrow */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5 mobile-m:gap-3">
             <div
-              className="w-11 h-11 rounded-xl flex items-center justify-center border border-white/10 backdrop-blur-xl"
+              className="w-9 h-9 mobile-m:w-11 mobile-m:h-11 rounded-xl flex items-center justify-center border border-white/10 flex-shrink-0"
               style={{ backgroundColor: c.soft }}
             >
-              <step.Icon className="w-5 h-5" style={{ color: c.bg }} />
+              <step.Icon className="w-4 h-4 mobile-m:w-5 mobile-m:h-5" style={{ color: c.bg }} />
             </div>
             <span
-              className="text-[11px] font-bold uppercase tracking-[0.25em]"
+              className="text-[9px] mobile-m:text-[11px] font-bold uppercase tracking-[0.2em] mobile-m:tracking-[0.25em]"
               style={{ color: c.bg }}
             >
               Step {step.number} — {step.label}
@@ -211,21 +221,21 @@ function StepCard({ step, dir, dark }: { step: Step; dir: number; dark: boolean 
           </div>
 
           {/* title */}
-          <h3 className="text-2xl mobile-m:text-3xl laptop:text-4xl font-bold text-white leading-[1.12] tracking-tight">
+          <h3 className="text-xl mobile-m:text-3xl laptop:text-4xl font-bold text-white leading-[1.15] tracking-tight">
             {step.title}
           </h3>
 
           {/* description */}
-          <p className="text-sm mobile-m:text-base text-white/65 leading-relaxed max-w-xl">
+          <p className="text-xs mobile-m:text-base text-white/65 leading-relaxed max-w-xl">
             {step.description}
           </p>
 
           {/* bullets */}
-          <ul className="grid grid-cols-1 mobile-m:grid-cols-2 gap-x-6 gap-y-2.5 mt-1">
+          <ul className="grid grid-cols-1 mobile-m:grid-cols-2 gap-x-6 gap-y-2 mobile-m:gap-y-2.5 mt-1">
             {step.bullets.map((b: string) => (
-              <li key={b} className="flex items-start gap-2 text-sm text-white/85">
+              <li key={b} className="flex items-start gap-2 text-xs mobile-m:text-sm text-white/85">
                 <CheckCircle2
-                  className="w-4 h-4 mt-0.5 flex-shrink-0"
+                  className="w-3.5 h-3.5 mobile-m:w-4 mobile-m:h-4 mt-0.5 flex-shrink-0"
                   style={{ color: c.bg }}
                 />
                 <span>{b}</span>
@@ -234,12 +244,12 @@ function StepCard({ step, dir, dark }: { step: Step; dir: number; dark: boolean 
           </ul>
 
           {/* stat strip */}
-          <div className="flex flex-wrap gap-3 mt-2">
+          <div className="flex flex-wrap gap-2 mobile-m:gap-3 mt-1 mobile-m:mt-2">
             {step.stats.map((s: string) => (
               <span
                 key={s}
-                className="text-[11px] font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full border border-white/10 text-white/75 backdrop-blur-md"
-                style={{ backgroundColor: "rgba(255,255,255,0.04)" }}
+                className="text-[9px] mobile-m:text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 mobile-m:px-3 mobile-m:py-1.5 rounded-full border border-white/10 text-white/75"
+                style={{ backgroundColor: "rgba(255,255,255,0.06)" }}
               >
                 {s}
               </span>
@@ -249,7 +259,7 @@ function StepCard({ step, dir, dark }: { step: Step; dir: number; dark: boolean 
 
         {/* accent edge glow */}
         <div
-          className="absolute inset-0 rounded-[28px] pointer-events-none"
+          className="absolute inset-0 rounded-[20px] mobile-m:rounded-[28px] pointer-events-none"
           style={{ boxShadow: `inset 0 0 0 1.5px ${c.bg}55` }}
         />
       </div>
@@ -292,30 +302,30 @@ export default function GermanyJourney({ theme = "dark" }) {
       style={{ height: "620vh" }}
     >
       <div
-        className={`sticky top-0 h-screen w-full flex flex-col overflow-hidden ${
-          dark ? "bg-transparent" : "bg-transparent"
-        }`}
+        className={`sticky top-0 h-screen w-full flex flex-col overflow-hidden ${dark ? "bg-transparent" : "bg-transparent"
+          }`}
       >
-        {/* ambient backdrop glow, follows active accent */}
-        <motion.div
+        {/* ambient backdrop glow — plain CSS transition instead of per-frame JS color animation (removes the main source of scroll jank) */}
+        <div
           className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[900px] rounded-full blur-[140px] opacity-30"
-          animate={{ backgroundColor: activeColor.bg }}
-          transition={{ duration: 0.6 }}
+          style={{
+            backgroundColor: activeColor.bg,
+            transition: "background-color 0.6s ease",
+            willChange: "background-color",
+          }}
         />
 
         {/* ── Heading ── */}
         <div className="relative pt-16 mobile-m:pt-0 pb-2 text-center px-6 flex-shrink-0">
           <span
-            className={`text-xs font-semibold uppercase tracking-[0.3em] ${
-              dark ? "text-white/40" : "text-slate-500"
-            }`}
+            className={`text-xs font-semibold uppercase tracking-[0.3em] ${dark ? "text-white/40" : "text-slate-500"
+              }`}
           >
             Your Complete Journey With EuroZiel
           </span>
           <h2
-            className={`mt-1 font-bold text-3xl mobile-m:text-4xl laptop:text-5xl tracking-tight ${
-              dark ? "text-slate-100" : "text-slate-900"
-            }`}
+            className={`mt-1 font-bold text-3xl mobile-m:text-4xl laptop:text-5xl tracking-tight ${dark ? "text-slate-100" : "text-slate-900"
+              }`}
           >
             Six Steps To{" "}
             <span
@@ -332,9 +342,8 @@ export default function GermanyJourney({ theme = "dark" }) {
           <div className="max-w-3xl laptop:max-w-5xl 4k:max-w-7xl mx-auto relative">
             {/* track */}
             <div
-              className={`h-1.5 rounded-full overflow-hidden ${
-                dark ? "bg-white/10" : "bg-slate-200"
-              }`}
+              className={`h-1.5 rounded-full overflow-hidden ${dark ? "bg-white/10" : "bg-slate-200"
+                }`}
             >
               <motion.div
                 className="h-full rounded-full"
@@ -342,9 +351,10 @@ export default function GermanyJourney({ theme = "dark" }) {
                   background:
                     "linear-gradient(90deg, #3b82c4, #e5a800, #1fae7a, #8b6fd8, #2bb3ab, #e08a3c)",
                   backgroundSize: "600% 100%",
+                  willChange: "width",
                 }}
                 animate={{ width: `${Math.max(4, progressPct)}%` }}
-                transition={{ type: "spring", stiffness: 120, damping: 22 }}
+                transition={{ type: "spring", stiffness: 120, damping: 26 }}
               />
             </div>
 
@@ -363,21 +373,20 @@ export default function GermanyJourney({ theme = "dark" }) {
                           isActive || isPast ? c.bg : dark ? "#1e293b" : "#e2e8f0",
                         boxShadow: isActive ? `0 0 18px ${c.glow}` : "none",
                       }}
-                      transition={{ type: "spring", damping: 18 }}
+                      transition={{ type: "spring", damping: 20, stiffness: 260 }}
                       className="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white"
                     >
                       {isPast ? "✓" : i + 1}
                     </motion.div>
                     <span
-                      className={`hidden mobile-m:block text-[9px] laptop:text-[10px] font-semibold uppercase tracking-wider mt-1.5 text-center leading-tight ${
-                        isActive
+                      className={`hidden mobile-m:block text-[9px] laptop:text-[10px] font-semibold uppercase tracking-wider mt-1.5 text-center leading-tight ${isActive
                           ? dark
                             ? "text-white"
                             : "text-slate-900"
                           : dark
-                          ? "text-white/35"
-                          : "text-slate-400"
-                      }`}
+                            ? "text-white/35"
+                            : "text-slate-400"
+                        }`}
                     >
                       {s.label}
                     </span>
@@ -390,16 +399,17 @@ export default function GermanyJourney({ theme = "dark" }) {
             <motion.div
               className="absolute -top-9 pointer-events-none"
               animate={{ left: `calc(${progressPct}% )` }}
-              transition={{ type: "spring", stiffness: 120, damping: 22 }}
-              style={{ translateX: "-50%" }}
+              transition={{ type: "spring", stiffness: 120, damping: 26 }}
+              style={{ translateX: "-50%", willChange: "left" }}
             >
               <motion.div
                 animate={{ y: [0, -5, 0] }}
-                transition={{ duration: 0.7, repeat: Infinity, ease: "easeInOut" }}
+                transition={{ duration: 0.9, repeat: Infinity, ease: "easeInOut" }}
                 className="relative flex flex-col items-center"
+                style={{ willChange: "transform" }}
               >
                 <div
-                  className="w-10 h-10 rounded-full border-2 flex items-center justify-center backdrop-blur-xl"
+                  className="w-10 h-10 rounded-full border-2 flex items-center justify-center"
                   style={{
                     borderColor: activeColor.bg,
                     backgroundColor: dark ? "#0b1220" : "#ffffff",
@@ -431,8 +441,8 @@ export default function GermanyJourney({ theme = "dark" }) {
         </div>
 
         {/* ── Single active card, swaps on scroll ── */}
-        <div className="relative flex-1 px-6 mobile-m:px-10 laptop:px-20 4k:px-32 pb-10">
-          <div className="relative max-w-4xl laptop:max-w-5xl mx-auto h-full min-h-[420px] mobile-m:min-h-[440px] laptop:min-h-[480px]">
+        <div className="relative flex-1 px-4 mobile-m:px-10 laptop:px-20 4k:px-32 pb-6 mobile-m:pb-10">
+          <div className="relative max-w-4xl laptop:max-w-5xl mx-auto h-full min-h-[520px] mobile-m:min-h-[440px] laptop:min-h-[480px]">
             <AnimatePresence custom={dir} initial={false} mode="popLayout">
               <StepCard key={activeStep.number} step={activeStep} dir={dir} dark={dark} />
             </AnimatePresence>
@@ -441,9 +451,8 @@ export default function GermanyJourney({ theme = "dark" }) {
 
         {/* scroll hint */}
         <div
-          className={`flex-shrink-0 text-center pb-6 text-[11px] font-medium uppercase tracking-[0.2em] ${
-            dark ? "text-white/30" : "text-slate-400"
-          }`}
+          className={`flex-shrink-0 text-center pb-6 text-[11px] font-medium uppercase tracking-[0.2em] ${dark ? "text-white/30" : "text-slate-400"
+            }`}
         >
           {active < N - 1 ? "Keep scrolling to continue the journey" : "You've reached the end of the journey"}
         </div>

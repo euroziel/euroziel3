@@ -43,35 +43,33 @@ export default function StudySection({
     },
     {
       num: "€0",
+      from: 50000,
       label: "Tuition Fees",
       desc: "At public universities in almost all states. Even states with exceptions charge under €3,000/year—less than a semester in private colleges.",
     },
-    // {
-    //   num: "18 Months",
-    //   label: "Post-Study Job Seeker Visa",
-    //   desc: "No pressure countdown. Germany gives you a full year and a half after graduation to find the right role without leaving."
-    // },
-    // {
-    //   num: "1.7 Million",
-    //   label: "Unfilled Skilled Jobs",
-    //   desc: "Active immigration changes are rolling out right now to make it easier for qualified non-EU graduates to stay and work."
-    // }
   ];
 
   // ------------------------------------------------------------------
-  // Hook: animated count-up. Parses a display string like "400,000+"
-  // or "€0" into a prefix, numeric target, and suffix, then counts up
-  // from 0 -> target once the element scrolls into view.
+  // Hook: animated count-up/count-down. Parses a display string like
+  // "400,000+" or "€0" into a prefix, numeric target, and suffix, then
+  // animates from `from` (default 0) -> target once the element scrolls
+  // into view. Passing a `from` greater than the target (e.g. 50000 -> 0)
+  // makes it count DOWN instead of up.
   // ------------------------------------------------------------------
 
-  function useCountUp(displayValue: string, inView: boolean, duration = 1600) {
+  function useCountUp(
+    displayValue: string,
+    inView: boolean,
+    duration = 1600,
+    from = 0
+  ) {
     const match = displayValue.match(/^([^\d]*)([\d,]+)(.*)$/);
     const prefix = match ? match[1] : "";
     const target = match ? parseInt(match[2].replace(/,/g, ""), 10) : 0;
     const suffix = match ? match[3] : "";
     const hasNumber = !!match;
 
-    const [value, setValue] = useState(0);
+    const [value, setValue] = useState(from);
 
     useEffect(() => {
       if (!inView || !hasNumber) return;
@@ -85,7 +83,8 @@ export default function StudySection({
         const progress = Math.min(1, elapsed / duration);
         // ease-out cubic
         const eased = 1 - Math.pow(1 - progress, 3);
-        setValue(Math.round(eased * target));
+        const current = from + (target - from) * eased;
+        setValue(Math.round(current));
 
         if (progress < 1) {
           frame = requestAnimationFrame(step);
@@ -95,7 +94,7 @@ export default function StudySection({
       frame = requestAnimationFrame(step);
       return () => cancelAnimationFrame(frame);
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [inView, target, hasNumber, duration]);
+    }, [inView, target, hasNumber, duration, from]);
 
     if (!hasNumber) return displayValue;
 
@@ -109,13 +108,14 @@ export default function StudySection({
 
   const StatItem: React.FC<{
     num: string;
+    from?: number;
     label: string;
     desc: string;
     dark: boolean;
     inView: boolean;
     delay: number;
-  }> = ({ num, label, desc, dark, inView, delay }) => {
-    const animatedNum = useCountUp(num, inView);
+  }> = ({ num, from = 0, label, desc, dark, inView, delay }) => {
+    const animatedNum = useCountUp(num, inView, 1600, from);
 
     return (
       <div
@@ -161,17 +161,9 @@ export default function StudySection({
       */}
       <HeroReveal />
 
+      {/* STATISTICS SECTION */}
+
       <section className="max-w-7xl mx-auto px-4 space-y-12 ">
-        {/* <div className="text-left max-w-2xl">
-          <span className="text-xs font-bold text-[#1b73ba] uppercase tracking-widest block mb-2">
-            By the Numbers
-          </span>
-          <h3
-            className={`text-2xl md:text-3xl font-extrabold font-sans ${dark ? "text-white" : "text-slate-900"}`}
-          >
-            Facts That Matter
-          </h3>
-        </div> */}
 
         <div
           ref={statsRef}
@@ -182,6 +174,7 @@ export default function StudySection({
             <div key={idx} className="pt-10 md:pt-0 md:px-10 first:pt-0">
               <StatItem
                 num={stat.num}
+                from={stat.from}
                 label={stat.label}
                 desc={stat.desc}
                 dark={dark}
@@ -196,8 +189,8 @@ export default function StudySection({
       {/* SEMESTER CALENDAR & URGENCY */}
       <section
         className={`py-0 px-4 ${dark
-            ? "bg-transparent "
-            : "bg-transparent "
+          ? "bg-transparent "
+          : "bg-transparent "
           }`}
       >
         <div className="max-w-5xl mx-auto text-left space-y-12">
@@ -220,8 +213,8 @@ export default function StudySection({
               <div
                 onClick={onOpenConsultation}
                 className={`rounded-4xl shadow-premium border-b-4 border-b-rose-500 overflow-hidden z-40 ${dark
-                    ? "border-slate-800 bg-transparent"
-                    : "border-slate-200 bg-transparent"
+                  ? "border-slate-800 bg-transparent"
+                  : "border-slate-200 bg-transparent"
                   }`}
               >
                 <img
@@ -238,8 +231,8 @@ export default function StudySection({
               <div
                 onClick={onOpenConsultation}
                 className={`rounded-4xl shadow-premium border-b-4 border-b-emerald-500 overflow-hidden ${dark
-                    ? "border-slate-800 bg-transparent"
-                    : "border-slate-200 bg-transparent"
+                  ? "border-slate-800 bg-transparent"
+                  : "border-slate-200 bg-transparent"
                   }`}
               >
                 <img
@@ -284,8 +277,8 @@ export default function StudySection({
         <ScrollReveal variant="flipUp">
           <div
             className={`p-8 md:p-12 rounded-sm border shadow-premium space-y-6 border-b-4 border-b-gold ${dark
-                ? "border-slate-800 bg-slate-950 text-white"
-                : "border-slate-200 bg-white text-slate-800"
+              ? "border-slate-800 bg-slate-950 text-white"
+              : "border-slate-200 bg-white text-slate-800"
               }`}
           >
             {/* <span className={`text-[10px] font-bold text-navy uppercase tracking-[0.2em] border px-3 py-1 rounded-sm ${dark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'

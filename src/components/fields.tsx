@@ -1,11 +1,17 @@
 import { Cpu, TrendingUp, Building2, Lightbulb, Palette, Stethoscope, Check } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
+import engineeringImg from "/assets/engineering-technology.jpg";
+import csItImg from "/assets/computer-science-it.jpg";
+import businessImg from "/assets/business-management.jpg";
+import naturalSciencesImg from "/assets/natural-sciences.jpg";
+import designArchitectureImg from "/assets/design-architecture.jpg";
+import medicineHealthImg from "/assets/medicine-health.jpg";
 
 const specialisations = [
   {
     icon: <Cpu className="w-5 h-5 text-indigo-500" />,
     title: "Engineering and Technology",
-    image: "https://placehold.co/800x600/4f46e5/ffffff?text=Engineering+%26+Technology&font=roboto",
+    image: engineeringImg,
     points: [
       "Germany is the core R&D engine of Europe, where Siemens, Bosch, BASF, Volkswagen, and Airbus actually build their technology.",
       "TU Munich, RWTH Aachen, and KIT consistently rank in the global top 100 for engineering.",
@@ -15,7 +21,7 @@ const specialisations = [
   {
     icon: <TrendingUp className="w-5 h-5 text-emerald-500" />,
     title: "Computer Science and IT",
-    image: "https://placehold.co/800x600/10b981/ffffff?text=Computer+Science+%26+IT&font=roboto",
+    image: csItImg,
     points: [
       "Berlin is one of Europe's fastest-growing tech hubs, home to 4,000+ startups including Zalando, N26, and Celonis.",
       "Course frameworks require mandatory hands-on industry internships.",
@@ -25,7 +31,7 @@ const specialisations = [
   {
     icon: <Building2 className="w-5 h-5 text-[#1b73ba]" />,
     title: "Business and Management",
-    image: "https://placehold.co/800x600/1b73ba/ffffff?text=Business+%26+Management&font=roboto",
+    image: businessImg,
     points: [
       "Unlike US/UK case-study models, German business schools focus deeply on applied economics, multinational finance, and supply chain management.",
       "Institutes like Mannheim Business School, Frankfurt School of Finance, and WHU rank in Europe's top 20.",
@@ -35,7 +41,7 @@ const specialisations = [
   {
     icon: <Lightbulb className="w-5 h-5 text-[#e5a800]" />,
     title: "Natural Sciences",
-    image: "https://placehold.co/800x600/e5a800/ffffff?text=Natural+Sciences&font=roboto",
+    image: naturalSciencesImg,
     points: [
       "Germany funds more scientific research per capita than almost any other country.",
       "The DFG (German Research Foundation) alone distributes over €3 billion annually.",
@@ -45,7 +51,7 @@ const specialisations = [
   {
     icon: <Palette className="w-5 h-5 text-purple-500" />,
     title: "Design and Architecture",
-    image: "https://placehold.co/800x600/9333ea/ffffff?text=Design+%26+Architecture&font=roboto",
+    image: designArchitectureImg,
     points: [
       "The infamous Bauhaus school started in Germany, and that prestige runs through every design programme.",
       "Coverage spans urban planning, product design, and industrial design.",
@@ -55,7 +61,7 @@ const specialisations = [
   {
     icon: <Stethoscope className="w-5 h-5 text-rose-500" />,
     title: "Medicine and Health",
-    image: "https://placehold.co/800x600/e11d48/ffffff?text=Medicine+%26+Health&font=roboto",
+    image: medicineHealthImg,
     points: [
       "Ranked among the most rigorous medical programmes in the world.",
       "Fully integrated with state-of-the-art hospitals and research-intensive faculties.",
