@@ -194,7 +194,7 @@ export default function FAQSection({ onOpenConsultation, theme }: FAQSectionProp
                   setActiveCategory(cat);
                   setExpandedIndex(null);
                 }}
-                className={`px-3 py-1.5 rounded-sm text-[9px] font-bold uppercase tracking-widest transition-all cursor-pointer border ${
+                className={`px-3 py-1.5 rounded-sm text-[13px] font-bold uppercase tracking-widest transition-all cursor-pointer border ${
                   isSelected
                     ? 'bg-navy text-white border-navy border-b-2 border-b-gold shadow-premium'
                     : dark
@@ -233,7 +233,7 @@ export default function FAQSection({ onOpenConsultation, theme }: FAQSectionProp
                   }`}
                 >
                   <div className="space-y-1 pr-4">
-                    <span className="text-[9px] font-bold text-gold uppercase tracking-widest font-mono">
+                    <span className="text-[13px] font-bold text-gold uppercase tracking-widest font-mono">
                       Category: {faq.cat}
                     </span>
                     <h4 className={`font-bold text-sm md:text-base ${dark ? 'text-slate-100' : 'text-slate-900'}`}>
