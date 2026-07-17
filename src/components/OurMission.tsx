@@ -135,7 +135,7 @@ const WhyEuroZielSection: React.FC = () => {
   const eurozielPoints = comparePoints.map((p) => p.euroziel);
 
   return (
-    <section className="relative w-full bg-transparent py-16 sm:py-20 px-4 sm:px-6">
+    <section className="relative w-full bg-transparent py-4 sm:py-8 px-4 sm:px-6">
       <div className="relative z-10 max-w-6xl mx-auto">
         {/* Heading */}
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white text-center mb-4 tracking-tight">

@@ -388,29 +388,24 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
   function ChooseCarousel({ isDark }: { isDark: boolean }) {
     const [active, setActive] = useState(0);
     const [radius, setRadius] = useState(360);
-    const [vhPerCard, setVhPerCard] = useState(100);
     const [sideScale, setSideScale] = useState(0.82); // only affects non-front cards
     const containerRef = useRef<HTMLDivElement>(null);
 
-    // responsive ring radius + scroll distance per card + side-card scale
+    // responsive ring radius + side-card scale
     useEffect(() => {
       const setR = () => {
         const w = window.innerWidth;
         if (w < 480) {
           setRadius(130);
-          setVhPerCard(65);
           setSideScale(0.55); // smaller side cards on small mobile
         } else if (w < 768) {
           setRadius(190);
-          setVhPerCard(75);
           setSideScale(0.62); // smaller side cards on mobile
         } else if (w < 1024) {
           setRadius(290);
-          setVhPerCard(90);
           setSideScale(0.82); // unchanged from before
         } else {
           setRadius(400);
-          setVhPerCard(100);
           setSideScale(0.82); // unchanged from before
         }
       };
@@ -419,22 +414,20 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
       return () => window.removeEventListener("resize", setR);
     }, []);
 
-    const { scrollYProgress } = useScroll({
-      target: containerRef,
-      offset: ["start start", "end end"],
-    });
-
-    useMotionValueEvent(scrollYProgress, "change", (latest) => {
-      const idx = Math.min(N - 1, Math.max(0, Math.round(latest * (N - 1))));
-      setActive((prev) => (prev !== idx ? idx : prev));
-    });
+    // automatic right-to-left carousel movement (replaces scroll-driven movement)
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setActive((prev) => (prev + 1) % N);
+      }, 2800); // time each card stays in front, in ms
+      return () => clearInterval(interval);
+    }, []);
 
     const rotation = -active * STEP;
     const [g1, g2] = GRADIENTS[active % GRADIENTS.length];
 
     return (
-      <div ref={containerRef} style={{ height: `${N * vhPerCard}vh` }} className="relative">
-        <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden px-4">
+      <div ref={containerRef} className="relative">
+        <div className="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden px-4">
           <div
             className="absolute inset-0 opacity-25 blur-3xl transition-all duration-700 pointer-events-none"
             style={{
@@ -543,8 +536,6 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
             </motion.div>
           </div>
 
-          
-
           <div className="flex gap-1.5 mobile-m:gap-2 mt-6 pt-12 mobile-m:mt-8 laptop:mt-10 relative z-10">
             {chooseCards.map((_, i) => (
               <div
@@ -558,12 +549,12 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
             ))}
           </div>
 
-          <p
+          {/* <p
             className={`mt-3 mobile-m:mt-4 text-[10px] mobile-m:text-xs relative z-10 tracking-wide uppercase ${isDark ? "text-slate-500" : "text-slate-400"
               }`}
           >
-            {active === N - 1 ? "Keep scrolling" : "Scroll to explore"}
-          </p>
+            Auto-playing
+          </p> */}
         </div>
       </div>
     );

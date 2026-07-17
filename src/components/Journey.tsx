@@ -302,7 +302,7 @@ export default function GermanyJourney({ theme = "dark" }) {
       style={{ height: "620vh" }}
     >
       <div
-        className={`sticky top-0 h-screen w-full flex flex-col overflow-hidden ${dark ? "bg-transparent" : "bg-transparent"
+        className={`sticky top-0 h-[100dvh] w-full flex flex-col overflow-hidden ${dark ? "bg-transparent" : "bg-transparent"
           }`}
       >
         {/* ambient backdrop glow — plain CSS transition instead of per-frame JS color animation (removes the main source of scroll jank) */}
@@ -441,8 +441,8 @@ export default function GermanyJourney({ theme = "dark" }) {
         </div>
 
         {/* ── Single active card, swaps on scroll ── */}
-        <div className="relative flex-1 px-4 mobile-m:px-10 laptop:px-20 4k:px-32 pb-6 mobile-m:pb-10">
-          <div className="relative max-w-4xl laptop:max-w-5xl mx-auto h-full min-h-[520px] mobile-m:min-h-[440px] laptop:min-h-[480px]">
+        <div className="relative flex-1 min-h-0 px-4 mobile-m:px-10 laptop:px-20 4k:px-32 pb-6 mobile-m:pb-10">
+          <div className="relative max-w-4xl laptop:max-w-5xl mx-auto h-full min-h-[58dvh] mobile-m:min-h-[60dvh] mobile-l:min-h-[62dvh] laptop:min-h-0">
             <AnimatePresence custom={dir} initial={false} mode="popLayout">
               <StepCard key={activeStep.number} step={activeStep} dir={dir} dark={dark} />
             </AnimatePresence>
