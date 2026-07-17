@@ -231,78 +231,67 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
   }
 
   /* ────────────────────────────────────────────────────────────
-     SCROLL-DRIVEN TESTIMONIAL SWAPPER
+     AUTO-PLAYING TESTIMONIAL SWAPPER
      ──────────────────────────────────────────────────────────── */
   function ScrollingTestimonials({ isDark }: { isDark: boolean }) {
-    const sectionRef = useRef<HTMLDivElement | null>(null);
     const [active, setActive] = useState(0);
     const [dir, setDir] = useState(1);
-    const prevActive = useRef(0);
 
-    const { scrollYProgress } = useScroll({
-      target: sectionRef,
-      offset: ["start start", "end end"],
-    });
-
-    useMotionValueEvent(scrollYProgress, "change", (v) => {
-      const idx = Math.min(testimonialCount - 1, Math.max(0, Math.round(v * (testimonialCount - 1))));
-      if (idx !== prevActive.current) {
-        setDir(idx > prevActive.current ? 1 : -1);
-        prevActive.current = idx;
-        setActive(idx);
-      }
-    });
+    // auto-advance instead of scroll-driven index changes
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setDir(1);
+        setActive((prev) => (prev + 1) % testimonialCount);
+      }, 4500); // time each testimonial stays visible, in ms
+      return () => clearInterval(interval);
+    }, []);
 
     const test = testimonials[active];
     const accent = ACCENTS[active % ACCENTS.length];
     const photoSide = active % 2 === 0 ? "left" : "right"; // alternates every testimonial
 
     return (
-      <div ref={sectionRef} className="relative" style={{ height: `${testimonialCount * 100}vh` }}>
-        <div className="sticky top-0 h-screen flex items-center overflow-hidden">
-          <div className="w-full max-w-6xl mx-auto px-4 mobile-m:px-6 laptop:px-10">
-            <div className="relative grid grid-cols-1 mobile-l:grid-cols-2 gap-10 mobile-m:gap-14 items-center min-h-[380px]">
-              {/* Photo column */}
-              <div className={`flex justify-center ${photoSide === "right" ? "mobile-l:order-2" : "mobile-l:order-1"}`}>
-                <AnimatePresence mode="wait" custom={dir}>
-                  <PhotoPanel test={test} dir={dir} accent={accent} side={photoSide} />
-                </AnimatePresence>
-              </div>
-
-              {/* Quote column */}
-              <div className={`${photoSide === "right" ? "mobile-l:order-1" : "mobile-l:order-2"}`}>
-                <AnimatePresence mode="wait" custom={dir}>
-                  <QuotePanel
-                    test={test}
-                    dir={dir}
-                    accent={accent}
-                    side={photoSide === "right" ? "right" : "left"}
-                    isDark={isDark}
-                  />
-                </AnimatePresence>
-              </div>
-            </div>
-
-            {/* progress dots + counter */}
-            <div className="flex items-center justify-center gap-4 mt-10 mobile-m:mt-14">
-              <div className="flex items-center gap-2">
-                {testimonials.map((_, i) => (
-                  <motion.div
-                    key={i}
-                    animate={{
-                      width: i === active ? 26 : 8,
-                      backgroundColor: i === active ? ACCENTS[i % ACCENTS.length] : isDark ? "#334155" : "#cbd5e1",
-                    }}
-                    transition={{ type: "spring", stiffness: 200, damping: 22 }}
-                    className="h-2 rounded-full"
-                  />
-                ))}
-              </div>
-              <span className={`text-xs font-semibold tabular-nums ${isDark ? "text-slate-500" : "text-slate-400"}`}>
-                {String(active + 1).padStart(2, "0")} / {String(testimonialCount).padStart(2, "0")}
-              </span>
-            </div>
+      <div className="w-full max-w-6xl mx-auto px-4 mobile-m:px-6 laptop:px-10">
+        <div className="relative grid grid-cols-1 mobile-l:grid-cols-2 gap-8 mobile-m:gap-10 laptop:gap-14 items-center">
+          {/* Photo column */}
+          <div className={`flex justify-center ${photoSide === "right" ? "mobile-l:order-2" : "mobile-l:order-1"}`}>
+            <AnimatePresence mode="wait" custom={dir}>
+              <PhotoPanel test={test} dir={dir} accent={accent} side={photoSide} />
+            </AnimatePresence>
           </div>
+
+          {/* Quote column */}
+          <div className={`text-center mobile-l:text-left ${photoSide === "right" ? "mobile-l:order-1" : "mobile-l:order-2"}`}>
+            <AnimatePresence mode="wait" custom={dir}>
+              <QuotePanel
+                test={test}
+                dir={dir}
+                accent={accent}
+                side={photoSide === "right" ? "right" : "left"}
+                isDark={isDark}
+              />
+            </AnimatePresence>
+          </div>
+        </div>
+
+        {/* progress dots + counter */}
+        <div className="flex items-center justify-center gap-4 mt-8 mobile-m:mt-10">
+          <div className="flex items-center gap-2">
+            {testimonials.map((_, i) => (
+              <motion.div
+                key={i}
+                animate={{
+                  width: i === active ? 26 : 8,
+                  backgroundColor: i === active ? ACCENTS[i % ACCENTS.length] : isDark ? "#334155" : "#cbd5e1",
+                }}
+                transition={{ type: "spring", stiffness: 200, damping: 22 }}
+                className="h-2 rounded-full"
+              />
+            ))}
+          </div>
+          <span className={`text-xs font-semibold tabular-nums ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+            {String(active + 1).padStart(2, "0")} / {String(testimonialCount).padStart(2, "0")}
+          </span>
         </div>
       </div>
     );
@@ -588,10 +577,10 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
 
       {/* SECTION 4: TESTIMONIALS — scroll-driven swapper with photo + quote panels */}
       <section
-        className={`relative z-40 pt-[30px] pb-[10px] py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 w-full transition-colors duration-300 ${isDark ? "border-slate-900 bg-transparent" : "border-slate-100 bg-transparent"
+        className={`relative z-40 py-10 mobile-m:py-14 laptop:py-16 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 w-full transition-colors duration-300 ${isDark ? "border-slate-900 bg-transparent" : "border-slate-100 bg-transparent"
           }`}
       >
-        <div className="w-full space-y-8 mobile-m:space-y-10 laptop:space-y-12 4k:space-y-16 max-w-7xl mx-auto">
+        <div className="w-full space-y-6 mobile-m:space-y-8 laptop:space-y-10 max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -599,12 +588,6 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
             transition={{ duration: 0.6 }}
             className="text-center max-w-xl mobile-m:max-w-2xl 4k:max-w-3xl mx-auto space-y-2 mobile-m:space-y-3"
           >
-            {/* <span
-              className={`text-[9px] mobile-m:text-[10px] 4k:text-xs font-bold text-navy uppercase tracking-[0.2em] px-2.5 mobile-m:px-3 py-1 rounded-sm border ${isDark ? "bg-slate-900 border-slate-800" : "bg-slate-100 border-slate-200"
-                }`}
-            >
-              SUCCESS STORIES
-            </span> */}
             <h2 className="text-2xl mobile-m:text-3xl laptop:text-4xl 4k:text-5xl font-bold tracking-tight font-sans">
               What Our Students Say
             </h2>
