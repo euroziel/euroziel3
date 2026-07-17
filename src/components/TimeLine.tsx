@@ -55,7 +55,6 @@ const timelineData: TimelinePhase[] = [
             "GRE / GMAT Preparation Guidance",
             "Academic Profile Evaluation & University Shortlisting",
             "uni-assist Account & Portal Setup",
-            "APS & Application Documentation Support",
             "Application Readiness & Submission Guidance",
         ],
     },
