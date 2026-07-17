@@ -26,7 +26,7 @@ export default function FAQSection({ onOpenConsultation, theme }: FAQSectionProp
     {
       cat: "Ausbildung",
       q: "What is Ausbildung and how is it different from a university degree?",
-      a: "Ausbildung is Germany's dual vocational training system where you split your time between a company workplace and a vocational school. Unlike a university degree, it is hands-on, industry-integrated, and you earn a salary from day one. It typically lasts 2 to 3.5 years depending on the field."
+      a: "Ausbildung is Germany's dual vocational training system where you split your time between a company workplace and a vocational school. Unlike a university degree, it is hands on, industry integrated, and you earn a salary from day one. It typically lasts 2 to 3.5 years depending on the field."
     },
     {
       cat: "Ausbildung",
@@ -233,10 +233,10 @@ export default function FAQSection({ onOpenConsultation, theme }: FAQSectionProp
                   }`}
                 >
                   <div className="space-y-1 pr-4">
-                    <span className="text-[13px] font-bold text-gold uppercase tracking-widest font-mono">
+                    <span className="text-[13px] font-bold text-gold uppercase tracking-widest font-sans">
                       Category: {faq.cat}
                     </span>
-                    <h4 className={`font-bold text-sm md:text-base ${dark ? 'text-slate-100' : 'text-slate-900'}`}>
+                    <h4 className={`text-sm md:text-base ${dark ? 'text-slate-100' : 'text-slate-900'}`}>
                       {faq.q}
                     </h4>
                   </div>

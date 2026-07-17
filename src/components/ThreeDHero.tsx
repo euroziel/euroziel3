@@ -113,7 +113,7 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
                 }`}
             >
               Your bridge from <span className="font-serif italic font-normal text-[#e5a800]">India</span> to <span className={`font-serif italic font-semibold ${isDark ? 'text-blue-400' : 'text-navy'
-                }`}>Germany</span>, built by people already there.
+                }`}>Germany</span> built by people already there.
             </motion.h1>
 
             {/* Subtext */}
@@ -178,7 +178,7 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
                   : 'border-slate-300 hover:border-slate-400 hover:bg-slate-50 text-slate-700'
                   }`}
               >
-                Explore 6-Step Roadmap
+                Explore 6 Step Roadmap
               </button>
             </motion.div>
 

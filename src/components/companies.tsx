@@ -29,7 +29,7 @@ const pathwayStats = [
     value: "€52,000",
     accent: "navy",
     label: "Avg. Starting Salary",
-    desc: "Across all fields — not a tech-only outlier",
+    desc: "Across all fields not a tech-only outlier",
   },
   {
     icon: <ShieldCheck className="w-5 h-5" />,
@@ -237,7 +237,7 @@ const Companies: React.FC<{ dark?: boolean }> = ({ dark = false }) => {
             }`}
           >
             The reason Indian students choose Germany over other European
-            countries isn't just the free education — it's what comes after.
+            countries isn't just the free education it's what comes after.
           </p>
         </div>
 

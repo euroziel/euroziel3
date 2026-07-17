@@ -135,19 +135,19 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
       image: "https://images.unsplash.com/photo-1568992687947-868a62a9f521?auto=format&fit=crop&w=800&q=80",
       points: [
         "APS verifies your Indian transcripts against German academic guidelines",
-        "Processing typically takes 6 to 12 weeks — apply early",
+        "Processing typically takes 6 to 12 weeks apply early",
         "Certificate is mandatory for most public university portals",
         "Do not wait for admissions to open before applying"
       ]
     },
     {
       title: "Public Universities",
-      short: "World-class and tuition-free",
+      short: "World class and tuition free",
       image: "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=800&q=80",
       points: [
         "Most public universities charge zero tuition fees",
         "Only a nominal semester contribution of €200–€400 applies",
-        "This fee typically includes a city-wide public transport pass",
+        "This fee typically includes a city wide public transport pass",
         "Applies to both EU and non-EU international students"
       ]
     },
@@ -158,7 +158,7 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
       points: [
         "English-taught programs are widely available",
         "Basic German (A1–A2) improves daily life and Anmeldung",
-        "Helps significantly with part-time student jobs",
+        "Helps significantly with part time student jobs",
         "B1/B2 is critical and often mandatory for Ausbildung"
       ]
     },
@@ -215,12 +215,12 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
             {/* Left: text content */}
             <ScrollReveal variant="glideUp">
               <div className="space-y-6 text-left order-2 md:order-1">
-                <span className="inline-block text-[10px] font-bold text-gold uppercase tracking-[0.2em] border border-gold/30 bg-gold/5 px-3 py-1.5 rounded-sm">
+                {/* <span className="inline-block text-[10px] font-bold text-gold uppercase tracking-[0.2em] border border-gold/30 bg-gold/5 px-3 py-1.5 rounded-sm">
                   Study Abroad Guidance
-                </span>
+                </span> */}
 
                 <h1 className="text-3xl mobile-m:text-4xl sm:text-5xl md:text-6xl font-bold font-sans leading-[1.1] text-white">
-                  Smart Guidance For a
+                  Smart Guidance <br /> for a
                   <br />
                   <span className="font-serif italic font-medium text-gold">
                     Smarter Future.
@@ -228,7 +228,7 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
                 </h1>
 
                 <p className="text-sm md:text-base font-sans leading-relaxed max-w-md text-slate-300">
-                  From your first enquiry to your first day on a German campus—EuroZiel
+                  From your first enquiry to your first day on a German campus EuroZiel
                   covers every aspect of your study abroad journey. Guided by mentors
                   currently studying your fields in Germany.
                 </p>
@@ -424,7 +424,7 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
                       </div>
 
                       <div className="text-[10px] text-slate-300 border-t border-white/15 pt-3 flex items-center justify-between">
-                        <span className="font-sans uppercase tracking-wider text-[9px]">Hover to Read Detail</span>
+                        {/* <span className="font-sans uppercase tracking-wider text-[9px]">Hover to Read Detail</span> */}
                         <ArrowRight className="w-3.5 h-3.5 text-gold" />
                       </div>
                     </div>

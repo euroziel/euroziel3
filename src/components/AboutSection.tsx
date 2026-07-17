@@ -69,8 +69,8 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
       tags: ["University Network", "Career Guidance", "Student Ecosystem"],
       bio: [
         "Sarathkumar leads EuroZiel's European network and ecosystem development initiatives, building strong connections across universities, student communities, graduates, and working professionals throughout Germany and Europe.",
-        "His expertise lies in creating a network-driven guidance system that provides students with practical exposure and real-world insights beyond the traditional admission process. Through continuous collaboration with students and professionals across multiple European cities, he helps deliver ground-level guidance on academics, student life, accommodation, internships, and career pathways.",
-        "This on-the-ground presence is what separates EuroZiel from agencies working purely off brochures — every recommendation is backed by someone who has actually navigated that city, that university, or that visa office."
+        "His expertise lies in creating a network driven guidance system that provides students with practical exposure and real world insights beyond the traditional admission process. Through continuous collaboration with students and professionals across multiple European cities, he helps deliver ground-level guidance on academics, student life, accommodation, internships, and career pathways.",
+        "This on the ground presence is what separates EuroZiel from agencies working purely off brochures every recommendation is backed by someone who has actually navigated that city, that university, or that visa office."
       ]
     },
     {
@@ -83,7 +83,7 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
       bio: [
         "Yuvasri leads EuroZiel's student support and academic process framework with strong experience in overseas education counseling and Germany-focused application guidance. Her expertise spans profile evaluation, university shortlisting, application planning, APS coordination, documentation review, and visa guidance.",
         "Known for her structured and accountable approach, she works closely with students across multiple academic backgrounds, helping them navigate complex admission processes with clarity and confidence.",
-        "Her focus on transparent communication and personalized mentorship is the heart of EuroZiel's student-first model — every student gets a plan built around their actual profile, not a one-size-fits-all template."
+        "Her focus on transparent communication and personalized mentorship is the heart of EuroZiel's student-first model every student gets a plan built around their actual profile, not a one-size-fits-all template."
       ]
     }
   ];
@@ -101,10 +101,10 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
         <ScrollReveal variant="blurIn">
           <div className="relative z-10 space-y-6">
             <div className="flex items-center gap-3">
-              <span className="text-[10px] font-bold uppercase tracking-[0.3em] px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-500 to-amber-500 text-white inline-flex items-center gap-1.5 shadow-sm">
+              {/* <span className="text-[10px] font-bold uppercase tracking-[0.3em] px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-500 to-amber-500 text-white inline-flex items-center gap-1.5 shadow-sm">
                 <Sparkles className="w-3 h-3" />
                 About EuroZiel
-              </span>
+              </span> */}
             </div>
 
             <h1 className={`text-4xl md:text-6xl font-bold font-sans leading-[1.05] tracking-tight ${dark ? 'text-white' : 'text-slate-900'}`}>
@@ -178,7 +178,7 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
                 Sarathkumar Venkateshwaran and Yuvasri Jagadeesan did not start EuroZiel because they saw a business opportunity. They started it because they watched too many genuinely capable Indian students either give up on Germany entirely or get burned by generic agencies that had never actually engaged with the German university system at a real level.
               </p>
               <p>
-                Generic agencies giving the same advice to every student regardless of their background. No one with actual ground-level knowledge of what TU Munich expects versus what RWTH Aachen looks for. No one who had sat through an APS documentation process, waited three months for a certificate, or figured out how Anmeldung actually works on arrival.
+                Generic agencies giving the same advice to every student regardless of their background. No one with actual ground level knowledge of what TU Munich expects versus what RWTH Aachen looks for. No one who had sat through an APS documentation process, waited three months for a certificate, or figured out how Anmeldung actually works on arrival.
               </p>
               <p className={`font-semibold ${dark ? 'text-white' : 'text-slate-800'}`}>
                 So they built something different. Not just a consultancy. A real, structural bridge.
@@ -194,7 +194,7 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
                 <div>
                   <h5 className={`text-sm font-bold font-sans mb-1 ${dark ? 'text-slate-100' : 'text-slate-800'}`}>Our Mission</h5>
                   <p className={`text-xs leading-relaxed font-sans ${dark ? 'text-slate-500' : 'text-slate-500'}`}>
-                    Make Germany genuinely accessible through honest, ground-level guidance.
+                    Make Germany genuinely accessible through honest, ground level guidance.
                   </p>
                 </div>
               </div>
@@ -205,7 +205,7 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
                 <div>
                   <h5 className={`text-sm font-bold font-sans mb-1 ${dark ? 'text-slate-100' : 'text-slate-800'}`}>Our Vision</h5>
                   <p className={`text-xs leading-relaxed font-sans ${dark ? 'text-slate-500' : 'text-slate-500'}`}>
-                    A student-first bridge between India and Europe, built on trust.
+                    A student first bridge between India and Europe, built on trust.
                   </p>
                 </div>
               </div>
@@ -225,7 +225,7 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
               Meet the Founders
             </h2>
             <p className={`text-xs md:text-sm font-sans ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
-              Direct, student-centric counseling expertise backed by a robust European network.
+              Direct student centric counseling expertise backed by a robust European network.
             </p>
           </div>
         </ScrollReveal>
@@ -325,7 +325,7 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
               Why Students Trust Us
             </h2>
             <p className={`text-xs md:text-sm ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
-              Absolute transparency, honest evaluations, and domain-based expertise.
+              Absolute transparency, honest evaluations, and domain based expertise.
             </p>
           </div>
         </ScrollReveal>
@@ -372,7 +372,7 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
                 Still deciding if EuroZiel is right for you?
               </h3>
               <p className={`text-xs md:text-sm max-w-xl mx-auto font-sans ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
-                Talk to us directly. No sales pitch, no pressure — just an honest evaluation of your profile.
+                Talk to us directly. No sales pitch, no pressure just an honest evaluation of your profile.
               </p>
               <button
                 onClick={onOpenConsultation}

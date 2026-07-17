@@ -577,7 +577,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
 
       {/* SECTION 4: TESTIMONIALS — scroll-driven swapper with photo + quote panels */}
       <section
-        className={`relative z-40 py-10 mobile-m:py-14 laptop:py-16 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 w-full transition-colors duration-300 ${isDark ? "border-slate-900 bg-transparent" : "border-slate-100 bg-transparent"
+        className={`relative z-40 py-0 mobile-m:py-14 laptop:py-30 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 w-full transition-colors duration-300 ${isDark ? "border-slate-900 bg-transparent" : "border-slate-100 bg-transparent"
           }`}
       >
         <div className="w-full space-y-6 mobile-m:space-y-8 laptop:space-y-10 max-w-7xl mx-auto">
@@ -601,7 +601,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
       </section>
 
       {/* SECTION 5: BOTTOM CTA */}
-      <div className={`w-full relative z-40 py-16 ${isDark ? 'bg-transparent' : 'bg-transparent'
+      <div className={`w-full relative z-40 py-0 ${isDark ? 'bg-transparent' : 'bg-transparent'
         }`}>
         <section className="max-w-7xl mx-auto px-4 mobile-m:px-5 laptop:px-8 4k:px-16 text-center">
           <ScrollReveal variant="flipUp">

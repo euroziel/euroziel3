@@ -35,7 +35,7 @@ const comparePoints: ComparePoint[] = [
   {
     id: 5,
     consultancy: "Slow, vague, and inconsistent communication",
-    euroziel: "Fast, transparent, and honest communication — always",
+    euroziel: "Fast, transparent, and honest communication always",
   },
   {
     id: 6,
@@ -144,7 +144,7 @@ const WhyEuroZielSection: React.FC = () => {
           </span>
         </h2>
         <p className="text-center text-sm sm:text-base text-gray-400 mb-12 max-w-xl mx-auto">
-          More than a consultancy — a real bridge to Germany.
+          More than a consultancy a real bridge to Germany.
         </p>
 
         {/* Three paragraph cards */}

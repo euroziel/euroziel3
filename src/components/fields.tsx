@@ -23,8 +23,8 @@ const specialisations = [
     title: "Computer Science and IT",
     image: csItImg,
     points: [
-      "Berlin is one of Europe's fastest-growing tech hubs, home to 4,000+ startups including Zalando, N26, and Celonis.",
-      "Course frameworks require mandatory hands-on industry internships.",
+      "Berlin is one of Europe's fastest growing tech hubs, home to 4,000+ startups including Zalando, N26, and Celonis.",
+      "Course frameworks require mandatory hands on industry internships.",
       "Graduate employment is outstanding at over 96% within six months of completion.",
     ],
   },
@@ -33,7 +33,7 @@ const specialisations = [
     title: "Business and Management",
     image: businessImg,
     points: [
-      "Unlike US/UK case-study models, German business schools focus deeply on applied economics, multinational finance, and supply chain management.",
+      "Unlike US/UK case study models, German business schools focus deeply on applied economics, multinational finance, and supply chain management.",
       "Institutes like Mannheim Business School, Frankfurt School of Finance, and WHU rank in Europe's top 20.",
       "Strong ties to multinational corporations mean real industry exposure from year one.",
     ],
@@ -55,7 +55,7 @@ const specialisations = [
     points: [
       "The infamous Bauhaus school started in Germany, and that prestige runs through every design programme.",
       "Coverage spans urban planning, product design, and industrial design.",
-      "Recognized globally as a high-end design credential.",
+      "Recognized globally as a high end design credential.",
     ],
   },
   {
@@ -64,8 +64,8 @@ const specialisations = [
     image: medicineHealthImg,
     points: [
       "Ranked among the most rigorous medical programmes in the world.",
-      "Fully integrated with state-of-the-art hospitals and research-intensive faculties.",
-      "Recognized across the UK, Gulf, and Australia — a long pathway but a permanent, peak qualification.",
+      "Fully integrated with state of the art hospitals and research-intensive faculties.",
+      "Recognized across the UK, Gulf, and Australia a long pathway but a permanent, peak qualification.",
     ],
   },
 ];

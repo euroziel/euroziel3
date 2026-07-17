@@ -23,11 +23,11 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
       icon: "🎓",
       desc: "Applying as an Indian student requires specific routing, since Class 12 certificates alone are usually insufficient for direct university entry. Depending on your stream and score, we analyze whether you need Studienkolleg (foundation year) or Indian university bridging first.",
       highlights: [
-        "Tuition-free or low-cost public universities",
+        "Tuition-free or low cost public universities",
         "English or German taught degree options",
-        "Clear roadmap — no guesswork on eligibility"
+        "Clear roadmap no guesswork on eligibility"
       ],
-      rules: "We help you find world-class, tuition-free English or German taught pathways with clear upfront route advice.",
+      rules: "We help you find world-class, tuition free English or German taught pathways with clear upfront route advice.",
       align: "right"
     },
     {
@@ -35,9 +35,9 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
       title: "Master's Programmes",
       tag: "Strategic Post-Graduation",
       icon: "📈",
-      desc: "This is where most Indian students either fail or succeed. Common mistakes include targeting wrong university tiers for their CGPA, templated SOPs, late APS applications, or wrong portal submissions. We map your specific profile and shortlist universities across 3 tiers — Ambitious, Realistic, and Safe.",
+      desc: "This is where most Indian students either fail or succeed. Common mistakes include targeting wrong university tiers for their CGPA, templated SOPs, late APS applications, or wrong portal submissions. We map your specific profile and shortlist universities across 3 tiers Ambitious, Realistic, and Safe.",
       highlights: [
-        "3-tier university shortlisting strategy",
+        "3 tier university shortlisting strategy",
         "100% customized SOPs & documents",
         "Avoid the common rejection traps"
       ],
@@ -49,11 +49,11 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
       title: "Ausbildung (Vocational Training)",
       tag: "Dual System Trainee",
       icon: "🛠️",
-      desc: "Germany's dual vocational training system where you split your time between a real company and a vocational school. You are not an intern — you are a registered trainee earning a contractual monthly salary between €600 and €1,200. Trusted by industry leaders like Bosch, BMW, and Siemens.",
+      desc: "Germany's dual vocational training system where you split your time between a real company and a vocational school. You are not an intern you are a registered trainee earning a contractual monthly salary between €600 and €1,200. Trusted by industry leaders like Bosch, BMW, and Siemens.",
       highlights: [
-        "Earn while you learn — real salary from day one",
+        "Earn while you learn real salary from day one",
         "Direct placement with top German companies",
-        "High chance of full-time job offer after completion"
+        "High chance of full time job offer after completion"
       ],
       rules: "Requires solid German language skills (B1 to B2 level target). We assist in school mapping and securing local training contracts.",
       align: "right"
@@ -243,9 +243,9 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
                 className={`text-4xl md:text-6xl lg:text-7xl font-bold font-sans leading-tight ${dark ? 'text-white' : 'text-slate-900'
                   }`}
               >
-                Complete support, <br />
+                Complete support <br />
                 <span className="font-serif italic font-medium text-gold">
-                  zero gaps.
+                  zero gaps
                 </span>
               </h1>
 
@@ -253,7 +253,7 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
                 className={`text-sm md:text-lg font-sans leading-relaxed max-w-xl mx-auto ${dark ? 'text-slate-300' : 'text-slate-600'
                   }`}
               >
-                From your first enquiry to your first day on a German campus—EuroZiel
+                From your first enquiry to your first day on a German campus EuroZiel
                 covers every aspect of your study abroad journey. Guided by mentors
                 currently studying your fields in Germany.
               </p>
@@ -304,7 +304,7 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
             Three Pathways, One Destination
           </h2>
           <p className={`text-sm mt-4 max-w-xl mx-auto font-sans ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
-            Whichever stage you're at, there's a clear, proven route mapped out for you — step by step.
+            Whichever stage you're at, there's a clear, proven route mapped out for you step by step.
           </p>
         </ScrollReveal>
 

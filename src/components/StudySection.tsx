@@ -47,7 +47,7 @@ export default function StudySection({
       num: "€0",
       from: 50000,
       label: "Tuition Fees",
-      desc: "At public universities in almost all states. Even states with exceptions charge under €3,000/year—less than a semester in private colleges.",
+      desc: "At public universities in almost all states. Even states with exceptions charge under €3,000/year less than a semester in private colleges.",
     },
   ];
 
