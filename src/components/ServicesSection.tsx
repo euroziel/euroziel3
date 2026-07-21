@@ -653,7 +653,7 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
       </section>
 
       {/* bottom CTA */}
-      <section className="max-w-4xl mx-auto px-4 mb-30 text-center">
+      <section className="max-w-3`````xl mx-auto px-4 mb-30 text-center">
         <ScrollReveal variant="clipReveal">
           <div className={`p-8 md:p-12 rounded-sm border shadow-premium space-y-6 border-b-4 border-b-gold ${dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200 bg-white'
             }`}>
