@@ -387,7 +387,7 @@ export default function StudySection({
 
           <ScrollReveal variant="fadeUp" delay={0.3}>
             <div className="p-5 rounded-3xl border border-gold/20 bg-gold/3 text-xs text-slate-600 dark:text-slate-400 space-y-2">
-              <span className="font-bold text-gold uppercase tracking-wider font-mono flex items-center gap-1.5">
+              <span className="font-bold text-gold uppercase tracking-wider font-sans flex items-center gap-1.5">
                 <AlertTriangle
                   className="w-4 h-4 text-gold"
                   style={{ strokeWidth: 2.5 }}

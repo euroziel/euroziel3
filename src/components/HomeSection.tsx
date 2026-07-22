@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent, } from 'motion/react';
-import { ArrowRight, Star, ArrowLeftRight, Quote, CheckCircle2, Pause, Play } from 'lucide-react';
+import { ArrowRight, Star, ArrowLeftRight, Quote, CheckCircle2, Pause, Play, ChevronRight, ChevronLeft } from 'lucide-react';
 import Journey from './Journey';
 import ScrollReveal from './ScrollReveal';
 import OurMission from './OurMission';
@@ -378,6 +378,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
     const [active, setActive] = useState(0);
     const [radius, setRadius] = useState(360);
     const [sideScale, setSideScale] = useState(0.82); // only affects non-front cards
+    const [autoPlay, setAutoPlay] = useState(false); // controls whether auto-rotation is running
     const containerRef = useRef<HTMLDivElement>(null);
 
     // responsive ring radius + side-card scale
@@ -404,12 +405,25 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
     }, []);
 
     // automatic right-to-left carousel movement (replaces scroll-driven movement)
+    // now only runs while autoPlay is true; stops once user clicks an arrow
     useEffect(() => {
+      if (!autoPlay) return;
       const interval = setInterval(() => {
         setActive((prev) => (prev + 1) % N);
       }, 2800); // time each card stays in front, in ms
       return () => clearInterval(interval);
-    }, []);
+    }, [autoPlay]);
+
+    // manual navigation handlers - stop autoplay and rotate on click
+    const handlePrev = () => {
+      setAutoPlay(false);
+      setActive((prev) => (prev - 1 + N) % N);
+    };
+
+    const handleNext = () => {
+      setAutoPlay(false);
+      setActive((prev) => (prev + 1) % N);
+    };
 
     const rotation = -active * STEP;
     const [g1, g2] = GRADIENTS[active % GRADIENTS.length];
@@ -447,6 +461,20 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
               maxWidth: "900px",
             }}
           >
+            {/* Left arrow */}
+            <button
+              type="button"
+              aria-label="Previous card"
+              onClick={handlePrev}
+              className={`absolute left-0 mobile-m:left-1 laptop:-left-2 top-1/2 -translate-y-1/2 z-20
+                w-8 h-8 mobile-m:w-9 mobile-m:h-9 laptop:w-11 laptop:h-11
+                flex items-center justify-center rounded-full shadow-lg backdrop-blur-sm
+                transition-transform duration-200 hover:scale-110 active:scale-95
+                ${isDark ? "bg-slate-900/80 text-white border border-white/10" : "bg-white/90 text-slate-900 border border-black/5"}`}
+            >
+              <ChevronLeft className="w-4 h-4 mobile-m:w-5 mobile-m:h-5" strokeWidth={2.5} />
+            </button>
+
             <motion.div
               className="relative w-full h-full mx-auto"
               style={{ transformStyle: "preserve-3d" }}
@@ -523,6 +551,20 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
                 );
               })}
             </motion.div>
+
+            {/* Right arrow */}
+            <button
+              type="button"
+              aria-label="Next card"
+              onClick={handleNext}
+              className={`absolute right-0 mobile-m:right-1 laptop:-right-2 top-1/2 -translate-y-1/2 z-20
+                w-8 h-8 mobile-m:w-9 mobile-m:h-9 laptop:w-11 laptop:h-11
+                flex items-center justify-center rounded-full shadow-lg backdrop-blur-sm
+                transition-transform duration-200 hover:scale-110 active:scale-95
+                ${isDark ? "bg-slate-900/80 text-white border border-white/10" : "bg-white/90 text-slate-900 border border-black/5"}`}
+            >
+              <ChevronRight className="w-4 h-4 mobile-m:w-5 mobile-m:h-5" strokeWidth={2.5} />
+            </button>
           </div>
 
           <div className="flex gap-1.5 mobile-m:gap-2 mt-6 pt-12 mobile-m:mt-8 laptop:mt-10 relative z-10">

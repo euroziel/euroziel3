@@ -69,23 +69,20 @@ const PathwayStat: React.FC<{
 
   return (
     <div
-      className={`relative flex items-start gap-3 p-4 rounded-xl border overflow-hidden group transition-all duration-300 hover:-translate-y-1 hover:shadow-premium hover:scale-[1.02] ${
-        dark
+      className={`relative flex items-start gap-3 p-4 rounded-xl border overflow-hidden group transition-all duration-300 hover:-translate-y-1 hover:shadow-premium hover:scale-[1.02] ${dark
           ? "border-slate-800 bg-slate-900/50 hover:border-slate-700"
           : "border-slate-200/60 bg-white hover:border-slate-300"
-      }`}
+        }`}
     >
       {/* subtle glow accent in the corner */}
       <div
-        className={`pointer-events-none absolute -top-8 -right-8 w-20 h-20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
-          isGold ? "bg-gold/20" : "bg-navy/20"
-        }`}
+        className={`pointer-events-none absolute -top-8 -right-8 w-20 h-20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${isGold ? "bg-gold/20" : "bg-navy/20"
+          }`}
       />
 
       <div
-        className={`relative shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-lg transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 ${
-          isGold ? "bg-gold/10 text-gold" : "bg-navy/10 text-navy"
-        }`}
+        className={`relative shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-lg transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 ${isGold ? "bg-gold/10 text-gold" : "bg-navy/10 text-navy"
+          }`}
       >
         {stat.icon}
       </div>
@@ -93,26 +90,23 @@ const PathwayStat: React.FC<{
       <div className="relative min-w-0">
         <div className="flex items-baseline gap-2 flex-wrap">
           <span
-            className={`text-lg font-bold transition-colors duration-300 ${
-              isGold ? "text-gold" : "text-navy"
-            }`}
+            className={`text-lg font-bold transition-colors duration-300 ${isGold ? "text-gold" : "text-navy"
+              }`}
           >
             {stat.value}
           </span>
           <span
-            className={`text-[11px] font-bold uppercase tracking-wide ${
-              dark ? "text-slate-200" : "text-slate-800"
-            }`}
+            className={`text-[11px] font-bold uppercase tracking-wide ${dark ? "text-slate-200" : "text-slate-800"
+              }`}
           >
             {stat.label}
           </span>
         </div>
         <p
-          className={`text-xs mt-1 font-sans leading-relaxed transition-colors duration-300 ${
-            dark
+          className={`text-xs mt-1 font-sans leading-relaxed transition-colors duration-300 ${dark
               ? "text-slate-400 group-hover:text-slate-300"
               : "text-slate-500 group-hover:text-slate-600"
-          }`}
+            }`}
         >
           {stat.desc}
         </p>
@@ -131,11 +125,10 @@ const LogoChip: React.FC<{ brand: string; dark: boolean }> = ({ brand, dark }) =
 
   return (
     <span
-      className={`px-5 py-3 border rounded-lg text-xs md:text-sm font-bold font-sans whitespace-nowrap transition-colors flex items-center justify-center gap-2 h-12 min-w-[120px] ${
-        dark
+      className={`px-5 py-3 border rounded-lg text-xs md:text-sm font-bold font-sans whitespace-nowrap transition-colors flex items-center justify-center gap-2 h-12 min-w-[120px] ${dark
           ? "bg-slate-900 border-slate-800 text-slate-200 hover:border-gold/40"
           : "bg-white border-slate-200 text-slate-700 hover:border-gold/40"
-      }`}
+        }`}
     >
       {imgFailed ? (
         <span className="hover:text-[#e5a800] transition-colors">{brand}</span>
@@ -167,14 +160,12 @@ const LogoMarquee: React.FC<{
   return (
     <div className="relative overflow-hidden py-1">
       <div
-        className={`pointer-events-none absolute inset-y-0 left-0 w-14 z-10 bg-gradient-to-r ${
-          dark ? "from-slate-950" : "from-slate-50"
-        } to-transparent`}
+        className={`pointer-events-none absolute inset-y-0 left-0 w-14 z-10 bg-gradient-to-r ${dark ? "from-slate-950" : "from-slate-50"
+          } to-transparent`}
       />
       <div
-        className={`pointer-events-none absolute inset-y-0 right-0 w-14 z-10 bg-gradient-to-l ${
-          dark ? "from-slate-950" : "from-slate-50"
-        } to-transparent`}
+        className={`pointer-events-none absolute inset-y-0 right-0 w-14 z-10 bg-gradient-to-l ${dark ? "from-slate-950" : "from-slate-50"
+          } to-transparent`}
       />
 
       <div
@@ -225,16 +216,14 @@ const Companies: React.FC<{ dark?: boolean }> = ({ dark = false }) => {
             Post-Graduation Pathways
           </span> */}
           <h3
-            className={`text-2xl md:text-4xl font-black font-sans leading-tight ${
-              dark ? "text-white" : "text-gold"
-            }`}
+            className={`text-2xl md:text-4xl font-black font-sans leading-tight ${dark ? "text-white" : "text-gold"
+              }`}
           >
             What Happens After You Graduate?
           </h3>
           <p
-            className={`text-sm md:text-base leading-relaxed font-sans ${
-              dark ? "text-slate-300" : "text-slate-700"
-            }`}
+            className={`text-sm md:text-base leading-relaxed font-sans ${dark ? "text-slate-300" : "text-slate-700"
+              }`}
           >
             The reason Indian students choose Germany over other European
             countries isn't just the free education it's what comes after.
@@ -248,20 +237,35 @@ const Companies: React.FC<{ dark?: boolean }> = ({ dark = false }) => {
         </div>
 
         <div
-          className={`max-w-3xl mx-auto flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between rounded-xl border p-5 transition-all duration-300 hover:shadow-md ${
-            dark
-              ? "bg-amber-500/5 border-gold/15 hover:border-gold/30"
-              : "bg-amber-50/60 border-gold/20 hover:border-gold/40"
-          }`}
+          className={`relative max-w-3xl mx-auto flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between rounded-2xl border p-5 sm:p-6 overflow-hidden transition-all duration-500 hover:shadow-xl hover:-translate-y-0.5 ${dark
+              ? "bg-gradient-to-br from-amber-500/10 via-slate-900/40 to-amber-500/5 border-gold/20 hover:border-gold/40 shadow-lg shadow-black/20"
+              : "bg-gradient-to-br from-amber-50 via-white to-amber-50/40 border-gold/25 hover:border-gold/50 shadow-md shadow-amber-900/5"
+            }`}
         >
-          <div className="flex gap-3 items-start group">
-            <div className="p-1.5 rounded-full bg-gold/10 text-gold shrink-0 transition-transform duration-300 group-hover:scale-110">
+          {/* decorative accent bar */}
+          <div
+            className={`absolute left-0 top-0 h-full w-1 ${dark ? "bg-gradient-to-b from-gold/80 via-gold/40 to-transparent" : "bg-gradient-to-b from-gold via-gold/60 to-transparent"
+              }`}
+          />
+
+          {/* subtle glow accent in the corner */}
+          <div
+            className={`absolute -right-10 -top-10 w-32 h-32 rounded-full blur-3xl pointer-events-none ${dark ? "bg-gold/10" : "bg-gold/15"
+              }`}
+          />
+
+          <div className="relative flex gap-3.5 items-start group z-10">
+            <div
+              className={`p-2 rounded-full shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 ${dark
+                  ? "bg-gold/15 text-gold ring-1 ring-gold/20 shadow-[0_0_12px_rgba(212,175,55,0.25)]"
+                  : "bg-gold/15 text-gold ring-1 ring-gold/25 shadow-[0_0_12px_rgba(212,175,55,0.15)]"
+                }`}
+            >
               <ShieldCheck className="w-4 h-4" />
             </div>
             <div
-              className={`text-xs md:text-sm font-sans leading-relaxed ${
-                dark ? "text-slate-300" : "text-slate-700"
-              }`}
+              className={`text-xs md:text-sm font-sans leading-relaxed ${dark ? "text-slate-300" : "text-slate-700"
+                }`}
             >
               <strong className={dark ? "text-slate-100" : "text-slate-900"}>
                 Deliberate immigration shifts:
@@ -271,15 +275,17 @@ const Companies: React.FC<{ dark?: boolean }> = ({ dark = false }) => {
               widened on purpose.
             </div>
           </div>
+
           <button
-            className={`shrink-0 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide px-4 py-2 rounded-lg border transition-all duration-300 self-start sm:self-center group ${
-              dark
-                ? "border-gold/30 text-gold hover:bg-gold hover:text-slate-900 hover:border-gold"
-                : "border-gold/40 text-gold hover:bg-gold hover:text-white hover:border-gold"
-            }`}
+            className={`relative z-10 shrink-0 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide px-4 py-2.5 rounded-lg border transition-all duration-300 self-start sm:self-center group/btn bg-gold border-gold ${dark
+                ? "text-slate-900 hover:bg-transparent hover:text-gold hover:shadow-[0_0_18px_rgba(212,175,55,0.35)]"
+                : "text-white hover:bg-transparent hover:text-gold hover:shadow-[0_0_18px_rgba(212,175,55,0.25)]"
+              }`}
           >
-            Learn More
-            <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+            <span className="relative flex items-center gap-1.5">
+              Learn More
+              <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover/btn:translate-x-1" />
+            </span>
           </button>
         </div>
       </ScrollReveal>
@@ -289,20 +295,18 @@ const Companies: React.FC<{ dark?: boolean }> = ({ dark = false }) => {
       --------------------------------------------------------- */}
       <ScrollReveal variant="fadeUp" delay={0.1} className="space-y-3">
         <div
-          className={`p-6 md:p-8 rounded-2xl border shadow-premium space-y-6 transition-colors duration-300 ${
-            dark
+          className={`p-6 md:p-8 rounded-2xl border shadow-premium space-y-6 transition-colors duration-300 ${dark
               ? "border-slate-800 bg-slate-950/80"
               : "border-slate-200/50 bg-white"
-          }`}
+            }`}
         >
           <div className="text-center">
             <h4 className="font-bold text-navy uppercase tracking-widest text-[10px] mb-1">
               Global Employers
             </h4>
             <div
-              className={`text-lg md:text-xl font-bold ${
-                dark ? "text-slate-100" : "text-slate-900"
-              }`}
+              className={`text-lg md:text-xl font-bold ${dark ? "text-slate-100" : "text-slate-900"
+                }`}
             >
               Where EuroZiel Connected Students Work
             </div>

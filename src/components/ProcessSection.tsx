@@ -247,15 +247,15 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
 
                 <div className="flex flex-wrap items-center gap-4 mobile-m:gap-6 pt-6 text-xs font-sans">
                   <div className="text-slate-400">
-                    <span className="text-gold font-bold text-base">500+</span> Students Guided
+                    <span className="text-gold font-bold text-[20px] text-base">500+ </span> Students Guided
                   </div>
                   <div className="w-px h-4 bg-slate-700" />
                   <div className="text-slate-400">
-                    <span className="text-gold font-bold text-base">98%</span> Visa Success Rate
+                    <span className="text-gold font-bold text-[20px] text-base">98%</span> Visa Success Rate
                   </div>
                   <div className="w-px h-4 bg-slate-700" />
                   <div className="text-slate-400">
-                    <span className="text-gold font-bold text-base">50+</span> Partner Universities
+                    <span className="text-gold font-bold text-[20px] text-base">50+</span> Partner Universities
                   </div>
                 </div>
               </div>
