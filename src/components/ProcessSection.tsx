@@ -412,13 +412,13 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
 
                     <div className="relative p-8 h-full flex flex-col justify-between text-left">
                       <div className="flex justify-between items-center">
-                        <span className="text-[9px] font-mono tracking-widest text-gold uppercase font-bold bg-slate-950/40 px-2.5 py-1.5 rounded-sm border border-gold/20">
+                        <span className="text-[9px] font-sans tracking-widest text-gold uppercase font-bold bg-slate-950/40 px-2.5 py-1.5 rounded-sm border border-gold/20">
                           Fact Card 0{idx + 1}
                         </span>
                         <Lightbulb className="w-5 h-5 text-gold" />
                       </div>
 
-                      <div>
+                      <div className="space-y-4 mt-40">
                         <h4 className="font-bold text-xl text-white font-sans">{ins.title}</h4>
                         <p className="text-sm text-slate-200 mt-2 font-sans">{ins.short}</p>
                       </div>
@@ -437,7 +437,7 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
                   >
                     <div>
                       <div className="flex justify-between items-center mb-4">
-                        <span className="text-[9px] font-mono tracking-widest text-gold uppercase font-bold">
+                        <span className="text-[9px] font-sans tracking-widest text-gold uppercase font-bold">
                           {ins.title}
                         </span>
                         <Lightbulb className="w-5 h-5 text-gold" />

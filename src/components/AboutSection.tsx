@@ -91,9 +91,9 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
   return (
     <div className="space-y-28 md:space-y-40 pb-24 bg-transparent">
 
-      <section className="min-h-screen mb-0 max-w-5xl mx-auto px-4 space-y-20">
+      <section className="min-h-screen mb-16 max-w-5xl mx-auto px-4 space-y-20">
         {/* ===== HERO — COLORFUL & ATTRACTIVE ===== */}
-        <section className="max-w-5xl mb-20 pt-20 mx-auto px-4 text-left relative">
+        <section className="max-w-5xl mb-10 pt-20 mx-auto px-4 text-left relative">
           {/* soft color blobs behind hero */}
           <div className="absolute -top-10 -left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute top-10 right-0 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -123,7 +123,7 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
               <div className="flex flex-wrap items-center gap-4 pt-4">
                 <button
                   onClick={onOpenConsultation}
-                  className="group inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-white bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-3 rounded-full hover:shadow-lg hover:shadow-blue-500/25 transition-all"
+                  className="px-6 mobile-m:px-8 laptop:px-8 4k:px-10 py-3 mobile-m:py-4 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm tracking-widest uppercase cursor-pointer transition-all duration-300 bg-navy text-white hover:bg-opacity-90 text-center shadow-premium border-b-2 border-gold font-sans flex items-center justify-center gap-2 transform hover:-translate-y-0.5 active:translate-y-0"
                 >
                   Book a Free Consultation
                   <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -137,9 +137,9 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
         </section>
 
         {/* ===== STATS ROW — COLOR-CODED BLOCKS ===== */}
-        <section className="max-w-5xl mx-auto px-4">
+        <section className="max-w-3xl mx-auto px-4">
           <ScrollReveal variant="fadeUp">
-            <div className="grid grid-cols-2 h-[300px] gap-5">
+            <div className="grid grid-cols-2 gap-5 ">
               {stats.map((s, i) => (
                 <div
                   key={i}
@@ -360,25 +360,24 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
       </section>
 
       {/* ===== CLOSING CTA — VIBRANT GRADIENT BANNER ===== */}
-      <section className="max-w-5xl mx-auto px-4">
+      <section className="max-w-3xl mx-auto px-4 mb-12 md:mb-30 text-center">
         <ScrollReveal variant="scaleUp">
-          <div className="relative overflow-hidden text-center py-16 px-6 rounded-3xl bg-gradient-to-br from-blue-500/10 via-amber-500/10 to-emerald-500/10 space-y-5">
-            <div className="absolute -top-8 -right-8 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-8 -left-8 w-40 h-40 bg-amber-500/20 rounded-full blur-3xl pointer-events-none" />
-
-            <div className="relative z-10 space-y-5">
-              <div className="w-12 h-12 rounded-full bg-white/60 dark:bg-slate-900/60 flex items-center justify-center mx-auto shadow-sm">
-                <HelpCircle className="w-6 h-6 text-gold" />
-              </div>
-              <h3 className={`text-2xl md:text-3xl font-bold font-serif italic ${dark ? 'text-white' : 'text-slate-900'}`}>
-                Still deciding if EuroZiel is right for you?
-              </h3>
-              <p className={`text-xs md:text-sm max-w-xl mx-auto font-sans ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
-                Talk to us directly. No sales pitch, no pressure just an honest evaluation of your profile.
-              </p>
+          <div className={`p-8 md:p-12 rounded-sm border shadow-premium space-y-5 md:space-y-6 border-b-4 border-b-gold ${dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200 bg-white'
+            }`}>
+            <div className={`w-10 h-10 md:w-12 md:h-12 rounded-sm border flex items-center justify-center mx-auto ${dark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
+              }`}>
+              <HelpCircle className="w-5 h-5 md:w-6 md:h-6 text-gold" />
+            </div>
+            <h3 className={`text-xl md:text-2xl font-bold font-sans leading-tight ${dark ? 'text-white' : 'text-slate-900'}`}>
+              Still Deciding If EuroZiel Is Right for You?
+            </h3>
+            <p className={`text-xs max-w-md mx-auto leading-relaxed ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
+              Talk to us directly. No sales pitch, no pressure — just an honest evaluation of your profile.
+            </p>
+            <div>
               <button
                 onClick={onOpenConsultation}
-                className="group inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-white bg-gradient-to-r from-blue-500 to-amber-500 px-6 py-3 rounded-full hover:shadow-lg hover:shadow-blue-500/20 transition-all"
+                className="group inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-sm font-bold text-xs uppercase tracking-widest bg-navy hover:bg-opacity-90 text-white border-b-2 border-gold transition-all cursor-pointer shadow-premium w-full sm:w-auto"
               >
                 Talk to a Counselor
                 <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -387,7 +386,6 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
           </div>
         </ScrollReveal>
       </section>
-
     </div>
   );
 }
