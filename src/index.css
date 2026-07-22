@@ -39,9 +39,12 @@
   /* Hide scrollbars for Firefox */
   scrollbar-width: none;
 
-  cursor: none !important;
+  cursor: none;
 }
 
+#contact-modal *, #contact-modal2 * {
+  cursor: auto; /* Allow cursor to be visible inside modals */
+}
 
 /* Custom Base Styles */
 @layer base {

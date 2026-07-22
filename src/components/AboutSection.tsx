@@ -91,69 +91,71 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
   return (
     <div className="space-y-28 md:space-y-40 pb-24 bg-transparent">
 
-      {/* ===== HERO — COLORFUL & ATTRACTIVE ===== */}
-      <section className="max-w-5xl pt-20 mx-auto px-4 text-left relative">
-        {/* soft color blobs behind hero */}
-        <div className="absolute -top-10 -left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute top-10 right-0 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-1/3 w-56 h-56 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+      <section className="min-h-screen mb-0 max-w-5xl mx-auto px-4 space-y-20">
+        {/* ===== HERO — COLORFUL & ATTRACTIVE ===== */}
+        <section className="max-w-5xl mb-20 pt-20 mx-auto px-4 text-left relative">
+          {/* soft color blobs behind hero */}
+          <div className="absolute -top-10 -left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-10 right-0 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-1/3 w-56 h-56 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
-        <ScrollReveal variant="blurIn">
-          <div className="relative z-10 space-y-6">
-            <div className="flex items-center gap-3">
-              {/* <span className="text-[10px] font-bold uppercase tracking-[0.3em] px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-500 to-amber-500 text-white inline-flex items-center gap-1.5 shadow-sm">
+          <ScrollReveal variant="blurIn">
+            <div className="relative z-10 space-y-6">
+              <div className="flex items-center gap-3">
+                {/* <span className="text-[10px] font-bold uppercase tracking-[0.3em] px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-500 to-amber-500 text-white inline-flex items-center gap-1.5 shadow-sm">
                 <Sparkles className="w-3 h-3" />
                 About EuroZiel
               </span> */}
-            </div>
-
-            <h1 className={`text-4xl md:text-6xl font-bold font-sans leading-[1.05] tracking-tight ${dark ? 'text-white' : 'text-slate-900'}`}>
-              We're not a consultancy
-              <br />
-              that read about{" "}
-              <span className="bg-gradient-to-r from-blue-500 via-amber-500 to-emerald-500 bg-clip-text text-transparent">
-                Germany.
-              </span>
-            </h1>
-            <p className={`text-xl md:text-2xl font-serif italic max-w-2xl ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
-              We're connected to people living it, right now.
-            </p>
-
-            <div className="flex flex-wrap items-center gap-4 pt-4">
-              <button
-                onClick={onOpenConsultation}
-                className="group inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-white bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-3 rounded-full hover:shadow-lg hover:shadow-blue-500/25 transition-all"
-              >
-                Book a Free Consultation
-                <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </button>
-              <span className={`text-[11px] font-sans ${dark ? 'text-slate-500' : 'text-slate-400'}`}>
-                No pressure. No sales pitch. Just honest guidance.
-              </span>
-            </div>
-          </div>
-        </ScrollReveal>
-      </section>
-
-      {/* ===== STATS ROW — COLOR-CODED BLOCKS ===== */}
-      <section className="max-w-5xl mx-auto px-4">
-        <ScrollReveal variant="fadeUp">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {stats.map((s, i) => (
-              <div
-                key={i}
-                className={`py-6 px-4 rounded-2xl text-center md:text-left ${s.bg} transition-transform hover:-translate-y-1`}
-              >
-                <div className={`text-2xl md:text-3xl font-bold font-serif ${s.color}`}>
-                  {s.value}
-                </div>
-                <div className={`text-[10px] uppercase tracking-widest font-bold mt-1 ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
-                  {s.label}
-                </div>
               </div>
-            ))}
-          </div>
-        </ScrollReveal>
+
+              <h1 className={`text-4xl md:text-6xl font-bold font-sans leading-[1.05] tracking-tight ${dark ? 'text-white' : 'text-slate-900'}`}>
+                We're not a consultancy
+                <br />
+                that read about{" "}
+                <span className="bg-gradient-to-r from-blue-500 via-amber-500 to-emerald-500 bg-clip-text text-transparent">
+                  Germany.
+                </span>
+              </h1>
+              <p className={`text-xl md:text-2xl font-serif italic max-w-2xl ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
+                We're connected to people living it, right now.
+              </p>
+
+              <div className="flex flex-wrap items-center gap-4 pt-4">
+                <button
+                  onClick={onOpenConsultation}
+                  className="group inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-white bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-3 rounded-full hover:shadow-lg hover:shadow-blue-500/25 transition-all"
+                >
+                  Book a Free Consultation
+                  <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </button>
+                <span className={`text-[11px] font-sans ${dark ? 'text-slate-500' : 'text-slate-400'}`}>
+                  No pressure. No sales pitch. Just honest guidance.
+                </span>
+              </div>
+            </div>
+          </ScrollReveal>
+        </section>
+
+        {/* ===== STATS ROW — COLOR-CODED BLOCKS ===== */}
+        <section className="max-w-5xl mx-auto px-4">
+          <ScrollReveal variant="fadeUp">
+            <div className="grid grid-cols-2 h-[300px] gap-5">
+              {stats.map((s, i) => (
+                <div
+                  key={i}
+                  className={`flex flex-col items-center justify-center py-6 px-4 rounded-2xl text-center md:text-left ${s.bg} transition-transform hover:-translate-y-1`}
+                >
+                  <div className={`text-2xl md:text-5xl font-bold font-serif ${s.color}`}>
+                    {s.value}
+                  </div>
+                  <div className={`text-[10px] uppercase tracking-widest font-bold mt-1 ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
+                    {s.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </ScrollReveal>
+        </section>
       </section>
 
       {/* ===== OUR STORY — FLOWING TEXT WITH COLOR ACCENTS ===== */}
@@ -251,8 +253,8 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
                   />
                   <div
                     className={`absolute inset-0 ${f.accent === 'navy'
-                        ? 'bg-gradient-to-t from-navy/70 via-navy/10 to-transparent'
-                        : 'bg-gradient-to-t from-slate-950/70 via-slate-950/10 to-transparent'
+                      ? 'bg-gradient-to-t from-navy/70 via-navy/10 to-transparent'
+                      : 'bg-gradient-to-t from-slate-950/70 via-slate-950/10 to-transparent'
                       }`}
                   />
                   <div

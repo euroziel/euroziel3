@@ -153,10 +153,12 @@ export default function App() {
           onOpenConsultation={() => setIsConsultationOpen(true)}
         />
 
+        <CanvasPlaneCursor />
+
         <ContactModal isOpen={isConsultationOpen} onClose={handleCloseModal1} theme={theme} />
         <ContactModal2 isOpen={isConsultation2Open} onClose={handleCloseModal2} theme={theme} />
 
-        <CanvasPlaneCursor />
+        
 
         {showScrollTop && (
           <button

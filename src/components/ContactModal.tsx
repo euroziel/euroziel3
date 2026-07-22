@@ -145,7 +145,7 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
     <AnimatePresence>
       {isOpen && (
         /* CRITICAL FIX: Escalated to z-[9999] and forced internal overflow management on layout wrappers */
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 overflow-y-auto overflow-x-hidden">
+        <div id="contact-modal" className="fixed inset-0 z-[9999] flex items-center justify-center p-4 overflow-y-auto overflow-x-hidden">
           
           {/* Backdrop */}
           <motion.div
