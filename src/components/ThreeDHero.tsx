@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 import { Sparkles, Calendar, GraduationCap, ChevronRight, CheckCircle } from 'lucide-react';
-import { FaInstagram, FaLinkedin, FaYoutube, FaWhatsapp, FaEnvelope } from 'react-icons/fa';
+import { FaInstagram, FaLinkedin, FaYoutube, FaWhatsapp, FaEnvelope, FaFacebook } from 'react-icons/fa';
 import { animate } from "framer-motion";
 
 interface ThreeDHeroProps {
@@ -214,7 +214,8 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
                 { href: 'mailto:info@euroziel.com?subject=I%20want%20to%20know%20about%20your%20services&body=Hello%2C%20I%20want%20to%20know%20about%20your%20services.', label: 'Email', Icon: FaEnvelope, color: '#EA4335', glow: 'rgba(234,67,53,0.5)' },
                 { href: 'https://www.youtube.com/channel/UC_X0Q9J4444', label: 'YouTube', Icon: FaYoutube, color: '#FF0000', glow: 'rgba(255,0,0,0.5)' },
                 { href: 'https://www.instagram.com/euro_ziel/', label: 'Instagram', Icon: FaInstagram, color: '#E4405F', glow: 'rgba(228,64,95,0.5)' },
-                { href: 'https://www.linkedin.com/company/euroziel/', label: 'LinkedIn', Icon: FaLinkedin, color: '#0A66C2', glow: 'rgba(10,102,194,0.5)' },
+                { href: 'https://www.linkedin.com/company/euroziel-consultancy/', label: 'LinkedIn', Icon: FaLinkedin, color: '#0A66C2', glow: 'rgba(10,102,194,0.5)' },
+                { href: 'https://www.facebook.com/EuroZiel/', label: 'Facebook', Icon: FaFacebook, color: '#1877F2', glow: 'rgba(24,119,242,0.5)' },
               ].map(({ href, label, Icon, color, glow }) => (
                 <a
                   key={label}
