@@ -203,7 +203,7 @@ function StepCard({ step, dir, dark }: { step: Step; dir: number; dark: boolean 
           {step.number}
         </span>
 
-        <div className="relative h-full flex flex-col justify-center gap-3 mobile-m:gap-5 px-5 py-6 mobile-m:px-10 mobile-m:py-10 laptop:px-16 laptop:py-14 max-w-2xl overflow-y-auto">
+        <div className="relative h-full flex flex-col justify-center gap-3 mobile-m:gap-5 px-5 py-6 mobile-m:px-10 mobile-m:py-10 laptop:px-16 laptop:py-14 max-w-2xl overflow-y-hidden mobile-m:overflow-y-auto">
           {/* eyebrow */}
           <div className="flex items-center gap-2.5 mobile-m:gap-3">
             <div

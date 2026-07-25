@@ -257,12 +257,12 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
                       : 'bg-gradient-to-t from-slate-950/70 via-slate-950/10 to-transparent'
                       }`}
                   />
-                  <div
+                  {/* <div
                     className={`absolute top-4 ${idx % 2 === 0 ? 'left-4' : 'right-4'} w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-bold font-mono ${f.accent === 'navy' ? 'bg-navy' : 'bg-gold'
                       }`}
                   >
                     {String(idx + 1).padStart(2, '0')}
-                  </div>
+                  </div> */}
                 </div>
 
                 {/* CONTENT SIDE */}

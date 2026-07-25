@@ -277,15 +277,15 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
 
               <div className="flex flex-wrap items-center justify-center gap-8 pt-6 text-xs font-sans">
                 <div className={dark ? 'text-slate-400' : 'text-slate-500'}>
-                  <span className="text-gold font-bold text-[30px] text-base">500+ </span> Students Guided
+                  <span className="text-gold font-bold laptop:text-[30px] text-base">500+ </span> Students Guided
                 </div>
                 <div className={`w-px h-4 ${dark ? 'bg-slate-700' : 'bg-slate-300'}`} />
                 <div className={dark ? 'text-slate-400' : 'text-slate-500'}>
-                  <span className="text-gold font-bold text-[30px] text-base">98%</span> Visa Success Rate
+                  <span className="text-gold font-bold laptop:text-[30px] text-base">98%</span> Visa Success Rate
                 </div>
                 <div className={`w-px h-4 ${dark ? 'bg-slate-700' : 'bg-slate-300'}`} />
                 <div className={dark ? 'text-slate-400' : 'text-slate-500'}>
-                  <span className="text-gold font-bold text-[30px] text-base">50+</span> Partner Universities
+                  <span className="text-gold font-bold laptop:text-[30px] text-base">50+</span> Partner Universities
                 </div>
               </div>
             </div>

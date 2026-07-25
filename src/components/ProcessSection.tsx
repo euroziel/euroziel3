@@ -409,7 +409,6 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
                       style={{ backgroundImage: `url(${ins.image})` }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/50 to-slate-950/20" />
-
                     <div className="relative p-8 h-full flex flex-col justify-between text-left">
                       <div className="flex justify-between items-center">
                         <span className="text-[9px] font-sans tracking-widest text-gold uppercase font-bold bg-slate-950/40 px-2.5 py-1.5 rounded-sm border border-gold/20">
