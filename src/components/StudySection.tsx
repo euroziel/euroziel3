@@ -622,8 +622,15 @@ function HeroReveal({ onOpenConsultation, onNavigateToTab , theme }: HeroRevealP
   }, []);
 
   return (
-    <section className="relative h-screen overflow-hidden">
-
+    <section
+      className="relative w-full overflow-hidden
+        min-h-[100svh]
+        mobile-l:min-h-[600px]
+        tablet:min-h-[700px]
+        laptop:min-h-[750px]
+        laptop-l:min-h-[820px]
+        4k:min-h-[1100px]"
+    >
       {/* Sky */}
       <div
         className="absolute inset-0 z-0"
@@ -654,23 +661,64 @@ function HeroReveal({ onOpenConsultation, onNavigateToTab , theme }: HeroRevealP
         <img
           src="/assets/university1.png"
           alt=""
-          className="w-full h-full object-fill"
+          className="w-full h-full object-cover object-center"
+          loading="eager"
         />
-
         <div className="absolute inset-0 bg-[#061628]/35" />
       </div>
 
       {/* Study Banner */}
-      <div className="relative z-30 flex items-center h-full">
-        <div className="max-w-screen px-6 md:px-12 lg:px-20">
-
-          <div className="flex items-center">
+      <div
+        className="relative z-30 flex flex-col justify-center
+          min-h-[100svh]
+          mobile-l:min-h-[600px]
+          tablet:min-h-[700px]
+          laptop:min-h-[750px] laptop:justify-center
+          laptop-l:min-h-[820px]
+          4k:min-h-[1100px]
+          py-10
+          mobile-l:py-12
+          tablet:py-16
+          laptop:py-0"
+      >
+        <div
+          className="w-full max-w-7xl mx-auto
+            px-4
+            mobile-m:px-5
+            mobile-l:px-6
+            tablet:px-10
+            laptop:px-16
+            laptop-l:px-20
+            4k:px-32"
+        >
+          <div
+            className="grid grid-cols-1
+              gap-6
+              mobile-l:gap-8
+              tablet:gap-10
+              laptop:grid-cols-2 laptop:gap-12 laptop:items-center
+              4k:gap-16"
+          >
+            {/* Left Side: Headline */}
             <div>
-              <span className="inline-flex items-center px-4 py-2 rounded-full border border-[#0f4c8f]/40 bg-[#0f4c8f]/10 text-[#f59e0b] text-xs font-semibold uppercase tracking-[0.25em] mb-6">
+              <span
+                className="inline-flex items-center rounded-full border border-[#0f4c8f]/40 bg-[#0f4c8f]/10 text-[#f59e0b] font-semibold uppercase
+                  px-3 py-1.5 text-[10px] tracking-[0.15em] mb-3
+                  mobile-l:px-4 mobile-l:py-2 mobile-l:text-xs mobile-l:tracking-[0.2em] mobile-l:mb-6"
+              >
                 🇩🇪 Study in Germany
               </span>
 
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-tight text-white">
+              <h1
+                className="font-black leading-tight text-white
+                  text-3xl
+                  mobile-m:text-4xl
+                  mobile-l:text-4xl
+                  tablet:text-5xl
+                  laptop:text-6xl
+                  laptop-l:text-7xl
+                  4k:text-8xl"
+              >
                 Build Your Future
                 <br />
                 <span className="text-[#0f4c8f]">
@@ -679,36 +727,57 @@ function HeroReveal({ onOpenConsultation, onNavigateToTab , theme }: HeroRevealP
               </h1>
             </div>
 
-            <div>
-              <p className="mt-6 max-w-2xl text-base md:text-xl leading-relaxed text-slate-300">
+            {/* Right Side: Paragraph & Actions */}
+            <div className="mt-4 laptop:mt-0">
+              <p
+                className="max-w-2xl leading-relaxed text-slate-300
+                  text-sm
+                  mobile-l:text-base
+                  tablet:text-lg
+                  laptop:text-xl"
+              >
                 From university shortlisting and APS certification to visa guidance,
                 accommodation, and settling in Germany—we support you at every stage
                 of your journey with transparent, personalized guidance.
               </p>
-              <div className="mt-10 flex flex-wrap gap-4">
 
+              <div
+                className="flex flex-wrap gap-3 mt-6
+                  mobile-l:gap-4
+                  laptop:mt-10"
+              >
                 <button
                   onClick={onOpenConsultation}
-                  className="px-8 py-4 rounded-full bg-[#f59e0b] text-black font-semibold hover:scale-105 transition"
+                  className="w-full rounded-full bg-[#f59e0b] text-black font-semibold hover:scale-105 transition shadow-lg
+                    px-6 py-3 text-sm
+                    mobile-l:px-7 mobile-l:py-3.5
+                    tablet:w-auto tablet:px-8 tablet:py-4 tablet:text-base"
                 >
                   Book Free Consultation
                 </button>
 
                 <button
                   onClick={() => onNavigateToTab('services')}
-                  className="px-8 py-4 rounded-full border border-white/20 bg-white/10 text-white hover:bg-white/20 transition"
+                  className="w-full rounded-full border border-white/30 bg-white/15 text-white hover:bg-white/25 transition
+                    px-6 py-3 text-sm
+                    mobile-l:px-7 mobile-l:py-3.5
+                    tablet:w-auto tablet:px-8 tablet:py-4 tablet:text-base"
                 >
                   Explore Services
                 </button>
-
               </div>
             </div>
-
           </div>
 
-
-          <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
-
+          {/* Stats Grid */}
+          <div
+            className="grid gap-3 mt-8
+              grid-cols-2
+              mobile-l:gap-4
+              tablet:mt-12 tablet:grid-cols-4
+              laptop:mt-16
+              4k:gap-6 4k:mt-24"
+          >
             {[
               { value: "400K+", label: "International Students" },
               { value: "€0", label: "Public University Tuition" },
@@ -717,46 +786,48 @@ function HeroReveal({ onOpenConsultation, onNavigateToTab , theme }: HeroRevealP
             ].map((item) => (
               <div
                 key={item.label}
-                className="rounded-xl border border-white/10 bg-black/30 backdrop-blur-md p-4"
+                className="rounded-xl border border-white/10 bg-black/40 backdrop-blur-md
+                  p-3
+                  mobile-l:p-4
+                  4k:p-6"
               >
-                <div className="text-2xl font-bold text-[#0f4c8f]">
+                <div
+                  className="font-bold text-[#0f4c8f]
+                    text-lg
+                    mobile-l:text-xl
+                    tablet:text-2xl
+                    4k:text-3xl"
+                >
                   {item.value}
                 </div>
 
-                <div className="mt-1 text-xs uppercase tracking-wider text-slate-300">
+                <div
+                  className="uppercase tracking-wider text-slate-300 mt-1
+                    text-[9px]
+                    mobile-l:text-[10px]
+                    tablet:text-xs
+                    4k:text-sm"
+                >
                   {item.label}
                 </div>
               </div>
             ))}
-
           </div>
-
         </div>
       </div>
-      {/* <div
-        className="relative z-30 flex items-center justify-center h-full"
-        style={{
-          opacity: mounted ? 1 : 0,
-          transform: mounted ? "scale(1)" : "scale(1.03)",
-          transition: "all .8s ease",
-        }}
-      >
-        <img
-          src="/assets/studyin.png"
-          alt="Study in Germany"
-          className="w-full max-w-7xl object-contain px-4"
-        />
-      </div> */}
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center opacity-60">
-        <span className="text-[10px] uppercase tracking-[0.3em] text-white">
+      <div
+        className="absolute bottom-4 left-1/2 -translate-x-1/2 z-40 flex-col items-center opacity-60 pointer-events-none
+          hidden
+          tablet:flex
+          laptop:bottom-8"
+      >
+        <span className="uppercase text-white text-[9px] tracking-[0.3em] mobile-l:text-[10px]">
           Scroll
         </span>
-
-        <span className="animate-bounce text-xl text-white">↓</span>
+        <span className="animate-bounce text-white mt-1 text-lg laptop:text-xl">↓</span>
       </div>
-
     </section>
   );
 }

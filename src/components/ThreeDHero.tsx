@@ -67,7 +67,7 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
         ref={containerRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className={`sticky top-[80px] lg:h-[calc(100vh-80px)] h-auto overflow-hidden pt-6 pb-6 mobile-m:pt-8 mobile-m:pb-8 mobile-l:pt-10 mobile-l:pb-10 tablet:pt-5 tablet:pb-5 laptop:pt-12 laptop:pb-12 laptop-l:pt-16 laptop-l:pb-16 4k:pt-24 4k:pb-24 px-4 mobile-m:px-5 mobile-l:px-6 tablet:px-6 laptop:px-8 laptop-l:px-12 4k:px-20 select-none lg:flex lg:items-center lg:justify-center z-40 ${isDark ? 'bg-transparent' : 'bg-transparent'
+        className={`sticky lg:h-[calc(100vh-80px)] h-auto overflow-hidden pt-6 pb-6 mobile-m:pt-8 mobile-m:pb-8 mobile-l:pt-10 mobile-l:pb-10 tablet:pt-5 tablet:pb-5 laptop:pt-12 laptop:pb-12 laptop-l:pt-16 laptop-l:pb-16 4k:pt-24 4k:pb-24 px-4 mobile-m:px-5 mobile-l:px-6 tablet:px-6 laptop:px-8 laptop-l:px-12 4k:px-20 select-none lg:flex lg:items-center lg:justify-center z-40 ${isDark ? 'bg-transparent' : 'bg-transparent'
           }`}
       >
         {/* Decorative Grid Gradients */}
@@ -83,7 +83,7 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
         <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 mobile-l:gap-10 laptop:gap-12 4k:gap-20 items-center relative z-10">
 
           {/* Left Column */}
-          <div className="lg:col-span-8 space-y-4 mobile-m:space-y-5 laptop:space-y-6 4k:space-y-8 text-left">
+          <div className="mobile-s:mt-14 mobile-m:mt-14 mobile-l:mt-14 tablet:mt-20 lg:col-span-8 space-y-4 mobile-m:space-y-5 laptop:space-y-6 4k:space-y-8 text-left">
 
             {/* Badge */}
             {/* <motion.div
