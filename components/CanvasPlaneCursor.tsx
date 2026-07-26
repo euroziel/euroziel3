@@ -219,7 +219,7 @@ export const CanvasPlaneCursor: React.FC = () => {
 
   return (
     <>
-      <canvas ref={canvasRef} className="pointer-events-none fixed inset-0" id="canvas" />
+      <canvas ref={canvasRef} className="hidden md:block pointer-events-none fixed inset-0" id="canvas" />
       <div
         ref={planeRef}
         style={{
@@ -235,7 +235,7 @@ export const CanvasPlaneCursor: React.FC = () => {
           willChange: 'transform',
         }}
       >
-        <svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" strokeWidth="2">
+        <svg className='hidden md:block' viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M21 16V14l-8-5V3c0-.6-.4-1-1-1s-1 .4-1 1v6L3 14v2l8-2.5V19l-2 1.5V22l3-1 3 1v-1.5L13 19v-5.5l8 2.5z" />
         </svg>
       </div>

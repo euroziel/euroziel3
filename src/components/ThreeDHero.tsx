@@ -62,7 +62,7 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
   const successRate = useCountUp(98, 0, 2); // Count up from 0 to 98 over 2 seconds
 
   return (
-    <div className="sticky lg:h-[200vh] h-auto">
+    <div className="sticky lg:h-[100vh] h-auto">
       <section
         ref={containerRef}
         onMouseMove={handleMouseMove}

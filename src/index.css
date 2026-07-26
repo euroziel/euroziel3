@@ -42,7 +42,7 @@
   cursor: none;
 }
 
-#contact-modal *, #contact-modal2 * {
+#contact-modal *, #contact-modal2 *, #navbar * {
   cursor: auto; /* Allow cursor to be visible inside modals */
 }
 

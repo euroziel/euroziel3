@@ -161,7 +161,7 @@ export default function StudySection({
         "not load". Replaced with a simple mount-triggered fade/scale-in
         using plain state, so it always plays regardless of scroll.
       */}
-      <HeroReveal />
+      <HeroReveal onOpenConsultation={onOpenConsultation} theme={theme} />
 
       {/* STATISTICS SECTION */}
 
@@ -191,8 +191,8 @@ export default function StudySection({
       {/* SEMESTER CALENDAR & URGENCY */}
       <section
         className={`relative py-16 md:py-24 px-4 overflow-hidden ${dark
-            ? "bg-[#050b14]"
-            : "bg-slate-50"
+          ? "bg-[#050b14]"
+          : "bg-slate-50"
           }`}
       >
         {/* ambient section-wide glow so it doesn't feel like a flat block */}
@@ -495,41 +495,264 @@ export default function StudySection({
 // "not in view -> in view" transition that ScrollReveal depends on.
 // ------------------------------------------------------------------
 
-function HeroReveal() {
+// function HeroReveal() {
+//   const [mounted, setMounted] = useState(false);
+
+//   useEffect(() => {
+//     // Trigger on next frame so the initial (hidden) state actually
+//     // paints first, then transitions in — avoids a "pop" with no animation.
+//     const raf = requestAnimationFrame(() => setMounted(true));
+//     return () => cancelAnimationFrame(raf);
+//   }, []);
+
+//   return (
+//     <section className="w-full text-left">
+//       <div
+//         className="relative w-full bg-transparent overflow-hidden shadow-premium
+//           h-[60vh] min-h-[320px]
+//           sm:h-[65vh] sm:min-h-[380px]
+//           md:h-[75vh] md:min-h-[450px]
+//           lg:h-[85vh]
+//           xl:h-[90vh]
+//           transition-all duration-700 ease-out"
+//         style={{
+//           opacity: mounted ? 1 : 0,
+//           transform: mounted ? "scale(1)" : "scale(1.03)",
+//         }}
+//       >
+//         <img
+//           src="/assets/studyin.png"
+//           alt="Study in Germany & Europe"
+//           className="absolute inset-0 w-full h-[100vh] object-contain"
+//           loading="lazy"
+//         />
+
+//         {/* Optional subtle overlay for text/logo legibility if you ever add content on top */}
+//         <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent pointer-events-none" />
+//       </div>
+//     </section>
+//   );
+// }
+
+interface HeroRevealProps {
+  onOpenConsultation: () => void;
+  theme: "light" | "dark";
+}
+
+function HeroReveal({ onOpenConsultation, theme }: HeroRevealProps) {
   const [mounted, setMounted] = useState(false);
 
+  const birdsRef = useRef<HTMLDivElement>(null);
+  const birdsEffect = useRef<any>(null);
+
   useEffect(() => {
-    // Trigger on next frame so the initial (hidden) state actually
-    // paints first, then transitions in — avoids a "pop" with no animation.
-    const raf = requestAnimationFrame(() => setMounted(true));
-    return () => cancelAnimationFrame(raf);
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    const loadScript = (src: string) =>
+      new Promise<void>((resolve, reject) => {
+        if (document.querySelector(`script[src="${src}"]`)) {
+          resolve();
+          return;
+        }
+
+        const s = document.createElement("script");
+        s.src = src;
+        s.onload = () => resolve();
+        s.onerror = () => reject();
+        document.head.appendChild(s);
+      });
+
+    async function init() {
+      try {
+        await loadScript(
+          "https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"
+        );
+
+        await loadScript(
+          "https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.birds.min.js"
+        );
+
+        if (!(window as any).VANTA || !birdsRef.current) return;
+
+        birdsEffect.current = (window as any).VANTA.BIRDS({
+          el: birdsRef.current,
+
+          mouseControls: false,
+          touchControls: false,
+          gyroControls: false,
+
+          minHeight: 50,
+          minWidth: 50,
+
+          scale: 0.75,
+          scaleMobile: 0.75,
+
+          backgroundColor: 0x000000,
+          backgroundAlpha: 0,
+
+          color1: 0x4a90d9,
+          color2: 0xffd97d,
+          colorMode: "varianceGradient",
+
+          speedLimit: 2.5,
+          quantity: 3,
+
+          birdSize: 1,
+          wingSpan: 10,
+
+          separation: 40,
+          alignment: 50,
+          cohesion: 50,
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    init();
+
+    return () => {
+      birdsEffect.current?.destroy();
+    };
   }, []);
 
   return (
-    <section className="w-full text-left">
+    <section className="relative h-screen overflow-hidden">
+
+      {/* Sky */}
       <div
-        className="relative w-full bg-transparent overflow-hidden shadow-premium
-          h-[60vh] min-h-[320px]
-          sm:h-[65vh] sm:min-h-[380px]
-          md:h-[75vh] md:min-h-[450px]
-          lg:h-[85vh]
-          xl:h-[90vh]
-          transition-all duration-700 ease-out"
+        className="absolute inset-0 z-0"
+        style={{
+          background:
+            "linear-gradient(to bottom,#0b1323 0%,#0d2540 40%,#0f3060 70%,#0f4c8f 100%)",
+        }}
+      />
+
+      {/* Birds */}
+      <div
+        ref={birdsRef}
+        className="absolute inset-0 z-[2] pointer-events-none"
+      />
+
+      {/* Bottom Gradient */}
+      <div
+        className="absolute inset-x-0 bottom-0 z-10 pointer-events-none"
+        style={{
+          height: "55%",
+          background:
+            "linear-gradient(to top, rgba(6,22,40,.95) 0%, rgba(6,22,40,.5) 55%, transparent 100%)",
+        }}
+      />
+
+      {/* University */}
+      <div className="absolute inset-0 z-20 pointer-events-none">
+        <img
+          src="/assets/university1.png"
+          alt=""
+          className="w-full h-full object-fill"
+        />
+
+        <div className="absolute inset-0 bg-[#061628]/35" />
+      </div>
+
+      {/* Study Banner */}
+      <div className="relative z-30 flex items-center h-full">
+        <div className="max-w-screen px-6 md:px-12 lg:px-20">
+
+          <div className="flex items-center">
+            <div>
+              <span className="inline-flex items-center px-4 py-2 rounded-full border border-[#0f4c8f]/40 bg-[#0f4c8f]/10 text-[#f59e0b] text-xs font-semibold uppercase tracking-[0.25em] mb-6">
+                🇩🇪 Study in Germany
+              </span>
+
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-tight text-white">
+                Build Your Future
+                <br />
+                <span className="text-[#0f4c8f]">
+                  at Germany's Top Universities.
+                </span>
+              </h1>
+            </div>
+
+            <div>
+              <p className="mt-6 max-w-2xl text-base md:text-xl leading-relaxed text-slate-300">
+                From university shortlisting and APS certification to visa guidance,
+                accommodation, and settling in Germany—we support you at every stage
+                of your journey with transparent, personalized guidance.
+              </p>
+              <div className="mt-10 flex flex-wrap gap-4">
+
+                <button
+                  onClick={onOpenConsultation}
+                  className="px-8 py-4 rounded-full bg-[#f59e0b] text-black font-semibold hover:scale-105 transition"
+                >
+                  Book Free Consultation
+                </button>
+
+                <button
+                  className="px-8 py-4 rounded-full border border-white/20 bg-white/10 text-white hover:bg-white/20 transition"
+                >
+                  Explore Universities
+                </button>
+
+              </div>
+            </div>
+
+          </div>
+
+
+          <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+
+            {[
+              { value: "400K+", label: "International Students" },
+              { value: "€0", label: "Public University Tuition" },
+              { value: "98%", label: "Visa Success Guidance" },
+              { value: "24/7", label: "Student Support" },
+            ].map((item) => (
+              <div
+                key={item.label}
+                className="rounded-xl border border-white/10 bg-black/30 backdrop-blur-md p-4"
+              >
+                <div className="text-2xl font-bold text-[#0f4c8f]">
+                  {item.value}
+                </div>
+
+                <div className="mt-1 text-xs uppercase tracking-wider text-slate-300">
+                  {item.label}
+                </div>
+              </div>
+            ))}
+
+          </div>
+
+        </div>
+      </div>
+      {/* <div
+        className="relative z-30 flex items-center justify-center h-full"
         style={{
           opacity: mounted ? 1 : 0,
           transform: mounted ? "scale(1)" : "scale(1.03)",
+          transition: "all .8s ease",
         }}
       >
         <img
           src="/assets/studyin.png"
-          alt="Study in Germany & Europe"
-          className="absolute inset-0 w-full h-[100vh] object-contain"
-          loading="lazy"
+          alt="Study in Germany"
+          className="w-full max-w-7xl object-contain px-4"
         />
+      </div> */}
 
-        {/* Optional subtle overlay for text/logo legibility if you ever add content on top */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent pointer-events-none" />
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center opacity-60">
+        <span className="text-[10px] uppercase tracking-[0.3em] text-white">
+          Scroll
+        </span>
+
+        <span className="animate-bounce text-xl text-white">↓</span>
       </div>
+
     </section>
   );
 }

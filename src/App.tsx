@@ -46,18 +46,20 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const hasSeenModal = localStorage.getItem('hasSeenContactModal');
+    const hasSeenModal = sessionStorage.getItem("hasSeenContactModal");
+
     if (!hasSeenModal) {
       const timer = setTimeout(() => {
         setIsConsultation2Open(true);
+        sessionStorage.setItem("hasSeenContactModal", "true");
       }, 5000);
+
       return () => clearTimeout(timer);
     }
   }, []);
 
   const handleCloseModal2 = () => {
     setIsConsultation2Open(false);
-    localStorage.setItem('hasSeenContactModal', 'true');
   };
 
   const handleCloseModal1 = () => {
@@ -92,9 +94,8 @@ export default function App() {
         pixelRatio={1}
       />
       <div
-        className={`relative z-10 min-h-screen flex flex-col font-sans transition-colors duration-300 ${
-          theme === 'dark' ? 'bg-transparent text-slate-100' : 'bg-white text-slate-900'
-        }`}
+        className={`relative z-10 min-h-screen flex flex-col font-sans transition-colors duration-300 ${theme === 'dark' ? 'bg-transparent text-slate-100' : 'bg-white text-slate-900'
+          }`}
       >
         <Navbar
           currentTab={currentTab}
@@ -157,8 +158,6 @@ export default function App() {
 
         <ContactModal isOpen={isConsultationOpen} onClose={handleCloseModal1} theme={theme} />
         <ContactModal2 isOpen={isConsultation2Open} onClose={handleCloseModal2} theme={theme} />
-
-        
 
         {showScrollTop && (
           <button

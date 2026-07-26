@@ -29,10 +29,14 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
   };
 
   return (
-    <nav className={`relative top-3 mobile-m:top-4 left-1/2 -translate-x-1/2 z-40 border transition-all rounded-full duration-300 backdrop-blur-md w-[calc(100%-0.75rem)] mobile-m:w-[calc(100%-1rem)] tablet:w-full max-w-[calc(100%-0.75rem)] laptop:max-w-[95vw] laptop-l:max-w-[80vw] ${theme === 'dark'
+    <nav
+     style={{zIndex: 10000}}
+     className={`absolute top-3 mobile-m:top-4 left-1/2 -translate-x-1/2 border transition-all rounded-full duration-300 backdrop-blur-md w-[calc(100%-0.75rem)] mobile-m:w-[calc(100%-1rem)] tablet:w-full max-w-[calc(100%-0.75rem)] laptop:max-w-[95vw] laptop-l:max-w-[80vw] ${theme === 'dark'
         ? 'bg-transparent border-slate-800 text-slate-100'
         : 'bg-transparent border-slate-200 text-slate-900'
-      }`}>
+      }`}
+      id='navbar'
+      >
       <div className="px-2 mobile-m:px-3 tablet:px-4 laptop:px-0">
         <div className="flex items-center justify-center gap-1 h-12 mobile-m:h-14 tablet:h-14 laptop:h-16">
 
