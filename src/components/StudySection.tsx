@@ -26,11 +26,13 @@ import Companies from "./companies";
 
 interface StudySectionProps {
   onOpenConsultation: () => void;
+  onNavigateToTab: (tab: string) => void;
   theme: "light" | "dark";
 }
 
 export default function StudySection({
   onOpenConsultation,
+  onNavigateToTab,
   theme,
 }: StudySectionProps) {
   const dark = theme === "dark";
@@ -161,7 +163,7 @@ export default function StudySection({
         "not load". Replaced with a simple mount-triggered fade/scale-in
         using plain state, so it always plays regardless of scroll.
       */}
-      <HeroReveal onOpenConsultation={onOpenConsultation} theme={theme} />
+      <HeroReveal onOpenConsultation={onOpenConsultation} onNavigateToTab={onNavigateToTab} theme={theme} />
 
       {/* STATISTICS SECTION */}
 
@@ -536,10 +538,11 @@ export default function StudySection({
 
 interface HeroRevealProps {
   onOpenConsultation: () => void;
+  onNavigateToTab: (tab: string) => void;
   theme: "light" | "dark";
 }
 
-function HeroReveal({ onOpenConsultation, theme }: HeroRevealProps) {
+function HeroReveal({ onOpenConsultation, onNavigateToTab , theme }: HeroRevealProps) {
   const [mounted, setMounted] = useState(false);
 
   const birdsRef = useRef<HTMLDivElement>(null);
@@ -692,9 +695,10 @@ function HeroReveal({ onOpenConsultation, theme }: HeroRevealProps) {
                 </button>
 
                 <button
+                  onClick={() => onNavigateToTab('services')}
                   className="px-8 py-4 rounded-full border border-white/20 bg-white/10 text-white hover:bg-white/20 transition"
                 >
-                  Explore Universities
+                  Explore Services
                 </button>
 
               </div>
