@@ -308,8 +308,8 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
                       <GraduationCap className="w-3.5 h-3.5 mobile-m:w-4 mobile-m:h-4 4k:w-5 4k:h-5" />
                     </div>
                     <div>
-                      <div className={`text-[10px] mobile-m:text-xs 4k:text-sm font-bold font-sans ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>03. University Match</div>
-                      <div className={`text-[9px] mobile-m:text-[10px] 4k:text-xs ${isDark ? 'text-slate-600' : 'text-slate-500'}`}>Shortlisting Ambitious, Realistic & Safe</div>
+                      <div className={`text-[10px] mobile-m:text-xs 4k:text-sm font-bold font-sans`}>03. University Match</div>
+                      <div className={`text-[9px] mobile-m:text-[10px] 4k:text-xs ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Shortlisting Ambitious, Realistic & Safe</div>
                     </div>
                   </div>
                 </div>
