@@ -606,7 +606,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
 
       {/* SECTION 2: WHY STUDENTS CHOOSE EUROZIEL */}
       <section
-        className={`relative z-40 py-16 mobile-m:py-20 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 border-b w-full transition-colors duration-600 ${isDark ? "border-slate-900 bg-transparent" : "border-slate-100 bg-transparent"
+        className={`relative z-40 py-10 mobile-m:py-2 laptop:py-24 px-4 mobile-m:px-5 mobile-l:px-6 laptop:px-8 4k:px-16 border-b w-full transition-colors duration-600 ${isDark ? "border-slate-900 bg-transparent" : "border-slate-100 bg-transparent"
           }`}
       >
         <div className="w-full max-w-7xl mx-auto">

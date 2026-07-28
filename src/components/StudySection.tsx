@@ -624,12 +624,12 @@ function HeroReveal({ onOpenConsultation, onNavigateToTab, theme }: HeroRevealPr
   return (
     <section
       className="relative w-full overflow-hidden
-        min-h-[100svh]
-        mobile-l:min-h-[600px]
-        tablet:min-h-[700px]
-        laptop:min-h-[750px]
-        laptop-l:min-h-[820px]
-        4k:min-h-[1100px]"
+    min-h-[100svh]
+    mobile-l:min-h-[600px]
+    tablet:min-h-[700px]
+    laptop:min-h-[750px]
+    laptop-l:min-h-[820px]
+    4k:min-h-[1100px]"
     >
       {/* Sky */}
       <div
@@ -668,14 +668,35 @@ function HeroReveal({ onOpenConsultation, onNavigateToTab, theme }: HeroRevealPr
       </div>
 
       {/* Study Banner */}
-      <div className="absolute flex w-full h-2/4 z-19 justify-around items-center">
-        <h1 className="text-white text-8xl font-eh font-bold">
+      <div
+        className="absolute inset-x-0 z-[19] flex flex-col items-center justify-center
+      gap-1 px-4 text-center pb-90
+      top-1/3
+      mobile-l:top-[28%]
+      tablet:flex-row tablet:gap-4 tablet:top-[10%]
+      laptop:gap-32
+      laptop-l:gap-58"
+      >
+        <h1
+          className="font-eh font-bold text-white
+        text-4xl leading-tight
+        mobile-l:text-5xl
+        tablet:text-6xl
+        laptop:text-7xl
+        laptop-l:text-8xl
+        4k:text-9xl"
+        >
           STUDY IN
         </h1>
-        {/* <h1 className="text-white text-7xl">
-          IN
-        </h1> */}
-        <h1 className="text-gold text-8xl font-eh font-bold">
+        <h1
+          className="font-eh font-bold text-gold
+        text-4xl leading-tight
+        mobile-l:text-5xl
+        tablet:text-6xl
+        laptop:text-7xl
+        laptop-l:text-8xl
+        4k:text-9xl"
+        >
           GERMANY
         </h1>
       </div>
@@ -683,9 +704,9 @@ function HeroReveal({ onOpenConsultation, onNavigateToTab, theme }: HeroRevealPr
       {/* Scroll Indicator */}
       <div
         className="absolute bottom-4 left-1/2 -translate-x-1/2 z-40 flex-col items-center opacity-60 pointer-events-none
-          hidden
-          tablet:flex
-          laptop:bottom-8"
+      hidden
+      tablet:flex
+      laptop:bottom-8"
       >
         <span className="uppercase text-white text-[9px] tracking-[0.3em] mobile-l:text-[10px]">
           Scroll
