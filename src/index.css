@@ -6,6 +6,23 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@font-face {
+  font-family: 'RusticRoadway';
+  src: url('./assets/fonts/RusticRoadway.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'EagleHorizonP';
+  src: url('./assets/fonts/EagleHorizonP.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
 @theme {
   /* Screen Breakpoints */
   --breakpoint-mobile-s: 320px;
@@ -21,6 +38,9 @@
   --font-display: "Space Grotesk", sans-serif;
   --font-serif: "Playfair Display", Georgia, serif;
   --font-mono: "JetBrains Mono", monospace;
+  --font-rr: "RusticRoadway", cursive;
+  --font-eh: "EagleHorizonP", cursive;
+
 
   /* Brand Colors */
   --color-navy: #1b73ba;
