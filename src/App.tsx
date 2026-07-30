@@ -126,7 +126,9 @@ export default function App() {
             />
             <Route
               path="/study"
-              element={<StudySection onOpenConsultation={() => setIsConsultationOpen(true)} onNavigateToTab={handleTabChange} theme={theme} />}
+              element={
+                <StudySection onOpenConsultation={() => setIsConsultationOpen(true)} onNavigateToTab={handleTabChange} theme={theme} />
+              }
             />
             <Route
               path="/services"

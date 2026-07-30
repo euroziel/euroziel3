@@ -166,14 +166,14 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
             >
               <button
                 onClick={onOpenConsultation}
-                className="px-6 mobile-m:px-8 laptop:px-8 4k:px-10 py-3 mobile-m:py-4 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm tracking-widest uppercase cursor-pointer transition-all duration-300 bg-navy text-white hover:bg-opacity-90 text-center shadow-premium border-b-2 border-gold font-sans flex items-center justify-center gap-2 transform hover:-translate-y-0.5 active:translate-y-0"
+                className="mybtn px-6 mobile-m:px-8 laptop:px-8 4k:px-10 py-3 mobile-m:py-4 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm tracking-widest uppercase cursor-pointer transition-all duration-300 bg-navy text-white hover:bg-opacity-90 text-center shadow-premium border-b-2 border-gold font-sans flex items-center justify-center gap-2 transform hover:-translate-y-0.5 active:translate-y-0"
               >
                 Start Your Germany Journey
                 <ChevronRight className="w-3.5 h-3.5 mobile-m:w-4 mobile-m:h-4 4k:w-5 4k:h-5" />
               </button>
               <button
                 onClick={() => onNavigateToTab('process')}
-                className={`px-5 mobile-m:px-6 4k:px-8 py-3 mobile-m:py-4 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm tracking-widest uppercase cursor-pointer transition-all duration-300 border text-center font-sans ${isDark
+                className={`mybtn px-5 mobile-m:px-6 4k:px-8 py-3 mobile-m:py-4 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm tracking-widest uppercase cursor-pointer transition-all duration-300 border text-center font-sans ${isDark
                   ? 'border-slate-800 hover:border-slate-600 hover:bg-slate-900 text-slate-300'
                   : 'border-slate-300 hover:border-slate-400 hover:bg-slate-50 text-slate-700'
                   }`}
@@ -207,7 +207,7 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="flex flex-wrap items-center gap-2 mobile-m:gap-3 4k:gap-4"
+              className=" mybtn flex flex-wrap items-center gap-2 mobile-m:gap-3 4k:gap-4"
             >
               {[
                 { href: 'https://wa.me/917598969875?text=Hello%2C%20I%20have%20an%20enquiry%20about%20your%20services.', label: 'WhatsApp', Icon: FaWhatsapp, color: '#25D366', glow: 'rgba(37,211,102,0.5)' },
@@ -221,7 +221,7 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
                   key={label}
                   href={href}
                   aria-label={label}
-                  className={`flex items-center justify-center rounded-full transition-all duration-300 h-10 w-10 mobile-m:h-11 mobile-m:w-11 laptop:h-12 laptop:w-12 4k:h-14 4k:w-14 border ${isDark ? 'bg-white/5 border-white/10' : 'bg-slate-100/10 border-slate-200/20'
+                  className={`mybtn flex items-center justify-center rounded-full transition-all duration-300 h-10 w-10 mobile-m:h-11 mobile-m:w-11 laptop:h-12 laptop:w-12 4k:h-14 4k:w-14 border ${isDark ? 'bg-white/5 border-white/10' : 'bg-slate-100/10 border-slate-200/20'
                     }`}
                   style={{ color }}
                   onMouseEnter={e => {
@@ -233,7 +233,7 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
                     e.currentTarget.style.boxShadow = 'none';
                   }}
                 >
-                  <Icon style={{ fontSize: 18 }} className="mobile-m:text-[20px] 4k:text-[24px]" />
+                  <Icon style={{ fontSize: 18 }} className="mybtn mobile-m:text-[20px] 4k:text-[24px]" />
                 </a>
               ))}
             </motion.div>
@@ -339,7 +339,7 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
                   </div>
                   <button
                     onClick={onOpenConsultation}
-                    className="px-3 mobile-m:px-4 4k:px-6 py-1.5 mobile-m:py-2 4k:py-3 bg-navy text-[10px] mobile-m:text-xs 4k:text-sm font-bold uppercase tracking-wider text-white rounded-sm hover:opacity-90 shadow-sm border-b-2 border-gold transition-all duration-300 cursor-pointer"
+                    className="mybtn px-3 mobile-m:px-4 4k:px-6 py-1.5 mobile-m:py-2 4k:py-3 bg-navy text-[10px] mobile-m:text-xs 4k:text-sm font-bold uppercase tracking-wider text-white rounded-sm hover:opacity-90 shadow-sm border-b-2 border-gold transition-all duration-300 cursor-pointer"
                   >
                     Book Session
                   </button>

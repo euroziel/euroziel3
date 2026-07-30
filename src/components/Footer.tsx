@@ -47,7 +47,7 @@ export default function Footer({ currentTab, onTabChange, theme, onOpenConsultat
               </p>
               <div className={`flex items-center gap-1.5 text-[11px] font-bold ${dark ? 'text-slate-200' : 'text-slate-800'}`}>
                 <Mail className="w-3.5 h-3.5 text-[#1b73ba]" />
-                <a href="mailto:info@euroziel.com?subject=Inquiry%20about%20services&body=Hello%2C%20I%20want%20to%20know%20about%20your%20services." className="hover:underline">info@euroziel.com</a>
+                <a href="mailto:info@euroziel.com?subject=Inquiry%20about%20services&body=Hello%2C%20I%20want%20to%20know%20about%20your%20services." className="mybtn hover:underline">info@euroziel.com</a>
               </div>
             </div>
 
@@ -60,7 +60,7 @@ export default function Footer({ currentTab, onTabChange, theme, onOpenConsultat
                   <button
                     key={link.id}
                     onClick={() => handleNavClick(link.id)}
-                    className="text-[11px] text-left hover:text-[#1b73ba] transition-colors cursor-pointer font-medium font-sans flex items-center gap-1 group"
+                    className="mybtn text-[11px] text-left hover:text-[#1b73ba] transition-colors cursor-pointer font-medium font-sans flex items-center gap-1 group"
                   >
                     <ArrowRight className="w-3 h-3 text-slate-400 opacity-0 group-hover:opacity-100 transition-all -ml-3 group-hover:ml-0" />
                     {link.label}
@@ -94,7 +94,7 @@ export default function Footer({ currentTab, onTabChange, theme, onOpenConsultat
               </p>
               <button
                 onClick={onOpenConsultation}
-                className="px-3.5 py-2 rounded-sm text-[11px] font-bold uppercase tracking-widest bg-navy text-white hover:bg-opacity-90 border-b-2 border-gold transition-all cursor-pointer shadow-premium"
+                className="mybtn px-3.5 py-2 rounded-sm text-[11px] font-bold uppercase tracking-widest bg-navy text-white hover:bg-opacity-90 border-b-2 border-gold transition-all cursor-pointer shadow-premium"
               >
                 9rs Enrollment &rarr;
               </button>
@@ -135,7 +135,7 @@ export default function Footer({ currentTab, onTabChange, theme, onOpenConsultat
             href="https://techgajana.org/"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-semibold text-[#e5a800] hover:underline"
+            className="mybtn font-semibold text-[#e5a800] hover:underline"
           >
             TechGajana Digital Solutions
           </a>

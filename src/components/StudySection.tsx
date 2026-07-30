@@ -478,7 +478,7 @@ export default function StudySection({
             <div>
               <button
                 onClick={onOpenConsultation}
-                className="px-8 py-3.5 rounded-sm font-bold text-xs uppercase tracking-widest bg-navy hover:bg-opacity-90 text-white border-b-2 border-gold transition-all cursor-pointer shadow-premium"
+                className="mybtn px-8 py-3.5 rounded-sm font-bold text-xs uppercase tracking-widest bg-navy hover:bg-opacity-90 text-white border-b-2 border-gold transition-all cursor-pointer shadow-premium"
               >
                 Book Your Session
               </button>
@@ -633,7 +633,7 @@ function HeroReveal({ onOpenConsultation, onNavigateToTab, theme }: HeroRevealPr
     >
       {/* Sky */}
       <div
-        className="absolute inset-0 z-0"
+        className="absolute inset-0"
         style={{
           background:
             "linear-gradient(to bottom,#0b1323 0%,#0d2540 40%,#0f3060 70%,#0f4c8f 100%)",
@@ -643,12 +643,12 @@ function HeroReveal({ onOpenConsultation, onNavigateToTab, theme }: HeroRevealPr
       {/* Birds */}
       <div
         ref={birdsRef}
-        className="absolute inset-0 z-[2] pointer-events-none"
+        className="absolute inset-0 pointer-events-none"
       />
 
       {/* Bottom Gradient */}
       <div
-        className="absolute inset-x-0 bottom-0 z-10 pointer-events-none"
+        className="absolute inset-x-0 bottom-0 pointer-events-none"
         style={{
           height: "55%",
           background:
@@ -657,7 +657,7 @@ function HeroReveal({ onOpenConsultation, onNavigateToTab, theme }: HeroRevealPr
       />
 
       {/* University */}
-      <div className="absolute inset-0 z-20 pointer-events-none">
+      <div className="absolute inset-0 pointer-events-none" style={{zIndex: 3}}>
         <img
           src="/assets/university1.png"
           alt=""
@@ -669,7 +669,7 @@ function HeroReveal({ onOpenConsultation, onNavigateToTab, theme }: HeroRevealPr
 
       {/* Study Banner */}
       <div
-        className="absolute inset-x-0 z-[19] flex flex-col items-center justify-center
+        className="absolute inset-x-0 z-[0] flex flex-col items-center justify-center
       gap-1 px-4 text-center pb-90
       top-1/3
       mobile-l:top-[28%]

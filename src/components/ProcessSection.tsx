@@ -234,12 +234,12 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
                 </p>
 
                 <div className="flex flex-wrap items-center gap-4 pt-2">
-                  <button className="bg-gold text-slate-950 text-sm font-bold px-8 py-3.5 rounded-sm hover:bg-gold/90 hover:scale-[1.02] transition-all shadow-premium">
+                  <button className="mybtn bg-gold text-slate-950 text-sm font-bold px-8 py-3.5 rounded-sm hover:bg-gold/90 hover:scale-[1.02] transition-all shadow-premium">
                     Start Your Journey Today
                   </button>
                   <button
                     onClick={() => { navigation.navigate('/#/services') }}
-                    className="text-sm font-semibold px-8 py-3.5 rounded-sm border border-slate-600 text-white hover:bg-white/5 transition-colors"
+                    className="mybtn text-sm font-semibold px-8 py-3.5 rounded-sm border border-slate-600 text-white hover:bg-white/5 transition-colors"
                   >
                     Explore Services
                   </button>
@@ -354,12 +354,12 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
 
                   {/* Checkbox */}
                   <div
-                    className={`w-5 h-5 shrink-0 rounded-sm flex items-center justify-center border transition-all ${item.checked
+                    className={`mybtn w-5 h-5 shrink-0 rounded-sm flex items-center justify-center border transition-all ${item.checked
                       ? "bg-navy border-navy text-white"
                       : `${dark ? "border-slate-700" : "border-slate-300"}`
                       }`}
                   >
-                    {item.checked && <Check className="w-3.5 h-3.5 stroke-[3.5]" />}
+                    {item.checked && <Check className="mybtn w-3.5 h-3.5 stroke-[3.5]" />}
                   </div>
 
                   {/* Step Text */}
@@ -478,7 +478,7 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
               <div>
                 <button
                   onClick={onOpenConsultation}
-                  className="px-8 py-3.5 rounded-sm font-bold text-xs uppercase tracking-widest bg-navy hover:bg-opacity-90 border-b-2 border-gold text-white transition-all cursor-pointer shadow-premium"
+                  className="mybtn px-8 py-3.5 rounded-sm font-bold text-xs uppercase tracking-widest bg-navy hover:bg-opacity-90 border-b-2 border-gold text-white transition-all cursor-pointer shadow-premium"
                 >
                   Get Your Germany Roadmap
                 </button>

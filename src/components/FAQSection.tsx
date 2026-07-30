@@ -413,13 +413,13 @@ export default function FAQSection({ onOpenConsultation, theme }: FAQSectionProp
       <div className="space-y-6">
         {/* Search Input */}
         <div className="relative max-w-lg mx-auto">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-400" />
+          <Search className="mybtn absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-400" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search FAQs (e.g. Ausbildung, APS, €11,904, WG)..."
-            className={`w-full pl-11 pr-4 py-3 rounded-sm border text-sm transition-all focus:outline-none focus:ring-1 focus:ring-navy ${
+            className={`mybtn w-full pl-11 pr-4 py-3 rounded-sm border text-sm transition-all focus:outline-none focus:ring-1 focus:ring-navy ${
               dark
                 ? 'border-slate-800 bg-slate-950 text-slate-105 focus:border-navy'
                 : 'border-slate-205 bg-slate-50 text-slate-900 focus:border-navy'
@@ -533,7 +533,7 @@ export default function FAQSection({ onOpenConsultation, theme }: FAQSectionProp
         <div className="pt-2">
           <button
             onClick={onOpenConsultation}
-            className="px-6 py-2.5 rounded-sm text-xs font-bold uppercase tracking-widest bg-navy text-white hover:bg-opacity-95 border-b-2 border-gold shadow-premium cursor-pointer"
+            className="mybtn px-6 py-2.5 rounded-sm text-xs font-bold uppercase tracking-widest bg-navy text-white hover:bg-opacity-95 border-b-2 border-gold shadow-premium cursor-pointer"
           >
             Start Detailed Profile Audit
           </button>

@@ -123,7 +123,7 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
               <div className="flex flex-wrap items-center gap-4 pt-4">
                 <button
                   onClick={onOpenConsultation}
-                  className="px-6 mobile-m:px-8 laptop:px-8 4k:px-10 py-3 mobile-m:py-4 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm tracking-widest uppercase cursor-pointer transition-all duration-300 bg-navy text-white hover:bg-opacity-90 text-center shadow-premium border-b-2 border-gold font-sans flex items-center justify-center gap-2 transform hover:-translate-y-0.5 active:translate-y-0"
+                  className="mybtn px-6 mobile-m:px-8 laptop:px-8 4k:px-10 py-3 mobile-m:py-4 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm tracking-widest uppercase cursor-pointer transition-all duration-300 bg-navy text-white hover:bg-opacity-90 text-center shadow-premium border-b-2 border-gold font-sans flex items-center justify-center gap-2 transform hover:-translate-y-0.5 active:translate-y-0"
                 >
                   Book a Free Consultation
                   <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -223,7 +223,7 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
             {/* <span className="text-[10px] font-bold text-white bg-navy px-3 py-1 rounded-full uppercase tracking-[0.3em] inline-block">
               Leadership Team
             </span> */}
-            <h2 className={`text-3xl md:text-4xl font-bold font-sans ${dark ? 'text-white' : 'text-slate-900'}`}>
+            <h2 className={`text-3xl md:text-4xl font-bold font-serif italic ${dark ? 'text-white' : 'text-slate-900'}`}>
               Meet the Founders
             </h2>
             <p className={`text-xs md:text-sm font-sans ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
@@ -240,36 +240,10 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
               variant={idx % 2 === 0 ? 'slideLeft' : 'slideRight'}
               delay={idx * 0.1}
             >
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center">
-
-                {/* IMAGE SIDE */}
-                <div
-                  className={`md:col-span-5 relative min-h-[320px] md:min-h-[440px] rounded-2xl overflow-hidden ${idx % 2 === 0 ? 'md:order-1' : 'md:order-2'
-                    }`}
-                >
-                  <div
-                    className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: `url(${f.image})` }}
-                  />
-                  <div
-                    className={`absolute inset-0 ${f.accent === 'navy'
-                      ? 'bg-gradient-to-t from-navy/70 via-navy/10 to-transparent'
-                      : 'bg-gradient-to-t from-slate-950/70 via-slate-950/10 to-transparent'
-                      }`}
-                  />
-                  {/* <div
-                    className={`absolute top-4 ${idx % 2 === 0 ? 'left-4' : 'right-4'} w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-bold font-mono ${f.accent === 'navy' ? 'bg-navy' : 'bg-gold'
-                      }`}
-                  >
-                    {String(idx + 1).padStart(2, '0')}
-                  </div> */}
-                </div>
+              <div className="grid grid-cols-1 gap-8 md:gap-12 items-center">
 
                 {/* CONTENT SIDE */}
-                <div
-                  className={`md:col-span-7 space-y-4 text-left ${idx % 2 === 0 ? 'md:order-2' : 'md:order-1'
-                    }`}
-                >
+                <div className="space-y-4 text-left">
                   <div>
                     <h4 className={`text-2xl md:text-3xl font-bold font-sans leading-tight ${dark ? 'text-slate-100' : 'text-slate-900'}`}>
                       {f.name}
@@ -377,7 +351,7 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
             <div>
               <button
                 onClick={onOpenConsultation}
-                className="group inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-sm font-bold text-xs uppercase tracking-widest bg-navy hover:bg-opacity-90 text-white border-b-2 border-gold transition-all cursor-pointer shadow-premium w-full sm:w-auto"
+                className="mybtn group inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-sm font-bold text-xs uppercase tracking-widest bg-navy hover:bg-opacity-90 text-white border-b-2 border-gold transition-all cursor-pointer shadow-premium w-full sm:w-auto"
               >
                 Talk to a Counselor
                 <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />

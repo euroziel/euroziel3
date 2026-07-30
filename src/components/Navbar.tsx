@@ -30,7 +30,7 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
 
   return (
     <nav
-     style={{zIndex: 10000}}
+     style={{zIndex: 1000}}
      className={`absolute top-3 mobile-m:top-4 left-1/2 -translate-x-1/2 border transition-all rounded-full duration-300 backdrop-blur-md w-[calc(100%-0.75rem)] mobile-m:w-[calc(100%-1rem)] tablet:w-full max-w-[calc(100%-0.75rem)] laptop:max-w-[95vw] laptop-l:max-w-[80vw] ${theme === 'dark'
         ? 'bg-transparent border-slate-800 text-slate-100'
         : 'bg-transparent border-slate-200 text-slate-900'

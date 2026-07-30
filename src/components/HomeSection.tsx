@@ -643,7 +643,7 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
       </section>
 
       {/* SECTION 5: BOTTOM CTA */}
-      <div className={`w-full relative z-40 py-0 ${isDark ? 'bg-transparent' : 'bg-transparent'
+      <div className={`w-full relative z-4 py-0 ${isDark ? 'bg-transparent' : 'bg-transparent'
         }`}>
         <section className="max-w-7xl mx-auto px-4 mobile-m:px-5 laptop:px-8 4k:px-16 text-center">
           <ScrollReveal variant="flipUp">
@@ -667,13 +667,13 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mobile-m:gap-4 pt-2 mobile-m:pt-4">
                   <button
                     onClick={onOpenConsultation}
-                    className="w-full sm:w-auto px-6 mobile-m:px-8 4k:px-10 py-3 mobile-m:py-3.5 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm uppercase tracking-widest bg-navy text-white hover:bg-opacity-90 border-b-2 border-gold transition-all cursor-pointer shadow-premium"
+                    className="mybtn w-full sm:w-auto px-6 mobile-m:px-8 4k:px-10 py-3 mobile-m:py-3.5 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm uppercase tracking-widest bg-navy text-white hover:bg-opacity-90 border-b-2 border-gold transition-all cursor-pointer shadow-premium"
                   >
                     Start Your Germany Journey
                   </button>
                   <button
                     onClick={() => onNavigateToTab('study')}
-                    className="w-full sm:w-auto px-5 mobile-m:px-6 4k:px-8 py-3 mobile-m:py-3.5 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm uppercase tracking-widest border border-slate-700 hover:border-slate-500 hover:bg-slate-800 text-slate-300 transition-all cursor-pointer"
+                    className="mybtn w-full sm:w-auto px-5 mobile-m:px-6 4k:px-8 py-3 mobile-m:py-3.5 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm uppercase tracking-widest border border-slate-700 hover:border-slate-500 hover:bg-slate-800 text-slate-300 transition-all cursor-pointer"
                   >
                     Verify €0 Tuition Fields &rarr;
                   </button>

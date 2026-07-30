@@ -277,12 +277,12 @@ const Companies: React.FC<{ dark?: boolean }> = ({ dark = false }) => {
           </div>
 
           <button
-            className={`relative z-10 shrink-0 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide px-4 py-2.5 rounded-lg border transition-all duration-300 self-start sm:self-center group/btn bg-gold border-gold ${dark
+            className={`mybtn relative z-10 shrink-0 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide px-4 py-2.5 rounded-lg border transition-all duration-300 self-start sm:self-center group/btn bg-gold border-gold ${dark
                 ? "text-slate-900 hover:bg-transparent hover:text-gold hover:shadow-[0_0_18px_rgba(212,175,55,0.35)]"
                 : "text-white hover:bg-transparent hover:text-gold hover:shadow-[0_0_18px_rgba(212,175,55,0.25)]"
               }`}
           >
-            <span className="relative flex items-center gap-1.5">
+            <span className="mybtn relative flex items-center gap-1.5">
               Learn More
               <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover/btn:translate-x-1" />
             </span>

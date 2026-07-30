@@ -66,6 +66,15 @@
   cursor: auto; /* Allow cursor to be visible inside modals */
 }
 
+.mybtn {
+  cursor: pointer;
+}
+
+body:has(.mybtn:hover) .mycursor {
+  display: none;
+}
+
+
 /* Custom Base Styles */
 @layer base {
   html {
