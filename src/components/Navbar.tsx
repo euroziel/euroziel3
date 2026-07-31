@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Logo from './Logo';
 import { Menu, X, Sun, Moon, Calendar, Home, BookOpen, Briefcase, GitBranch, Users, HelpCircle, LogIn } from 'lucide-react';
 
@@ -12,6 +12,32 @@ interface NavbarProps {
 
 export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, onOpenConsultation }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [showNavbar, setShowNavbar] = useState(true);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const controlNavbar = () => {
+      const currentScrollY = window.scrollY;
+
+      // Always show navbar near the top of the page
+      if (currentScrollY < 80) {
+        setShowNavbar(true);
+      } else if (currentScrollY > lastScrollY.current) {
+        // Scrolling down -> hide
+        setShowNavbar(false);
+        // Also close mobile drawer if open while hiding
+        setIsOpen(false);
+      } else if (currentScrollY < lastScrollY.current) {
+        // Scrolling up -> show
+        setShowNavbar(true);
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener('scroll', controlNavbar, { passive: true });
+    return () => window.removeEventListener('scroll', controlNavbar);
+  }, []);
 
   const menuItems = [
     { id: 'home', label: 'Home', Icon: Home },
@@ -30,8 +56,12 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
 
   return (
     <nav
-     style={{zIndex: 1000}}
-     className={`absolute top-3 mobile-m:top-4 left-1/2 -translate-x-1/2 border transition-all rounded-full duration-300 backdrop-blur-md w-[calc(100%-0.75rem)] mobile-m:w-[calc(100%-1rem)] tablet:w-full max-w-[calc(100%-0.75rem)] laptop:max-w-[95vw] laptop-l:max-w-[80vw] ${theme === 'dark'
+     style={{
+       zIndex: 1000,
+       transform: showNavbar ? 'translateX(-50%) translateY(0)' : 'translateX(-50%) translateY(-150%)',
+       transition: 'transform 0.35s ease-in-out',
+     }}
+     className={`fixed top-3 mobile-m:top-4 left-1/2 border rounded-full backdrop-blur-md w-[calc(100%-0.75rem)] mobile-m:w-[calc(100%-1rem)] tablet:w-full max-w-[calc(100%-0.75rem)] laptop:max-w-[95vw] laptop-l:max-w-[80vw] ${theme === 'dark'
         ? 'bg-transparent border-slate-800 text-slate-100'
         : 'bg-transparent border-slate-200 text-slate-900'
       }`}
