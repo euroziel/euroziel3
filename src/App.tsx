@@ -11,9 +11,15 @@ import AboutSection from './components/AboutSection';
 import FAQSection from './components/FAQSection';
 import ContactModal from './components/ContactModal';
 import ContactModal2 from './components/ContactModal2';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import TermsConditions from './components/TermsConditions';
+import RefundCancellationPolicy from './components/RefundCancellationPolicy';
+import Disclaimer from './components/Disclaimer';
+import CookiePolicy from './components/CookiePolicy';
 import { ChevronUp } from 'lucide-react';
 import Particles from './../components/Particles';
 import CanvasPlaneCursor from '@/components/CanvasPlaneCursor';
+
 
 export default function App() {
   const navigate = useNavigate();
@@ -145,6 +151,26 @@ export default function App() {
             <Route
               path="/faq"
               element={<FAQSection onOpenConsultation={() => setIsConsultationOpen(true)} theme={theme} />}
+            />
+            <Route
+              path="/privacy-policy"
+              element={<PrivacyPolicy theme={theme} />}
+            />
+            <Route
+              path="/terms-conditions"
+              element={<TermsConditions theme={theme} />}
+            />
+            <Route
+              path="/refund-cancellation"
+              element={<RefundCancellationPolicy theme={theme} />}
+            />
+            <Route
+              path="/disclaimer"
+              element={<Disclaimer theme={theme} />}
+            />
+            <Route
+              path="/cookie-policy"
+              element={<CookiePolicy theme={theme} />}
             />
           </Routes>
         </main>

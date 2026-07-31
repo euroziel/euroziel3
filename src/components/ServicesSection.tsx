@@ -598,7 +598,7 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: -6, scale: 0.97 }}
                           transition={{ duration: 0.2 }}
-                          className={`absolute left-16 right-0 top-full mt-2 z-30 rounded-sm border p-5 shadow-premium ${dark ? 'bg-slate-950 border-gold/30' : 'bg-white border-gold/30'
+                          className={`absolute left-16 right-0 top-full mt-2 z-1 rounded-sm border p-5 shadow-premium ${dark ? 'bg-slate-950 border-gold/30' : 'bg-white border-gold/30'
                             }`}
                         >
                           <div className="flex items-start gap-4">
@@ -626,14 +626,14 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
                                 <div className="flex items-center gap-3">
                                   <button
                                     onClick={() => handleUnlockPay(idx)}
-                                    className="flex items-center gap-2 text-xs font-bold bg-gold text-slate-950 px-4 py-2 rounded-sm hover:brightness-95 transition-all"
+                                    className="mybtn flex items-center gap-2 text-xs font-bold bg-gold text-slate-950 px-4 py-2 rounded-sm hover:brightness-95 transition-all"
                                   >
                                     <Lock className="w-3.5 h-3.5" strokeWidth={3} />
                                     Unlock for ₹9
                                   </button>
                                   <button
                                     onClick={() => setLockedPopup(null)}
-                                    className={`text-xs font-semibold px-3 py-2 rounded-sm transition-colors ${dark ? 'text-slate-400 hover:text-slate-200' : 'text-slate-500 hover:text-slate-700'
+                                    className={`mybtn text-xs font-semibold px-3 py-2 rounded-sm transition-colors ${dark ? 'text-slate-400 hover:text-slate-200' : 'text-slate-500 hover:text-slate-700'
                                       }`}
                                   >
                                     Cancel

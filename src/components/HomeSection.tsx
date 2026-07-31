@@ -466,13 +466,13 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
               type="button"
               aria-label="Previous card"
               onClick={handlePrev}
-              className={`absolute left-0 mobile-m:left-1 laptop:-left-2 top-1/2 -translate-y-1/2 z-20
+              className={`mybtn absolute left-0 mobile-m:left-1 laptop:-left-2 top-1/2 -translate-y-1/2 z-20
                 w-8 h-8 mobile-m:w-9 mobile-m:h-9 laptop:w-11 laptop:h-11
                 flex items-center justify-center rounded-full shadow-lg backdrop-blur-sm
                 transition-transform duration-200 hover:scale-110 active:scale-95
                 ${isDark ? "bg-slate-900/80 text-white border border-white/10" : "bg-white/90 text-slate-900 border border-black/5"}`}
             >
-              <ChevronLeft className="w-4 h-4 mobile-m:w-5 mobile-m:h-5" strokeWidth={2.5} />
+              <ChevronLeft className="mybtn w-4 h-4 mobile-m:w-5 mobile-m:h-5" strokeWidth={2.5} />
             </button>
 
             <motion.div
@@ -557,13 +557,13 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
               type="button"
               aria-label="Next card"
               onClick={handleNext}
-              className={`absolute right-0 mobile-m:right-1 laptop:-right-2 top-1/2 -translate-y-1/2 z-20
+              className={`mybtn absolute right-0 mobile-m:right-1 laptop:-right-2 top-1/2 -translate-y-1/2 z-20
                 w-8 h-8 mobile-m:w-9 mobile-m:h-9 laptop:w-11 laptop:h-11
                 flex items-center justify-center rounded-full shadow-lg backdrop-blur-sm
                 transition-transform duration-200 hover:scale-110 active:scale-95
                 ${isDark ? "bg-slate-900/80 text-white border border-white/10" : "bg-white/90 text-slate-900 border border-black/5"}`}
             >
-              <ChevronRight className="w-4 h-4 mobile-m:w-5 mobile-m:h-5" strokeWidth={2.5} />
+              <ChevronRight className="mybtn w-4 h-4 mobile-m:w-5 mobile-m:h-5" strokeWidth={2.5} />
             </button>
           </div>
 

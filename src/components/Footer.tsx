@@ -22,6 +22,14 @@ export default function Footer({ currentTab, onTabChange, theme, onOpenConsultat
     { id: 'faq', label: 'FAQs' }
   ];
 
+  const policyLinks = [
+    { id: 'privacy-policy', label: 'Privacy Policy' },
+    { id: 'terms-conditions', label: 'Terms & Conditions' },
+    { id: 'refund-cancellation', label: 'Refund & Cancellation Policy' },
+    { id: 'disclaimer', label: 'Disclaimer' },
+    { id: 'cookie-policy', label: 'Cookie Policy' },
+  ];
+
   const handleNavClick = (id: string) => {
     onTabChange(id);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -120,6 +128,28 @@ export default function Footer({ currentTab, onTabChange, theme, onOpenConsultat
           </div>
         </div>
 
+        <div className={`border-t pt-4 flex flex-col gap-2 text-[10px] ${
+          dark ? 'border-slate-900' : 'border-slate-200/40'
+        }`}>
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5">
+            {policyLinks.map((policy, idx) => (
+              <React.Fragment key={policy.id}>
+                <button
+                  onClick={() => handleNavClick(policy.id)}
+                  className={`mybtn cursor-pointer transition-colors hover:text-[#1b73ba] ${
+                    currentTab === policy.id ? 'text-[#1b73ba] font-semibold' : dark ? 'text-slate-400' : 'text-slate-500'
+                  }`}
+                >
+                  {policy.label}
+                </button>
+                {idx < policyLinks.length - 1 && (
+                  <span className={dark ? 'text-slate-700' : 'text-slate-300'}>|</span>
+                )}
+              </React.Fragment>
+            ))}
+          </div>
+        </div>
+
         <div className={`border-t pt-4 flex flex-col mobile-l:flex-row items-center justify-between gap-2 text-[11px] ${
           dark ? 'border-slate-900' : 'border-slate-200/40'
         }`}>
@@ -131,7 +161,7 @@ export default function Footer({ currentTab, onTabChange, theme, onOpenConsultat
 
         <div className="text-center text-[10px] opacity-70">
           Designed and Developed by{' '}
-          <a
+          <a 
             href="https://techgajana.org/"
             target="_blank"
             rel="noopener noreferrer"
