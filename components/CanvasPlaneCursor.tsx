@@ -229,7 +229,7 @@ export const CanvasPlaneCursor: React.FC = () => {
           width: '32px',
           height: '32px',
           pointerEvents: 'none',
-          zIndex: 4,
+          zIndex: 999999,
           marginTop: '-16px',
           marginLeft: '-16px',
           willChange: 'transform',
