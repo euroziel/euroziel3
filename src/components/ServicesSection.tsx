@@ -221,14 +221,8 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
   // Once Razorpay is integrated, call setPaidSteps(...) ONLY inside the actual
   // payment success callback (e.g. handler.on('payment.success', ...)), not here.
   const handleUnlockPay = (idx: number) => {
-    setPaymentLoadingStep(idx);
-
-    // Simulated gateway redirect delay — replace this entire block with real Razorpay checkout.open()
-    setTimeout(() => {
-      setPaymentLoadingStep(null);
-      // Intentionally NOT unlocking or expanding the step here.
-      // Step remains locked and closed until real payment confirms.
-    }, 1500);
+    setLockedPopup(null);
+    onOpenConsultation();
   };
 
   return (

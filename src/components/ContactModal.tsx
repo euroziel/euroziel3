@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Send, CheckCircle2, AlertCircle, Sparkles, Lock, Eye, EyeOff, LogIn, QrCode, ArrowLeft, ShieldCheck } from 'lucide-react';
+import { X, Send, CheckCircle2, AlertCircle, Sparkles, Lock, Eye, EyeOff, LogIn, QrCode, ArrowLeft, ShieldCheck, Copy, Check, Receipt } from 'lucide-react';
 import { db } from '../lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
@@ -46,7 +46,7 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
     password: '',
     course: '',
     budget: '',
-    timeline: 'winter_2026',
+    timeline: 'Winter 2026 (Oct Start)',
     message: '',
     transactionId: '',
   });
@@ -55,6 +55,13 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
   const [errors, setErrors] = useState<ValidationErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyUpi = () => {
+    navigator.clipboard.writeText('sarathkumar1.2001-1@oksbi');
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const validateFormStep = (): boolean => {
     const newErrors: ValidationErrors = {};
@@ -99,10 +106,16 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
 
   const validatePaymentStep = (): boolean => {
     const newErrors: ValidationErrors = {};
-    if (!form.transactionId.trim()) {
+    const cleanTxnId = form.transactionId.trim().replace(/\s+/g, '');
+    
+    // Regex for Indian UPI Transaction ID / UTR Number:
+    // Matches 12-digit numeric UTR (e.g. 423189076512) or 8-24 character alphanumeric UTR/Ref (e.g. UTR-987654321012, T240803123456)
+    const upiTxnRegex = /^(?:[0-9]{12}|[A-Za-z0-9\-]{8,24})$/;
+
+    if (!cleanTxnId) {
       newErrors.transactionId = 'UPI Transaction ID / UTR number is required';
-    } else if (form.transactionId.trim().length < 6) {
-      newErrors.transactionId = 'Transaction ID must be at least 6 characters';
+    } else if (!upiTxnRegex.test(cleanTxnId)) {
+      newErrors.transactionId = 'Please enter a valid 12-digit UTR or Transaction ID (e.g. 423189076512 or UTR-98765432)';
     }
 
     setErrors(newErrors);
@@ -193,7 +206,7 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
       password: '',
       course: '',
       budget: '',
-      timeline: 'winter_2026',
+      timeline: 'Winter 2026 (Oct Start)',
       message: '',
       transactionId: '',
     });
@@ -231,7 +244,7 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
             exit={{ opacity: 0, scale: 0.96, y: 15 }}
             transition={{ type: 'spring', duration: 0.4, ease: 'easeOut' }}
             id="contact-modal"
-            className={`relative w-full max-w-2xl rounded-sm shadow-2xl overflow-hidden z-[10000] border flex flex-col border-b-4 border-b-amber-500 my-auto ${
+            className={`relative w-full ${step === 'payment' ? 'max-w-4xl' : 'max-w-2xl'} rounded-sm shadow-2xl overflow-hidden z-[10000] border flex flex-col border-b-4 border-b-amber-500 my-auto transition-all duration-300 ${
               theme === 'dark'
                 ? 'bg-slate-900 border-slate-800 text-slate-100'
                 : 'bg-white border-slate-200 text-slate-900'
@@ -509,119 +522,176 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
                 </>
               )}
 
-              {/* STEP 2: Dummy UPI QR Code & Transaction ID */}
+              {/* STEP 2: UPI QR Code & Transaction ID Side-by-Side */}
               {step === 'payment' && (
-                <div className="flex flex-col items-center text-center py-2">
+                <div className="py-1">
                   <button
                     onClick={() => setStep('form')}
-                    className="self-start flex items-center gap-1.5 text-xs text-amber-500 hover:underline mb-4 cursor-pointer"
+                    className="flex items-center gap-1.5 text-xs text-amber-500 hover:text-amber-400 font-medium mb-4 cursor-pointer transition-colors"
                   >
                     <ArrowLeft className="w-4 h-4" /> Back to Profile Details
                   </button>
 
-                  <div className="mb-4">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-sm text-[10px] font-bold tracking-[0.15em] uppercase mb-1 bg-emerald-500/10 border border-emerald-500/35 text-emerald-500">
-                      <ShieldCheck className="w-3.5 h-3.5" /> Instant UPI Payment (₹9)
-                    </span>
-                    <h3 className="text-xl font-bold font-sans text-slate-900 dark:text-white">
-                      Scan QR Code to Pay ₹9
-                    </h3>
-                    <p className={`text-xs mt-1 max-w-md ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
-                      Scan using Google Pay, PhonePe, Paytm, BHIM, or any UPI app. Enter your Transaction ID below to register.
-                    </p>
-                  </div>
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                    {/* LEFT COLUMN: Enlarged QR Code & UPI Details (5 cols) */}
+                    <div className="lg:col-span-5 flex flex-col items-center">
+                      <div className={`p-4 rounded-2xl border flex flex-col items-center w-full shadow-2xl relative overflow-hidden ring-1 ring-amber-500/20 ${
+                        theme === 'dark'
+                          ? 'bg-slate-950/95 border-slate-800 shadow-amber-500/5'
+                          : 'bg-slate-50 border-slate-200/80 shadow-slate-300'
+                      }`}>
+                        {/* Ambient top glow */}
+                        <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-48 h-24 bg-amber-500/15 rounded-full blur-2xl pointer-events-none" />
 
-                  {/* Dummy UPI QR Box */}
-                  <div className={`p-4 rounded-md border flex flex-col items-center mb-5 ${
-                    theme === 'dark' ? 'bg-slate-950 border-slate-800' : 'bg-slate-50 border-slate-200'
-                  }`}>
-                    {/* SVG UPI QR Representation */}
-                    <div className="w-44 h-44 bg-white p-3 rounded-md shadow-md border flex flex-col items-center justify-center relative mb-2">
-                      <svg className="w-full h-full text-slate-900" viewBox="0 0 100 100" fill="currentColor">
-                        <path d="M0,0 h30 v30 h-30 z M10,10 h10 v10 h-10 z" />
-                        <path d="M70,0 h30 v30 h-30 z M80,10 h10 v10 h-10 z" />
-                        <path d="M0,70 h30 v30 h-30 z M10,80 h10 v10 h-10 z" />
-                        <rect x="35" y="5" width="10" height="20" />
-                        <rect x="50" y="15" width="15" height="10" />
-                        <rect x="5" y="35" width="20" height="10" />
-                        <rect x="30" y="35" width="40" height="30" />
-                        <rect x="75" y="35" width="20" height="15" />
-                        <rect x="35" y="70" width="15" height="25" />
-                        <rect x="55" y="75" width="20" height="20" />
-                        <rect x="80" y="70" width="15" height="10" />
-                        <rect x="80" y="85" width="15" height="15" />
-                      </svg>
-                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                        <div className="bg-amber-500 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded shadow border border-slate-900">
-                          ₹9 ONLY
+                        {/* Bigger & Better QR Code Image Container */}
+                        <div className="w-full p-2 bg-white rounded-xl shadow-xl border border-slate-200 dark:border-slate-800 mb-3 transition-transform hover:scale-[1.01] duration-300">
+                          <img 
+                            src="/assets/upi-qr.png" 
+                            alt="SARATHKUMAR V UPI QR Code" 
+                            className="w-full h-auto rounded-lg object-contain shadow-inner"
+                          />
+                        </div>
+
+                        {/* Accepted UPI Apps badges */}
+                        <div className="flex items-center justify-center gap-1.5 mb-3 text-[9px] font-bold uppercase tracking-wider text-slate-400">
+                          <span className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-amber-400">GPay</span>
+                          <span className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-amber-400">PhonePe</span>
+                          <span className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-amber-400">Paytm</span>
+                          <span className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-amber-400">BHIM</span>
+                        </div>
+
+                        {/* Interactive UPI ID Bar with Copy Button */}
+                        <div className="w-full bg-slate-900/90 border border-slate-800/90 rounded-xl p-2.5 flex items-center justify-between gap-2 mb-2">
+                          <div className="text-left overflow-hidden">
+                            <div className="text-[9px] uppercase font-bold text-slate-400 tracking-wider">Official UPI ID</div>
+                            <div className="font-mono text-[11px] text-amber-400 font-bold truncate select-all">
+                              sarathkumar1.2001-1@oksbi
+                            </div>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={handleCopyUpi}
+                            className="px-2.5 py-1 rounded-md text-[10px] font-bold bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center gap-1 transition-all cursor-pointer shrink-0 active:scale-95 shadow-sm"
+                          >
+                            {copied ? (
+                              <>
+                                <Check className="w-3 h-3 text-emerald-400" />
+                                <span className="text-emerald-400">Copied</span>
+                              </>
+                            ) : (
+                              <>
+                                <Copy className="w-3 h-3" />
+                                <span>Copy</span>
+                              </>
+                            )}
+                          </button>
+                        </div>
+
+                        <div className="flex items-center justify-between w-full text-[11px] px-1 text-slate-400">
+                          <span>Verification Fee:</span>
+                          <span className="font-bold text-emerald-400 text-xs">₹9.00 INR</span>
                         </div>
                       </div>
                     </div>
 
-                    <div className="text-xs font-semibold text-amber-500 tracking-wider">
-                      UPI ID: <span className="font-mono text-slate-200">euroziel@upi</span>
-                    </div>
-                    <div className="text-[10px] text-slate-400 mt-0.5">
-                      Amount: <strong className="text-emerald-400">₹9.00 INR</strong> (Standard Verification Fee)
+                    {/* RIGHT COLUMN: Step Header & Form Submission (7 cols) */}
+                    <div className="lg:col-span-7 space-y-4 text-left flex flex-col justify-center">
+                      <div>
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase mb-2 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 shadow-sm">
+                          <ShieldCheck className="w-3.5 h-3.5" /> Instant UPI Payment (₹9)
+                        </span>
+                        <h3 className="text-2xl font-bold font-sans text-slate-900 dark:text-white tracking-tight">
+                          Scan QR Code to Pay <span className="text-amber-500">₹9</span>
+                        </h3>
+                        <p className={`text-xs mt-1.5 leading-relaxed ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
+                          Scan using Google Pay, PhonePe, Paytm, BHIM, or any UPI app. Enter your Transaction ID / UTR below to confirm registration.
+                        </p>
+                      </div>
+
+                      {/* Quick Instructions list */}
+                      <div className={`p-3 rounded-lg border text-xs space-y-1.5 ${
+                        theme === 'dark' ? 'bg-slate-950/60 border-slate-800/60 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-700'
+                      }`}>
+                        <div className="font-semibold text-amber-500 text-[11px] uppercase tracking-wider">Quick Steps:</div>
+                        <div className="flex gap-2 text-[11px]">
+                          <span className="text-amber-400 font-bold">1.</span> Scan QR code on the left or copy the UPI ID.
+                        </div>
+                        <div className="flex gap-2 text-[11px]">
+                          <span className="text-amber-400 font-bold">2.</span> Complete payment of ₹9 on your UPI app.
+                        </div>
+                        <div className="flex gap-2 text-[11px]">
+                          <span className="text-amber-400 font-bold">3.</span> Paste the 12-digit UTR / Transaction ID below.
+                        </div>
+                      </div>
+
+                      {/* Transaction ID Form */}
+                      <form onSubmit={handleFinalSubmit} className="space-y-4 pt-1">
+                        <div>
+                          <label className="block text-[10px] font-bold uppercase tracking-wider mb-1.5 text-slate-400 flex items-center justify-between">
+                            <span>ENTER UPI TRANSACTION ID / UTR NUMBER *</span>
+                            <span className="text-slate-500 normal-case font-normal text-[10px]">(12 digits)</span>
+                          </label>
+                          <div className="relative">
+                            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+                              <Receipt className="w-4 h-4" />
+                            </div>
+                            <input
+                              type="text"
+                              name="transactionId"
+                              value={form.transactionId}
+                              onChange={handleChange}
+                              placeholder="e.g. 423189076512 or UTR-98765432"
+                              className={`w-full pl-10 pr-4 py-3 rounded-lg border text-sm transition-all focus:outline-none focus:ring-2 focus:ring-amber-500/40 font-mono tracking-wide ${
+                                errors.transactionId
+                                  ? 'border-red-500 bg-red-500/5 focus:ring-red-500/40'
+                                  : theme === 'dark'
+                                  ? 'border-slate-800 bg-slate-950 text-slate-100 focus:border-amber-500'
+                                  : 'border-slate-200 bg-slate-50 text-slate-900 focus:border-amber-500'
+                              }`}
+                            />
+                          </div>
+                          {errors.transactionId ? (
+                            <p className="text-xs text-red-400 flex items-center gap-1.5 mt-1.5 font-medium">
+                              <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {errors.transactionId}
+                            </p>
+                          ) : (
+                            <p className="text-[10px] text-slate-500 mt-1 pl-0.5">
+                              Check Google Pay / PhonePe transaction details screen for 12-digit UPI Ref No.
+                            </p>
+                          )}
+                        </div>
+
+                        {submitError && (
+                          <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-xs text-red-400 flex items-center gap-2">
+                            <AlertCircle className="w-4 h-4 shrink-0" />
+                            <span>{submitError}</span>
+                          </div>
+                        )}
+
+                        <button
+                          type="submit"
+                          disabled={isSubmitting}
+                          className="w-full py-3.5 rounded-lg font-bold text-xs tracking-widest uppercase cursor-pointer transition-all duration-300 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 active:scale-[0.99] disabled:opacity-75"
+                        >
+                          {isSubmitting ? (
+                            <>
+                              <div className="w-4 h-4 border-2 border-slate-950/30 border-t-slate-950 rounded-full animate-spin" />
+                              Verifying Transaction ID...
+                            </>
+                          ) : (
+                            <>
+                              <Send className="w-4 h-4 stroke-[2.5]" />
+                              Submit Transaction ID & Confirm
+                            </>
+                          )}
+                        </button>
+                      </form>
                     </div>
                   </div>
-
-                  {/* Transaction ID Form */}
-                  <form onSubmit={handleFinalSubmit} className="w-full max-w-md space-y-4">
-                    <div>
-                      <label className="block text-[10px] font-bold uppercase tracking-wider mb-1 text-left text-slate-500 dark:text-slate-400">
-                        Enter UPI Transaction ID / UTR Number *
-                      </label>
-                      <input
-                        type="text"
-                        name="transactionId"
-                        value={form.transactionId}
-                        onChange={handleChange}
-                        placeholder="e.g. 423189076512 or UTR-987654"
-                        className={`w-full px-4 py-2.5 rounded-sm border text-sm transition-all focus:outline-none focus:ring-1 focus:ring-blue-900 ${
-                          errors.transactionId
-                            ? 'border-red-500 bg-red-500/5'
-                            : theme === 'dark'
-                            ? 'border-slate-800 bg-slate-950 focus:border-blue-900'
-                            : 'border-slate-200 bg-slate-50 focus:border-blue-900'
-                        }`}
-                      />
-                      {errors.transactionId && (
-                        <p className="text-xs text-red-500 flex items-center gap-1 mt-1 font-medium text-left">
-                          <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {errors.transactionId}
-                        </p>
-                      )}
-                    </div>
-
-                    {submitError && (
-                      <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-sm text-xs text-red-500 flex items-center gap-2 text-left">
-                        <AlertCircle className="w-4 h-4 shrink-0" />
-                        <span>{submitError}</span>
-                      </div>
-                    )}
-
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full py-3.5 rounded-sm font-bold text-xs tracking-widest uppercase cursor-pointer transition-all duration-300 bg-blue-950 hover:bg-opacity-95 text-white flex items-center justify-center gap-2 border-b-2 border-amber-500 disabled:opacity-75"
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                          Saving Application & Transaction ID...
-                        </>
-                      ) : (
-                        <>
-                          <Send className="w-4 h-4 text-amber-500" />
-                          Submit Transaction ID & Confirm
-                        </>
-                      )}
-                    </button>
-                  </form>
                 </div>
               )}
 
-              {/* STEP 3: Confirmation Screen (Matches Image 2) */}
+              {/* STEP 3: Confirmation Screen */}
               {step === 'success' && (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
@@ -644,7 +714,7 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
                     Thank you, <span className="font-bold text-white">{form.name}</span>. Your application data has been stored. The Euroziel admin team will review and verify your details shortly.
                   </p>
 
-                  {/* Verification Workflow Card matching Image 2 */}
+                  {/* Verification Workflow Card */}
                   <div className={`p-4 rounded-md border w-full max-w-md mb-8 text-left text-xs space-y-2.5 ${
                     theme === 'dark' ? 'bg-slate-950/80 border-slate-800' : 'bg-slate-100 border-slate-200'
                   }`}>
