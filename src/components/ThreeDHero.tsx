@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
-import { Sparkles, Calendar, GraduationCap, ChevronRight, CheckCircle } from 'lucide-react';
+import { Sparkles, Calendar, GraduationCap, ChevronRight, CheckCircle, LogIn } from 'lucide-react';
 import { FaInstagram, FaLinkedin, FaYoutube, FaWhatsapp, FaEnvelope, FaFacebook } from 'react-icons/fa';
 import { animate } from "framer-motion";
 
@@ -12,6 +12,22 @@ interface ThreeDHeroProps {
 
 export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme }: ThreeDHeroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
+    return !!localStorage.getItem('euroziel_current_user');
+  });
+
+  useEffect(() => {
+    const checkLoginStatus = () => {
+      setIsLoggedIn(!!localStorage.getItem('euroziel_current_user'));
+    };
+    window.addEventListener('storage', checkLoginStatus);
+    window.addEventListener('euroziel_payment_updated', checkLoginStatus);
+    return () => {
+      window.removeEventListener('storage', checkLoginStatus);
+      window.removeEventListener('euroziel_payment_updated', checkLoginStatus);
+    };
+  }, []);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -62,12 +78,12 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
   const successRate = useCountUp(98, 0, 2); // Count up from 0 to 98 over 2 seconds
 
   return (
-    <div className="sticky lg:h-[95vh] h-auto ">
+    <div id="hero-banner" className="hero-banner sticky lg:h-[95vh] h-auto">
       <section
         ref={containerRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className={`sticky lg:h-[calc(100vh-80px)] h-auto overflow-hidden pt-6 pb-6 mobile-m:pt-8 mobile-m:pb-8 mobile-l:pt-10 mobile-l:pb-10 tablet:pt-5 tablet:pb-5 laptop:pt-24 laptop:pb-1 laptop-l:pt-36 laptop-l:pb-24 4k:pt-24 4k:pb-24 px-4 mobile-m:px-5 mobile-l:px-6 tablet:px-6 laptop:px-8 laptop-l:px-12 4k:px-20 select-none lg:flex lg:items-center lg:justify-center z-40 ${isDark ? 'bg-transparent' : 'bg-transparent'
+        className={`sticky lg:h-[calc(100vh-80px)] h-auto overflow-hidden pt-6 pb-6 mobile-m:pt-8 mobile-m:pb-8 mobile-l:pt-10 mobile-l:pb-10 tablet:pt-5 tablet:pb-5 laptop:pt-24 laptop:pb-1 laptop-l:pt-36 laptop-l:pb-24 4k:pt-24 4k:pb-24 px-4 mobile-m:px-5 mobile-l:px-6 tablet:px-6 laptop:px-8 laptop-l:px-12 4k:px-20 lg:flex lg:items-center lg:justify-center z-10 ${isDark ? 'bg-transparent' : 'bg-transparent'
           }`}
       >
         {/* Decorative Grid Gradients */}
@@ -316,7 +332,7 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
 
                 {/* Card Footer */}
                 <div
-                  className={`pt-3 mobile-m:pt-4 4k:pt-5 flex items-center justify-between border-t ${isDark ? 'border-slate-900' : 'border-slate-100'
+                  className={`pt-3 mobile-m:pt-4 4k:pt-5 flex items-center justify-between border-t pointer-events-auto relative z-30 ${isDark ? 'border-slate-900' : 'border-slate-100'
                     }`}
                   style={{ transform: 'translateZ(50px)' }}
                 >
@@ -337,12 +353,22 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
                     </span>
                     {/* <span className="text-[9px] mobile-m:text-[10px] 4k:text-xs text-slate-400 ml-1">for 20 mins</span> */}
                   </div>
-                  <button
-                    onClick={onOpenConsultation}
-                    className="mybtn px-3 mobile-m:px-4 4k:px-6 py-1.5 mobile-m:py-2 4k:py-3 bg-navy text-[10px] mobile-m:text-xs 4k:text-sm font-bold uppercase tracking-wider text-white rounded-sm hover:opacity-90 shadow-sm border-b-2 border-gold transition-all duration-300 cursor-pointer"
-                  >
-                    Book Session
-                  </button>
+                  {isLoggedIn ? (
+                    <a
+                      href="https://dashboard.euroziel.com"
+                      className="mybtn px-3 mobile-m:px-4 4k:px-6 py-1.5 mobile-m:py-2 4k:py-3 bg-navy text-[10px] mobile-m:text-xs 4k:text-sm font-bold uppercase tracking-wider text-white rounded-sm hover:opacity-90 shadow-sm border-b-2 border-gold transition-all duration-300 cursor-pointer flex items-center gap-1.5"
+                    >
+                      <LogIn className="w-3.5 h-3.5 text-gold shrink-0" />
+                      Go to Dashboard
+                    </a>
+                  ) : (
+                    <button
+                      onClick={onOpenConsultation}
+                      className="mybtn px-3 mobile-m:px-4 4k:px-6 py-1.5 mobile-m:py-2 4k:py-3 bg-navy text-[10px] mobile-m:text-xs 4k:text-sm font-bold uppercase tracking-wider text-white rounded-sm hover:opacity-90 shadow-sm border-b-2 border-gold transition-all duration-300 cursor-pointer"
+                    >
+                      Book Session
+                    </button>
+                  )}
                 </div>
 
                 {/* Depth Badge */}

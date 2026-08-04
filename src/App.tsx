@@ -11,6 +11,7 @@ import AboutSection from './components/AboutSection';
 import FAQSection from './components/FAQSection';
 import ContactModal from './components/ContactModal';
 import ContactModal2 from './components/ContactModal2';
+import LoginModal from './components/LoginModal';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsConditions from './components/TermsConditions';
 import RefundCancellationPolicy from './components/RefundCancellationPolicy';
@@ -32,6 +33,7 @@ export default function App() {
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
   const [isConsultation2Open, setIsConsultation2Open] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
@@ -109,6 +111,7 @@ export default function App() {
           theme={theme}
           onThemeToggle={toggleTheme}
           onOpenConsultation={() => setIsConsultationOpen(true)}
+          onOpenLogin={() => setIsLoginOpen(true)}
         />
 
         <main className="flex-grow pt-0">
@@ -186,6 +189,7 @@ export default function App() {
 
         <ContactModal isOpen={isConsultationOpen} onClose={handleCloseModal1} theme={theme} />
         <ContactModal2 isOpen={isConsultation2Open} onClose={handleCloseModal2} theme={theme} />
+        <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} theme={theme} />
 
         {showScrollTop && (
           <button

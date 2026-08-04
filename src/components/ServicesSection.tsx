@@ -184,12 +184,27 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
   // ── Add these inside your component, near your other useState hooks ──
   const FREE_STEPS = 3; // first 3 steps are open for everyone
 
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
+    return !!localStorage.getItem('euroziel_current_user');
+  });
   const [paidSteps, setPaidSteps] = useState<Set<number>>(new Set()); // indices unlocked via successful payment
   const [lockedPopup, setLockedPopup] = useState<number | null>(null); // index of step showing the "unlock" popup
   const [paymentLoadingStep, setPaymentLoadingStep] = useState<number | null>(null); // step currently "processing" payment
 
-  const isStepUnlocked = (idx: number) => idx < FREE_STEPS || paidSteps.has(idx);
-  const totalUnlocked = FREE_STEPS + paidSteps.size;
+  React.useEffect(() => {
+    const checkLoginStatus = () => {
+      setIsLoggedIn(!!localStorage.getItem('euroziel_current_user'));
+    };
+    window.addEventListener('storage', checkLoginStatus);
+    window.addEventListener('euroziel_payment_updated', checkLoginStatus);
+    return () => {
+      window.removeEventListener('storage', checkLoginStatus);
+      window.removeEventListener('euroziel_payment_updated', checkLoginStatus);
+    };
+  }, []);
+
+  const isStepUnlocked = (idx: number) => isLoggedIn || idx < FREE_STEPS || paidSteps.has(idx);
+  const totalUnlocked = isLoggedIn ? blockSteps.length : FREE_STEPS + paidSteps.size;
 
   const handleStepClick = (idx: number) => {
     if (!isStepUnlocked(idx)) {
@@ -206,14 +221,8 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
   // Once Razorpay is integrated, call setPaidSteps(...) ONLY inside the actual
   // payment success callback (e.g. handler.on('payment.success', ...)), not here.
   const handleUnlockPay = (idx: number) => {
-    setPaymentLoadingStep(idx);
-
-    // Simulated gateway redirect delay — replace this entire block with real Razorpay checkout.open()
-    setTimeout(() => {
-      setPaymentLoadingStep(null);
-      // Intentionally NOT unlocking or expanding the step here.
-      // Step remains locked and closed until real payment confirms.
-    }, 1500);
+    setLockedPopup(null);
+    onOpenConsultation();
   };
 
   return (

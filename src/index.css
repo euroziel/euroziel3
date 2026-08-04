@@ -62,14 +62,19 @@
   cursor: none;
 }
 
-#contact-modal *, #contact-modal2 *, #navbar * {
-  cursor: auto; /* Allow cursor to be visible inside modals */
+#contact-modal *, #contact-modal2 *, #login-modal *, #navbar *, input, button, a, select, textarea, [role="button"] {
+  cursor: auto; /* Allow cursor to be visible inside modals and form controls */
 }
 
-.mybtn {
-  cursor: pointer;
+button, a, input[type="submit"], input[type="button"], .mybtn {
+  cursor: pointer !important;
 }
 
+/* Hide the plane cursor when hovering over modals or navbar */
+body:has(#login-modal:hover) .mycursor,
+body:has(#contact-modal:hover) .mycursor,
+body:has(#contact-modal2:hover) .mycursor,
+body:has(#navbar:hover) .mycursor,
 body:has(.mybtn:hover) .mycursor {
   display: none;
 }
