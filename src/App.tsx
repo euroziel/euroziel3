@@ -12,6 +12,7 @@ import FAQSection from './components/FAQSection';
 import ContactModal from './components/ContactModal';
 import ContactModal2 from './components/ContactModal2';
 import LoginModal from './components/LoginModal';
+import RejectionNoticeModal from './components/RejectionNoticeModal';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsConditions from './components/TermsConditions';
 import RefundCancellationPolicy from './components/RefundCancellationPolicy';
@@ -190,6 +191,7 @@ export default function App() {
         <ContactModal isOpen={isConsultationOpen} onClose={handleCloseModal1} theme={theme} />
         <ContactModal2 isOpen={isConsultation2Open} onClose={handleCloseModal2} theme={theme} />
         <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} theme={theme} />
+        <RejectionNoticeModal theme={theme} />
 
         {showScrollTop && (
           <button

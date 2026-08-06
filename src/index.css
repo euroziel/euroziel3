@@ -62,8 +62,12 @@
   cursor: none;
 }
 
-#contact-modal *, #contact-modal2 *, #login-modal *, #navbar *, input, button, a, select, textarea, [role="button"] {
+#contact-modal *, #contact-modal2 *, #login-modal *, #rejection-notice-modal *, #navbar *, input, button, a, select, textarea, [role="button"] {
   cursor: auto; /* Allow cursor to be visible inside modals and form controls */
+}
+
+input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="tel"], textarea {
+  cursor: text !important;
 }
 
 button, a, input[type="submit"], input[type="button"], .mybtn {
@@ -74,9 +78,10 @@ button, a, input[type="submit"], input[type="button"], .mybtn {
 body:has(#login-modal:hover) .mycursor,
 body:has(#contact-modal:hover) .mycursor,
 body:has(#contact-modal2:hover) .mycursor,
+body:has(#rejection-notice-modal:hover) .mycursor,
 body:has(#navbar:hover) .mycursor,
 body:has(.mybtn:hover) .mycursor {
-  display: none;
+  display: none !important;
 }
 
 
