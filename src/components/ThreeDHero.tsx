@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
-import { Sparkles, Calendar, GraduationCap, ChevronRight, CheckCircle, LogIn } from 'lucide-react';
+import { Sparkles, Calendar, GraduationCap, ChevronRight, CheckCircle, LogIn, AlertTriangle } from 'lucide-react';
 import { FaInstagram, FaLinkedin, FaYoutube, FaWhatsapp, FaEnvelope, FaFacebook } from 'react-icons/fa';
 import { animate } from "framer-motion";
 
@@ -16,10 +16,22 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
     return !!localStorage.getItem('euroziel_current_user');
   });
+  const [hasPaid, setHasPaid] = useState<boolean>(() => {
+    return localStorage.getItem('euroziel_has_paid') === 'true';
+  });
+  const [isVerified, setIsVerified] = useState<boolean>(() => {
+    return localStorage.getItem('euroziel_is_verified') === 'true';
+  });
+  const [isRejected, setIsRejected] = useState<boolean>(() => {
+    return localStorage.getItem('euroziel_is_rejected') === 'true';
+  });
 
   useEffect(() => {
     const checkLoginStatus = () => {
       setIsLoggedIn(!!localStorage.getItem('euroziel_current_user'));
+      setHasPaid(localStorage.getItem('euroziel_has_paid') === 'true');
+      setIsVerified(localStorage.getItem('euroziel_is_verified') === 'true');
+      setIsRejected(localStorage.getItem('euroziel_is_rejected') === 'true');
     };
     window.addEventListener('storage', checkLoginStatus);
     window.addEventListener('euroziel_payment_updated', checkLoginStatus);
@@ -337,30 +349,73 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
                   style={{ transform: 'translateZ(50px)' }}
                 >
                   <div className="text-left">
-                    <span className={`text-[10px] mobile-m:text-xs 4k:text-sm font-bold tracking-widest  ${isDark ? 'text-slate-400' : 'text-slate-500'
-                      }`}>Start Profile verification</span> <br />
-                    <span className={`text-[10px] mobile-m:text-xs 4k:text-sm font-bold tracking-widest  ${isDark ? 'text-slate-400' : 'text-slate-500'
-                      }`}>@ just</span>
-                    <span className="text-[12px] mobile-m:text-[9px] laptop:text-[24px] laptop-l:text-[30px] 4k:text-[11px] uppercase tracking-widest font-sans text-bold pl-1 text-gold">₹9</span> <br />
-                    <span
-                      style={{
-                        background: 'linear-gradient(to top left, transparent 47%, currentColor 48%, currentColor 52%, transparent 53%) no-repeat center',
-                        padding: '0 2px'
-                      }}
-                      className="text-xs mobile-m:text-sm 4k:text-base font-bold text-gray-300"
-                    >
-                      INR 1500
-                    </span>
-                    {/* <span className="text-[9px] mobile-m:text-[10px] 4k:text-xs text-slate-400 ml-1">for 20 mins</span> */}
+                    <span className={`text-[10px] mobile-m:text-xs 4k:text-sm font-bold tracking-widest ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                      {isLoggedIn && hasPaid ? (isVerified ? 'Profile Verified' : isRejected ? 'Verification Flagged' : 'Verification Status') : 'Start Profile verification'}
+                    </span> <br />
+                    {isLoggedIn && hasPaid ? (
+                      isVerified ? (
+                        <span className="text-xs text-emerald-400 font-bold uppercase tracking-wider">Access Granted</span>
+                      ) : isRejected ? (
+                        <span className="text-[11px] text-red-400 font-bold uppercase tracking-wider flex items-center gap-1 mt-0.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-ping" /> Action Required
+                        </span>
+                      ) : (
+                        <span className="text-[11px] text-amber-400 font-bold uppercase tracking-wider flex items-center gap-1 mt-0.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" /> ₹9 Paid • Pending Review
+                        </span>
+                      )
+                    ) : (
+                      <>
+                        <span className={`text-[10px] mobile-m:text-xs 4k:text-sm font-bold tracking-widest ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>@ just</span>
+                        <span className="text-[12px] mobile-m:text-[9px] laptop:text-[24px] laptop-l:text-[30px] 4k:text-[11px] uppercase tracking-widest font-sans text-bold pl-1 text-gold">₹9</span> <br />
+                        <span
+                          style={{
+                            background: 'linear-gradient(to top left, transparent 47%, currentColor 48%, currentColor 52%, transparent 53%) no-repeat center',
+                            padding: '0 2px'
+                          }}
+                          className="text-xs mobile-m:text-sm 4k:text-base font-bold text-gray-300"
+                        >
+                          INR 1500
+                        </span>
+                      </>
+                    )}
                   </div>
-                  {isLoggedIn ? (
-                    <a
-                      href="https://dashboard.euroziel.com"
-                      className="mybtn px-3 mobile-m:px-4 4k:px-6 py-1.5 mobile-m:py-2 4k:py-3 bg-navy text-[10px] mobile-m:text-xs 4k:text-sm font-bold uppercase tracking-wider text-white rounded-sm hover:opacity-90 shadow-sm border-b-2 border-gold transition-all duration-300 cursor-pointer flex items-center gap-1.5"
-                    >
-                      <LogIn className="w-3.5 h-3.5 text-gold shrink-0" />
-                      Go to Dashboard
-                    </a>
+                  {isLoggedIn && hasPaid ? (
+                    isVerified ? (
+                      <a
+                        href="https://dashboard.euroziel.com"
+                        className="mybtn px-3 mobile-m:px-4 4k:px-6 py-1.5 mobile-m:py-2 4k:py-3 bg-navy text-[10px] mobile-m:text-xs 4k:text-sm font-bold uppercase tracking-wider text-white rounded-sm hover:opacity-90 shadow-sm border-b-2 border-gold transition-all duration-300 cursor-pointer flex items-center gap-1.5"
+                      >
+                        <LogIn className="w-3.5 h-3.5 text-gold shrink-0" />
+                        Go to Dashboard
+                      </a>
+                    ) : isRejected ? (
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          window.dispatchEvent(new Event('euroziel_open_rejection_modal'));
+                        }}
+                        className="mybtn px-3 mobile-m:px-4 4k:px-6 py-1.5 mobile-m:py-2 4k:py-3 bg-red-950 border border-red-500/50 text-red-400 text-[10px] mobile-m:text-xs 4k:text-sm font-bold uppercase tracking-wider rounded-sm hover:bg-red-900/60 shadow-lg shadow-red-500/20 transition-all duration-300 cursor-pointer flex items-center gap-1.5 z-50 pointer-events-auto"
+                      >
+                        <AlertTriangle className="w-3.5 h-3.5 text-red-400 animate-pulse shrink-0" />
+                        Fix Payment Details
+                      </button>
+                    ) : (
+                      <div className="relative group">
+                        <button
+                          disabled
+                          className="mybtn px-3 mobile-m:px-4 4k:px-6 py-1.5 mobile-m:py-2 4k:py-3 bg-slate-900 border border-amber-500/30 text-amber-400 text-[10px] mobile-m:text-xs 4k:text-sm font-bold uppercase tracking-wider rounded-sm opacity-80 cursor-not-allowed flex items-center gap-1.5"
+                          title="Wait till the admin verifies your ₹9 payment"
+                        >
+                          <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping shrink-0" />
+                          Wait till Admin Verifies
+                        </button>
+                        <div className="absolute right-0 top-full mt-2 opacity-0 group-hover:opacity-100 transition-opacity bg-slate-950 text-amber-400 text-[10px] py-1 px-3 rounded border border-amber-500/30 whitespace-nowrap pointer-events-none z-50 shadow-xl">
+                          ⏳ Verification Pending - Wait for admin approval
+                        </div>
+                      </div>
+                    )
                   ) : (
                     <button
                       onClick={onOpenConsultation}

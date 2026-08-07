@@ -392,7 +392,7 @@ export default function FAQSection({ onOpenConsultation, theme }: FAQSectionProp
   });
 
   return (
-    <div className="space-y-12 md:space-y-16 pb-20 max-w-5xl mx-auto px-4 pt-10 text-left">
+    <div className="space-y-12 md:space-y-16 pb-20 max-w-5xl mx-auto px-4 pt-24 text-left">
       
       {/* Category banner */}
       <ScrollReveal variant="fadeDown">

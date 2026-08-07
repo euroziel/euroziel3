@@ -181,11 +181,16 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
     }
   ];
 
-  // ── Add these inside your component, near your other useState hooks ──
   const FREE_STEPS = 3; // first 3 steps are open for everyone
 
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
     return !!localStorage.getItem('euroziel_current_user');
+  });
+  const [hasPaid, setHasPaid] = useState<boolean>(() => {
+    return localStorage.getItem('euroziel_has_paid') === 'true';
+  });
+  const [isVerified, setIsVerified] = useState<boolean>(() => {
+    return localStorage.getItem('euroziel_is_verified') === 'true';
   });
   const [paidSteps, setPaidSteps] = useState<Set<number>>(new Set()); // indices unlocked via successful payment
   const [lockedPopup, setLockedPopup] = useState<number | null>(null); // index of step showing the "unlock" popup
@@ -194,6 +199,8 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
   React.useEffect(() => {
     const checkLoginStatus = () => {
       setIsLoggedIn(!!localStorage.getItem('euroziel_current_user'));
+      setHasPaid(localStorage.getItem('euroziel_has_paid') === 'true');
+      setIsVerified(localStorage.getItem('euroziel_is_verified') === 'true');
     };
     window.addEventListener('storage', checkLoginStatus);
     window.addEventListener('euroziel_payment_updated', checkLoginStatus);
@@ -203,8 +210,8 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
     };
   }, []);
 
-  const isStepUnlocked = (idx: number) => isLoggedIn || idx < FREE_STEPS || paidSteps.has(idx);
-  const totalUnlocked = isLoggedIn ? blockSteps.length : FREE_STEPS + paidSteps.size;
+  const isStepUnlocked = (idx: number) => (isLoggedIn && isVerified) || idx < FREE_STEPS || paidSteps.has(idx);
+  const totalUnlocked = (isLoggedIn && isVerified) ? blockSteps.length : FREE_STEPS + paidSteps.size;
 
   const handleStepClick = (idx: number) => {
     if (!isStepUnlocked(idx)) {
@@ -268,20 +275,32 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
               </p>
 
               <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-                <button
-                  onClick={onOpenConsultation}
-                  className="mybtn px-6 mobile-m:px-8 laptop:px-8 4k:px-10 py-3 mobile-m:py-4 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm tracking-widest uppercase cursor-pointer transition-all duration-300 bg-navy text-white hover:bg-opacity-90 text-center shadow-premium border-b-2 border-gold font-sans flex items-center justify-center gap-2 transform hover:-translate-y-0.5 active:translate-y-0"
-                >
-                  Book Your Session
-                </button>
-                {/* <button
-                  className={`text-sm font-semibold px-8 py-3.5 rounded-sm border transition-colors ${dark
-                    ? 'border-slate-700 text-white hover:bg-slate-800/60'
-                    : 'border-slate-300 text-slate-900 hover:bg-slate-100/60'
-                    }`}
-                >
-                  Explore Services
-                </button> */}
+                {isLoggedIn && hasPaid ? (
+                  isVerified ? (
+                    <a
+                      href="https://dashboard.euroziel.com"
+                      className="mybtn px-6 mobile-m:px-8 laptop:px-8 4k:px-10 py-3 mobile-m:py-4 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm tracking-widest uppercase cursor-pointer transition-all duration-300 bg-navy text-white hover:bg-opacity-90 text-center shadow-premium border-b-2 border-gold font-sans flex items-center justify-center gap-2"
+                    >
+                      Go to Student Dashboard
+                    </a>
+                  ) : (
+                    <button
+                      disabled
+                      className="mybtn px-6 mobile-m:px-8 laptop:px-8 4k:px-10 py-3 mobile-m:py-4 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm tracking-widest uppercase bg-slate-800 text-amber-400 border border-amber-500/30 opacity-80 cursor-not-allowed text-center font-sans flex items-center justify-center gap-2 shadow-inner"
+                      title="Wait till the admin verifies your ₹9 payment"
+                    >
+                      <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+                      Wait till Account Verification
+                    </button>
+                  )
+                ) : (
+                  <button
+                    onClick={onOpenConsultation}
+                    className="mybtn px-6 mobile-m:px-8 laptop:px-8 4k:px-10 py-3 mobile-m:py-4 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm tracking-widest uppercase cursor-pointer transition-all duration-300 bg-navy text-white hover:bg-opacity-90 text-center shadow-premium border-b-2 border-gold font-sans flex items-center justify-center gap-2 transform hover:-translate-y-0.5 active:translate-y-0"
+                  >
+                    Book Your Session
+                  </button>
+                )}
               </div>
 
               <div className="flex flex-wrap items-center justify-center gap-8 pt-6 text-xs font-sans">
@@ -607,22 +626,42 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: -6, scale: 0.97 }}
                           transition={{ duration: 0.2 }}
-                          className={`absolute left-16 right-0 top-full mt-2 z-1 rounded-sm border p-5 shadow-premium ${dark ? 'bg-slate-950 border-gold/30' : 'bg-white border-gold/30'
+                          className={`absolute left-16 right-0 top-full mt-2 z-10 rounded-sm border p-5 shadow-premium ${dark ? 'bg-slate-950 border-gold/30' : 'bg-white border-gold/30'
                             }`}
                         >
                           <div className="flex items-start gap-4">
-                            <div className="w-10 h-10 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center flex-shrink-0">
-                              <Lock className="w-5 h-5 text-gold" strokeWidth={2.5} />
+                            <div className="w-10 h-10 rounded-full bg-amber-500/10 border border-amber-500/30 flex items-center justify-center flex-shrink-0">
+                              <Lock className="w-5 h-5 text-amber-500" strokeWidth={2.5} />
                             </div>
                             <div className="flex-1">
                               <h5 className={`font-extrabold text-sm mb-1 ${dark ? 'text-slate-100' : 'text-slate-800'}`}>
-                                Step {step.id} is locked
+                                {isLoggedIn && hasPaid ? `Step ${step.id} - Verification Pending` : `Step ${step.id} is locked`}
                               </h5>
                               <p className={`text-xs leading-relaxed mb-4 ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
-                                This step stays locked until payment is complete. Unlock it instantly for just ₹9.
+                                {isLoggedIn && hasPaid
+                                  ? "Your payment of ₹9 has been received and is currently being verified by the Euroziel admin team. Access to all steps will unlock automatically once verified."
+                                  : "This step stays locked until payment is complete. Unlock it instantly for just ₹9."}
                               </p>
 
-                              {isPaying ? (
+                              {isLoggedIn && hasPaid ? (
+                                <div className="flex items-center gap-3">
+                                  <button
+                                    disabled
+                                    className="mybtn flex items-center gap-2 text-xs font-bold bg-amber-500/20 text-amber-400 border border-amber-500/40 px-4 py-2 rounded-sm opacity-80 cursor-not-allowed"
+                                    title="Wait till account verification by admin"
+                                  >
+                                    <Lock className="w-3.5 h-3.5 text-amber-400 animate-pulse" strokeWidth={2.5} />
+                                    Wait till Account Verification
+                                  </button>
+                                  <button
+                                    onClick={() => setLockedPopup(null)}
+                                    className={`mybtn text-xs font-semibold px-3 py-2 rounded-sm transition-colors ${dark ? 'text-slate-400 hover:text-slate-200' : 'text-slate-500 hover:text-slate-700'
+                                      }`}
+                                  >
+                                    Close
+                                  </button>
+                                </div>
+                              ) : isPaying ? (
                                 <div className="flex items-center gap-2 text-xs font-semibold text-gold">
                                   <motion.span
                                     animate={{ rotate: 360 }}
@@ -664,7 +703,7 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
 
       {/* bottom CTA */}
       <section className="max-w-3xl mx-auto px-4 sm:px-6 mb-16 md:mb-24 text-center">
-        <ScrollReveal variant="clipReveal">
+        <ScrollReveal variant="fadeUp">
           <div className={`p-6 sm:p-8 md:p-12 rounded-sm border shadow-premium space-y-4 sm:space-y-6 border-b-4 border-b-gold ${dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200 bg-white'
             }`}>
             <span className={`inline-block text-[9px] sm:text-[10px] font-bold text-navy uppercase tracking-[0.15em] sm:tracking-[0.2em] border px-2.5 sm:px-3 py-1 rounded-sm ${dark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'

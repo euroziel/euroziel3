@@ -39,6 +39,22 @@ type ModalStep = 'form' | 'payment' | 'success';
 
 export default function ContactModal({ isOpen, onClose, theme = 'light' }: ContactModalProps) {
   const [step, setStep] = useState<ModalStep>('form');
+  const [isVerified, setIsVerified] = useState<boolean>(() => {
+    return localStorage.getItem('euroziel_is_verified') === 'true';
+  });
+
+  React.useEffect(() => {
+    const checkStatus = () => {
+      setIsVerified(localStorage.getItem('euroziel_is_verified') === 'true');
+    };
+    window.addEventListener('storage', checkStatus);
+    window.addEventListener('euroziel_payment_updated', checkStatus);
+    return () => {
+      window.removeEventListener('storage', checkStatus);
+      window.removeEventListener('euroziel_payment_updated', checkStatus);
+    };
+  }, []);
+
   const [form, setForm] = useState<FormState>({
     name: '',
     email: '',
@@ -187,6 +203,7 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
       localStorage.setItem('euroziel_user', JSON.stringify(userAccount));
       localStorage.setItem('euroziel_current_user', JSON.stringify(userAccount));
       localStorage.setItem('euroziel_has_paid', 'true');
+      localStorage.setItem('euroziel_is_verified', 'false');
       window.dispatchEvent(new Event('euroziel_payment_updated'));
 
       setIsSubmitting(false);
@@ -730,13 +747,29 @@ export default function ContactModal({ isOpen, onClose, theme = 'light' }: Conta
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-3 w-full max-w-md justify-center">
-                    <a
-                      href="https://dashboard.euroziel.com"
-                      className="px-6 py-3 rounded-sm font-bold text-xs tracking-widest uppercase bg-navy text-white hover:bg-opacity-90 transition-all text-center flex items-center justify-center gap-2 border-b-2 border-gold shadow-md"
-                    >
-                      <LogIn className="w-4 h-4 text-gold" />
-                      Go to Dashboard
-                    </a>
+                    {isVerified ? (
+                      <a
+                        href="https://dashboard.euroziel.com"
+                        className="px-6 py-3 rounded-sm font-bold text-xs tracking-widest uppercase bg-navy text-white hover:bg-opacity-90 transition-all text-center flex items-center justify-center gap-2 border-b-2 border-gold shadow-md"
+                      >
+                        <LogIn className="w-4 h-4 text-gold" />
+                        Go to Dashboard
+                      </a>
+                    ) : (
+                      <div className="relative group flex-1">
+                        <button
+                          disabled
+                          className="w-full px-6 py-3 rounded-sm font-bold text-xs tracking-widest uppercase bg-slate-800/80 border border-slate-700 text-slate-400 opacity-70 cursor-not-allowed text-center flex items-center justify-center gap-2 shadow-inner"
+                          title="Wait till the admin verifies your ₹9 payment"
+                        >
+                          <LogIn className="w-4 h-4 text-amber-400 opacity-60" />
+                          Go to Dashboard
+                        </button>
+                        <div className="absolute left-1/2 -translate-x-1/2 -bottom-10 opacity-0 group-hover:opacity-100 transition-opacity bg-slate-950 text-amber-400 text-[10px] py-1 px-3 rounded border border-amber-500/30 whitespace-nowrap pointer-events-none z-50 shadow-xl">
+                          ⏳ Wait till the admin verifies your ₹9 payment
+                        </div>
+                      </div>
+                    )}
                     <button
                       onClick={handleClose}
                       className="px-6 py-3 rounded-sm font-bold text-xs tracking-widest uppercase border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-200 transition-all cursor-pointer text-center"

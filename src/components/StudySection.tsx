@@ -26,7 +26,7 @@ import Companies from "./companies";
 
 interface StudySectionProps {
   onOpenConsultation: () => void;
-  onNavigateToTab: (tab: string) => void;
+  onNavigateToTab?: (tab: string) => void;
   theme: "light" | "dark";
 }
 
@@ -657,45 +657,43 @@ function HeroReveal({ onOpenConsultation, onNavigateToTab, theme }: HeroRevealPr
       />
 
       {/* University */}
-      <div className="absolute inset-0 pointer-events-none" style={{zIndex: 3}}>
+      <div className="absolute inset-0 pointer-events-none z-[2]">
         <img
           src="/assets/university1.png"
-          alt=""
-          className="w-full h-full object-cover object-center"
+          alt="German University Architecture"
+          className="w-full h-full object-cover object-center opacity-90"
           loading="eager"
         />
-        <div className="absolute inset-0 bg-[#061628]/35" />
+        <div className="absolute inset-0 bg-[#061628]/40" />
       </div>
 
       {/* Study Banner */}
       <div
-        className="absolute inset-x-0 z-[0] flex flex-col items-center justify-center
-      gap-1 px-4 text-center pb-90
-      top-1/3
-      mobile-l:top-[28%]
+        className="absolute inset-x-0 z-[4] flex flex-col items-center justify-center
+      gap-1 px-4 text-center max-w-full overflow-hidden pointer-events-none
+      top-[18%]
+      mobile-l:top-[20%]
       tablet:flex-row tablet:gap-4 tablet:top-[10%]
-      laptop:gap-32
-      laptop-l:gap-58"
+      laptop:gap-28
+      laptop-l:gap-48"
       >
         <h1
           className="font-eh font-bold text-white
-        text-4xl leading-tight
-        mobile-l:text-5xl
+        text-3xl mobile-m:text-4xl mobile-l:text-5xl
         tablet:text-6xl
         laptop:text-7xl
         laptop-l:text-8xl
-        4k:text-9xl"
+        4k:text-9xl tracking-wide uppercase drop-shadow-lg"
         >
           STUDY IN
         </h1>
         <h1
           className="font-eh font-bold text-gold
-        text-4xl leading-tight
-        mobile-l:text-5xl
+        text-3xl mobile-m:text-4xl mobile-l:text-5xl
         tablet:text-6xl
         laptop:text-7xl
         laptop-l:text-8xl
-        4k:text-9xl"
+        4k:text-9xl tracking-wide uppercase drop-shadow-lg"
         >
           GERMANY
         </h1>

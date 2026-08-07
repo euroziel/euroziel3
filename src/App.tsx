@@ -12,6 +12,7 @@ import FAQSection from './components/FAQSection';
 import ContactModal from './components/ContactModal';
 import ContactModal2 from './components/ContactModal2';
 import LoginModal from './components/LoginModal';
+import RejectionNoticeModal from './components/RejectionNoticeModal';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsConditions from './components/TermsConditions';
 import RefundCancellationPolicy from './components/RefundCancellationPolicy';
@@ -89,21 +90,26 @@ export default function App() {
   };
 
   return (
-    <div style={{ width: '100%', height: '600px', position: 'absolute' }}>
-      <Particles
-        particleColors={["#ffffff"]}
-        particleCount={200}
-        particleSpread={10}
-        speed={0.1}
-        particleBaseSize={100}
-        moveParticlesOnHover
-        alphaParticles={false}
-        disableRotation={false}
-        pixelRatio={1}
-      />
+    <div className="relative w-full min-h-screen flex flex-col font-sans overflow-x-hidden">
+      {/* Background Particles Container */}
+      <div className="absolute top-0 left-0 w-full h-[600px] pointer-events-none overflow-hidden z-0">
+        <Particles
+          particleColors={["#ffffff"]}
+          particleCount={200}
+          particleSpread={10}
+          speed={0.1}
+          particleBaseSize={100}
+          moveParticlesOnHover
+          alphaParticles={false}
+          disableRotation={false}
+          pixelRatio={1}
+        />
+      </div>
+
       <div
-        className={`relative z-10 min-h-screen flex flex-col font-sans transition-colors duration-300 ${theme === 'dark' ? 'bg-transparent text-slate-100' : 'bg-white text-slate-900'
-          }`}
+        className={`relative z-10 min-h-screen flex flex-col font-sans w-full overflow-x-hidden transition-colors duration-300 ${
+          theme === 'dark' ? 'bg-transparent text-slate-100' : 'bg-white text-slate-900'
+        }`}
       >
         <Navbar
           currentTab={currentTab}
@@ -190,6 +196,7 @@ export default function App() {
         <ContactModal isOpen={isConsultationOpen} onClose={handleCloseModal1} theme={theme} />
         <ContactModal2 isOpen={isConsultation2Open} onClose={handleCloseModal2} theme={theme} />
         <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} theme={theme} />
+        <RejectionNoticeModal theme={theme} />
 
         {showScrollTop && (
           <button

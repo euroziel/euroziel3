@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Logo from './Logo';
-import { Menu, X, Calendar, Home, BookOpen, Briefcase, GitBranch, Users, HelpCircle, LogIn, LogOut } from 'lucide-react';
+import { Menu, X, Calendar, Home, BookOpen, Briefcase, GitBranch, Users, HelpCircle, LogIn, LogOut, AlertTriangle } from 'lucide-react';
 
 interface NavbarProps {
   currentTab: string;
@@ -19,13 +19,24 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
     const saved = localStorage.getItem('euroziel_current_user');
     return saved ? JSON.parse(saved) : null;
   });
+  const [hasPaid, setHasPaid] = useState<boolean>(() => {
+    return localStorage.getItem('euroziel_has_paid') === 'true';
+  });
+  const [isVerified, setIsVerified] = useState<boolean>(() => {
+    return localStorage.getItem('euroziel_is_verified') === 'true';
+  });
+  const [isRejected, setIsRejected] = useState<boolean>(() => {
+    return localStorage.getItem('euroziel_is_rejected') === 'true';
+  });
   const lastScrollY = useRef(0);
 
   useEffect(() => {
     const checkUserStatus = () => {
-
       const saved = localStorage.getItem('euroziel_current_user');
       setCurrentUser(saved ? JSON.parse(saved) : null);
+      setHasPaid(localStorage.getItem('euroziel_has_paid') === 'true');
+      setIsVerified(localStorage.getItem('euroziel_is_verified') === 'true');
+      setIsRejected(localStorage.getItem('euroziel_is_rejected') === 'true');
     };
 
     window.addEventListener('storage', checkUserStatus);
@@ -60,7 +71,14 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
     const confirmed = window.confirm('Are you sure you want to logout? Your services will be locked until you log back in.');
     if (!confirmed) return;
     localStorage.removeItem('euroziel_current_user');
+    localStorage.removeItem('euroziel_has_paid');
+    localStorage.removeItem('euroziel_is_verified');
+    localStorage.removeItem('euroziel_is_rejected');
+    localStorage.removeItem('euroziel_rejection_reason');
     setCurrentUser(null);
+    setHasPaid(false);
+    setIsVerified(false);
+    setIsRejected(false);
     window.dispatchEvent(new Event('euroziel_payment_updated'));
   };
 
@@ -136,14 +154,43 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
 
           {/* Desktop Controls */}
           <div className="hidden laptop:flex items-center gap-2">
-            {currentUser ? (
-              <a
-                href="https://dashboard.euroziel.com"
-                className="flex items-center gap-1.5 px-3 mobile-m:px-4 py-1.5 rounded-full text-[10px] mobile-m:text-[11px] laptop:text-[9px] font-bold tracking-widest uppercase bg-navy text-white hover:bg-opacity-90 border-b-2 border-gold cursor-pointer transition-all duration-300 whitespace-nowrap"
-              >
-                <LogIn className="w-3.5 h-3.5 text-gold shrink-0" />
-                Go to Dashboard
-              </a>
+            {currentUser && hasPaid ? (
+              isVerified ? (
+                <a
+                  href="https://dashboard.euroziel.com"
+                  className="flex items-center gap-1.5 px-3 mobile-m:px-4 py-1.5 rounded-full text-[10px] mobile-m:text-[11px] laptop:text-[9px] font-bold tracking-widest uppercase bg-navy text-white hover:bg-opacity-90 border-b-2 border-gold cursor-pointer transition-all duration-300 whitespace-nowrap shadow-sm"
+                >
+                  <LogIn className="w-3.5 h-3.5 text-gold shrink-0" />
+                  Go to Dashboard
+                </a>
+              ) : isRejected ? (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    window.dispatchEvent(new Event('euroziel_open_rejection_modal'));
+                  }}
+                  className="flex items-center gap-1.5 px-3 mobile-m:px-4 py-1.5 rounded-full text-[10px] mobile-m:text-[11px] laptop:text-[9px] font-bold tracking-widest uppercase bg-red-950/90 text-red-400 border border-red-500/50 hover:bg-red-900/60 cursor-pointer transition-all duration-300 whitespace-nowrap shadow-lg shadow-red-500/20"
+                  title="Click to view rejection reason and update Transaction ID"
+                >
+                  <AlertTriangle className="w-3.5 h-3.5 text-red-400 shrink-0 animate-pulse" />
+                  Fix Payment Details
+                </button>
+              ) : (
+                <div className="relative group">
+                  <button
+                    disabled
+                    className="flex items-center gap-1.5 px-3 mobile-m:px-4 py-1.5 rounded-full text-[10px] mobile-m:text-[11px] laptop:text-[9px] font-bold tracking-widest uppercase bg-slate-800 text-slate-400 border border-slate-700 opacity-70 cursor-not-allowed transition-all duration-300 whitespace-nowrap"
+                    title="Wait till the admin verifies your ₹9 payment"
+                  >
+                    <LogIn className="w-3.5 h-3.5 text-amber-400 shrink-0 opacity-60" />
+                    Go to Dashboard
+                  </button>
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity bg-slate-950 text-amber-400 text-[10px] py-1 px-3 rounded border border-amber-500/30 whitespace-nowrap pointer-events-none z-50 shadow-xl">
+                    ⏳ Wait till admin verifies payment
+                  </div>
+                </div>
+              )
             ) : (
               <button
                 onClick={onOpenConsultation}
@@ -240,15 +287,39 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
             </div>
 
             <div className="pt-1">
-              {currentUser ? (
-                <a
-                  href="https://dashboard.euroziel.com"
-                  onClick={() => setIsOpen(false)}
-                  className="w-full py-2.5 rounded-xl font-bold text-[10px] mobile-m:text-[11px] laptop:text-[9px] uppercase tracking-wider text-center bg-navy text-white hover:bg-opacity-90 border-b-2 border-gold flex items-center justify-center gap-1.5 shadow-md cursor-pointer"
-                >
-                  <LogIn className="w-4 h-4 text-gold" />
-                  Go to Dashboard
-                </a>
+              {currentUser && hasPaid ? (
+                isVerified ? (
+                  <a
+                    href="https://dashboard.euroziel.com"
+                    onClick={() => setIsOpen(false)}
+                    className="w-full py-2.5 rounded-xl font-bold text-[10px] mobile-m:text-[11px] laptop:text-[9px] uppercase tracking-wider text-center bg-navy text-white hover:bg-opacity-90 border-b-2 border-gold flex items-center justify-center gap-1.5 shadow-md cursor-pointer"
+                  >
+                    <LogIn className="w-4 h-4 text-gold" />
+                    Go to Dashboard
+                  </a>
+                ) : isRejected ? (
+                  <button
+                    onClick={() => { setIsOpen(false); window.dispatchEvent(new Event('euroziel_open_rejection_modal')); }}
+                    className="w-full py-2.5 rounded-xl font-bold text-[10px] mobile-m:text-[11px] uppercase tracking-wider text-center bg-red-950 text-red-400 border border-red-500/50 flex items-center justify-center gap-1.5 shadow-md cursor-pointer"
+                  >
+                    <AlertTriangle className="w-4 h-4 text-red-400" />
+                    Fix Payment Details
+                  </button>
+                ) : (
+                  <div className="w-full relative group">
+                    <button
+                      disabled
+                      className="w-full py-2.5 rounded-xl font-bold text-[10px] mobile-m:text-[11px] uppercase tracking-wider text-center bg-slate-800 text-slate-400 border border-slate-700 opacity-70 cursor-not-allowed flex items-center justify-center gap-1.5"
+                      title="Wait till the admin verifies your ₹9 payment"
+                    >
+                      <LogIn className="w-4 h-4 text-amber-400 opacity-60" />
+                      Go to Dashboard
+                    </button>
+                    <div className="text-[10px] text-center text-amber-400 mt-1 font-semibold">
+                      ⏳ Wait till admin verifies payment
+                    </div>
+                  </div>
+                )
               ) : (
                 <button
                   onClick={() => { setIsOpen(false); onOpenConsultation(); }}

@@ -1,11 +1,11 @@
 import { Cpu, TrendingUp, Building2, Lightbulb, Palette, Stethoscope, Check } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
-import engineeringImg from "/assets/engineering-technology.jpg";
-import csItImg from "/assets/computer-science-it.jpg";
-import businessImg from "/assets/business-management.jpg";
-import naturalSciencesImg from "/assets/natural-sciences.jpg";
-import designArchitectureImg from "/assets/design-architecture.jpg";
-import medicineHealthImg from "/assets/medicine-health.jpg";
+const engineeringImg = "/assets/engineering-technology.jpg";
+const csItImg = "/assets/computer-science-it.jpg";
+const businessImg = "/assets/business-management.jpg";
+const naturalSciencesImg = "/assets/natural-sciences.jpg";
+const designArchitectureImg = "/assets/design-architecture.jpg";
+const medicineHealthImg = "/assets/medicine-health.jpg";
 
 const specialisations = [
   {
