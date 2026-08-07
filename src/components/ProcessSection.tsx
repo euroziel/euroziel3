@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Check, Info, HelpCircle, ArrowRight, Zap, Target, BookOpen, FileSpreadsheet, Backpack, CalendarDays, ClipboardCheck, Lightbulb, AlertCircle
@@ -12,6 +13,7 @@ interface ProcessSectionProps {
 }
 
 export default function ProcessSection({ onOpenConsultation, theme }: ProcessSectionProps) {
+  const navigate = useNavigate();
   const dark = theme === 'dark';
 
   // Pre-departure Checklist state
@@ -238,7 +240,10 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
                     Start Your Journey Today
                   </button>
                   <button
-                    onClick={() => { navigation.navigate('/#/services') }}
+                    onClick={() => {
+                      navigate('/services');
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
                     className="mybtn text-sm font-semibold px-8 py-3.5 rounded-sm border border-slate-600 text-white hover:bg-white/5 transition-colors"
                   >
                     Explore Services
