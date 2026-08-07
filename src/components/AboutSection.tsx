@@ -93,7 +93,7 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
 
       <section className="min-h-screen mb-16 max-w-5xl mx-auto px-4 space-y-20">
         {/* ===== HERO — COLORFUL & ATTRACTIVE ===== */}
-        <section className="max-w-5xl mb-10 pt-20 mx-auto px-4 text-left relative">
+        <section className="max-w-5xl mb-10 pt-28 md:pt-36 mx-auto px-4 text-left relative">
           {/* soft color blobs behind hero */}
           <div className="absolute -top-10 -left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute top-10 right-0 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -237,7 +237,7 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
           {founders.map((f, idx) => (
             <ScrollReveal
               key={idx}
-              variant={idx % 2 === 0 ? 'slideLeft' : 'slideRight'}
+              variant="fadeUp"
               delay={idx * 0.1}
             >
               <div className="grid grid-cols-1 gap-8 md:gap-12 items-center">

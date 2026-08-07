@@ -703,7 +703,7 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
 
       {/* bottom CTA */}
       <section className="max-w-3xl mx-auto px-4 sm:px-6 mb-16 md:mb-24 text-center">
-        <ScrollReveal variant="clipReveal">
+        <ScrollReveal variant="fadeUp">
           <div className={`p-6 sm:p-8 md:p-12 rounded-sm border shadow-premium space-y-4 sm:space-y-6 border-b-4 border-b-gold ${dark ? 'border-slate-800 bg-slate-950' : 'border-slate-200 bg-white'
             }`}>
             <span className={`inline-block text-[9px] sm:text-[10px] font-bold text-navy uppercase tracking-[0.15em] sm:tracking-[0.2em] border px-2.5 sm:px-3 py-1 rounded-sm ${dark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'

@@ -212,16 +212,16 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
         <div className="absolute top-0 right-0 w-[32rem] h-[32rem] bg-gold/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-navy/30 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 min-h-screen flex items-center">
-          <div className="grid md:grid-cols-2 gap-10 items-center w-full py-16 md:py-24">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 min-h-screen flex items-center pt-32 md:pt-36 pb-12">
+          <div className="grid md:grid-cols-2 gap-10 items-center w-full py-6 md:py-16">
             {/* Left: text content */}
             <ScrollReveal variant="glideUp">
-              <div className="space-y-6 text-left order-2 md:order-1">
+              <div className="space-y-6 text-left order-1 md:order-1">
                 {/* <span className="inline-block text-[10px] font-bold text-gold uppercase tracking-[0.2em] border border-gold/30 bg-gold/5 px-3 py-1.5 rounded-sm">
                   Study Abroad Guidance
                 </span> */}
 
-                <h1 className="text-3xl mobile-m:text-4xl sm:text-5xl md:text-6xl font-bold font-sans leading-[1.1] text-white">
+                <h1 className="text-3xl mobile-m:text-4xl sm:text-5xl md:text-6xl font-bold font-sans leading-[1.15] text-white">
                   Smart Guidance <br /> for a
                   <br />
                   <span className="font-serif italic font-medium text-gold">
@@ -236,7 +236,10 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
                 </p>
 
                 <div className="flex flex-wrap items-center gap-4 pt-2">
-                  <button className="mybtn bg-gold text-slate-950 text-sm font-bold px-8 py-3.5 rounded-sm hover:bg-gold/90 hover:scale-[1.02] transition-all shadow-premium">
+                  <button 
+                    onClick={onOpenConsultation}
+                    className="mybtn bg-gold text-slate-950 text-sm font-bold px-8 py-3.5 rounded-sm hover:bg-gold/90 hover:scale-[1.02] transition-all shadow-premium"
+                  >
                     Start Your Journey Today
                   </button>
                   <button
@@ -267,18 +270,18 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
             </ScrollReveal>
 
             {/* Right: sample image */}
-            <ScrollReveal variant="clipReveal">
-              <div className="relative w-full flex justify-center md:justify-end order-1 md:order-2 pb-8 md:pb-0">
+            <ScrollReveal variant="fadeUp">
+              <div className="relative w-full flex justify-center md:justify-end order-2 md:order-2 pb-8 md:pb-0">
                 <div className="relative w-full max-w-sm mobile-l:max-w-md md:max-w-lg">
                   <img
                     src="/assets/process.jpg"
                     alt="Graduate student smiling"
-                    className="w-full rounded-sm object-cover object-top h-[300px] mobile-m:h-[360px] mobile-l:h-[420px] md:h-[520px] shadow-premium border-b-4 border-b-gold"
+                    className="w-full rounded-sm object-cover object-top h-[280px] mobile-m:h-[340px] mobile-l:h-[400px] md:h-[520px] shadow-premium border-b-4 border-b-gold"
                   />
 
                   {/* Floating badge on the image */}
-                  <div className="absolute -bottom-8 left-4 right-4 mobile-l:left-auto mobile-l:right-4 md:-right-6 md:left-auto md:bottom-[-1.5rem] bg-gold text-slate-900 rounded-sm px-4 py-3.5 mobile-l:px-5 mobile-l:py-4 shadow-premium border-l-4 border-l-gold max-w-full mobile-l:max-w-[220px]">
-                    <p className="text-[11px] font-sans pb-3 text-black leading-snug">
+                  <div className="absolute -bottom-6 left-4 right-4 mobile-l:left-auto mobile-l:right-4 md:-right-6 md:left-auto md:bottom-[-1.5rem] bg-gold text-slate-900 rounded-sm px-4 py-3.5 mobile-l:px-5 mobile-l:py-4 shadow-premium border-l-4 border-l-gold max-w-full mobile-l:max-w-[220px]">
+                    <p className="text-[11px] font-sans text-black leading-snug">
                       Personalized courses, expert mentors, and flexible guidance built for real results.
                     </p>
                   </div>
