@@ -73,9 +73,12 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
     localStorage.removeItem('euroziel_current_user');
     localStorage.removeItem('euroziel_has_paid');
     localStorage.removeItem('euroziel_is_verified');
+    localStorage.removeItem('euroziel_is_rejected');
+    localStorage.removeItem('euroziel_rejection_reason');
     setCurrentUser(null);
     setHasPaid(false);
     setIsVerified(false);
+    setIsRejected(false);
     window.dispatchEvent(new Event('euroziel_payment_updated'));
   };
 

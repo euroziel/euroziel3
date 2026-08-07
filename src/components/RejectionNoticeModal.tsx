@@ -24,18 +24,41 @@ export default function RejectionNoticeModal({ theme = 'dark' }: RejectionNotice
   const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
+    let unsubscribe: (() => void) | null = null;
+
     const checkUserAndListen = () => {
-      const savedUserStr = localStorage.getItem('euroziel_current_user') || localStorage.getItem('euroziel_user');
-      if (!savedUserStr) return;
+      if (unsubscribe) {
+        unsubscribe();
+        unsubscribe = null;
+      }
+
+      const savedUserStr = localStorage.getItem('euroziel_current_user');
+      if (!savedUserStr) {
+        setIsOpen(false);
+        setRejectionData(null);
+        localStorage.removeItem('euroziel_is_rejected');
+        localStorage.removeItem('euroziel_rejection_reason');
+        return;
+      }
 
       let userObj: any = null;
       try {
         userObj = JSON.parse(savedUserStr);
       } catch (e) {
+        setIsOpen(false);
+        setRejectionData(null);
+        localStorage.removeItem('euroziel_is_rejected');
+        localStorage.removeItem('euroziel_rejection_reason');
         return;
       }
 
-      if (!userObj?.email) return;
+      if (!userObj?.email) {
+        setIsOpen(false);
+        setRejectionData(null);
+        localStorage.removeItem('euroziel_is_rejected');
+        localStorage.removeItem('euroziel_rejection_reason');
+        return;
+      }
 
       const emailToQuery = userObj.email.trim().toLowerCase();
 
@@ -45,7 +68,7 @@ export default function RejectionNoticeModal({ theme = 'dark' }: RejectionNotice
         where('email', '==', emailToQuery)
       );
 
-      const unsubscribe = onSnapshot(
+      unsubscribe = onSnapshot(
         q,
         (snapshot) => {
           if (!snapshot.empty) {
@@ -95,12 +118,12 @@ export default function RejectionNoticeModal({ theme = 'dark' }: RejectionNotice
           console.warn('Firestore snapshot error:', err);
         }
       );
-
-      return () => unsubscribe();
     };
 
     const handleForceOpen = () => {
-      const savedUserStr = localStorage.getItem('euroziel_current_user') || localStorage.getItem('euroziel_user');
+      const savedUserStr = localStorage.getItem('euroziel_current_user');
+      if (!savedUserStr) return;
+
       let userObj: any = {};
       try { userObj = JSON.parse(savedUserStr || '{}'); } catch(e){}
       const reasonText = localStorage.getItem('euroziel_rejection_reason') || 'invalid transaction id';
@@ -115,12 +138,12 @@ export default function RejectionNoticeModal({ theme = 'dark' }: RejectionNotice
       setIsOpen(true);
     };
 
-    const cleanup = checkUserAndListen();
+    checkUserAndListen();
 
     window.addEventListener('euroziel_payment_updated', checkUserAndListen);
     window.addEventListener('euroziel_open_rejection_modal', handleForceOpen);
     return () => {
-      if (cleanup) cleanup();
+      if (unsubscribe) unsubscribe();
       window.removeEventListener('euroziel_payment_updated', checkUserAndListen);
       window.removeEventListener('euroziel_open_rejection_modal', handleForceOpen);
     };
@@ -147,7 +170,7 @@ export default function RejectionNoticeModal({ theme = 'dark' }: RejectionNotice
 
     try {
       let targetDocId = rejectionData?.docId;
-      const savedUserStr = localStorage.getItem('euroziel_current_user') || localStorage.getItem('euroziel_user');
+      const savedUserStr = localStorage.getItem('euroziel_current_user');
       let userObj: any = {};
       try { userObj = JSON.parse(savedUserStr || '{}'); } catch(e){}
       const emailToQuery = (rejectionData?.email || userObj?.email || '').trim().toLowerCase();
