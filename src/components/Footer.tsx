@@ -2,6 +2,7 @@ import React from 'react';
 import Logo from './Logo';
 import { Mail, ShieldCheck, Heart, ArrowRight, Compass, ShieldAlert } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
+import ActionButton from './ActionButton';
 
 interface FooterProps {
   currentTab: string;
@@ -100,12 +101,11 @@ export default function Footer({ currentTab, onTabChange, theme, onOpenConsultat
               <p className="text-[11px] font-sans leading-snug">
                 Don't miss the current Winter intake deadlines. Book a 1-on-1 counselor audit.
               </p>
-              <button
-                onClick={onOpenConsultation}
+              <ActionButton
+                onOpenConsultation={onOpenConsultation}
+                defaultText="Enrollment & Consultation →"
                 className="mybtn px-3.5 py-2 rounded-sm text-[11px] font-bold uppercase tracking-widest bg-navy text-white hover:bg-opacity-90 border-b-2 border-gold transition-all cursor-pointer shadow-premium"
-              >
-                9rs Enrollment &rarr;
-              </button>
+              />
             </div>
 
           </div>

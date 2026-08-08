@@ -6,6 +6,8 @@ import {
 } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 import TimeLine from '@/src/components/TimeLine';
+import ActionButton from './ActionButton';
+import VerificationNotice from './VerificationNotice';
 
 interface ProcessSectionProps {
   onOpenConsultation: () => void;
@@ -235,13 +237,14 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
                   currently studying your fields in Germany.
                 </p>
 
+                <VerificationNotice alignLeft={true} />
+
                 <div className="flex flex-wrap items-center gap-4 pt-2">
-                  <button 
-                    onClick={onOpenConsultation}
+                  <ActionButton
+                    onOpenConsultation={onOpenConsultation}
+                    defaultText="Start Your Journey Today"
                     className="mybtn bg-gold text-slate-950 text-sm font-bold px-8 py-3.5 rounded-sm hover:bg-gold/90 hover:scale-[1.02] transition-all shadow-premium"
-                  >
-                    Start Your Journey Today
-                  </button>
+                  />
                   <button
                     onClick={() => {
                       navigate('/services');
@@ -484,12 +487,11 @@ export default function ProcessSection({ onOpenConsultation, theme }: ProcessSec
                 Speak with our core team and get a realistic, honest evaluation of your profile, academic eligibility, and career opportunities in public universities.
               </p>
               <div>
-                <button
-                  onClick={onOpenConsultation}
+                <ActionButton
+                  onOpenConsultation={onOpenConsultation}
+                  defaultText="Get Your Germany Roadmap"
                   className="mybtn px-8 py-3.5 rounded-sm font-bold text-xs uppercase tracking-widest bg-navy hover:bg-opacity-90 border-b-2 border-gold text-white transition-all cursor-pointer shadow-premium"
-                >
-                  Get Your Germany Roadmap
-                </button>
+                />
               </div>
             </div>
           </div>

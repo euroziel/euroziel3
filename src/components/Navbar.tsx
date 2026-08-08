@@ -180,14 +180,14 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
                 <div className="relative group">
                   <button
                     disabled
-                    className="flex items-center gap-1.5 px-3 mobile-m:px-4 py-1.5 rounded-full text-[10px] mobile-m:text-[11px] laptop:text-[9px] font-bold tracking-widest uppercase bg-slate-800 text-slate-400 border border-slate-700 opacity-70 cursor-not-allowed transition-all duration-300 whitespace-nowrap"
+                    className="flex items-center gap-1.5 px-3 mobile-m:px-4 py-1.5 rounded-full text-[10px] mobile-m:text-[11px] laptop:text-[9px] font-bold tracking-widest uppercase bg-slate-800 text-amber-400 border border-amber-500/30 opacity-80 cursor-not-allowed transition-all duration-300 whitespace-nowrap"
                     title="Wait till the admin verifies your ₹9 payment"
                   >
-                    <LogIn className="w-3.5 h-3.5 text-amber-400 shrink-0 opacity-60" />
-                    Go to Dashboard
+                    <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping shrink-0" />
+                    Wait till Account Verification
                   </button>
                   <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity bg-slate-950 text-amber-400 text-[10px] py-1 px-3 rounded border border-amber-500/30 whitespace-nowrap pointer-events-none z-50 shadow-xl">
-                    ⏳ Wait till admin verifies payment
+                    ⏳ Verification Pending — Wait for admin approval
                   </div>
                 </div>
               )
@@ -309,14 +309,14 @@ export default function Navbar({ currentTab, onTabChange, theme, onThemeToggle, 
                   <div className="w-full relative group">
                     <button
                       disabled
-                      className="w-full py-2.5 rounded-xl font-bold text-[10px] mobile-m:text-[11px] uppercase tracking-wider text-center bg-slate-800 text-slate-400 border border-slate-700 opacity-70 cursor-not-allowed flex items-center justify-center gap-1.5"
+                      className="w-full py-2.5 rounded-xl font-bold text-[10px] mobile-m:text-[11px] uppercase tracking-wider text-center bg-slate-900 text-amber-400 border border-amber-500/30 opacity-80 cursor-not-allowed flex items-center justify-center gap-2"
                       title="Wait till the admin verifies your ₹9 payment"
                     >
-                      <LogIn className="w-4 h-4 text-amber-400 opacity-60" />
-                      Go to Dashboard
+                      <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping shrink-0" />
+                      Wait till Account Verification
                     </button>
                     <div className="text-[10px] text-center text-amber-400 mt-1 font-semibold">
-                      ⏳ Wait till admin verifies payment
+                      ⏳ Verification Pending — Admin will review & approve
                     </div>
                   </div>
                 )

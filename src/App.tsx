@@ -90,7 +90,7 @@ export default function App() {
   };
 
   return (
-    <div className="relative w-full min-h-screen flex flex-col font-sans overflow-x-hidden">
+    <div className="relative w-full min-h-screen flex flex-col font-sans">
       {/* Background Particles Container */}
       <div className="absolute top-0 left-0 w-full h-[600px] pointer-events-none overflow-hidden z-0">
         <Particles
@@ -107,7 +107,7 @@ export default function App() {
       </div>
 
       <div
-        className={`relative z-10 min-h-screen flex flex-col font-sans w-full overflow-x-hidden transition-colors duration-300 ${
+        className={`relative z-10 min-h-screen flex flex-col font-sans w-full transition-colors duration-300 ${
           theme === 'dark' ? 'bg-transparent text-slate-100' : 'bg-white text-slate-900'
         }`}
       >

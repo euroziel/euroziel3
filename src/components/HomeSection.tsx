@@ -4,6 +4,7 @@ import { ArrowRight, Star, ArrowLeftRight, Quote, CheckCircle2, Pause, Play, Che
 import Journey from './Journey';
 import ScrollReveal from './ScrollReveal';
 import OurMission from './OurMission';
+import ActionButton from './ActionButton';
 
 interface HomeSectionProps {
   onOpenConsultation: () => void;
@@ -665,12 +666,11 @@ export default function HomeSection({ onOpenConsultation, onNavigateToTab, theme
                 </p>
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mobile-m:gap-4 pt-2 mobile-m:pt-4">
-                  <button
-                    onClick={onOpenConsultation}
+                  <ActionButton
+                    onOpenConsultation={onOpenConsultation}
+                    defaultText="Start Your Germany Journey"
                     className="mybtn w-full sm:w-auto px-6 mobile-m:px-8 4k:px-10 py-3 mobile-m:py-3.5 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm uppercase tracking-widest bg-navy text-white hover:bg-opacity-90 border-b-2 border-gold transition-all cursor-pointer shadow-premium"
-                  >
-                    Start Your Germany Journey
-                  </button>
+                  />
                   <button
                     onClick={() => onNavigateToTab('study')}
                     className="mybtn w-full sm:w-auto px-5 mobile-m:px-6 4k:px-8 py-3 mobile-m:py-3.5 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm uppercase tracking-widest border border-slate-700 hover:border-slate-500 hover:bg-slate-800 text-slate-300 transition-all cursor-pointer"

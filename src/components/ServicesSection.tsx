@@ -4,6 +4,8 @@ import {
   Compass, Laptop, FileCode, Landmark, ShieldCheck, HelpCircle, ArrowRight, ClipboardCheck, Scroll, FileCheck, Award, GraduationCap, ChevronDown, CheckCircle, Check, Lock
 } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
+import ActionButton from './ActionButton';
+import VerificationNotice from './VerificationNotice';
 
 interface ServicesSectionProps {
   onOpenConsultation: () => void;
@@ -274,33 +276,14 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
                 currently studying your fields in Germany.
               </p>
 
+              <VerificationNotice />
+
               <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-                {isLoggedIn && hasPaid ? (
-                  isVerified ? (
-                    <a
-                      href="https://dashboard.euroziel.com"
-                      className="mybtn px-6 mobile-m:px-8 laptop:px-8 4k:px-10 py-3 mobile-m:py-4 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm tracking-widest uppercase cursor-pointer transition-all duration-300 bg-navy text-white hover:bg-opacity-90 text-center shadow-premium border-b-2 border-gold font-sans flex items-center justify-center gap-2"
-                    >
-                      Go to Student Dashboard
-                    </a>
-                  ) : (
-                    <button
-                      disabled
-                      className="mybtn px-6 mobile-m:px-8 laptop:px-8 4k:px-10 py-3 mobile-m:py-4 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm tracking-widest uppercase bg-slate-800 text-amber-400 border border-amber-500/30 opacity-80 cursor-not-allowed text-center font-sans flex items-center justify-center gap-2 shadow-inner"
-                      title="Wait till the admin verifies your ₹9 payment"
-                    >
-                      <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
-                      Wait till Account Verification
-                    </button>
-                  )
-                ) : (
-                  <button
-                    onClick={onOpenConsultation}
-                    className="mybtn px-6 mobile-m:px-8 laptop:px-8 4k:px-10 py-3 mobile-m:py-4 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm tracking-widest uppercase cursor-pointer transition-all duration-300 bg-navy text-white hover:bg-opacity-90 text-center shadow-premium border-b-2 border-gold font-sans flex items-center justify-center gap-2 transform hover:-translate-y-0.5 active:translate-y-0"
-                  >
-                    Book Your Session
-                  </button>
-                )}
+                <ActionButton
+                  onOpenConsultation={onOpenConsultation}
+                  defaultText="Book Your Session"
+                  className="mybtn px-6 mobile-m:px-8 laptop:px-8 4k:px-10 py-3 mobile-m:py-4 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm tracking-widest uppercase cursor-pointer transition-all duration-300 bg-navy text-white hover:bg-opacity-90 text-center shadow-premium border-b-2 border-gold font-sans flex items-center justify-center gap-2 transform hover:-translate-y-0.5 active:translate-y-0"
+                />
               </div>
 
               <div className="flex flex-wrap items-center justify-center gap-8 pt-6 text-xs font-sans">
@@ -717,12 +700,11 @@ export default function ServicesSection({ onOpenConsultation, theme }: ServicesS
               Our mentors are not sitting in an office in India guessing what Germany is like. They are there. Right now. And they are part of your team.
             </p>
             <div>
-              <button
-                onClick={onOpenConsultation}
+              <ActionButton
+                onOpenConsultation={onOpenConsultation}
+                defaultText="Schedule a Meeting"
                 className="mybtn w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-3.5 rounded-sm font-bold text-xs uppercase tracking-widest bg-navy hover:bg-opacity-90 text-white border-b-2 border-gold transition-all cursor-pointer shadow-premium"
-              >
-                Schedule a Meeting
-              </button>
+              />
             </div>
           </div>
         </ScrollReveal>

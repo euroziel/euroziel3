@@ -4,6 +4,7 @@ import {
   Search, ChevronDown, BookOpen, GraduationCap, Coins, FileCheck, HelpCircle, Globe, ChevronRight 
 } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
+import ActionButton from './ActionButton';
 
 interface FAQSectionProps {
   onOpenConsultation: () => void;
@@ -531,12 +532,11 @@ export default function FAQSection({ onOpenConsultation, theme }: FAQSectionProp
           Every educational background behaves uniquely. Let Yuvasri and Sarathkumar evaluate your CGPA and language status on a raw personal basis.
         </p>
         <div className="pt-2">
-          <button
-            onClick={onOpenConsultation}
+          <ActionButton
+            onOpenConsultation={onOpenConsultation}
+            defaultText="Start Detailed Profile Audit"
             className="mybtn px-6 py-2.5 rounded-sm text-xs font-bold uppercase tracking-widest bg-navy text-white hover:bg-opacity-95 border-b-2 border-gold shadow-premium cursor-pointer"
-          >
-            Start Detailed Profile Audit
-          </button>
+          />
         </div>
       </div>
       </ScrollReveal>
