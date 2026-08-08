@@ -19,6 +19,7 @@ import {
   Snowflake,
 } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
+import ActionButton from "./ActionButton";
 import { useState, useEffect, useRef } from "react";
 import { useInView } from "motion/react";
 import Fields from "./fields";
@@ -476,12 +477,11 @@ export default function StudySection({
               false promises.
             </p>
             <div>
-              <button
-                onClick={onOpenConsultation}
+              <ActionButton
+                onOpenConsultation={onOpenConsultation}
+                defaultText="Book Your Session"
                 className="mybtn px-8 py-3.5 rounded-sm font-bold text-xs uppercase tracking-widest bg-navy hover:bg-opacity-90 text-white border-b-2 border-gold transition-all cursor-pointer shadow-premium"
-              >
-                Book Your Session
-              </button>
+              />
             </div>
           </div>
         </ScrollReveal>

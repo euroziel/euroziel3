@@ -4,6 +4,8 @@ import {
   Heart, Users, BookOpen, GraduationCap, Compass, ShieldAlert, Sparkles, Building2, HelpCircle, ArrowRight, ArrowUpRight
 } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
+import ActionButton from './ActionButton';
+import VerificationNotice from './VerificationNotice';
 
 interface AboutSectionProps {
   onOpenConsultation: () => void;
@@ -120,14 +122,15 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
                 We're connected to people living it, right now.
               </p>
 
+              <VerificationNotice alignLeft={true} />
+
               <div className="flex flex-wrap items-center gap-4 pt-4">
-                <button
-                  onClick={onOpenConsultation}
+                <ActionButton
+                  onOpenConsultation={onOpenConsultation}
+                  defaultText="Book a Free Consultation"
                   className="mybtn px-6 mobile-m:px-8 laptop:px-8 4k:px-10 py-3 mobile-m:py-4 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm tracking-widest uppercase cursor-pointer transition-all duration-300 bg-navy text-white hover:bg-opacity-90 text-center shadow-premium border-b-2 border-gold font-sans flex items-center justify-center gap-2 transform hover:-translate-y-0.5 active:translate-y-0"
-                >
-                  Book a Free Consultation
-                  <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </button>
+                  icon={<ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />}
+                />
                 <span className={`text-[11px] font-sans ${dark ? 'text-slate-500' : 'text-slate-400'}`}>
                   No pressure. No sales pitch. Just honest guidance.
                 </span>
@@ -349,13 +352,12 @@ export default function AboutSection({ onOpenConsultation, theme }: AboutSection
               Talk to us directly. No sales pitch, no pressure — just an honest evaluation of your profile.
             </p>
             <div>
-              <button
-                onClick={onOpenConsultation}
+              <ActionButton
+                onOpenConsultation={onOpenConsultation}
+                defaultText="Talk to a Counselor"
                 className="mybtn group inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-sm font-bold text-xs uppercase tracking-widest bg-navy hover:bg-opacity-90 text-white border-b-2 border-gold transition-all cursor-pointer shadow-premium w-full sm:w-auto"
-              >
-                Talk to a Counselor
-                <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </button>
+                icon={<ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />}
+              />
             </div>
           </div>
         </ScrollReveal>

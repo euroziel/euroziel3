@@ -140,11 +140,11 @@ function CalendarPageContent({ phase }: { phase: TimelinePhase }) {
     return (
         <>
             {/* Torn calendar header */}
-            <div className="relative bg-navy px-8 pt-9 pb-7 text-center shrink-0">
-                <p className="text-gold text-[11px] font-bold tracking-[0.25em] uppercase mb-1">
+            <div className="relative bg-navy px-5 pt-6 pb-5 sm:px-8 sm:pt-9 sm:pb-7 text-center shrink-0">
+                <p className="text-gold text-[10px] sm:text-[11px] font-bold tracking-[0.2em] sm:tracking-[0.25em] uppercase mb-0.5 sm:mb-1">
                     {phase.range}
                 </p>
-                <h3 className="text-white text-5xl md:text-6xl font-bold font-sans tracking-tight">
+                <h3 className="text-4xl sm:text-5xl md:text-6xl font-bold font-sans tracking-tight text-white">
                     {phase.month}
                 </h3>
                 <svg
@@ -161,15 +161,15 @@ function CalendarPageContent({ phase }: { phase: TimelinePhase }) {
             </div>
 
             {/* Content */}
-            <div className="px-8 md:px-10 py-8 space-y-5 overflow-y-auto grow">
-                <h4 className="text-xl md:text-2xl font-bold font-sans text-slate-900 leading-snug">
+            <div className="px-5 sm:px-8 md:px-10 py-4 sm:py-6 md:py-8 space-y-3.5 sm:space-y-5 overflow-y-auto grow">
+                <h4 className="text-lg sm:text-xl md:text-2xl font-bold font-sans text-slate-900 leading-snug">
                     {phase.title}
                 </h4>
-                <p className="text-sm text-slate-600 font-sans leading-relaxed">{phase.intro}</p>
+                <p className="text-xs sm:text-sm text-slate-600 font-sans leading-relaxed">{phase.intro}</p>
 
-                <ul className="space-y-2.5 pt-1">
+                <ul className="space-y-2 sm:space-y-2.5 pt-1">
                     {phase.items.map((item, i) => (
-                        <li key={i} className="flex items-start gap-2.5 text-sm text-slate-700 font-sans">
+                        <li key={i} className="flex items-start gap-2 sm:gap-2.5 text-xs sm:text-sm text-slate-700 font-sans">
                             <CheckIcon />
                             <span>{item}</span>
                         </li>
@@ -178,19 +178,19 @@ function CalendarPageContent({ phase }: { phase: TimelinePhase }) {
 
                 {phase.highlight && (
                     <div
-                        className={`mt-4 rounded-sm border-l-4 px-4 py-3 ${phase.isFinal
+                        className={`mt-3 sm:mt-4 rounded-sm border-l-4 px-3.5 py-2.5 sm:px-4 sm:py-3 ${phase.isFinal
                             ? "border-l-gold bg-navy text-white"
                             : "border-l-gold bg-gold/5 border border-gold/20"
                             }`}
                     >
                         <p
-                            className={`text-[10px] font-bold uppercase tracking-widest mb-1 ${phase.isFinal ? "text-gold" : "text-navy"
+                            className={`text-[9px] sm:text-[10px] font-bold uppercase tracking-widest mb-1 ${phase.isFinal ? "text-gold" : "text-navy"
                                 }`}
                         >
                             {phase.highlight.label}
                         </p>
                         <p
-                            className={`text-sm font-sans leading-relaxed ${phase.isFinal ? "text-slate-200" : "text-slate-700"
+                            className={`text-xs sm:text-sm font-sans leading-relaxed ${phase.isFinal ? "text-slate-200" : "text-slate-700"
                                 }`}
                         >
                             {phase.highlight.text}
@@ -230,121 +230,9 @@ function applyPeelStyle(el: HTMLDivElement, p: number) {
 }
 
 /* ───────────────────────────────────────
-   MOBILE ACCORDION TIMELINE COMPONENT
+   TIMELINE PEEL COMPONENT FOR ALL DEVICES
    ─────────────────────────────────────── */
-function MobileTimeline() {
-    const [expandedIndex, setExpandedIndex] = useState<number>(0);
-
-    return (
-        <section className="w-full py-10 px-4">
-            <div className="max-w-lg mx-auto space-y-6">
-                {/* Section heading */}
-                <div className="text-center space-y-3 mb-6">
-                    <span className="inline-block text-[10px] font-bold text-gold uppercase tracking-[0.2em] border border-gold/30 bg-gold/5 px-3 py-1.5 rounded-sm">
-                        The Roadmap
-                    </span>
-                    <h2 className="text-2xl font-bold font-sans text-white leading-tight">
-                        Your Germany{" "}
-                        <span className="font-serif italic font-medium text-gold">Timeline</span>
-                    </h2>
-                </div>
-
-                {/* Vertical timeline line + cards */}
-                <div className="relative">
-                    {/* Connecting line */}
-                    <div className="absolute left-5 top-0 bottom-0 w-[2px] bg-slate-800" />
-
-                    <div className="space-y-4">
-                        {timelineData.map((phase, i) => {
-                            const isExpanded = expandedIndex === i;
-                            return (
-                                <div key={i} className="relative pl-14">
-                                    {/* Node */}
-                                    <div
-                                        className={`absolute left-0 top-3 w-10 h-10 rounded-full flex items-center justify-center border-4 z-10 text-[11px] font-bold transition-colors ${isExpanded
-                                            ? 'bg-gold border-gold text-slate-950'
-                                            : 'bg-slate-950 border-gold text-gold'
-                                            }`}
-                                    >
-                                        {phase.month.split('–')[0]}
-                                    </div>
-
-                                    {/* Card */}
-                                    <div
-                                        className={`rounded-sm border overflow-hidden transition-all shadow-premium ${isExpanded
-                                            ? 'border-gold/40 bg-white'
-                                            : 'border-slate-800 bg-slate-950/80'
-                                            }`}
-                                    >
-                                        <button
-                                            onClick={() => setExpandedIndex(isExpanded ? -1 : i)}
-                                            className={`w-full px-4 py-3.5 flex items-center justify-between text-left cursor-pointer transition-colors ${isExpanded
-                                                ? 'bg-navy'
-                                                : 'hover:bg-slate-900/40'
-                                                }`}
-                                        >
-                                            <div>
-                                                <p className={`text-[10px] font-bold tracking-widest uppercase ${isExpanded ? 'text-gold' : 'text-gold/60'}`}>
-                                                    {phase.range}
-                                                </p>
-                                                <h4 className={`text-sm font-bold mt-0.5 ${isExpanded ? 'text-white' : 'text-slate-300'}`}>
-                                                    {phase.title}
-                                                </h4>
-                                            </div>
-                                            <svg
-                                                className={`w-4 h-4 shrink-0 transition-transform ${isExpanded ? 'rotate-180 text-gold' : 'text-slate-500'}`}
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                stroke="currentColor"
-                                                strokeWidth={2}
-                                            >
-                                                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                                            </svg>
-                                        </button>
-
-                                        {isExpanded && (
-                                            <div className="px-5 pb-5 pt-3 bg-white space-y-4">
-                                                <p className="text-sm text-slate-600 font-sans leading-relaxed">{phase.intro}</p>
-                                                <ul className="space-y-2">
-                                                    {phase.items.map((item, j) => (
-                                                        <li key={j} className="flex items-start gap-2.5 text-sm text-slate-700 font-sans">
-                                                            <CheckIcon />
-                                                            <span>{item}</span>
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                                {phase.highlight && (
-                                                    <div
-                                                        className={`rounded-sm border-l-4 px-4 py-3 ${phase.isFinal
-                                                            ? "border-l-gold bg-navy text-white"
-                                                            : "border-l-gold bg-gold/5 border border-gold/20"
-                                                            }`}
-                                                    >
-                                                        <p className={`text-[10px] font-bold uppercase tracking-widest mb-1 ${phase.isFinal ? "text-gold" : "text-navy"}`}>
-                                                            {phase.highlight.label}
-                                                        </p>
-                                                        <p className={`text-sm font-sans leading-relaxed ${phase.isFinal ? "text-slate-200" : "text-slate-700"}`}>
-                                                            {phase.highlight.text}
-                                                        </p>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
-}
-
-/* ───────────────────────────────────────
-   DESKTOP PEEL TIMELINE COMPONENT
-   ─────────────────────────────────────── */
-function DesktopTimeline() {
+export default function GermanyTimelineSection() {
     const total = timelineData.length;
     const vhPerMonth = 120;
     const endBufferVh = 40;
@@ -413,35 +301,35 @@ function DesktopTimeline() {
             className="relative w-full bg-transparent"
             style={{ height: `calc(${total * vhPerMonth}vh + ${endBufferVh}vh)` }}
         >
-            <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center py-8 md:py-10">
+            <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center py-4 sm:py-8 md:py-10">
                 {/* Ambient glows */}
-                <div className="absolute top-0 -right-32 w-96 h-96 bg-gold/10 rounded-full blur-3xl pointer-events-none" />
-                <div className="absolute bottom-0 -left-32 w-96 h-96 bg-navy/30 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute top-0 -right-32 w-72 h-72 sm:w-96 sm:h-96 bg-gold/10 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute bottom-0 -left-32 w-72 h-72 sm:w-96 sm:h-96 bg-navy/30 rounded-full blur-3xl pointer-events-none" />
 
-                <div className="relative z-10 max-w-6xl w-full mx-auto px-4 flex flex-col items-center justify-center h-full">
+                <div className="relative z-10 max-w-6xl w-full mx-auto px-3 sm:px-4 flex flex-col items-center justify-center h-full">
                     {/* Section heading */}
-                    <div className="text-center max-w-2xl mx-auto space-y-3 mb-6 md:mb-8 shrink-0">
-                        <span className="inline-block text-[10px] font-bold text-gold uppercase tracking-[0.2em] border border-gold/30 bg-gold/5 px-3 py-1.5 rounded-sm">
+                    <div className="text-center max-w-2xl mx-auto space-y-1.5 sm:space-y-3 mb-4 sm:mb-6 md:mb-8 shrink-0">
+                        <span className="inline-block text-[10px] font-bold text-gold uppercase tracking-[0.2em] border border-gold/30 bg-gold/5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-sm">
                             The Roadmap
                         </span>
-                        <h2 className="text-3xl md:text-5xl font-bold font-sans text-white leading-tight">
+                        <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold font-sans text-white leading-tight">
                             Your Germany{" "}
                             <span className="font-serif italic font-medium text-gold">Timeline</span>
                         </h2>
-                        <p className="text-sm md:text-base text-slate-400 font-sans leading-relaxed">
+                        <p className="hidden sm:block text-xs sm:text-sm md:text-base text-slate-400 font-sans leading-relaxed">
                             A structured roadmap designed to guide you from your first consultation to your
                             arrival in Germany with complete clarity and support.
                         </p>
                     </div>
 
                     {/* Calendar wrapper */}
-                    <div className="relative w-full max-w-2xl shrink-0">
+                    <div className="relative w-full max-w-md sm:max-w-xl md:max-w-2xl shrink-0 px-2 sm:px-0">
                         {/* Spiral binding */}
-                        <div className="absolute -top-3 left-0 right-0 flex justify-center gap-4 z-30">
+                        <div className="absolute -top-2.5 sm:-top-3 left-0 right-0 flex justify-center gap-2 sm:gap-4 z-30">
                             {Array.from({ length: 12 }).map((_, i) => (
                                 <span
                                     key={i}
-                                    className="w-2.5 h-2.5 rounded-full bg-slate-700 border border-slate-600 shadow-inner"
+                                    className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-slate-700 border border-slate-600 shadow-inner"
                                 />
                             ))}
                         </div>
@@ -451,7 +339,7 @@ function DesktopTimeline() {
                         <div className="absolute inset-0 translate-y-1 translate-x-0.5 bg-slate-800/80 rounded-sm" />
 
                         {/* Page stack */}
-                        <div className="relative h-[540px]">
+                        <div className="relative h-[450px] sm:h-[500px] md:h-[540px]">
                             {timelineData.map((phase, i) => (
                                 <div
                                     key={i}
@@ -472,12 +360,12 @@ function DesktopTimeline() {
                         </div>
 
                         {/* Page number tab */}
-                        <div className="absolute top-4 right-4 z-40 bg-gold text-slate-950 text-[11px] font-bold px-2.5 py-1 rounded-sm">
+                        <div className="absolute top-3 right-5 sm:top-4 sm:right-4 z-40 bg-gold text-slate-950 text-[10px] sm:text-[11px] font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-sm">
                             {currentIndex + 1} / {total}
                         </div>
 
                         {/* Scroll progress bar */}
-                        <div className="absolute -bottom-5 left-0 right-0 h-1 bg-slate-800 rounded-full overflow-hidden">
+                        <div className="absolute -bottom-4 sm:-bottom-5 left-2 right-2 sm:left-0 sm:right-0 h-1 bg-slate-800 rounded-full overflow-hidden">
                             <div
                                 ref={progressBarRef}
                                 className="h-full bg-gold rounded-full"
@@ -487,12 +375,12 @@ function DesktopTimeline() {
                     </div>
 
                     {/* Scroll cue */}
-                    <div className="flex flex-col items-center gap-1.5 mt-6 md:mt-8 text-slate-500 shrink-0">
-                        <span className="text-[10px] font-semibold tracking-[0.2em] uppercase">
+                    <div className="flex flex-col items-center gap-1 sm:gap-1.5 mt-4 sm:mt-6 md:mt-8 text-slate-500 shrink-0">
+                        <span className="text-[9px] sm:text-[10px] font-semibold tracking-[0.2em] uppercase">
                             Scroll to explore
                         </span>
                         <svg
-                            className="w-4 h-4 animate-bounce"
+                            className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-bounce"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -505,20 +393,4 @@ function DesktopTimeline() {
             </div>
         </section>
     );
-}
-
-/* ───────────────────────────────────────
-   RESPONSIVE WRAPPER — picks the right layout
-   ─────────────────────────────────────── */
-export default function GermanyTimelineSection() {
-    const [isMobile, setIsMobile] = useState(false);
-
-    useEffect(() => {
-        const check = () => setIsMobile(window.innerWidth < 768);
-        check();
-        window.addEventListener("resize", check);
-        return () => window.removeEventListener("resize", check);
-    }, []);
-
-    return isMobile ? <MobileTimeline /> : <DesktopTimeline />;
 }

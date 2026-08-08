@@ -3,6 +3,8 @@ import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 import { Sparkles, Calendar, GraduationCap, ChevronRight, CheckCircle, LogIn, AlertTriangle } from 'lucide-react';
 import { FaInstagram, FaLinkedin, FaYoutube, FaWhatsapp, FaEnvelope, FaFacebook } from 'react-icons/fa';
 import { animate } from "framer-motion";
+import ActionButton from './ActionButton';
+import VerificationNotice from './VerificationNotice';
 
 interface ThreeDHeroProps {
   onOpenConsultation: () => void;
@@ -185,6 +187,9 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
               </div>
             </motion.div>
 
+            {/* Verification status notice */}
+            <VerificationNotice alignLeft={true} />
+
             {/* CTA Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -192,13 +197,12 @@ export default function ThreeDHero({ onOpenConsultation, onNavigateToTab, theme 
               transition={{ duration: 0.6, delay: 0.4 }}
               className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mobile-m:gap-4 4k:gap-5 pt-1 mobile-m:pt-2"
             >
-              <button
-                onClick={onOpenConsultation}
+              <ActionButton
+                onOpenConsultation={onOpenConsultation}
+                defaultText="Start Your Germany Journey"
                 className="mybtn px-6 mobile-m:px-8 laptop:px-8 4k:px-10 py-3 mobile-m:py-4 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm tracking-widest uppercase cursor-pointer transition-all duration-300 bg-navy text-white hover:bg-opacity-90 text-center shadow-premium border-b-2 border-gold font-sans flex items-center justify-center gap-2 transform hover:-translate-y-0.5 active:translate-y-0"
-              >
-                Start Your Germany Journey
-                <ChevronRight className="w-3.5 h-3.5 mobile-m:w-4 mobile-m:h-4 4k:w-5 4k:h-5" />
-              </button>
+                icon={<ChevronRight className="w-3.5 h-3.5 mobile-m:w-4 mobile-m:h-4 4k:w-5 4k:h-5" />}
+              />
               <button
                 onClick={() => onNavigateToTab('process')}
                 className={`mybtn px-5 mobile-m:px-6 4k:px-8 py-3 mobile-m:py-4 4k:py-5 rounded-sm font-bold text-[10px] mobile-m:text-xs 4k:text-sm tracking-widest uppercase cursor-pointer transition-all duration-300 border text-center font-sans ${isDark
